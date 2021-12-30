@@ -53,7 +53,7 @@ const EditRegistrationStep2 = ({ token }) => {
     setDataOptions(dataOptionsArr);
     if (updateState.success) {
       SweatAlert("Berhasil", "Berhasil update form pendaftaran", "success");
-      return router.push("/pelatihan/master-pendaftaran");
+      return router.back();
     } else if (updateState.error) {
       SweatAlert("Gagal", updateState.error, "error");
     }

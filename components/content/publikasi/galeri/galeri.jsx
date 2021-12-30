@@ -14,6 +14,7 @@ import { addDays } from "date-fns";
 import Swal from "sweetalert2";
 import moment from "moment";
 import { Modal } from "react-bootstrap";
+import Cookies from 'js-cookie'
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
@@ -35,6 +36,7 @@ import { DELETE_GALERI_RESET } from "../../../../redux/types/publikasi/galeri.ty
 const Galeri = ({ token }) => {
     const dispatch = useDispatch();
     const router = useRouter();
+    const permission = Cookies.get("token_permission")
 
     const {
         loading: allLoading,
@@ -137,7 +139,7 @@ const Galeri = ({ token }) => {
             cancelButtonText: "Batal",
         }).then(result => {
             if (result.isConfirmed) {
-                dispatch(deleteGaleri(id, token));
+                dispatch(deleteGaleri(id, token, permission));
             }
         });
     };
@@ -501,7 +503,7 @@ const Galeri = ({ token }) => {
         const data = {
             id,
         };
-        dispatch(viewGaleri(data, token));
+        dispatch(viewGaleri(data, token, permission));
         setIndexGalleri(i);
     };
 

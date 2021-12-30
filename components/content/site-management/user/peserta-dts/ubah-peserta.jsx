@@ -26,6 +26,7 @@ import ListPelatihan from "./list-peserta-pelatihan";
 import Tables from "./detail-list-peserta-pelatihan";
 import UbahPelatihan from "./ubah-list-peserta-pelatihan";
 import SimpleReactValidator from "simple-react-validator";
+import Cookies from 'js-cookie'
 
 import Image from "next/image";
 const TambahPage = ({ token }) => {
@@ -329,7 +330,7 @@ const TambahPage = ({ token }) => {
       kelurahan: typeof kelurahan === "object" ? kelurahan.label : kelurahan,
     };
     if (simpleValidator.current.allValid()) {
-      dispatch(updatePesertaDts(token, data));
+      dispatch(updatePesertaDts(token, data, Cookies.get("token_permission")));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

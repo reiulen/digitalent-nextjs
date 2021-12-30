@@ -16,7 +16,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
 import { dropdownTemabyAkademi } from "../../../../redux/actions/pelatihan/function.actions";
 import { listsReportTraining } from "../../../../redux/actions/pelatihan/report-training.actions";
-import { set } from "js-cookie";
+import Cookies from "js-cookie";
 import axios from "axios";
 
 const ListReport = ({ token }) => {
@@ -24,6 +24,7 @@ const ListReport = ({ token }) => {
   const router = useRouter();
   const { permission } = useSelector((state) => state.adminPermission);
   const [listPermission, setListPermission] = useState([]);
+  const token_permission = Cookies.get("token_permission");
 
   useEffect(() => {
     const filterPermission = permission?.permissions?.filter((item) =>
@@ -340,6 +341,7 @@ const ListReport = ({ token }) => {
                         dispatch(
                           listsReportTraining(
                             token,
+                            token_permission,
                             page,
                             limit,
                             search,
@@ -367,6 +369,7 @@ const ListReport = ({ token }) => {
                           dispatch(
                             listsReportTraining(
                               token,
+                              token_permission,
                               page,
                               limit,
                               search,
@@ -434,6 +437,7 @@ const ListReport = ({ token }) => {
                         dispatch(
                           listsReportTraining(
                             token,
+                            token_permission,
                             e,
                             limit,
                             search,
@@ -469,6 +473,7 @@ const ListReport = ({ token }) => {
                             dispatch(
                               listsReportTraining(
                                 token,
+                                token_permission,
                                 page,
                                 e.target.value,
                                 search,
@@ -538,7 +543,9 @@ const ListReport = ({ token }) => {
               onChange={(e) => {
                 setAcademy({ value: e.value, label: e.label });
                 setTheme({ label: "", value: "" });
-                dispatch(dropdownTemabyAkademi(e?.value, token));
+                dispatch(
+                  dropdownTemabyAkademi(e?.value, token, token_permission)
+                );
               }}
             />
           </div>
@@ -621,7 +628,8 @@ const ListReport = ({ token }) => {
                   null,
                   null,
                   null,
-                  null
+                  null,
+                  token_permission
                 )
               );
             }}
@@ -653,7 +661,8 @@ const ListReport = ({ token }) => {
                   pelaksanaan[0] === "Invalid date"
                     ? ""
                     : pelaksanaan.join(","),
-                  statusPelatihan ? statusPelatihan.label : ""
+                  statusPelatihan ? statusPelatihan.label : "",
+                  token_permission
                 )
               );
             }}

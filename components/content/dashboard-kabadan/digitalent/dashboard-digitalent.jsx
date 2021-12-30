@@ -33,12 +33,14 @@ import {
 import moment from "moment";
 
 import PaginationDashboard from "../component/pagination-dashbaord.component";
+import Cookies from "js-cookie";
 
 const DashboardDigitalent = ({ token }) => {
   const MyMap = dynamic(() => import("../component/map-digitalent.component"), {
     ssr: false,
   });
   const dispatch = useDispatch();
+  const token_permission = Cookies.get("token_permission");
 
   const [filterStatistikAkademiPendaftar, setFilterStatistikAkademiPendaftar] =
     useState("");
@@ -381,7 +383,11 @@ const DashboardDigitalent = ({ token }) => {
                   funcFilterYear={(value) => {
                     setFilterStatistikAkademiPendaftar(value);
                     dispatch(
-                      getDigitalentStatistikAkademiPendaftar(token, value)
+                      getDigitalentStatistikAkademiPendaftar(
+                        token,
+                        token_permission,
+                        value
+                      )
                     );
                   }}
                   year={year}
@@ -422,7 +428,11 @@ const DashboardDigitalent = ({ token }) => {
                   funcFilterYear={(value) => {
                     setFilterStatistikAkademiPeserta(value);
                     dispatch(
-                      getDigitalentStatistikAkademiPeserta(token, value)
+                      getDigitalentStatistikAkademiPeserta(
+                        token,
+                        token_permission,
+                        value
+                      )
                     );
                   }}
                   year={year}
@@ -483,7 +493,11 @@ const DashboardDigitalent = ({ token }) => {
                       funcPagination={(value) => {
                         setPageMitraPendaftaran(value);
                         dispatch(
-                          getDigitalentStatistikMitraPendaftar(token, value)
+                          getDigitalentStatistikMitraPendaftar(
+                            token,
+                            token_permission,
+                            value
+                          )
                         );
                       }}
                     />
@@ -511,7 +525,11 @@ const DashboardDigitalent = ({ token }) => {
                       funcPagination={(value) => {
                         setPageMitraPeserta(value);
                         dispatch(
-                          getDigitalentStatistikMitraPeserta(token, value)
+                          getDigitalentStatistikMitraPeserta(
+                            token,
+                            token_permission,
+                            value
+                          )
                         );
                       }}
                     />
@@ -579,11 +597,17 @@ const DashboardDigitalent = ({ token }) => {
                 <PaginationDashboard
                   total={tablePendaftar?.total}
                   perPage={tablePendaftar?.perPage}
-                  title="Pendaftar"
+                  title="Pelatihan"
                   activePage={pageTablePendaftaran}
                   funcPagination={(value) => {
                     setPageTablePendaftaran(value);
-                    dispatch(getDigitalentTablePendaftaran(token, value));
+                    dispatch(
+                      getDigitalentTablePendaftaran(
+                        token,
+                        token_permission,
+                        value
+                      )
+                    );
                   }}
                 />
               </div>
@@ -614,6 +638,7 @@ const DashboardDigitalent = ({ token }) => {
                         dispatch(
                           getDigitalentPesertaWilayah(
                             token,
+                            token_permission,
                             e.target.value,
                             themePesertaWilayah,
                             yearPesertaWilayah
@@ -644,6 +669,7 @@ const DashboardDigitalent = ({ token }) => {
                         dispatch(
                           getDigitalentPesertaWilayah(
                             token,
+                            token_permission,
                             academyPesertaWilayah,
                             e.target.value,
                             yearPesertaWilayah
@@ -674,6 +700,7 @@ const DashboardDigitalent = ({ token }) => {
                         dispatch(
                           getDigitalentPesertaWilayah(
                             token,
+                            token_permission,
                             academyPesertaWilayah,
                             themePesertaWilayah,
                             e.target.value
@@ -715,12 +742,16 @@ const DashboardDigitalent = ({ token }) => {
                         <PaginationDashboard
                           total={provinsiPendaftar?.total}
                           perPage={provinsiPendaftar?.perPage}
-                          title="Pendaftar"
+                          title="Provinsi"
                           activePage={pageProvinsiPendaftar}
                           funcPagination={(value) => {
                             setPageProvinsiPendaftar(value);
                             dispatch(
-                              getDigitalentProvinsiPendaftar(token, value)
+                              getDigitalentProvinsiPendaftar(
+                                token,
+                                token_permission,
+                                value
+                              )
                             );
                           }}
                         />
@@ -743,12 +774,16 @@ const DashboardDigitalent = ({ token }) => {
                         <PaginationDashboard
                           total={provinsiPeserta?.total}
                           perPage={provinsiPeserta?.perPage}
-                          title="Peserta"
+                          title="Provinsi"
                           activePage={pageProvinsiPeserta}
                           funcPagination={(value) => {
                             setPageProvinsiPeserta(value);
                             dispatch(
-                              getDigitalentProvinsiPeserta(token, value)
+                              getDigitalentProvinsiPeserta(
+                                token,
+                                token_permission,
+                                value
+                              )
                             );
                           }}
                         />

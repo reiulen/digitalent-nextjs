@@ -271,7 +271,6 @@ export const dropdownTemabyAkademi = (id, token) => async (dispatch) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        // Permission: tokenPermission,
       },
     };
     const { data } = await axios.get(
@@ -298,7 +297,7 @@ export const dropdownPelatihan =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
       const { data } = await axios.get(
@@ -629,31 +628,28 @@ export const dropdownTempatLahir = (token) => async (dispatch) => {
   }
 };
 
-export const dropdownPenyelenggara =
-  (token, token_permission = "") =>
-  async (dispatch) => {
-    try {
-      const config = {
-        headers: {
-          Authorization: "Bearer " + token,
-          Permission: token_permission,
-        },
-      };
-      const { data } = await axios.get(
-        process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/organizer`,
-        config
-      );
-      dispatch({
-        type: GET_DROPDOWN_PENYELENGGARA,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: ERROR_DROPDOWN_PENYELENGGARA,
-        payload: error.response.data.message,
-      });
-    }
-  };
+export const dropdownPenyelenggara = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/organizer`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_PENYELENGGARA,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_PENYELENGGARA,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 export const getDropdownYear = (token) => async (dispatch) => {
   try {

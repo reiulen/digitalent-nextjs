@@ -8,6 +8,7 @@ import { Modal } from "react-bootstrap";
 import Select from "react-select";
 import moment from "moment";
 import DatePicker from "react-datepicker";
+import Cookies from "js-cookie";
 
 import {
   clearErrors,
@@ -25,6 +26,7 @@ const ListDaftarPelatihan = ({ token }) => {
   const router = useRouter();
 
   let { success } = router.query;
+  const token_permission = Cookies.get("token_permission");
 
   const { loading, error, summary } = useSelector((state) => state.allSummary);
 
@@ -106,7 +108,8 @@ const ListDaftarPelatihan = ({ token }) => {
         penyelenggara != null ? penyelenggara.value : null,
         academy,
         theme,
-        token
+        token,
+        token_permission
       )
     );
   };
@@ -126,7 +129,8 @@ const ListDaftarPelatihan = ({ token }) => {
         null,
         null,
         null,
-        token
+        token,
+        token_permission
       )
     );
   };
@@ -152,7 +156,8 @@ const ListDaftarPelatihan = ({ token }) => {
         penyelenggara != null ? penyelenggara.label : null,
         academy !== null ? academy.label : null,
         theme !== null ? theme.label : null,
-        token
+        token,
+        token_permission
       )
     );
   };
@@ -180,7 +185,8 @@ const ListDaftarPelatihan = ({ token }) => {
         null,
         null,
         null,
-        token
+        token,
+        token_permission
       )
     );
   };
@@ -200,7 +206,8 @@ const ListDaftarPelatihan = ({ token }) => {
         null,
         null,
         null,
-        token
+        token,
+        token_permission
       )
     );
   };

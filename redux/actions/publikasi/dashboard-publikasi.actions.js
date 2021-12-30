@@ -6,13 +6,13 @@ import {
   ROLE_ADMIN_REQUEST,
   ROLE_ADMIN_SUCCESS,
   ROLE_ADMIN_FAIL,
-  
+
   CLEAR_ERRORS
 } from '../../types/publikasi/dashboard-publikasi.type'
 
 import axios from "axios";
 
-export const getAllDashboardPublikasi = (token) =>
+export const getAllDashboardPublikasi = (token, permission) =>
   async (dispatch) => {
     try {
       dispatch({ type: DASHBOARD_PUBLIKASI_REQUEST });
@@ -20,6 +20,7 @@ export const getAllDashboardPublikasi = (token) =>
       const config = {
         headers: {
           Authorization: 'Bearer ' + token,
+          "Permission": permission
         },
       };
 
@@ -40,7 +41,7 @@ export const getAllDashboardPublikasi = (token) =>
     }
   };
 
-export const getRoleAdmin = (token) =>
+export const getRoleAdmin = (token, permission) =>
   async (dispatch) => {
     try {
       dispatch({ type: ROLE_ADMIN_REQUEST });
@@ -48,12 +49,13 @@ export const getRoleAdmin = (token) =>
       const config = {
         headers: {
           Authorization: 'Bearer ' + token,
+          "Permission": permission
         }
       };
 
-      
+
       let link = process.env.END_POINT_API_SITE_MANAGEMENT + `api/user/publikasi`;
-      
+
       const { data } = await axios.get(link, config);
 
       dispatch({

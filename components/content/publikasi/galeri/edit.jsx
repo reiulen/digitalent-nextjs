@@ -11,7 +11,7 @@ import moment from "moment";
 import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
 import DatePicker from 'react-datepicker'
-
+import Cookies from 'js-cookie'
 
 import styles from "../../../../styles/previewGaleri.module.css";
 
@@ -62,6 +62,7 @@ const img = {
 const EditGaleri = ({ token }) => {
     const dispatch = useDispatch();
     const router = useRouter();
+    const permission = Cookies.get("token_permission")
 
     const importSwitch = () => import("bootstrap-switch-button-react");
     const SwitchButton = dynamic(importSwitch, {
@@ -292,7 +293,7 @@ const EditGaleri = ({ token }) => {
             })
                 .then((result) => {
                     if (result.isConfirmed) {
-                        dispatch(onCall(data, token))
+                        dispatch(onCall(data, token, permission))
                     }
                 });
         } else {
@@ -321,7 +322,7 @@ const EditGaleri = ({ token }) => {
             })
                 .then((result) => {
                     if (result.isConfirmed) {
-                        dispatch(onCall(data, token))
+                        dispatch(onCall(data, token, permission))
                     }
                 });
         }

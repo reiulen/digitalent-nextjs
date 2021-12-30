@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import moment from "moment";
 import { TagsInput } from "react-tag-input-component";
 import DatePicker from "react-datepicker";
-
+import Cookies from 'js-cookie'
 import styles from "../../../../styles/previewGaleri.module.css";
 
 import {
@@ -26,6 +26,7 @@ const TambahImagetron = ({ token, id }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const permission = Cookies.get("token_permission")
 
   const importSwitch = () => import("bootstrap-switch-button-react");
 
@@ -151,7 +152,7 @@ const TambahImagetron = ({ token, id }) => {
           cancelButtonText: "Batal",
         }).then((result) => {
           if (result.isConfirmed) {
-            dispatch(newImagetron(data, token));
+            dispatch(newImagetron(data, token, permission));
           }
         });
       } else {
@@ -176,7 +177,7 @@ const TambahImagetron = ({ token, id }) => {
           cancelButtonText: "Batal",
         }).then((result) => {
           if (result.isConfirmed) {
-            dispatch(newImagetron(data, token));
+            dispatch(newImagetron(data, token, permission));
           }
         });
       }
@@ -411,9 +412,8 @@ const TambahImagetron = ({ token, id }) => {
                           onChange={(e) => handleChangePublish(e)}
                         />
                         <span
-                          className={`sliders round ${
-                            publish ? "text-white" : "pl-2"
-                          }`}
+                          className={`sliders round ${publish ? "text-white" : "pl-2"
+                            }`}
                         ></span>
                       </label>
                     </div>

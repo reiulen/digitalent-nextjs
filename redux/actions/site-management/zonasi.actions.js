@@ -26,7 +26,7 @@ import {
 
 import axios from "axios";
 
-export const getAllZonasi = (token) => async (dispatch, getState) => {
+export const getAllZonasi = (token, tokenPermission) => async (dispatch, getState) => {
   try {
     dispatch({ type: ZONASI_REQUEST });
 
@@ -46,6 +46,7 @@ export const getAllZonasi = (token) => async (dispatch, getState) => {
         params,
         headers: {
           authorization: `Bearer ${token}`,
+          Permission: tokenPermission,
         },
       }
     );
@@ -62,19 +63,20 @@ export const getAllZonasi = (token) => async (dispatch, getState) => {
 };
 
 // delete zonasi tidak ada
-export const deleteZonasi = (id, token) => async (dispatch) => {
+export const deleteZonasi = (id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ZONASI_REQUEST });
 
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission,
       },
     };
 
     const { data } = await axios.delete(
       process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/setting-page/delete/${id}`,
+      `api/setting-page/delete/${id}`,
       config
     );
 
@@ -90,7 +92,7 @@ export const deleteZonasi = (id, token) => async (dispatch) => {
   }
 };
 
-export const postZonasi = (sendData, token) => {
+export const postZonasi = (sendData, token, tokenPermission) => {
   return async (dispatch) => {
     try {
       dispatch({
@@ -102,6 +104,7 @@ export const postZonasi = (sendData, token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: tokenPermission,
           },
         }
       );
@@ -118,7 +121,7 @@ export const postZonasi = (sendData, token) => {
   };
 };
 
-export const getDetailZonasi = (id, token) => {
+export const getDetailZonasi = (id, token, tokenPermission) => {
   return async (dispatch) => {
     dispatch({
       type: DETAIL_ZONASI_REQUEST,
@@ -129,6 +132,7 @@ export const getDetailZonasi = (id, token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: tokenPermission,
           },
         }
       );
@@ -145,7 +149,7 @@ export const getDetailZonasi = (id, token) => {
   };
 };
 
-export const updateZonasi = (sendData, id, token) => async (dispatch) => {
+export const updateZonasi = (sendData, id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({
       type: UPDATE_ZONASI_REQUEST,
@@ -153,12 +157,13 @@ export const updateZonasi = (sendData, id, token) => async (dispatch) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission,
       },
     };
 
     const { data } = await axios.post(
       process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/setting-page/update/${id}`,
+      `api/setting-page/update/${id}`,
       sendData,
       config
     );

@@ -19,6 +19,7 @@ import LoadingTable from "../../../LoadingTable"
 import IconArrow from "../../../assets/icon/Arrow";
 import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
+import Cookies from 'js-cookie'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteArtikelPeserta, clearErrors } from '../../../../redux/actions/publikasi/artikel-peserta.actions'
@@ -28,6 +29,7 @@ const ArtikelPeserta = ({ token }) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
+    const permission = Cookies.get("token_permission")
 
     const { loading: allLoading, error, artikel_peserta } = useSelector(state => state.allArtikelPeserta)
     const {
@@ -84,7 +86,7 @@ const ArtikelPeserta = ({ token }) => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteArtikelPeserta(id, token));
+                dispatch(deleteArtikelPeserta(id, token, permission));
             }
         });
     };

@@ -75,8 +75,8 @@ export const getAllSummary =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
-        Permission: token_permission,
       };
 
       const { data } = await axios.get(link, config);
@@ -94,44 +94,47 @@ export const getAllSummary =
   };
 //END ALL SUMMARY
 
-export const getAkademiByPelatihan = (token, id) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN +
-      `api/v1/akademi/akademi-by-pelatihan?pelatian_id=${id}`;
+export const getAkademiByPelatihan =
+  (token, id, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/akademi/akademi-by-pelatihan?pelatian_id=${id}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: GET_AKADEMI_BY_PELATIHAN_SUCCESS,
-      payload: data,
-    });
-    return data;
-  } catch (error) {
-    dispatch({
-      type: GET_AKADEMI_BY_PELATIHAN_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: GET_AKADEMI_BY_PELATIHAN_SUCCESS,
+        payload: data,
+      });
+      return data;
+    } catch (error) {
+      dispatch({
+        type: GET_AKADEMI_BY_PELATIHAN_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const getPendaftaranPeserta =
   (
     token,
+    token_permission = "",
     pelatihanId,
     keyword = "",
     limit = 5,
     page = 1,
     administrasi = "",
     pelatihan = "",
-    subtansi = "",
-    token_permission = ""
+    subtansi = ""
   ) =>
   async (dispatch) => {
     try {
@@ -150,8 +153,8 @@ export const getPendaftaranPeserta =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
-        Permission: token_permission,
       };
 
       const { data } = await axios.get(link, config);
@@ -169,35 +172,39 @@ export const getPendaftaranPeserta =
     }
   };
 
-export const getStatusPendaftar = (token, id) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN +
-      `api/v1/formPendaftaran/jumlah-pendaftar?pelatian_id=${id}`;
+export const getStatusPendaftar =
+  (token, id, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/formPendaftaran/jumlah-pendaftar?pelatian_id=${id}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: GET_STATUS_PENDAFTAR_SUCCESS,
-      payload: data,
-    });
-    return data;
-  } catch (error) {
-    dispatch({
-      type: GET_STATUS_PENDAFTAR_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: GET_STATUS_PENDAFTAR_SUCCESS,
+        payload: data,
+      });
+      return data;
+    } catch (error) {
+      dispatch({
+        type: GET_STATUS_PENDAFTAR_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const getReminderBerkas =
-  (token, index, token_permission) => async (dispatch) => {
+  (token, index, token_permission = "") =>
+  async (dispatch) => {
     try {
       let link =
         process.env.END_POINT_API_PELATIHAN +
@@ -206,8 +213,8 @@ export const getReminderBerkas =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
-        Permission: token_permission,
       };
 
       const { data } = await axios.get(link, config);
@@ -225,7 +232,8 @@ export const getReminderBerkas =
   };
 
 export const getDataPribadi =
-  (token, index, token_permission) => async (dispatch) => {
+  (token, index, token_permission = "") =>
+  async (dispatch) => {
     try {
       let link =
         process.env.END_POINT_API_PELATIHAN +
@@ -234,8 +242,8 @@ export const getDataPribadi =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
-        Permission: token_permission,
       };
 
       const { data } = await axios.get(link, config);
@@ -252,194 +260,214 @@ export const getDataPribadi =
     }
   };
 
-export const getRiwayatPelatihan = (token, index) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN +
-      `api/v1/formPendaftaran/list-pelatihan-user?id=${index}`;
+export const getRiwayatPelatihan =
+  (token, index, token_permission) => async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/formPendaftaran/list-pelatihan-user?id=${index}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: GET_RIWAYAT_PELATIHAN_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_RIWAYAT_PELATIHAN_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: GET_RIWAYAT_PELATIHAN_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_RIWAYAT_PELATIHAN_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
-export const getBerkasPendaftaran = (token, index) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN +
-      `api/v1/formPendaftaran/list-form-Pendaftran?id=${index}`;
+export const getBerkasPendaftaran =
+  (token, index, token_permission) => async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/formPendaftaran/list-form-Pendaftran?id=${index}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: GET_BERKAS_PENDAFTARAN_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_BERKAS_PENDAFTARAN_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: GET_BERKAS_PENDAFTARAN_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_BERKAS_PENDAFTARAN_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
-export const getFormKomitmen = (token, index) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN +
-      `api/v1/formPendaftaran/data-form-komitmen?id=${index}`;
+export const getFormKomitmen =
+  (token, index, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/formPendaftaran/data-form-komitmen?id=${index}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: GET_FORM_KOMITMEN_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_FORM_KOMITMEN_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: GET_FORM_KOMITMEN_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_FORM_KOMITMEN_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 // LPJ
-export const newLPJ = (setData, token) => async (dispatch) => {
-  try {
-    dispatch({ type: NEW_LPJ_REQUEST });
-    let link =
-      process.env.END_POINT_API_PELATIHAN + "api/v1/formPendaftaran/create-lpj";
+export const newLPJ =
+  (setData, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: NEW_LPJ_REQUEST });
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        "api/v1/formPendaftaran/create-lpj";
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.post(link, setData, config);
+      const { data } = await axios.post(link, setData, config);
 
-    if (data) {
-      dispatch({ type: NEW_LPJ_SUCCESS, payload: data });
+      if (data) {
+        dispatch({ type: NEW_LPJ_SUCCESS, payload: data });
+      }
+    } catch (error) {
+      dispatch({
+        type: NEW_LPJ_FAIL,
+        payload: error.response.data.message,
+      });
     }
-  } catch (error) {
-    dispatch({
-      type: NEW_LPJ_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+  };
 
-export const getFormLpj = (token, index) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN +
-      `api/v1/formPendaftaran/list-form-lpj?id=${index}`;
+export const getFormLpj =
+  (token, index, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/formPendaftaran/list-form-lpj?id=${index}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: GET_FORM_LPJ_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_FORM_LPJ_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: GET_FORM_LPJ_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_FORM_LPJ_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 // END LPJ
 
-export const updateStatusPeserta = (statusData, token) => async (dispatch) => {
-  try {
-    dispatch({
-      type: UPDATE_STATUS_REQUEST,
-    });
+export const updateStatusPeserta =
+  (statusData, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: UPDATE_STATUS_REQUEST,
+      });
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN +
-        "api/v1/formPendaftaran/update-status",
-      statusData,
-      config
-    );
+      const { data } = await axios.post(
+        process.env.END_POINT_API_PELATIHAN +
+          "api/v1/formPendaftaran/update-status",
+        statusData,
+        config
+      );
 
-    dispatch({
-      type: UPDATE_STATUS_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_STATUS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: UPDATE_STATUS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_STATUS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
-export const updateReminder = (reminderData, token) => async (dispatch) => {
-  try {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+export const updateReminder =
+  (reminderData, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN +
-        "api/v1/formPendaftaran/update-reminder",
-      reminderData,
-      config
-    );
+      const { data } = await axios.post(
+        process.env.END_POINT_API_PELATIHAN +
+          "api/v1/formPendaftaran/update-reminder",
+        reminderData,
+        config
+      );
 
-    dispatch({
-      type: UPDATE_REMINDER_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_REMINDER_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: UPDATE_REMINDER_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_REMINDER_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const clearErrors = () => async (dispatch) => {
   dispatch({

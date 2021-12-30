@@ -23,6 +23,7 @@ import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
 
 import { useDispatch, useSelector } from "react-redux";
+import Cookies from 'js-cookie'
 
 import {
   deleteArtikel,
@@ -34,6 +35,7 @@ import { DELETE_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.
 const Artikel = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const permission = Cookies.get("token_permission")
 
   const {
     loading: allLoading,
@@ -127,7 +129,7 @@ const Artikel = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteArtikel(id, token));
+        dispatch(deleteArtikel(id, token, permission));
       }
     });
   };
@@ -400,7 +402,7 @@ const Artikel = ({ token }) => {
             background="bg-light-warning"
             icon="new/mail-white.svg"
             color='#ffffff'
-            value={artikel.total_author === "" || artikel.total_author === undefined ? 0 : artikel.total_author}
+            value={artikel?.total_author === "" || artikel?.total_author === undefined ? 0 : artikel?.total_author}
             titleValue="Orang"
             title="Total Author"
             publishedVal=""

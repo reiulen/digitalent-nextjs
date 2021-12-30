@@ -8,6 +8,7 @@ import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import Modal from "../../site-management/modal";
+import Cookies from 'js-cookie'
 
 import styles from "../../../../styles/sitemanagement/userMitra.module.css";
 import styles2 from "../../../../styles/previewGaleri.module.css";
@@ -71,6 +72,7 @@ const Table = ({ token }) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
           },
         }
       );
@@ -113,6 +115,7 @@ const Table = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );

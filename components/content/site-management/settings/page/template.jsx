@@ -11,6 +11,7 @@ import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import Select from "react-select";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 import styles from "../../../../../styles/previewGaleri.module.css";
 import { postTemplate } from "../../../../../redux/actions/site-management/settings/pelatihan.actions";
@@ -60,7 +61,7 @@ export default function Template(props) {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       dispatch(
-        postTemplate(props.token, subject, body, status.value.toLowerCase())
+        postTemplate(props.token, subject, body, status.value.toLowerCase(), Cookies.get("token_permission"))
       );
     } else {
       simpleValidator.current.showMessages();
@@ -87,6 +88,7 @@ export default function Template(props) {
           {
             headers: {
               authorization: `Bearer ${props.token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         )
@@ -169,26 +171,26 @@ export default function Template(props) {
           {localStorage
             .getItem("permissions")
             .includes("site_management.setting.pelatihan.manage") && (
-            <div className="d-flex justify-content-end mb-5 mr-4">
-              <button
-                type="reset"
-                className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
-                onClick={(e) => {
-                  setStatus("");
-                  setSubject("");
-                  setBody("");
-                }}
-              >
-                Reset
-              </button>
-              <button
-                type="submit"
-                className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
-              >
-                Kirim
-              </button>
-            </div>
-          )}
+              <div className="d-flex justify-content-end mb-5 mr-4">
+                <button
+                  type="reset"
+                  className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
+                  onClick={(e) => {
+                    setStatus("");
+                    setSubject("");
+                    setBody("");
+                  }}
+                >
+                  Reset
+                </button>
+                <button
+                  type="submit"
+                  className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
+                >
+                  Kirim
+                </button>
+              </div>
+            )}
         </form>
       </div>
     </div>

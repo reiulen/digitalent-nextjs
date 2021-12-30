@@ -159,7 +159,8 @@ export const getAllTraining =
 
 //CARD TRAINING
 export const getCardTraining =
-  (token, token_permission) => async (dispatch) => {
+  (token, token_permission = "") =>
+  async (dispatch) => {
     try {
       let link =
         process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/list-count`;
@@ -167,7 +168,7 @@ export const getCardTraining =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          // Permission: token_permission,
+          Permission: token_permission,
         },
       };
 
@@ -187,206 +188,228 @@ export const getCardTraining =
 //END CARD REVIEW
 
 //DETAIL TRAINING
-export const getDetailTrainingStep1 = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DETAIL_TRAINING_STEP1_REQUEST });
+export const getDetailTrainingStep1 =
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: DETAIL_TRAINING_STEP1_REQUEST });
 
-    let link = process.env.END_POINT_API_PELATIHAN + `api/pelatihan/${id}`;
+      let link = process.env.END_POINT_API_PELATIHAN + `api/pelatihan/${id}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DETAIL_TRAINING_STEP1_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_TRAINING_STEP1_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_TRAINING_STEP1_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_TRAINING_STEP1_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
-export const getDetailTrainingStep2 = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DETAIL_TRAINING_STEP2_REQUEST });
+export const getDetailTrainingStep2 =
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: DETAIL_TRAINING_STEP2_REQUEST });
 
-    let link = process.env.END_POINT_API_PELATIHAN + `api/pelatihan/${id}`;
+      let link = process.env.END_POINT_API_PELATIHAN + `api/pelatihan/${id}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DETAIL_TRAINING_STEP2_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_TRAINING_STEP2_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_TRAINING_STEP2_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_TRAINING_STEP2_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
-export const getDetailTrainingStep3 = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DETAIL_TRAINING_STEP3_REQUEST });
+export const getDetailTrainingStep3 =
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: DETAIL_TRAINING_STEP3_REQUEST });
 
-    let link = process.env.END_POINT_API_PELATIHAN + `api/pelatihan/${id}`;
+      let link = process.env.END_POINT_API_PELATIHAN + `api/pelatihan/${id}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DETAIL_TRAINING_STEP3_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_TRAINING_STEP3_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_TRAINING_STEP3_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_TRAINING_STEP3_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
-export const getDetailTrainingStep4 = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DETAIL_TRAINING_STEP4_REQUEST });
+export const getDetailTrainingStep4 =
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: DETAIL_TRAINING_STEP4_REQUEST });
 
-    let link = process.env.END_POINT_API_PELATIHAN + `api/pelatihan/${id}`;
+      let link = process.env.END_POINT_API_PELATIHAN + `api/pelatihan/${id}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DETAIL_TRAINING_STEP4_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_TRAINING_STEP4_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_TRAINING_STEP4_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_TRAINING_STEP4_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 //END DETAIL TRAINING
 
 //NEW TRAINING
-export const newTrainingStep1 = (dataTraining, token) => async (dispatch) => {
-  try {
-    dispatch({
-      type: NEW_TRAINING_STEP1_REQUEST,
-    });
+export const newTrainingStep1 =
+  (dataTraining, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: NEW_TRAINING_STEP1_REQUEST,
+      });
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN + "api/v1/pelatihan/step-all",
-      dataTraining,
-      config
-    );
+      const { data } = await axios.post(
+        process.env.END_POINT_API_PELATIHAN + "api/v1/pelatihan/step-all",
+        dataTraining,
+        config
+      );
 
-    dispatch({
-      type: NEW_TRAINING_STEP1_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: NEW_TRAINING_STEP1_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: NEW_TRAINING_STEP1_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: NEW_TRAINING_STEP1_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
-export const newTrainingStep2 = (dataTraining, token) => async (dispatch) => {
-  try {
-    dispatch({
-      type: NEW_TRAINING_STEP2_REQUEST,
-    });
+export const newTrainingStep2 =
+  (dataTraining, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: NEW_TRAINING_STEP2_REQUEST,
+      });
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN + "api/pelatihan",
-      dataTraining,
-      config
-    );
+      const { data } = await axios.post(
+        process.env.END_POINT_API_PELATIHAN + "api/pelatihan",
+        dataTraining,
+        config
+      );
 
-    dispatch({
-      type: NEW_TRAINING_STEP2_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: NEW_TRAINING_STEP2_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: NEW_TRAINING_STEP2_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: NEW_TRAINING_STEP2_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
-export const newTrainingStep3 = (dataTraining, token) => async (dispatch) => {
-  try {
-    dispatch({
-      type: NEW_TRAINING_STEP3_REQUEST,
-    });
+export const newTrainingStep3 =
+  (dataTraining, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: NEW_TRAINING_STEP3_REQUEST,
+      });
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN + "api/pelatihan",
-      dataTraining,
-      config
-    );
+      const { data } = await axios.post(
+        process.env.END_POINT_API_PELATIHAN + "api/pelatihan",
+        dataTraining,
+        config
+      );
 
-    dispatch({
-      type: NEW_TRAINING_STEP3_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: NEW_TRAINING_STEP3_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: NEW_TRAINING_STEP3_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: NEW_TRAINING_STEP3_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 //END NEW TRAINING
 
 //UPDATE TRAINING
 export const updateTrainingStep1 =
-  (dataTraining, token) => async (dispatch) => {
+  (dataTraining, token, token_permission = "") =>
+  async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_TRAINING_STEP1_REQUEST,
@@ -395,6 +418,7 @@ export const updateTrainingStep1 =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 
@@ -417,7 +441,8 @@ export const updateTrainingStep1 =
   };
 
 export const updateTrainingStep2 =
-  (id, dataTraining, token) => async (dispatch) => {
+  (id, dataTraining, token, token_permission = "") =>
+  async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_TRAINING_STEP2_REQUEST,
@@ -426,6 +451,7 @@ export const updateTrainingStep2 =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 
@@ -448,7 +474,8 @@ export const updateTrainingStep2 =
   };
 
 export const updateTrainingStep3 =
-  (id, dataTraining, token) => async (dispatch) => {
+  (id, dataTraining, token, token_permission = "") =>
+  async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_TRAINING_STEP3_REQUEST,
@@ -457,6 +484,7 @@ export const updateTrainingStep3 =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 
@@ -481,15 +509,16 @@ export const updateTrainingStep3 =
 
 //DELETE TRAINING
 export const deleteTraining =
-  (id, token, token_permission) => async (dispatch) => {
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
     try {
       dispatch({ type: DELETE_TRAINING_REQUEST });
 
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
-        Permission: token_permission,
       };
 
       const { data } = await axios.delete(
@@ -512,136 +541,149 @@ export const deleteTraining =
 //END DELETE TRAINING
 
 //DETAIL LPJ
-export const getDetailLpj = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DETAIL_LPJ_REQUEST });
+export const getDetailLpj =
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: DETAIL_LPJ_REQUEST });
 
-    let link = process.env.END_POINT_API_PELATIHAN + `api/pelatihan/${id}`;
+      let link = process.env.END_POINT_API_PELATIHAN + `api/pelatihan/${id}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DETAIL_LPJ_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_LPJ_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_LPJ_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_LPJ_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 //END DETAIL LPJ
 
 //ADD LPJ
-export const addLpj = (dataLpj, token) => async (dispatch) => {
-  try {
-    dispatch({
-      type: ADD_LPJ_REQUEST,
-    });
+export const addLpj =
+  (dataLpj, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: ADD_LPJ_REQUEST,
+      });
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN + "api/pelatihan",
-      dataLpj,
-      config
-    );
+      const { data } = await axios.post(
+        process.env.END_POINT_API_PELATIHAN + "api/pelatihan",
+        dataLpj,
+        config
+      );
 
-    dispatch({
-      type: ADD_LPJ_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ADD_LPJ_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: ADD_LPJ_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ADD_LPJ_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 //END ADD LPJ
 
 //DETAIL EVIDENCE
-export const getDetailEvidence = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DETAIL_EVIDENCE_REQUEST });
+export const getDetailEvidence =
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: DETAIL_EVIDENCE_REQUEST });
 
-    let link = process.env.END_POINT_API_PELATIHAN + `api/pelatihan/${id}`;
+      let link = process.env.END_POINT_API_PELATIHAN + `api/pelatihan/${id}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DETAIL_EVIDENCE_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_EVIDENCE_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_EVIDENCE_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_EVIDENCE_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 //END DETAIL EVIDENCE
 
 //ADD EVIDENCE
-export const addEvidence = (dataEvidence, token) => async (dispatch) => {
-  try {
-    dispatch({
-      type: ADD_EVIDENCE_REQUEST,
-    });
+export const addEvidence =
+  (dataEvidence, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: ADD_EVIDENCE_REQUEST,
+      });
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN + "api/pelatihan",
-      dataEvidence,
-      config
-    );
+      const { data } = await axios.post(
+        process.env.END_POINT_API_PELATIHAN + "api/pelatihan",
+        dataEvidence,
+        config
+      );
 
-    dispatch({
-      type: ADD_EVIDENCE_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ADD_EVIDENCE_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: ADD_EVIDENCE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ADD_EVIDENCE_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 //END ADD EVIDENCE
 
 //CLONE TRAINING
 export const cloneTrainingAction =
-  (id, token, token_permission) => async (dispatch) => {
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
     try {
       dispatch({ type: CLONE_TRAINING_REQUEST });
 
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
-        Permission: token_permission,
       };
 
       const { data } = await axios.post(
@@ -668,7 +710,8 @@ export const cloneTrainingAction =
 
 //UPDATE STATUS PUBLISH
 export const updateStatusPublish =
-  (dataStatus, token, token_permission) => async (dispatch) => {
+  (dataStatus, token, token_permission = "") =>
+  async (dispatch) => {
     try {
       dispatch({
         type: REQUEST_STATUS_PUBLISH,
@@ -677,8 +720,8 @@ export const updateStatusPublish =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
-        Permission: token_permission,
       };
 
       const { data } = await axios.post(
@@ -702,7 +745,8 @@ export const updateStatusPublish =
 
 //UPDATE STATUS PELATIHAN
 export const updateStatusPelatihan =
-  (dataStatus, token, token_permission) => async (dispatch) => {
+  (dataStatus, token, token_permission = "") =>
+  async (dispatch) => {
     try {
       dispatch({
         type: REQUEST_STATUS_PELATIHAN,
@@ -711,8 +755,8 @@ export const updateStatusPelatihan =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
-        Permission: token_permission,
       };
 
       const { data } = await axios.post(
@@ -740,227 +784,257 @@ export const clearErrors = () => async (dispatch) => {
   });
 };
 
-export const getEditTrainingStep1 = (id, token) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-satu`;
+export const getEditTrainingStep1 =
+  (id, token, token_permission) => async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-satu`;
 
-    const config = {
-      params: {
-        pelatian_id: id,
-      },
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        params: {
+          pelatian_id: id,
+        },
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
-    dispatch({
-      type: GET_EDIT_DATA_TRAINING,
-      payload: data,
-    });
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const getEditTrainingStep2 = (id, token) => async (dispatch) => {
-  try {
-    dispatch({
-      type: REQUEST_EDIT_DATA_TRAINING2,
-    });
-    let link =
-      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-dua`;
-
-    const config = {
-      params: {
-        pelatian_id: id,
-      },
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-
-    const { data } = await axios.get(link, config);
-    dispatch({
-      type: GET_EDIT_DATA_TRAINING2,
-      payload: data,
-    });
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const getEditTrainingStep3 = (id, token) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-tiga`;
-
-    const config = {
-      params: {
-        pelatian_id: id,
-      },
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-
-    const { data } = await axios.get(link, config);
-    dispatch({
-      type: GET_EDIT_DATA_TRAINING3,
-      payload: data,
-    });
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const putTrainingStep1 = (token, datas) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/step-satu`;
-
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-
-    await axios.post(link, datas, config);
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const putTrainingStep2 = (token, datas) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/step-dua`;
-
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-
-    await axios.post(link, datas, config);
-
-    window.location.href = `/pelatihan/pelatihan/edit-pelatihan/edit-form-komitmen?id=${datas.Pelatian_id}`;
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const putTrainingStep3 = (token, datas) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/step-tiga`;
-
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-
-    await axios.post(link, datas, config);
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const postEvidence = (token, datas) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/upload-evidence`;
-
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-
-    const { data } = await axios.post(link, datas, config);
-    if (data.status) {
-      Swal.fire("Berhasil", "Evidence berhasil di Upload", "success").then(
-        () => {
-          window.location = "/pelatihan/pelatihan";
-        }
-      );
-    } else {
-      Swal.fire("Opppss !", data.message, "error").then(() => {});
+      const { data } = await axios.get(link, config);
+      dispatch({
+        type: GET_EDIT_DATA_TRAINING,
+        payload: data,
+      });
+    } catch (error) {
+      throw error;
     }
-  } catch (error) {
-    Swal.fire("Opppss !", error.message, "error").then(() => {});
-  }
-};
+  };
 
-export const getFormEvidence = (token, pelatian_id) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-evidence`;
+export const getEditTrainingStep2 =
+  (id, token, token_permission) => async (dispatch) => {
+    try {
+      dispatch({
+        type: REQUEST_EDIT_DATA_TRAINING2,
+      });
+      let link =
+        process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-dua`;
 
-    const config = {
-      params: {
-        pelatian_id,
-      },
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        params: {
+          pelatian_id: id,
+        },
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
-    dispatch({
-      type: GET_FORM_EVIDENCE,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: FAILED_GET_FORM_EVIDENCE,
-      payload: [],
-    });
-  }
-};
+      const { data } = await axios.get(link, config);
+      dispatch({
+        type: GET_EDIT_DATA_TRAINING2,
+        payload: data,
+      });
+    } catch (error) {
+      throw error;
+    }
+  };
 
-export const getFormLPJ = (token, pelatian_id) => async (dispatch) => {
-  try {
-    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-lpj`;
+export const getEditTrainingStep3 =
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-tiga`;
 
-    const config = {
-      params: {
-        pelatian_id,
-      },
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        params: {
+          pelatian_id: id,
+        },
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
+      dispatch({
+        type: GET_EDIT_DATA_TRAINING3,
+        payload: data,
+      });
+    } catch (error) {
+      throw error;
+    }
+  };
 
-    dispatch({
-      type: GET_FORM_LPJ,
-      payload: data,
-    });
-  } catch (error) {
-    throw error;
-  }
-};
+export const putTrainingStep1 =
+  (token, datas, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/step-satu`;
 
-export const postLpj = (token, datas) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/upload-lpj`;
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      await axios.post(link, datas, config);
+    } catch (error) {
+      throw error;
+    }
+  };
 
-    await axios.post(link, datas, config);
-    Swal.fire("Berhasil", "LPJ berhasil di Upload", "success").then(() => {
-      window.location = "/pelatihan/pelatihan";
-    });
-  } catch (error) {
-    throw error;
-  }
-};
+export const putTrainingStep2 =
+  (token, datas, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/step-dua`;
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
+
+      await axios.post(link, datas, config);
+
+      window.location.href = `/pelatihan/pelatihan/edit-pelatihan/edit-form-komitmen?id=${datas.Pelatian_id}`;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+export const putTrainingStep3 =
+  (token, datas, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/step-tiga`;
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
+
+      await axios.post(link, datas, config);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+export const postEvidence =
+  (token, datas, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/pelatihan/upload-evidence`;
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
+
+      const { data } = await axios.post(link, datas, config);
+      if (data.status) {
+        Swal.fire("Berhasil", "Evidence berhasil di Upload", "success").then(
+          () => {
+            window.location = "/pelatihan/pelatihan";
+          }
+        );
+      } else {
+        Swal.fire("Opppss !", data.message, "error").then(() => {});
+      }
+    } catch (error) {
+      Swal.fire("Opppss !", error.message, "error").then(() => {});
+    }
+  };
+
+export const getFormEvidence =
+  (token, pelatian_id, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-evidence`;
+
+      const config = {
+        params: {
+          pelatian_id,
+        },
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+      dispatch({
+        type: GET_FORM_EVIDENCE,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: FAILED_GET_FORM_EVIDENCE,
+        payload: [],
+      });
+    }
+  };
+
+export const getFormLPJ =
+  (token, pelatian_id, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-lpj`;
+
+      const config = {
+        params: {
+          pelatian_id,
+        },
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+
+      dispatch({
+        type: GET_FORM_LPJ,
+        payload: data,
+      });
+    } catch (error) {
+      throw error;
+    }
+  };
+
+export const postLpj =
+  (token, datas, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/upload-lpj`;
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
+
+      await axios.post(link, datas, config);
+      Swal.fire("Berhasil", "LPJ berhasil di Upload", "success").then(() => {
+        window.location = "/pelatihan/pelatihan";
+      });
+    } catch (error) {
+      throw error;
+    }
+  };

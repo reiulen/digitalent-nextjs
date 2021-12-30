@@ -21,6 +21,7 @@ import ButtonAction from '../../../ButtonAction'
 import IconArrow from "../../../assets/icon/Arrow";
 import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
+import Cookies from 'js-cookie'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteFaq, updatePinFaq, getAllFaqPagination } from '../../../../redux/actions/publikasi/faq.actions'
@@ -34,6 +35,7 @@ const Faq = ({ token }) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
+    const permission = Cookies.get("token_permission")
 
     const { loading, error, faq } = useSelector(state => state.allFaq)
     const { paginateFaq } = useSelector(state => state.paginationFaq)
@@ -123,7 +125,7 @@ const Faq = ({ token }) => {
             tanggal_publish: data.tanggal_publish,
         }
 
-        dispatch(updatePinFaq(dataToSend, data.id, token))
+        dispatch(updatePinFaq(dataToSend, data.id, token, permission))
     };
 
     const onNewReset = () => {
@@ -142,7 +144,7 @@ const Faq = ({ token }) => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteFaq(id, token));
+                dispatch(deleteFaq(id, token, permission));
             }
         });
     };

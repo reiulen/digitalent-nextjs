@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import moment from "moment";
 import DatePicker from 'react-datepicker'
 import { TagsInput } from "react-tag-input-component";
+import Cookies from 'js-cookie'
 
 import styles from "../../../../styles/previewGaleri.module.css";
 
@@ -23,6 +24,7 @@ const EditImagetron = ({ token, idUser }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
+    const permission = Cookies.get("token_permission")
 
     const importSwitch = () => import('bootstrap-switch-button-react')
 
@@ -156,7 +158,7 @@ const EditImagetron = ({ token, idUser }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateImagetron(data, token));
+                                dispatch(updateImagetron(data, token, permission));
                             }
                         });
                 } else {
@@ -184,7 +186,7 @@ const EditImagetron = ({ token, idUser }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateImagetron(data, token));
+                                dispatch(updateImagetron(data, token, permission));
                             }
                         });
                 }
@@ -219,7 +221,7 @@ const EditImagetron = ({ token, idUser }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateImagetron(data, token));
+                                dispatch(updateImagetron(data, token, permission));
                             }
                         });
                 } else {
@@ -247,7 +249,7 @@ const EditImagetron = ({ token, idUser }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateImagetron(data, token));
+                                dispatch(updateImagetron(data, token, permission));
                             }
                         });
                 }

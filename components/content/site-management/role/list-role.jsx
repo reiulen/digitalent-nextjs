@@ -20,6 +20,7 @@ import {
   searchCooporation,
 } from "../../../../redux/actions/site-management/role.actions";
 import axios from "axios";
+import Cookies from 'js-cookie'
 
 import { DELETE_ROLES_RESET } from "../../../../redux/types/site-management/role.type";
 
@@ -53,13 +54,13 @@ const Table = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteRoles(id, token));
+        dispatch(deleteRoles(id, token, Cookies.get("token_permission")));
       }
     });
   };
 
   useEffect(() => {
-    dispatch(getAllRoles(token));
+    dispatch(getAllRoles(token, Cookies.get("token_permission")));
   }, [dispatch, allRoles.cari, allRoles.page, allRoles.limit, token]);
 
   useEffect(() => {
@@ -67,7 +68,7 @@ const Table = ({ token }) => {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
           if (result.isConfirmed) {
-            dispatch(getAllRoles(token));
+            dispatch(getAllRoles(token, Cookies.get("token_permission")));
           }
         }
       );

@@ -24,6 +24,7 @@ import {
 } from "../../../../redux/types/publikasi/artikel.type";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
+import Cookies from 'js-cookie'
 
 const EditArtikel = ({ token, idUser }) => {
   const editorRef = useRef();
@@ -232,7 +233,7 @@ const EditArtikel = ({ token, idUser }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              dispatch(updateArtikel(data, token));
+              dispatch(updateArtikel(data, token, Cookies.get("token_permission")));
             }
           });
         } else {
@@ -261,7 +262,7 @@ const EditArtikel = ({ token, idUser }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              dispatch(updateArtikel(data, token));
+              dispatch(updateArtikel(data, token, Cookies.get("token_permission")));
             }
           });
         }
@@ -295,7 +296,7 @@ const EditArtikel = ({ token, idUser }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              dispatch(updateArtikel(data, token));
+              dispatch(updateArtikel(data, token, Cookies.get("token_permission")));
             }
           });
         } else {
@@ -324,7 +325,7 @@ const EditArtikel = ({ token, idUser }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              dispatch(updateArtikel(data, token));
+              dispatch(updateArtikel(data, token, Cookies.get("token_permission")));
             }
           });
         }
@@ -425,7 +426,7 @@ const EditArtikel = ({ token, idUser }) => {
                         <div style={{ width: "100%", height: "300px" }}>
                           <div
                             ref={quillRef}
-                            style={{fontFamily:'Poppins'}}
+                            style={{ fontFamily: 'Poppins' }}
                           />
                         </div>
                       ) : (

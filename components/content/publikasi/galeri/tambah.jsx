@@ -10,6 +10,7 @@ import SimpleReactValidator from 'simple-react-validator'
 import DatePicker from 'react-datepicker'
 import moment from "moment";
 import Swal from "sweetalert2";
+import Cookies from 'js-cookie'
 import { TagsInput } from "react-tag-input-component";
 
 import styles from "../../../../styles/previewGaleri.module.css";
@@ -56,12 +57,7 @@ const img = {
 const TambahGaleri = ({ token, id }) => {
     const dispatch = useDispatch()
     const router = useRouter();
-
-    // const importSwitch = () => import('bootstrap-switch-button-react')
-
-    // const SwitchButton = dynamic(importSwitch, {
-    //     ssr: false
-    // })
+    const permission = Cookies.get("token_permission")
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
     const [, forceUpdate] = useState();
 
@@ -319,7 +315,7 @@ const TambahGaleri = ({ token, id }) => {
             })
                 .then((result) => {
                     if (result.isConfirmed) {
-                        dispatch(onCall(data, token))
+                        dispatch(onCall(data, token, permission))
                     }
                 });
         } else {
@@ -345,7 +341,7 @@ const TambahGaleri = ({ token, id }) => {
             })
                 .then((result) => {
                     if (result.isConfirmed) {
-                        dispatch(onCall(data, token))
+                        dispatch(onCall(data, token, permission))
                     }
                 });
         }

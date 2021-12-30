@@ -13,11 +13,13 @@ import { UPDATE_KATEGORI_RESET } from '../../../../redux/types/publikasi/kategor
 
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
+import Cookies from 'js-cookie'
 
 const EditKategori = ({ token }) => {
 
     const dispatch = useDispatch()
     const router = useRouter();
+    const permission = Cookies.get("token_permission")
 
     const { loading, error, isUpdated } = useSelector(state => state.updateKategori)
     const { kategori } = useSelector(state => state.detailKategori)
@@ -73,7 +75,7 @@ const EditKategori = ({ token }) => {
             })
                 .then((result) => {
                     if (result.isConfirmed) {
-                        dispatch(updateKategori(data, kategori.id, token))
+                        dispatch(updateKategori(data, kategori.id, token, permission))
                     }
                 });
         } else {

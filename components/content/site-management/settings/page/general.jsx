@@ -8,6 +8,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SimpleReactValidator from "simple-react-validator";
+import Cookies from "js-cookie";
 
 import styles from "../../../../../styles/previewGaleri.module.css";
 import styles2 from "../../../../../styles/sitemanagement/userMitra.module.css";
@@ -154,6 +155,7 @@ const GeneralPage = ({ token }) => {
                   {
                     headers: {
                       authorization: `Bearer ${token}`,
+                      Permission: Cookies.get("token_permission")
                     },
                   }
                 );
@@ -412,6 +414,7 @@ const GeneralPage = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );

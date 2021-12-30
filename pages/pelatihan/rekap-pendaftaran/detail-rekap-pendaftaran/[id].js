@@ -52,24 +52,32 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const token_permission = req.cookies.token_permission;
 
       await store.dispatch(
-        getStatusPendaftar(session.user.user.data.token, params.id)
+        getStatusPendaftar(
+          session.user.user.data.token,
+          params.id,
+          token_permission
+        )
       );
 
       await store.dispatch(
-        getAkademiByPelatihan(session.user.user.data.token, params.id)
+        getAkademiByPelatihan(
+          session.user.user.data.token,
+          params.id,
+          token_permission
+        )
       );
 
       await store.dispatch(
         getPendaftaranPeserta(
           session.user.user.data.token,
+          token_permission,
           params.id,
           null,
           null,
           null,
           null,
           null,
-          null,
-          token_permission
+          null
         )
       );
       return {

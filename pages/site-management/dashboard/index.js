@@ -39,7 +39,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
 
     await store.dispatch(getAllListsPeserta(session.user.user.data.token));
-    await store.dispatch(loadDataListZonasi(session.user.user.data.token));
+    await store.dispatch(loadDataListZonasi(session.user.user.data.token, 1, req.cookies.token_permission));
 
     return {
       props: { session, title: "Dashboard - Site Management" },

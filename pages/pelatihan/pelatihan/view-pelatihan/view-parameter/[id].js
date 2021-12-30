@@ -10,53 +10,53 @@ import { getSession } from "next-auth/client";
 import { getReviewStep4Revisi } from "../../../../../redux/actions/pelatihan/review.actions";
 
 const ViewTraining = dynamic(
-	() =>
-		import(
-			"../../../../../components/content/pelatihan/training/view/view-training-step4"
-		),
-	{
-		loading: function loadingNow() {
-			return <LoadingSkeleton />;
-		},
-		ssr: false,
-	}
+  () =>
+    import(
+      "../../../../../components/content/pelatihan/training/view/view-training-step4"
+    ),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
 );
 
 export default function ViewTrainingPage() {
-	return (
-		<>
-			<div className="d-flex flex-column flex-root">
-				<ViewTraining />
-			</div>
-		</>
-	);
+  return (
+    <>
+      <div className="d-flex flex-column flex-root">
+        <ViewTraining />
+      </div>
+    </>
+  );
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-	(store) =>
-		async ({ query, req, params }) => {
-			const session = await getSession({ req });
-			const middleware = middlewareAuthAdminSession(session);
-			if (!middleware.status) {
-				return {
-					redirect: {
-						destination: middleware.redirect,
-						permanent: false,
-					},
-				};
-			}
-			const token_permission = req.cookies.token_permission;
+  (store) =>
+    async ({ query, req, params }) => {
+      const session = await getSession({ req });
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
+        return {
+          redirect: {
+            destination: middleware.redirect,
+            permanent: false,
+          },
+        };
+      }
+      const token_permission = req.cookies.token_permission;
 
-			await store.dispatch(
-				getReviewStep4Revisi(
-					session.user.user.data.token,
-					params.id,
-					token_permission
-				)
-			);
+      await store.dispatch(
+        getReviewStep4Revisi(
+          session.user.user.data.token,
+          params.id,
+          token_permission
+        )
+      );
 
-			return {
-				props: { session, title: "View Parameter - Pelatihan" },
-			};
-		}
+      return {
+        props: { session, title: "View Parameter - Pelatihan" },
+      };
+    }
 );

@@ -6,7 +6,7 @@ import {
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export const loadDataPrompt = (token) => {
+export const loadDataPrompt = (token, tokenPermission) => {
   return async (dispatch) => {
     try {
       let { data } = await axios.get(
@@ -14,6 +14,7 @@ export const loadDataPrompt = (token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: tokenPermission,
           },
         }
       );
@@ -28,7 +29,7 @@ export const loadDataPrompt = (token) => {
   };
 };
 
-export const postTemplate = (token, subject, body, status) => {
+export const postTemplate = (token, subject, body, status, tokenPermission) => {
   return (dispatch) => {
     axios
       .post(
@@ -40,6 +41,7 @@ export const postTemplate = (token, subject, body, status) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: tokenPermission,
           },
         }
       )
@@ -54,7 +56,7 @@ export const postTemplate = (token, subject, body, status) => {
   };
 };
 
-export const putDataPrompt = (token, notification, email) => {
+export const putDataPrompt = (token, notification, email, tokenPermission) => {
   return async (dispatch) => {
     try {
       await axios.post(
@@ -74,6 +76,7 @@ export const putDataPrompt = (token, notification, email) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: tokenPermission,
           },
         }
       );
@@ -93,7 +96,7 @@ export const postKetentuan = (
   trainingPassStatus,
   completeFinalAdministrativeStatus,
   statusNotPassedTraining,
-  noTrainingAccepted
+  noTrainingAccepted, tokenPermission
 ) => {
   return (dispatch) => {
     axios
@@ -109,6 +112,7 @@ export const postKetentuan = (
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: tokenPermission,
           },
         }
       )
@@ -138,7 +142,8 @@ export const postViaFilter = (
   broadcastEmailSendNotification,
   emailSubject,
   emailContent,
-  via
+  via,
+  tokenPermission
 ) => {
   let data = {
     title,
@@ -164,17 +169,18 @@ export const postViaFilter = (
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: tokenPermission
           },
         }
       )
       .then((response) => {
-        if(response.data.status){
+        if (response.data.status) {
           window.open(response.data.data, "_blank")
           Swal.fire("Berhasil", response.data.message, "success").then(() => {
             router.push("/partnership/user/auth/login");
           });
 
-        }else{
+        } else {
           Swal.fire("Ooopss", response.data.message, "error").then(() => {
             router.push("/partnership/user/auth/login");
           });
@@ -187,11 +193,11 @@ export const postViaFilter = (
   };
 };
 
-export const postViaTemplate = (token,title, file, participantSelectionStatusUpdate,
+export const postViaTemplate = (token, title, file, participantSelectionStatusUpdate,
   status,
   broadcastEmailSendNotification,
   emailSubject,
-  emailContent, via) => {
+  emailContent, via, tokenPermission) => {
   const data = {
     title,
     tahun: "",
@@ -228,17 +234,18 @@ export const postViaTemplate = (token,title, file, participantSelectionStatusUpd
           headers: {
             authorization: `Bearer ${token}`,
             "content-type": "multipart/form-data",
+            Permission: tokenPermission
           },
         }
       )
       .then((response) => {
         window.open(response.data.data, "_blank")
-        if(response.data.status){
+        if (response.data.status) {
           Swal.fire("Berhasil", response.data.message, "success").then(() => {
             router.push("/partnership/user/auth/login");
           });
 
-        }else{
+        } else {
           Swal.fire("Ooopss", response.data.message, "error").then(() => {
             router.push("/partnership/user/auth/login");
           });
@@ -252,7 +259,8 @@ export const postViaTemplate = (token,title, file, participantSelectionStatusUpd
 
 export const postFileSize = (
   token,
-  image, document
+  image, document,
+  tokenPermission
 ) => {
   return (dispatch) => {
     axios
@@ -273,6 +281,7 @@ export const postFileSize = (
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: tokenPermission
           },
         }
       )

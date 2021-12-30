@@ -10,6 +10,7 @@ import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
+import Cookies from "js-cookie";
 import {
   deletePage,
   getAllPage,
@@ -18,11 +19,13 @@ import {
   limitCooporation,
 } from "../../../../../redux/actions/site-management/settings/page.actions";
 
+
 import { DELETE_PAGE_RESET } from "../../../../../redux/types/site-management/settings/page.type";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+  
 
   const allPage = useSelector((state) => state.allPage);
   const {
@@ -53,13 +56,13 @@ const Table = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deletePage(id, token));
+        dispatch(deletePage(id, token, Cookies.get("token_permission")));
       }
     });
   };
 
   useEffect(() => {
-    dispatch(getAllPage(token));
+    dispatch(getAllPage(token, Cookies.get("token_permission")));
   }, [dispatch, allPage.cari, allPage.page, allPage.limit, token]);
 
   useEffect(() => {
@@ -67,7 +70,7 @@ const Table = ({ token }) => {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
           if (result.isConfirmed) {
-            dispatch(getAllPage(token));
+            dispatch(getAllPage(token, Cookies.get("token_permission")));
           }
         }
       );
@@ -88,15 +91,15 @@ const Table = ({ token }) => {
             {localStorage
               .getItem("permissions")
               .includes("site_management.setting.page.manage") && (
-              <div className="card-toolbar">
-                <Link href="/site-management/setting/pilih-template" passHref>
-                  <a className="btn btn-rounded-full bg-blue-primary text-white">
-                    <IconAdd className="mr-3" width="14" height="14" />
-                    Tambah Page
-                  </a>
-                </Link>
-              </div>
-            )}
+                <div className="card-toolbar">
+                  <Link href="/site-management/setting/pilih-template" passHref>
+                    <a className="btn btn-rounded-full bg-blue-primary text-white">
+                      <IconAdd className="mr-3" width="14" height="14" />
+                      Tambah Page
+                    </a>
+                  </Link>
+                </div>
+              )}
           </div>
           <div className="card-body pt-0">
             <div className="table-filter">
@@ -121,17 +124,17 @@ const Table = ({ token }) => {
                               }
                             />
                           </form>
-                            <button
-                              type="button"
-                              onClick={(e) => handleSubmit(e)}
-                              className="btn bg-blue-primary text-white right-center-absolute"
-                              style={{
-                                borderTopLeftRadius: "0",
-                                borderBottomLeftRadius: "0",
-                              }}
-                            >
-                              Cari
-                            </button>
+                          <button
+                            type="button"
+                            onClick={(e) => handleSubmit(e)}
+                            className="btn bg-blue-primary text-white right-center-absolute"
+                            style={{
+                              borderTopLeftRadius: "0",
+                              borderBottomLeftRadius: "0",
+                            }}
+                          >
+                            Cari
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -171,7 +174,7 @@ const Table = ({ token }) => {
                                   {allPage.page === 1
                                     ? index + 1
                                     : (allPage.page - 1) * allPage.limit +
-                                      (index + 1)}
+                                    (index + 1)}
                                 </td>
                                 <td
                                   className="align-middle text-left"
@@ -211,52 +214,52 @@ const Table = ({ token }) => {
                                       .includes(
                                         "site_management.setting.page.manage"
                                       ) && (
-                                      <Link
-                                        href={`/site-management/setting/ubah-page/${items.url}`}
-                                      >
-                                        <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                                          <IconPencil width="16" height="16" />
-                                          <div className="text-hover-show-hapus">
-                                            Ubah
-                                          </div>
-                                        </a>
-                                      </Link>
-                                    )}
+                                        <Link
+                                          href={`/site-management/setting/ubah-page/${items.url}`}
+                                        >
+                                          <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                            <IconPencil width="16" height="16" />
+                                            <div className="text-hover-show-hapus">
+                                              Ubah
+                                            </div>
+                                          </a>
+                                        </Link>
+                                      )}
 
                                     {localStorage
                                       .getItem("permissions")
                                       .includes(
                                         "site_management.setting.page.view"
                                       ) && (
-                                      <Link
-                                        href={`/site-management/setting/preview-page/${items.url}`}
-                                      >
-                                        <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
-                                          <IconEye width="16" height="16" />
-                                          <div className="text-hover-show-hapus">
-                                            Preview
-                                          </div>
-                                        </a>
-                                      </Link>
-                                    )}
+                                        <Link
+                                          href={`/site-management/setting/preview-page/${items.url}`}
+                                        >
+                                          <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
+                                            <IconEye width="16" height="16" />
+                                            <div className="text-hover-show-hapus">
+                                              Preview
+                                            </div>
+                                          </a>
+                                        </Link>
+                                      )}
 
                                     {localStorage
                                       .getItem("permissions")
                                       .includes(
                                         "site_management.setting.page.manage"
                                       ) && (
-                                      <button
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        onClick={() =>
-                                          handleDelete(items.id, token)
-                                        }
-                                      >
-                                        <IconDelete width="16" height="16" />
-                                        <div className="text-hover-show-hapus">
-                                          Hapus
-                                        </div>
-                                      </button>
-                                    )}
+                                        <button
+                                          className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                          onClick={() =>
+                                            handleDelete(items.id, token)
+                                          }
+                                        >
+                                          <IconDelete width="16" height="16" />
+                                          <div className="text-hover-show-hapus">
+                                            Hapus
+                                          </div>
+                                        </button>
+                                      )}
                                   </div>
                                 </td>
                               </tr>
@@ -301,7 +304,7 @@ const Table = ({ token }) => {
                             color: "#9E9E9E",
                           }}
                           onChange={(e) =>
-                            dispatch(limitCooporation(e.target.value, token))
+                            dispatch(limitCooporation(e.target.value, token, Cookies.get("token_permission")))
                           }
                         >
                           <option value="5">5</option>

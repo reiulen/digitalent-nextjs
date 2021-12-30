@@ -16,6 +16,7 @@ import Image from "next/image";
 import Swal from "sweetalert2";
 import { postRoles } from "../../../../redux/actions/site-management/role.actions";
 import SimpleReactValidator from "simple-react-validator";
+import Cookies from 'js-cookie'
 
 const TambahRole = ({ token }) => {
   let dispatch = useDispatch();
@@ -52,14 +53,14 @@ const TambahRole = ({ token }) => {
     backgroundColor: "#203E80",
   };
 
-  let list = allPermission.data.data;
+  let list = allPermission?.data?.data;
 
   let permission = [];
 
-  for (let i = 0; i < allPermission.data.data.length; i++) {
-    permission.push(allPermission.data.data[i]);
-    if (allPermission.data.data[i].list_sub_menu.length > 0) {
-      allPermission.data.data[i].list_sub_menu.forEach((item) => {
+  for (let i = 0; i < allPermission.data?.data.length; i++) {
+    permission.push(allPermission.data?.data[i]);
+    if (allPermission.data?.data[i].list_sub_menu.length > 0) {
+      allPermission.data?.data[i].list_sub_menu.forEach((item) => {
         permission.push(item);
         if (item.list_sub_menu.length > 0) {
           item.list_sub_menu.forEach((sub) => {
@@ -628,7 +629,7 @@ const TambahRole = ({ token }) => {
       }),
     };
     if (simpleValidator.current.allValid()) {
-      dispatch(postRoles(data, token));
+      dispatch(postRoles(data, token, Cookies.get("token_permission")));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
