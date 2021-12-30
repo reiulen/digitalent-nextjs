@@ -6,7 +6,10 @@ import CheckboxReference from "../../../components/content/pelatihan/training/co
 import { options, element, size } from "./data";
 
 export const helperHandlePercentage = (totalAdd, total) => {
-  return Math.ceil((100 * totalAdd) / total);
+  if (totalAdd !== 0 && total !== 0) {
+    return Math.ceil((100 * totalAdd) / total);
+  }
+  return 0;
 };
 
 export const disablePlusMinusPeriod = (e) => {
@@ -2218,6 +2221,9 @@ export const helperUnformatCheckbox = (formBuilderCheck) => {
       if (rowBuilder.element === "checkbox" && rowBuilder.value !== "") {
         let val = rowBuilder.value.join(",");
         rowBuilder.value = val;
+      } else {
+        rowBuilder.value = "";
+        rowBuilder.fileName = "Belum ada file";
       }
       rowBuilder.triggered_parent.length > 0 &&
         rowBuilder.triggered_parent.map((rowParent, indexParent) => {
@@ -2231,6 +2237,9 @@ export const helperUnformatCheckbox = (formBuilderCheck) => {
               ) {
                 let val = rowFormParent.value.join(",");
                 rowFormParent.value = val;
+              } else {
+                rowFormParent.value = "";
+                rowFormParent.fileName = "Belum ada file";
               }
               rowFormParent.triggered_children.length > 0 &&
                 rowFormParent.triggered_children.map(
@@ -2245,8 +2254,10 @@ export const helperUnformatCheckbox = (formBuilderCheck) => {
                             rowFormChildren.value !== ""
                           ) {
                             let val = rowFormChildren.value.join(",");
-
                             rowFormChildren.value = val;
+                          } else {
+                            rowFormChildren.value = "";
+                            rowFormChildren.fileName = "Belum ada file";
                           }
                           rowFormChildren.triggered_index.length > 0 &&
                             rowFormChildren.triggered_index.map(
@@ -2262,6 +2273,10 @@ export const helperUnformatCheckbox = (formBuilderCheck) => {
                                       ) {
                                         let val = rowFormIndex.value.join(",");
                                         rowFormIndex.value = val;
+                                      } else {
+                                        rowFormIndex.value = "";
+                                        rowFormIndex.fileName =
+                                          "Belum ada file";
                                       }
                                       // console.log(rowFormIndex);
                                       // FOURTH FORM BUILDER OBJECT

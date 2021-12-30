@@ -11,7 +11,7 @@ export default NextAuth({
   providers: [
     Providers.Credentials({
       async authorize(credentials) {
-        const { email, password, role, capcha, token_nik, token_id } =
+        const { email, password, role, capcha, token_nik, token_id, fcm } =
           credentials;
         if (role !== "peserta_sso")
           if (!email || !password) {
@@ -35,6 +35,12 @@ export default NextAuth({
 
           if (role === "peserta") {
             link = process.env.END_POINT_API_PELATIHAN + `api/v1/auth/login`;
+            credential = {
+              email,
+              password,
+              capcha,
+              fcm,
+            };
           }
 
           if (role === "peserta_sso") {
@@ -43,6 +49,7 @@ export default NextAuth({
             credential = {
               token_nik,
               token_id,
+              fcm,
             };
           }
 

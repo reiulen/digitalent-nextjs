@@ -80,54 +80,117 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
   );
 
   //data pelatihan
+
+  const { trainingData } = useSelector((state) => state.trainingStep1);
+  const { registrationData } = useSelector((state) => state.registrationStep2);
+  const { commitmentData } = useSelector((state) => state.commitmentStep3);
+
   const [program, setProgram] = useState(
-    (getEditTraining && getEditTraining.program_dts) || ""
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.program_dts
+      : getEditTraining.program_dts
   );
   const [ketentuan, setKetentuan] = useState(
     (getEditTraining && getEditTraining.ketentuan_peserta) || ""
   );
-
   const [name, setName] = useState(
-    (getEditTraining && getEditTraining.name) || ""
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.name
+      : getEditTraining.name
   );
-  const [level, setLevel] = useState({
-    label: getEditTraining.level_pelatihan,
-    value: getEditTraining.level_pelatihan,
-  });
-  const [academy, setAcademy] = useState({
-    label: getEditTraining.akademi,
-    value: getEditTraining.akademi_id,
-  });
-  const [theme, setTheme] = useState({
-    label: getEditTraining.tema,
-    value: getEditTraining.tema_id,
-  });
+  const [level, setLevel] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? {
+          label: trainingData.level_pelatihan.label,
+          value: trainingData.level_pelatihan.label,
+        }
+      : {
+          label: getEditTraining.level_pelatihan,
+          value: getEditTraining.level_pelatihan,
+        }
+  );
+  const [academy, setAcademy] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.akademi_id
+      : {
+          label: getEditTraining.akademi,
+          value: getEditTraining.akademi_id,
+        }
+  );
+  const [theme, setTheme] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.tema_id
+      : {
+          label: getEditTraining.tema,
+          value: getEditTraining.tema_id,
+        }
+  );
   const [logoFile, setLogoFile] = useState("");
-  const [logoBase, setLogoBase] = useState(getEditTraining.logo);
+  const [logoBase, setLogoBase] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.logo
+      : getEditTraining.logo
+  );
   const [logoName, setLogoName] = useState(
-    getEditTraining.logo.length > 0 ? getEditTraining.logo : "Belum ada file"
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? `${trainingData.logo.length > 0 ? trainingData.logo : "Belum ada file"}`
+      : `${
+          getEditTraining.logo.length > 0
+            ? getEditTraining.logo
+            : "Belum ada file"
+        }`
   );
   const [thumbnailFile, setThumbnailFile] = useState("");
-  const [thumbnailBase, setThumbnailBase] = useState(getEditTraining.thumbnail);
+  const [thumbnailBase, setThumbnailBase] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.thumbnail
+      : getEditTraining.thumbnail
+  );
   const [thumbnailName, setThumbnailName] = useState(
-    getEditTraining.thumbnail.length > 0
-      ? getEditTraining.thumbnail
-      : "Belum ada file"
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? `${
+          trainingData.thumbnail.length > 0
+            ? trainingData.thumbnail
+            : "Belum ada file"
+        }`
+      : `${
+          getEditTraining.thumbnail.length > 0
+            ? getEditTraining.thumbnail
+            : "Belum ada file"
+        }`
   );
   const [silabusFile, setSilabusFile] = useState("");
-  const [silabusBase, setSilabusBase] = useState(getEditTraining.silabus);
+  const [silabusBase, setSilabusBase] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.silabus
+      : getEditTraining.silabus
+  );
   const [silabusName, setSilabusName] = useState(
-    getEditTraining.silabus.length > 0
-      ? getEditTraining.silabus
-      : "Belum ada file"
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? `${
+          trainingData.silabus.length > 0
+            ? trainingData.silabus
+            : "Belum ada file"
+        }`
+      : `${
+          getEditTraining.silabus.length > 0
+            ? getEditTraining.silabus
+            : "Belum ada file"
+        }`
   );
   const [metodeImplementation, setMetodeImplementation] = useState(
-    getEditTraining.metode_pelaksanaan
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.metode_pelaksanaan
+      : getEditTraining.metode_pelaksanaan
   );
-  const [organizer, setOrganizer] = useState({
-    label: getEditTraining.penyelenggara,
-    value: getEditTraining.penyelenggara,
-  });
+  const [organizer, setOrganizer] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.penyelenggara
+      : {
+          label: getEditTraining.penyelenggara,
+          value: getEditTraining.penyelenggara,
+        }
+  );
   const [mitra, setMitra] = useState(
     dataMitra.data
       .filter((item) => {
@@ -142,53 +205,130 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
   );
 
   //tanggal pendaftaran
-  const [startDateRegistration, setStartDateRegistration] = useState(null);
-  const [endDateRegistration, setEndDateRegistration] = useState(null);
+  const [startDateRegistration, setStartDateRegistration] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.pendaftaran_mulai
+      : null
+  );
+  const [endDateRegistration, setEndDateRegistration] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.pendaftaran_selesai
+      : null
+  );
   //tanggal pelatihan
-  const [startDateTraining, setStartDateTraining] = useState(null);
-  const [endDateTraining, setEndDateTraining] = useState(null);
-  const [description, setDescription] = useState(getEditTraining.deskripsi);
+  const [startDateTraining, setStartDateTraining] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.pelatihan_mulai
+      : null
+  );
+  const [endDateTraining, setEndDateTraining] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.pelatihan_selesai
+      : null
+  );
+  const [description, setDescription] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.deskripsi
+      : getEditTraining.deskripsi
+  );
   //kuota
   const [targetKuotaRegister, setTargetKuotaRegister] = useState(
-    getEditTraining.kuota_pendaftar
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.kuota_pendaftar
+      : getEditTraining.kuota_pendaftar
   );
   const [targetKuotaUser, setTargetKuotaUser] = useState(
-    getEditTraining.kuota_peserta
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.kuota_peserta
+      : getEditTraining.kuota_peserta
   );
-  const [statusKuota, setStatusKuota] = useState(getEditTraining.status_kuota);
+  const [statusKuota, setStatusKuota] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.status_kuota
+      : getEditTraining.status_kuota
+  );
   const [plotRegistration, setPlotRegistration] = useState(
-    getEditTraining.alur_pendaftaran
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.alur_pendaftaran
+      : getEditTraining.alur_pendaftaran
   );
   const [sertification, setSertification] = useState(
-    getEditTraining.sertifikasi
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.sertifikasi
+      : getEditTraining.sertifikasi
   );
-  const [lpjUser, setLpjUser] = useState(getEditTraining.lpj_peserta);
-  const [zonasi, setZonasi] = useState({
-    label: getEditTraining.zonasi,
-    value: getEditTraining.zonasi,
-  });
+  const [lpjUser, setLpjUser] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.lpj_peserta
+      : getEditTraining.lpj_peserta
+  );
+  const [zonasi, setZonasi] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.zonasi_id
+      : {
+          label: getEditTraining.zonasi,
+          value: getEditTraining.zonasi,
+        }
+  );
 
-  const [batch, setBatch] = useState({
-    label: getEditTraining.batch,
-    value: getEditTraining.batch,
-  });
+  const [batch, setBatch] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? {
+          label: trainingData.batch,
+          value: trainingData.batch,
+        }
+      : {
+          label: getEditTraining.batch,
+          value: getEditTraining.batch,
+        }
+  );
   const [metodeTraining, setMetodeTraining] = useState(
-    getEditTraining.metode_pelatihan
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.metode_pelatihan
+      : getEditTraining.metode_pelatihan
   );
   //location
-  const [address, setAddress] = useState(getEditTraining.alamat);
-  const [province, setProvince] = useState({
-    label: getEditTraining.provinsi,
-    value: getEditTraining.provinsi,
-  });
-  const [city, setCity] = useState({
-    label: getEditTraining.kabupaten,
-    value: getEditTraining.kabupaten,
-  });
-  const [umum, setUmum] = useState(getEditTraining.umum);
-  const [tuna_netra, setTunaNetra] = useState(getEditTraining.tuna_netra);
-  const [tuna_rungu, setTunaRungu] = useState(getEditTraining.tuna_rungu);
-  const [tuna_daksa, setTunaDaksa] = useState(getEditTraining.tuna_daksa);
+  const [address, setAddress] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.alamat
+      : getEditTraining.alamat
+  );
+  const [province, setProvince] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.provinsi
+      : {
+          label: getEditTraining.provinsi,
+          value: getEditTraining.provinsi,
+        }
+  );
+  const [city, setCity] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.kabupaten
+      : {
+          label: getEditTraining.kabupaten,
+          value: getEditTraining.kabupaten,
+        }
+  );
+  const [umum, setUmum] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.umum
+      : getEditTraining.umum
+  );
+  const [tuna_netra, setTunaNetra] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.tuna_netra
+      : getEditTraining.tuna_netra
+  );
+  const [tuna_rungu, setTunaRungu] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.tuna_rungu
+      : getEditTraining.tuna_rungu
+  );
+  const [tuna_daksa, setTunaDaksa] = useState(
+    Object.getOwnPropertyNames(trainingData).length > 0
+      ? trainingData.tuna_daksa
+      : getEditTraining.tuna_daksa
+  );
 
   useEffect(() => {
     dispatch(dropdownTemabyAkademi(academy.value, token));

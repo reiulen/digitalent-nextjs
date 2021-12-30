@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardTotal from "../../dashboard-kabadan/component/card-total.component";
@@ -7,16 +7,42 @@ import PaginationDashboard from "../../dashboard-kabadan/component/pagination-da
 
 import { helperHandlePercentage } from "../../../../utils/middleware/helper";
 import { useRouter } from "next/router";
+import { useSelector, useDispatch } from "react-redux";
+import Cookies from "js-cookie";
 
-const DashboardDetailPelatihan = () => {
+import {
+  getDetailTemaPendaftar,
+  getDetailTemaPeserta,
+} from "../../../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
+
+const DashboardDetailPelatihan = ({ token }) => {
   const router = useRouter();
-  const { akademi_id, tema_id } = router.query;
+  const dispatch = useDispatch();
+  const token_permission = Cookies.get("token_permission");
+
+  const { akademi_id, tema_id, id } = router.query;
+  const {
+    loading: loadingTemaPeserta,
+    error: errorTemaPeserta,
+    temaPeserta,
+  } = useSelector((state) => state.detailTemaPeserta);
+  const {
+    loading: loadingTemaPendaftar,
+    error: errorTemaPendaftar,
+    temaPendaftar,
+  } = useSelector((state) => state.detailTemaPendaftar);
+
+  const [page, setPage] = useState(1);
+
   return (
     <PageWrapper>
       <section className="opening-hello">
         <DashboardHeader
           funcFilterYear={(value) => {
-            console.log(value);
+            dispatch(
+              getDetailTemaPendaftar(token, token_permission, id, page, value)
+            );
+            dispatch(getDetailTemaPeserta(token, token_permission, id, value));
           }}
           path={tema_id}
         />
@@ -29,17 +55,23 @@ const DashboardDetailPelatihan = () => {
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Seluruh Pendaftar"}
-              value={100}
-              statisticDay={10}
-              dailyAdd={helperHandlePercentage(10, 20)}
+              value={temaPeserta?.pendaftar?.total}
+              statisticDay={temaPeserta?.pendaftar?.total_penambahan}
+              dailyAdd={helperHandlePercentage(
+                temaPeserta?.pendaftar?.total_penambahan,
+                temaPeserta?.pendaftar?.total
+              )}
             />
           </div>
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Seluruh Peserta"}
-              value={100}
-              statisticDay={10}
-              dailyAdd={helperHandlePercentage(10, 20)}
+              value={temaPeserta?.peserta?.total}
+              statisticDay={temaPeserta?.peserta?.total_penambahan}
+              dailyAdd={helperHandlePercentage(
+                temaPeserta?.peserta?.total_penambahan,
+                temaPeserta?.peserta?.total
+              )}
             />
           </div>
         </div>
@@ -57,35 +89,42 @@ const DashboardDetailPelatihan = () => {
                   <tr>
                     <th className="text-center ">No</th>
                     <th>Nama Pelatihan</th>
-                    <th>Pelatihan</th>
+                    <th>Pendaftar</th>
                     <th>Peserta</th>
                     <th>Lulus</th>
                     <th>Sertifikasi</th>
                   </tr>
                 </thead>
                 <tbody className="w-100">
-                  {[1, 2, 3, 4, 5].map((row, i) => (
+                  {temaPendaftar?.list?.map((row, i) => (
                     <tr key={i}>
-                      <td className="text-center">{i + 1}</td>
-                      <td>Junior Graphi</td>
-                      <td>200</td>
-                      <td>120</td>
-                      <td>120</td>
-                      <td>120</td>
+                      <td className="text-center">
+                        {i + 1 * (page * 5) - (5 - 1)}
+                      </td>
+                      <td>{row.name}</td>
+                      <td>{row.pendaftar}</td>
+                      <td>{row.peserta}</td>
+                      <td>{row.lulus}</td>
+                      <td>{row.sertifikat}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <PaginationDashboard
-              total={10}
-              perPage={5}
-              title="Pelatihan Dibuka"
-              activePage={1}
-              funcPagination={(value) => {
-                console.log(value);
-              }}
-            />
+            {temaPendaftar?.total > 5 && (
+              <PaginationDashboard
+                total={temaPendaftar?.total}
+                perPage={temaPendaftar?.perPage}
+                title="Pelatihan Dibuka"
+                activePage={page}
+                funcPagination={(value) => {
+                  setPage(value);
+                  dispatch(
+                    getDetailTemaPendaftar(token, token_permission, id, value)
+                  );
+                }}
+              />
+            )}
           </div>
         </div>
       </section>

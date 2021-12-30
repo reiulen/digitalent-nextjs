@@ -11,11 +11,7 @@ import dynamic from "next/dynamic";
 import LoadingSidebar from "../loader/LoadingSidebar";
 import { toast } from "react-toastify";
 
-import {
-  getFirebaseToken,
-  onMessageListener,
-} from "../../../messaging_get_token";
-// import { firebaseReceiveMessage } from "../../../messaging_receive_message";
+import { getFirebaseToken } from "../../../messaging_get_token";
 
 import { getMessaging, onMessage } from "firebase/messaging";
 
@@ -61,16 +57,18 @@ const Navigationbar = ({ session }) => {
 
   const { footer, loading } = useSelector((state) => state.berandaFooter);
 
-  const [isTokenFound, setTokenFound] = useState(false);
+  // const [isTokenFound, setTokenFound] = useState(false);
   const [alertNotif, setAlertNotif] = useState(false);
 
   useEffect(() => {
-    getFirebaseToken(setTokenFound);
+    // getFirebaseToken(setTokenFound);
+    // console.log(Cookies.get("fcm_token"));
 
     const messaging = getMessaging();
     onMessage(messaging, (payload) => {
-      console.log("Message received. ", payload.notification);
-      toast.info(payload.notification.title);
+      // console.log("Message received. ", payload.notification);
+      // toast.info(payload.notification.title);
+      GetNotifikasi();
       setAlertNotif(true);
     });
 
@@ -141,6 +139,21 @@ const Navigationbar = ({ session }) => {
       .catch((err) => {});
   };
 
+  const ClearNotifikasi = async () => {
+    axios
+      .get(
+        process.env.END_POINT_API_PELATIHAN + "api/v1/auth/hapus-notifikasi",
+        {
+          headers: {
+            Authorization: `Bearer ${session.token}`,
+          },
+        }
+      )
+      .then((res) => {
+        GetNotifikasi();
+      });
+  };
+
   const getMenu = async (token) => {
     try {
       let { data } = await axios.get(
@@ -198,6 +211,7 @@ const Navigationbar = ({ session }) => {
         if (res.data.status) {
           Cookies.remove("id_tema");
           Cookies.remove("id_pelatihan");
+          Cookies.remove("fcm_token");
           signOut();
         }
       })
@@ -310,18 +324,26 @@ const Navigationbar = ({ session }) => {
                       setAlertNotif(false);
                     }}
                   ></i>
-                  {alertNotif && (
+                  {dataNotification?.length > 0 && (
                     <div
                       onClick={() => setNotification(!notification)}
-                      className="position-absolute bg-danger rounded-full cursor-pointer"
+                      className="position-absolute bg-danger rounded-full cursor-pointer d-flex justify-content-center align-items-center"
                       style={{
-                        height: "15px",
-                        width: "15px",
+                        height: "18px",
+                        width: "18px",
                         right: "8px",
                         top: "5px",
                         border: "2px solid white",
                       }}
-                    ></div>
+                    >
+                      <div
+                        style={{ fontSize: "9px" }}
+                        className="text-white m-0 p-0"
+                      >
+                        {/* ANGKA NOTIFIKASI */}
+                        {dataNotification?.length}
+                      </div>
+                    </div>
                   )}
                   {notification && (
                     <div
@@ -336,6 +358,7 @@ const Navigationbar = ({ session }) => {
                           onClick={() => {
                             setNotification(!notification);
                             setAlertNotif(false);
+                            ClearNotifikasi();
                           }}
                           className="cursor-pointer"
                           style={{ width: "20px", height: "20px" }}
@@ -547,7 +570,7 @@ const Navigationbar = ({ session }) => {
                   </Col>
                   <Col
                     className={`p-0 m-0 ${
-                      menu?.length > 0 ? `h-350px` : "h-350px"
+                      menu?.length > 0 ? `h-400px` : "h-350px"
                     } overflow-auto ${style.scrollbar_navbar}`}
                   >
                     {navbarItems &&
@@ -639,20 +662,28 @@ const Navigationbar = ({ session }) => {
                   className="ri-notification-4-line ri-2x  text-gray"
                 ></i>
               </a>
-              {alertNotif && (
+              {dataNotification?.length > 0 && (
                 <div
                   onClick={() => {
                     setNotification(!notification);
                   }}
-                  className="position-absolute bg-danger rounded-full cursor-pointer"
+                  className="position-absolute bg-danger rounded-full cursor-pointer d-flex align-items-center justify-content-center"
                   style={{
-                    height: "15px",
-                    width: "15px",
+                    height: "18px",
+                    width: "18px",
                     right: "10px",
                     top: "5px",
-                    border: "2px solid white",
+                    border: "1px solid white",
                   }}
-                ></div>
+                >
+                  <div
+                    style={{ fontSize: "9px" }}
+                    className="text-white m-0 p-0"
+                  >
+                    {/* ANGKA NOTIFIKASI */}
+                    {dataNotification?.length}
+                  </div>
+                </div>
               )}
               {notification && (
                 <div
@@ -667,6 +698,7 @@ const Navigationbar = ({ session }) => {
                       onClick={() => {
                         setNotification(!notification);
                         setAlertNotif(false);
+                        ClearNotifikasi();
                       }}
                       className="cursor-pointer"
                     />
