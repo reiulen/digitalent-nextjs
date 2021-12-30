@@ -959,7 +959,7 @@ const reducer = combineReducers({
   deleteTraining: deleteTrainingReducer,
   getEditTraining: getEditTrainingReducer,
   getEditTraining2: getEditTraining2Reducer,
-  getEditTraining3: getEditTrainingReducer,
+  getEditTraining3: getEditTraining3Reducer,
   getFormLPJ: getFormLPJReducer,
   newLPJ: newLPJReducer,
   getFormEvidence: getFormEvidenceReducer,
