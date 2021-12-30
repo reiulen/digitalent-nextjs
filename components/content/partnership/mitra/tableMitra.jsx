@@ -100,8 +100,8 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
-    // dispatch(fetchMitra(token, cookiePermission));
-    dispatch(fetchMitra(token));
+    dispatch(fetchMitra(token, cookiePermission));
+    // dispatch(fetchMitra(token));
     dispatch(cancelChangeProvinces(token));
   }, [
     dispatch,
