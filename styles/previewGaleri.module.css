@@ -103,6 +103,11 @@
   top: 345px;
 }
 
+.validhomePage{
+  position: absolute;
+  top: 345px;
+}
+
 .btnKembali{
   padding-top: 10px;
   padding-bottom: 10px;
@@ -179,6 +184,9 @@
     position: absolute;
     top: 370px;
   }
+  .validhomePage{
+    top: 370px;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -207,6 +215,9 @@
   }
   .validQuill{
     position: absolute;
+    top: 370px;
+  }
+  .validhomePage{
     top: 370px;
   }
 
@@ -287,6 +298,9 @@
     position: absolute;
     top: 415px;
   }
+  .validhomePage{
+    top: 435px; 
+  }
 
   /* Home Page Galeri */
 
@@ -366,6 +380,9 @@
     position: absolute;
     top: 465px;
   }
+  .validhomePage{
+    top: 485px; 
+  }
 }
 
 @media only screen and (max-width: 280px){
@@ -405,5 +422,8 @@
   .validQuill{
     position: absolute;
     top: 490px;
+  }
+  .validhomePage{
+    top: 510px; 
   }
 }
