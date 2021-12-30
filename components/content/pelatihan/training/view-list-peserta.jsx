@@ -506,10 +506,16 @@ const DetailSummary = ({ token }) => {
                                 {row.update_by}
                               </p>
                               <p className="my-0">
-                                {moment(row.update_time).format("DD MMMM YYYY")}
+                                {row.update_time !== ""
+                                  ? moment(row.update_time).format(
+                                      "DD MMMM YYYY"
+                                    )
+                                  : "-"}
                               </p>
                               <p className="my-0">
-                                {moment(row.update_time).format("hh:mm:ss")}
+                                {row.update_time !== ""
+                                  ? moment(row.update_time).format("hh:mm:ss")
+                                  : "-"}
                               </p>
                             </td>
                             <td>
