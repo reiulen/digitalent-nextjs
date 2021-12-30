@@ -261,7 +261,7 @@ const TambahArtikelPeserta = ({ session }) => {
                         <p>Tunggu Sebentar</p>
                       )}
                     </div>
-                    <div className="mt-13">
+                    <div className={`${styles.validhomePage}`}>
                       {simpleValidator.current.message(
                         "isi artikel",
                         deskripsi,
@@ -272,7 +272,7 @@ const TambahArtikelPeserta = ({ session }) => {
                   </div>
                 </div>
 
-                <div className="form-group">
+                <div className={`${styles.selectKategori} form-group`}>
                   <label
                     htmlFor="staticEmail"
                     className="col-sm-2 col-form-label font-weight-bolder"
