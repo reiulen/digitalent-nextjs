@@ -72,7 +72,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       const url = data?.data?.redirect;
-      if (url != "/dashboard") {
+      if (url && url != "/dashboard") {
         return {
           redirect: {
             destination: url,
