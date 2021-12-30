@@ -75,7 +75,9 @@ const StepTwo = ({ token, tokenPermission }) => {
         questions_to_share: jumlah_soal,
       };
 
-      dispatch(updateTriviaQuestionBanksPublish(data, id, token));
+      dispatch(
+        updateTriviaQuestionBanksPublish(data, id, token, tokenPermission)
+      );
       localStorage.removeItem("clone1");
       localStorage.removeItem("clone3");
       localStorage.removeItem("clone");

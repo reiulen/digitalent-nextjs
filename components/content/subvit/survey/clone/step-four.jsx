@@ -135,7 +135,7 @@ const StepOne = ({ token, tokenPermission }) => {
         category,
       };
 
-      dispatch(newCloneSurveyQuestionBanks(data, token));
+      dispatch(newCloneSurveyQuestionBanks(data, token, tokenPermission));
       localStorage.removeItem("clone3");
     } else {
       simpleValidator.current.showMessages();
@@ -176,7 +176,9 @@ const StepOne = ({ token, tokenPermission }) => {
 
       localStorage.setItem("clone3", JSON.stringify(setData));
 
-      dispatch(updateSurveyQuestionBanks(router.query.id, data, token));
+      dispatch(
+        updateSurveyQuestionBanks(router.query.id, data, token, tokenPermission)
+      );
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
