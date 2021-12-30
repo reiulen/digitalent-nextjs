@@ -12,9 +12,11 @@ import { UPDATE_SETTING_RESET } from "../../../../redux/types/publikasi/setting.
 
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingTable from "../../../LoadingTable";
+import Cookies from 'js-cookie'
 
-const Pengaturan = ({ token, permission }) => {
+const Pengaturan = ({ token }) => {
     const dispatch = useDispatch()
+    const permission = Cookies.get("token_permission")
 
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
     const [, forceUpdate] = useState();

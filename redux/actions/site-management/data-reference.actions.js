@@ -27,7 +27,7 @@ import {
 import axios from "axios";
 
 export const getAllDataReference =
-  (token, paginate = null, token_permission = "") =>
+  (token, paginate = null, token_permission) =>
   async (dispatch, getState) => {
     try {
       dispatch({ type: DATA_REFERENCE_REQUEST });

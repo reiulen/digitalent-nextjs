@@ -262,6 +262,7 @@ const ListSummary = ({ token }) => {
       },
       headers: {
         Authorization: "Bearer " + token,
+        Permission: token_permission,
       },
     };
 

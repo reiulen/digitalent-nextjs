@@ -17,13 +17,15 @@ import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.act
 
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
+import Cookies from 'js-cookie'
 
 import "../../../../styles/publikasi.module.css"
 
-const TambahFaq = ({ token, id, permission }) => {
+const TambahFaq = ({ token, id }) => {
     const editorRef = useRef();
     const dispatch = useDispatch()
     const router = useRouter()
+    const permission = Cookies.get("token_permission")
 
     const { role_permission } = useSelector((state) => state.allRolePermission);
 

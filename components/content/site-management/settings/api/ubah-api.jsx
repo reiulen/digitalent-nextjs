@@ -9,6 +9,7 @@ import axios from "axios";
 import IconCalender from "../../../../assets/icon/Calender";
 import Select from "react-select";
 import SimpleReactValidator from "simple-react-validator";
+import Cookies from "js-cookie";
 
 import styles from "../../../../../styles/previewGaleri.module.css";
 
@@ -84,6 +85,7 @@ const UbahApi = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission")
               },
             }
           );
@@ -135,6 +137,7 @@ const UbahApi = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission")
               },
             }
           );

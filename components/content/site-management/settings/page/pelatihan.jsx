@@ -14,6 +14,7 @@ import Template from "./template";
 import SUBM from "./subm";
 import FileSize from "./filesize";
 import Ketentuan from "./ketentuan";
+import Cookies from "js-cookie";
 
 import { loadDataPrompt } from "../../../../../redux/actions/site-management/settings/pelatihan.actions";
 
@@ -23,7 +24,7 @@ export default function Pelatihan({ token }) {
   const router = useRouter();
 
   useEffect(() => {
-    dispatch(loadDataPrompt(token));
+    dispatch(loadDataPrompt(token, Cookies.get("token_permission")));
   }, [token, dispatch]);
 
   const [page, setPage] = useState(router.query.sidebar !== undefined ? router.query?.sidebar : "Prompt")

@@ -14,6 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "../../../../../styles/previewGaleri.module.css";
 import SimpleReactValidator from "simple-react-validator";
+import Cookies from 'js-cookie'
 
 import Swal from "sweetalert2";
 import Image from "next/image";
@@ -121,7 +122,7 @@ const TambahPage = ({ token }) => {
               },
             };
           }
-          dispatch(postPage(sendData, token));
+          dispatch(postPage(sendData, token, Cookies.get("token_permission")));
         }
       });
     } else {
@@ -150,7 +151,7 @@ const TambahPage = ({ token }) => {
       });
     }
     if (error) {
-      Swal.fire(error, "", "error").then(() => {});
+      Swal.fire(error, "", "error").then(() => { });
     }
 
     setEditorLoaded(true);
@@ -339,7 +340,7 @@ const TambahPage = ({ token }) => {
                         />
                       </div>
                     </div>
-                      <p className="text-muted">Format image (.png/.jpg), Max size 5MB</p>
+                    <p className="text-muted">Format image (.png/.jpg), Max size 5MB</p>
 
                     <div className="ml-4"></div>
                   </div>
@@ -472,7 +473,7 @@ const TambahPage = ({ token }) => {
                           <CKEditor
                             editor={ClassicEditor}
                             data={isi_artikel}
-                            onReady={(editor) => {}}
+                            onReady={(editor) => { }}
                             onChange={(event, editor) => {
                               const data = editor.getData();
                               setIsiArtikel(data);
@@ -487,7 +488,7 @@ const TambahPage = ({ token }) => {
                         ) : (
                           <p>Tunggu Sebentar</p>
                         )}
-                         {simpleValidator.current.message(
+                        {simpleValidator.current.message(
                           "isi_artikel",
                           isi_artikel,
                           template === "1" ? "required|min:5|max:2000" : "",
@@ -586,7 +587,7 @@ const TambahPage = ({ token }) => {
                             simpleValidator.current.showMessageFor("gambar");
                           }}
                         />
-                         {simpleValidator.current.message(
+                        {simpleValidator.current.message(
                           "gambar",
                           gambar,
                           template === "2" ? "required" : "",
@@ -655,7 +656,7 @@ const TambahPage = ({ token }) => {
                         ) : (
                           <p>Tunggu Sebentar</p>
                         )}
-                         {simpleValidator.current.message(
+                        {simpleValidator.current.message(
                           "isi_artikel",
                           isi_artikel,
                           template === "2" ? "required|min:5|max:2000" : "",

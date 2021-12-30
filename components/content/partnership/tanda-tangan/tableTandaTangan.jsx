@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
-
+import Cookies from "js-cookie"
 import Swal from "sweetalert2";
 import {
   fetchSignature,
@@ -34,7 +34,7 @@ const Table = ({ token }) => {
 
   const [successDelete, setSuccessDelete] = useState(false);
   const [keyWord, setKeyWord] = useState("");
-
+  const cookiePermission = Cookies.get("token_permission")
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(searchByKey(keyWord));
@@ -52,7 +52,7 @@ const Table = ({ token }) => {
       // dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteTandaTangan(id,token,));
+        dispatch(deleteTandaTangan(id,token,cookiePermission));
         setSuccessDelete(true);
         setIsStatusBar(false);
         router.replace(`/partnership/tanda-tangan`);
@@ -92,7 +92,7 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
-    dispatch(fetchSignature(token));
+    dispatch(fetchSignature(token, cookiePermission));
   }, [
     dispatch,
     allTandaTangan?.keyword,

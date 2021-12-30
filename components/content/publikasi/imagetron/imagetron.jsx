@@ -22,6 +22,7 @@ import LoadingTable from "../../../LoadingTable";
 import IconArrow from "../../../assets/icon/Arrow";
 import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
+import Cookies from 'js-cookie'
 
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -31,10 +32,11 @@ import {
 
 import { DELETE_IMAGETRON_RESET } from "../../../../redux/types/publikasi/imagetron.type";
 
-const Imagetron = ({ token, permission }) => {
+const Imagetron = ({ token }) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
+    const permission = Cookies.get("token_permission")
 
     const {
         loading: allLoading,

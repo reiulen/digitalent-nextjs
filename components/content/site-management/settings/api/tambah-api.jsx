@@ -10,6 +10,7 @@ import axios from "axios";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
+import Cookies from 'js-cookie'
 
 import styles from "../../../../../styles/previewGaleri.module.css"
 
@@ -93,6 +94,7 @@ const TambahApi = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission")
               },
             }
           );
@@ -123,6 +125,7 @@ const TambahApi = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission")
               },
             }
           );
@@ -140,7 +143,7 @@ const TambahApi = ({ token }) => {
         }
       }
 
-      getListField(apiChoice, token);
+      getListField(apiChoice, token, Cookies.get("token_permission"));
     }
   }, [apiChoice, token]);
 

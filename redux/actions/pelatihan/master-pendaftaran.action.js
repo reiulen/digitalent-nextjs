@@ -202,8 +202,8 @@ export const updateMasterPelatihanAction =
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
+          Permission: token_permission,
         },
-        Permission: token_permission,
       };
       const { data } = await axios.post(link, formData, config);
       if (data) {
@@ -217,36 +217,39 @@ export const updateMasterPelatihanAction =
     }
   };
 
-export const deleteMasterTraining = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DELETE_MASTER_TRAINING_REQUEST });
+export const deleteMasterTraining =
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: DELETE_MASTER_TRAINING_REQUEST });
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.delete(
-      process.env.END_POINT_API_PELATIHAN +
-        `api/v1/formBuilder/delete?id=${id}`,
-      config
-    );
+      const { data } = await axios.delete(
+        process.env.END_POINT_API_PELATIHAN +
+          `api/v1/formBuilder/delete?id=${id}`,
+        config
+      );
 
-    dispatch({
-      type: DELETE_MASTER_TRAINING_SUCCESS,
-      payload: data.status,
-    });
-  } catch (error) {
-    dispatch({
-      type: DELETE_MASTER_TRAINING_FAIL,
-      payload: error.response.data.message || error,
-    });
-  }
-};
+      dispatch({
+        type: DELETE_MASTER_TRAINING_SUCCESS,
+        payload: data.status,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELETE_MASTER_TRAINING_FAIL,
+        payload: error.response.data.message || error,
+      });
+    }
+  };
 
 export const updateStatusPublishMaster =
-  (dataStatus, token) => async (dispatch) => {
+  (dataStatus, token, token_permission) => async (dispatch) => {
     try {
       dispatch({
         type: REQUEST_STATUS_PUBLISH,
@@ -255,6 +258,7 @@ export const updateStatusPublishMaster =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 

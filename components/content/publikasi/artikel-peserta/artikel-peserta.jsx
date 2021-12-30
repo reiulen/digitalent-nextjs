@@ -19,15 +19,17 @@ import LoadingTable from "../../../LoadingTable"
 import IconArrow from "../../../assets/icon/Arrow";
 import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
+import Cookies from 'js-cookie'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteArtikelPeserta, clearErrors } from '../../../../redux/actions/publikasi/artikel-peserta.actions'
 import { DELETE_ARTIKEL_PESERTA_RESET } from "../../../../redux/types/publikasi/artikel-peserta.type";
 
-const ArtikelPeserta = ({ token, permission }) => {
+const ArtikelPeserta = ({ token }) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
+    const permission = Cookies.get("token_permission")
 
     const { loading: allLoading, error, artikel_peserta } = useSelector(state => state.allArtikelPeserta)
     const {

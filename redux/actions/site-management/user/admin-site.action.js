@@ -117,7 +117,7 @@ export const getAllListPelatihan = (token, cari) => async (dispatch, getState) =
 };
 
 export const getListRoles =
-  (token, search = "") =>
+  (token, search = "", tokenPermission) =>
   async (dispatch) => {
     try {
       dispatch({ type: ROLES_LIST_REQUEST });
@@ -128,6 +128,8 @@ export const getListRoles =
           params: { cari: search, limit: 10000 },
           headers: {
             authorization: `Bearer ${token}`,
+          "Permission": tokenPermission
+            
           },
         }
       );
@@ -305,7 +307,7 @@ export const getDetailAdminSite = (id, token, tokenPermission) => async (dispatc
   }
 };
 
-export const getEditAdminSite = (id, token) => async (dispatch) => {
+export const getEditAdminSite = (id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({
       type: EDIT_ADMIN_SITE_REQUEST,
@@ -313,6 +315,7 @@ export const getEditAdminSite = (id, token) => async (dispatch) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        "Permission": tokenPermission
       },
     };
 

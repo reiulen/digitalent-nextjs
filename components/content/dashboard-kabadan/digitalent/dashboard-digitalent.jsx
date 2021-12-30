@@ -597,7 +597,7 @@ const DashboardDigitalent = ({ token }) => {
                 <PaginationDashboard
                   total={tablePendaftar?.total}
                   perPage={tablePendaftar?.perPage}
-                  title="Pendaftar"
+                  title="Pelatihan"
                   activePage={pageTablePendaftaran}
                   funcPagination={(value) => {
                     setPageTablePendaftaran(value);
@@ -742,7 +742,7 @@ const DashboardDigitalent = ({ token }) => {
                         <PaginationDashboard
                           total={provinsiPendaftar?.total}
                           perPage={provinsiPendaftar?.perPage}
-                          title="Pendaftar"
+                          title="Provinsi"
                           activePage={pageProvinsiPendaftar}
                           funcPagination={(value) => {
                             setPageProvinsiPendaftar(value);
@@ -774,7 +774,7 @@ const DashboardDigitalent = ({ token }) => {
                         <PaginationDashboard
                           total={provinsiPeserta?.total}
                           perPage={provinsiPeserta?.perPage}
-                          title="Peserta"
+                          title="Provinsi"
                           activePage={pageProvinsiPeserta}
                           funcPagination={(value) => {
                             setPageProvinsiPeserta(value);

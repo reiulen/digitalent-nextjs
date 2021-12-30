@@ -40,7 +40,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       
-      await store.dispatch(getAllPage(session.user.user.data.token));
+      await store.dispatch(getAllPage(session.user.user.data.token, req.cookies.token_permission));
 
       // await store.dispatch(
       //   getAllArtikel(

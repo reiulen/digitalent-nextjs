@@ -12,11 +12,13 @@ import { newKategori, clearErrors } from '../../../../redux/actions/publikasi/ka
 import { NEW_KATEGORI_RESET } from '../../../../redux/types/publikasi/kategori.type'
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
+import Cookies from 'js-cookie'
 
-const TambahKategori = ({ token, permission }) => {
+const TambahKategori = ({ token }) => {
 
     const dispatch = useDispatch()
     const router = useRouter();
+    const permission = Cookies.get("token_permission")
 
     const { loading, error, success } = useSelector(state => state.newKategori)
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));

@@ -13,13 +13,15 @@ import { newArtikelPeserta } from "../../../../redux/actions/publikasi/artikel.a
 
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import { useQuill } from "react-quilljs";
+import Cookies from 'js-cookie'
 
 import styles from "../../../../styles/previewGaleri.module.css";
 
-const TambahArtikelPeserta = ({ session, permission }) => {
+const TambahArtikelPeserta = ({ session }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const permission = Cookies.get("token_permission")
 
   const importSwitch = () => import("bootstrap-switch-button-react");
   const SwitchButton = dynamic(importSwitch, {

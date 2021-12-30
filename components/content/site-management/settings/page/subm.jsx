@@ -404,7 +404,6 @@ export default function SUBM(props) {
       setNameFile(e.target.files[0].name);
     }
   };
-  console.log(listTraining)
 
   const trainingOpt = listTraining?.map((item, index) => {
     return {

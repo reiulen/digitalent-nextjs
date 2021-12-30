@@ -11,6 +11,7 @@ import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 import Swal from "sweetalert2";
+import Cookies from 'js-cookie'
 
 import styles from "../../../../../styles/previewGaleri.module.css";
 import stylesPag from "../../../../../styles/pagination.module.css";
@@ -59,13 +60,13 @@ const Table = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteApis(id, token));
+        dispatch(deleteApis(id, token, Cookies.get("token_permission")));
       }
     });
   };
 
   useEffect(() => {
-    dispatch(getAllApi(token));
+    dispatch(getAllApi(token, Cookies.get("token_permission")));
   }, [dispatch, allApi.cari, allApi.page, allApi.limit, token]);
 
   useEffect(() => {
@@ -73,7 +74,7 @@ const Table = ({ token }) => {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
           if (result.isConfirmed) {
-            dispatch(getAllApi(token));
+            dispatch(getAllApi(token, Cookies.get("token_permission")));
           }
         }
       );
@@ -99,17 +100,17 @@ const Table = ({ token }) => {
             {localStorage
               .getItem("permissions")
               .includes("site_management.setting.api.manage") && (
-              <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
-                <Link href="/site-management/setting/api/tambah-api" passHref>
-                  <a
-                    className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}
-                  >
-                    <IconAdd className="mr-3" width="14" height="14" />
-                    Tambah API
-                  </a>
-                </Link>
-              </div>
-            )}
+                <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
+                  <Link href="/site-management/setting/api/tambah-api" passHref>
+                    <a
+                      className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}
+                    >
+                      <IconAdd className="mr-3" width="14" height="14" />
+                      Tambah API
+                    </a>
+                  </Link>
+                </div>
+              )}
           </div>
           <div className="card-body">
             <div className="table-filter">
@@ -165,19 +166,19 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allApi.data.setting_api.length === 0 ? (
+                      {allApi.data?.setting_api.length === 0 ? (
                         <td className="align-middle text-center" colSpan="8">
                           Data kosong
                         </td>
                       ) : (
-                        allApi.data.setting_api.map((items, index) => {
+                        allApi.data?.setting_api.map((items, index) => {
                           return (
                             <tr key={index}>
                               <td className="align-middle text-left">
                                 {allApi.page === 1
                                   ? index + 1
                                   : (allApi.page - 1) * allApi.limit +
-                                    (index + 1)}
+                                  (index + 1)}
                               </td>
                               <td className="align-middle text-left">
                                 <p className="p-part-t text-overflow-ens">
@@ -228,53 +229,53 @@ const Table = ({ token }) => {
                                     .includes(
                                       "site_management.setting.api.manage"
                                     ) && (
-                                    <Link
-                                      href={`/site-management/setting/api/ubah-api?id=${items.id}`}
-                                      passHref
-                                    >
-                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                                        <IconPencil width="16" height="16" />
-                                        <div className="text-hover-show-hapus">
-                                          Ubah
-                                        </div>
-                                      </a>
-                                    </Link>
-                                  )}
+                                      <Link
+                                        href={`/site-management/setting/api/ubah-api?id=${items.id}`}
+                                        passHref
+                                      >
+                                        <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                          <IconPencil width="16" height="16" />
+                                          <div className="text-hover-show-hapus">
+                                            Ubah
+                                          </div>
+                                        </a>
+                                      </Link>
+                                    )}
                                   {localStorage
                                     .getItem("permissions")
                                     .includes(
                                       "site_management.setting.api.view"
                                     ) && (
-                                    <Link
-                                      href={`/site-management/setting/api/detail-api?id=${items.id}`}
-                                      passHref
-                                    >
-                                      <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
-                                        <IconEye width="16" height="16" />
-                                        <div className="text-hover-show-hapus">
-                                          Detail
-                                        </div>
-                                      </a>
-                                    </Link>
-                                  )}
+                                      <Link
+                                        href={`/site-management/setting/api/detail-api?id=${items.id}`}
+                                        passHref
+                                      >
+                                        <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
+                                          <IconEye width="16" height="16" />
+                                          <div className="text-hover-show-hapus">
+                                            Detail
+                                          </div>
+                                        </a>
+                                      </Link>
+                                    )}
 
                                   {localStorage
                                     .getItem("permissions")
                                     .includes(
                                       "site_management.setting.api.manage"
                                     ) && (
-                                    <button
-                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                      onClick={() =>
-                                        handleDelete(items.id, token)
-                                      }
-                                    >
-                                      <IconDelete width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Hapus
-                                      </div>
-                                    </button>
-                                  )}
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        onClick={() =>
+                                          handleDelete(items.id, token)
+                                        }
+                                      >
+                                        <IconDelete width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Hapus
+                                        </div>
+                                      </button>
+                                    )}
                                 </div>
                               </td>
                             </tr>
@@ -292,8 +293,8 @@ const Table = ({ token }) => {
                     <div className={`${stylesPag.pagination} table-pagination`}>
                       <Pagination
                         activePage={allApi.page}
-                        itemsCountPerPage={allApi.data.perPage}
-                        totalItemsCount={allApi.data.total}
+                        itemsCountPerPage={allApi.data?.perPage}
+                        totalItemsCount={allApi.data?.total}
                         pageRangeDisplayed={3}
                         onChange={(page) => dispatch(setPage(page))}
                         nextPageText={">"}
@@ -337,7 +338,7 @@ const Table = ({ token }) => {
                           className="align-middle mt-6"
                           style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                         >
-                          Total Data {allApi.data && allApi.data.total} List
+                          Total Data {allApi.data && allApi.data?.total} List
                           Data
                         </p>
                       </div>
