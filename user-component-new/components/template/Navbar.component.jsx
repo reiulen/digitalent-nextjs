@@ -648,7 +648,7 @@ const Navigationbar = ({ session }) => {
                   className="ri-notification-4-line ri-2x  text-gray"
                 ></i>
               </a>
-              {alertNotif && (
+              {true && (
                 <div
                   onClick={() => {
                     setNotification(!notification);
