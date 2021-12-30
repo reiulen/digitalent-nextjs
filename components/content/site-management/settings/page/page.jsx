@@ -21,7 +21,6 @@ import {
 
 
 import { DELETE_PAGE_RESET } from "../../../../../redux/types/site-management/settings/page.type";
-import Cookies from "js-cookie";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
