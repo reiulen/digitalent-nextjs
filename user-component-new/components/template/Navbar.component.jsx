@@ -11,11 +11,7 @@ import dynamic from "next/dynamic";
 import LoadingSidebar from "../loader/LoadingSidebar";
 import { toast } from "react-toastify";
 
-import {
-  getFirebaseToken,
-  onMessageListener,
-} from "../../../messaging_get_token";
-// import { firebaseReceiveMessage } from "../../../messaging_receive_message";
+import { getFirebaseToken } from "../../../messaging_get_token";
 
 import { getMessaging, onMessage } from "firebase/messaging";
 
@@ -61,11 +57,12 @@ const Navigationbar = ({ session }) => {
 
   const { footer, loading } = useSelector((state) => state.berandaFooter);
 
-  const [isTokenFound, setTokenFound] = useState(false);
+  // const [isTokenFound, setTokenFound] = useState(false);
   const [alertNotif, setAlertNotif] = useState(false);
 
   useEffect(() => {
-    getFirebaseToken(setTokenFound);
+    // getFirebaseToken(setTokenFound);
+    console.log(Cookies.get("fcm_token"));
 
     const messaging = getMessaging();
     onMessage(messaging, (payload) => {
@@ -199,6 +196,7 @@ const Navigationbar = ({ session }) => {
         if (res.data.status) {
           Cookies.remove("id_tema");
           Cookies.remove("id_pelatihan");
+          Cookies.remove("fcm_token");
           signOut();
         }
       })
