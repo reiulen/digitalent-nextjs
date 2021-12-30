@@ -134,7 +134,7 @@ export const loadDataListZonasi = (token, page = 1,tokenPermission="") => {
 				payload: data,
 				page,
 			});
-		} catch (error) {	
+		} catch (error) {
 			// notify(error.response.data.message);
 		}
 	};

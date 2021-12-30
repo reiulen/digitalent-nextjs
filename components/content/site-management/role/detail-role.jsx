@@ -45,7 +45,7 @@ const DetailRole = ({ token }) => {
     });
   };
 
-  let list = detailRoles.role.permissions;
+  let list = detailRoles.role?.permissions;
 
   const menu = list.map((item, index) => {
     if (item.list_sub_menu.length > 0) {

@@ -22,6 +22,7 @@ import LoadingTable from "../../../LoadingTable";
 import IconArrow from "../../../assets/icon/Arrow";
 import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
+import Cookies from 'js-cookie'
 
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -35,6 +36,7 @@ const Imagetron = ({ token }) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
+    const permission = Cookies.get("token_permission")
 
     const {
         loading: allLoading,
@@ -124,7 +126,7 @@ const Imagetron = ({ token }) => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteImagetron(id, token));
+                dispatch(deleteImagetron(id, token, permission));
             }
         });
     };

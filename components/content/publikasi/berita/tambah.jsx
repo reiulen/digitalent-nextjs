@@ -20,11 +20,13 @@ import { NEW_BERITA_RESET } from '../../../../redux/types/publikasi/berita.type'
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 import { useQuill } from "react-quilljs";
+import Cookies from 'js-cookie'
 
 const TambahBerita = ({ token, id }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
+    const permission = Cookies.get("token_permission")
 
     const importSwitch = () => import('bootstrap-switch-button-react')
     const [editorLoaded, setEditorLoaded] = useState(false)
@@ -203,7 +205,7 @@ const TambahBerita = ({ token, id }) => {
                 })
                     .then((result) => {
                         if (result.isConfirmed) {
-                            dispatch(newBerita(data, token))
+                            dispatch(newBerita(data, token, permission))
                         }
                     });
             } else {
@@ -231,7 +233,7 @@ const TambahBerita = ({ token, id }) => {
                 })
                     .then((result) => {
                         if (result.isConfirmed) {
-                            dispatch(newBerita(data, token))
+                            dispatch(newBerita(data, token, permission))
                         }
                     });
             }

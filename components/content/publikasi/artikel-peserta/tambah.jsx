@@ -18,11 +18,13 @@ import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.act
 import { NEW_ARTIKEL_PESERTA_RESET } from "../../../../redux/types/publikasi/artikel-peserta.type";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
+import Cookies from 'js-cookie'
 
-const TambahArtikel = () => {
+const TambahArtikel = ({ token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const permission = Cookies.get("token_permission")
 
   const importSwitch = () => import("bootstrap-switch-button-react");
   const [editorLoaded, setEditorLoaded] = useState(false);
@@ -68,7 +70,7 @@ const TambahArtikel = () => {
   const [iconPlus, setIconPlus] = useState(
     "/assets/icon/Add.svg"
   );
-  const [gambarName, setGambarName] = useState (null)
+  const [gambarName, setGambarName] = useState(null)
   const [kategori_id, setKategoriId] = useState("");
   const [users_id, setUserId] = useState(87);
   const [tag, setTag] = useState([]);
@@ -77,7 +79,7 @@ const TambahArtikel = () => {
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"]
 
-    if (type.includes (e.target.files[0].type)){
+    if (type.includes(e.target.files[0].type)) {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
@@ -87,7 +89,7 @@ const TambahArtikel = () => {
       };
       reader.readAsDataURL(e.target.files[0])
       setGambarName(e.target.files[0].name)
-    } 
+    }
     else {
       e.target.value = null
       Swal.fire(
@@ -131,11 +133,11 @@ const TambahArtikel = () => {
 
       if (publish === true) {
         setPublish(1)
-      
+
       } else {
         setPublish(0)
 
-      } 
+      }
 
       const data = {
         judul_artikel,
@@ -159,9 +161,9 @@ const TambahArtikel = () => {
       })
         .then((result) => {
           if (result.isConfirmed) {
-            dispatch(newArtikelPeserta(data));
+            dispatch(newArtikelPeserta(data, token, permission));
           }
-      });
+        });
 
     } else {
       simpleValidator.current.showMessages();
@@ -303,10 +305,10 @@ const TambahArtikel = () => {
                           src={iconPlus}
                           alt="plus"
                           width={60}
-                          height={60} 
+                          height={60}
                         />
                       </label>
-                      
+
                       <input
                         type="file"
                         name="gambar"
@@ -317,7 +319,7 @@ const TambahArtikel = () => {
                         onBlur={() =>
                           simpleValidator.current.showMessageFor("gambar")
                         }
-                        style={{display: "none"}}
+                        style={{ display: "none" }}
                       />
                     </div>
                     <div>
@@ -330,12 +332,12 @@ const TambahArtikel = () => {
                       {
                         gambarName !== null ?
                           <small className="text-danger">{gambarName}</small>
-                        :
+                          :
                           null
                       }
                     </div>
                   </div>
-                  
+
                 </div>
                 <div className="form-group">
                   <label
@@ -370,7 +372,7 @@ const TambahArtikel = () => {
                               <option key={row.id} value={row.id}>
                                 {row.nama_kategori}
                               </option>
-                            :
+                              :
                               null
                           );
                         })
@@ -407,7 +409,7 @@ const TambahArtikel = () => {
                     htmlFor="staticEmail"
                     className="ml-5 pl-4 "
                   >
-                    Publish 
+                    Publish
                   </label>
                   <div className="col-sm-1 ml-4">
                     <div className="">
@@ -420,9 +422,8 @@ const TambahArtikel = () => {
                           onChange={(e) => handleChangePublish(e)}
                         />
                         <span
-                          className={`sliders round ${
-                            publish ? "text-white" : "pl-2"
-                          }`}
+                          className={`sliders round ${publish ? "text-white" : "pl-2"
+                            }`}
                         >
                         </span>
                       </label>

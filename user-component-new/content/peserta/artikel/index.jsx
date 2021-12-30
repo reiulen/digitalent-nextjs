@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 
 import moment from "moment";
+import Cookies from 'js-cookie'
 import PulseLoaderRender from "../../../components/loader/PulseLoader";
 
 import {
@@ -24,6 +25,7 @@ import {
 const Dashboard = ({ session, success }) => {
 	const router = useRouter();
 	const dispatch = useDispatch();
+	const permission = Cookies.get("token_permission")
 
 	const allArtikelsPeserta = useSelector((state) => state.allArtikelsPeserta);
 	const deleteArtikel = useSelector((state) => state.deleteArtikel);
@@ -125,7 +127,7 @@ const Dashboard = ({ session, success }) => {
 											cancelButtonText: "Batal",
 										}).then((result) => {
 											if (result.isConfirmed) {
-												dispatch(deleteArtikelPeserta(item.id, session.token));
+												dispatch(deleteArtikelPeserta(item.id, session.token, permission));
 											}
 										});
 									}}
@@ -169,7 +171,7 @@ const Dashboard = ({ session, success }) => {
 
 	const handleSearch = () => {
 		dispatch(
-			getAllArtikelsPeserta(session.token, 1, limit, keyword, null, null, null)
+			getAllArtikelsPeserta(session.token, 1, limit, keyword, null, null, null, permission)
 		);
 	};
 
@@ -183,7 +185,8 @@ const Dashboard = ({ session, success }) => {
 				keyword,
 				null,
 				null,
-				null
+				null,
+				permission
 			)
 		);
 	};
@@ -208,7 +211,8 @@ const Dashboard = ({ session, success }) => {
 									null,
 									null,
 									null,
-									null
+									null,
+									permission
 								)
 							);
 						}}
@@ -229,7 +233,8 @@ const Dashboard = ({ session, success }) => {
 									null,
 									"1",
 									null,
-									null
+									null,
+									permission
 								)
 							);
 						}}
@@ -250,7 +255,8 @@ const Dashboard = ({ session, success }) => {
 									null,
 									"0",
 									null,
-									null
+									null,
+									permission
 								)
 							);
 						}}
@@ -290,28 +296,28 @@ const Dashboard = ({ session, success }) => {
 									<form onSubmit={(e) => {
 										e.preventDefault();
 										handleSearch
-										}}
+									}}
 									>
-									<i className="ri-search-line left-center-absolute ml-2"></i>
-									<input
-										type="text"
-										className="form-control pl-10"
-										placeholder="Ketik disini untuk Pencarian..."
-										value={keyword}
-										onChange={(e) => {
-											setKeyword(e.target.value);
-										}}
-									/>
-									<button
-										className="btn btn-primary text-white right-center-absolute"
-										style={{
-											borderTopLeftRadius: "0",
-											borderBottomLeftRadius: "0",
-										}}
-										onClick={handleSearch}
-									>
-										Cari
-									</button>
+										<i className="ri-search-line left-center-absolute ml-2"></i>
+										<input
+											type="text"
+											className="form-control pl-10"
+											placeholder="Ketik disini untuk Pencarian..."
+											value={keyword}
+											onChange={(e) => {
+												setKeyword(e.target.value);
+											}}
+										/>
+										<button
+											className="btn btn-primary text-white right-center-absolute"
+											style={{
+												borderTopLeftRadius: "0",
+												borderBottomLeftRadius: "0",
+											}}
+											onClick={handleSearch}
+										>
+											Cari
+										</button>
 									</form>
 								</div>
 							</div>
@@ -435,7 +441,8 @@ const Dashboard = ({ session, success }) => {
 															keyword,
 															null,
 															null,
-															null
+															null,
+															permission
 														)
 													);
 												}}
@@ -517,7 +524,8 @@ const Dashboard = ({ session, success }) => {
 											limit,
 											keyword,
 											null,
-											null
+											null,
+											permission
 										)
 									);
 								}}
@@ -542,7 +550,8 @@ const Dashboard = ({ session, success }) => {
 												: null,
 											dateRegister[1] !== null
 												? moment(dateRegister[1]).format("YYYY-MM-DD")
-												: null
+												: null,
+											permission
 										)
 									);
 								}}

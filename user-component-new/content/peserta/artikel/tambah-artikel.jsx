@@ -13,6 +13,7 @@ import { newArtikelPeserta } from "../../../../redux/actions/publikasi/artikel.a
 
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import { useQuill } from "react-quilljs";
+import Cookies from 'js-cookie'
 
 import styles from "../../../../styles/previewGaleri.module.css";
 
@@ -20,6 +21,7 @@ const TambahArtikelPeserta = ({ session }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const permission = Cookies.get("token_permission")
 
   const importSwitch = () => import("bootstrap-switch-button-react");
   const SwitchButton = dynamic(importSwitch, {
@@ -105,7 +107,7 @@ const TambahArtikelPeserta = ({ session }) => {
         kategori_id: kategori,
         tag: tag,
       };
-      dispatch(newArtikelPeserta(data, session.token));
+      dispatch(newArtikelPeserta(data, session.token, permission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -252,8 +254,8 @@ const TambahArtikelPeserta = ({ session }) => {
                     <div className="ckeditor">
                       {editorLoaded ? (
                         <div style={{ width: "100%", height: "300px" }}>
-                          <div ref={quillRef} 
-                            style={{fontFamily:'Poppins'}}/>
+                          <div ref={quillRef}
+                            style={{ fontFamily: 'Poppins' }} />
                         </div>
                       ) : (
                         <p>Tunggu Sebentar</p>

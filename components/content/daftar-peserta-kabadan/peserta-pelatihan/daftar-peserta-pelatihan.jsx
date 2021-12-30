@@ -7,6 +7,7 @@ import Pagination from "react-js-pagination";
 import { Modal } from "react-bootstrap";
 import moment from "moment";
 import Select from "react-select";
+import Cookies from "js-cookie";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -17,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 const DaftarPesertaPelatihan = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   const { error: errorDataAkademi, data: dataPelatihan } = useSelector(
     (state) => state.getAkademiByPelatihan
@@ -65,7 +67,16 @@ const DaftarPesertaPelatihan = ({ token }) => {
 
   const handlePagination = (pageNumber) => {
     setPage(pageNumber);
-    dispatch(getPendaftaranPeserta(token, id, search, limit, pageNumber));
+    dispatch(
+      getPendaftaranPeserta(
+        token,
+        token_permission,
+        id,
+        search,
+        limit,
+        pageNumber
+      )
+    );
   };
 
   function capitalize(s) {
@@ -80,19 +91,24 @@ const DaftarPesertaPelatihan = ({ token }) => {
   const handleSearch = (e) => {
     e.preventDefault();
     setPage(1);
-    dispatch(getPendaftaranPeserta(token, id, search, limit, 1));
+    dispatch(
+      getPendaftaranPeserta(token, token_permission, id, search, limit, 1)
+    );
   };
 
   const handleLimit = (val) => {
     setLimit(val);
     setPage(1);
-    dispatch(getPendaftaranPeserta(token, id, search, val, 1));
+    dispatch(
+      getPendaftaranPeserta(token, token_permission, id, search, val, 1)
+    );
   };
 
   const handleFilter = () => {
     dispatch(
       getPendaftaranPeserta(
         token,
+        token_permission,
         id,
         search,
         limit,

@@ -41,6 +41,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req, params }) => {
       const session = await getSession({ req });
+      const token_permission = req.cookies.token_permission;
 
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
@@ -53,13 +54,21 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getStatusPendaftar(session.user.user.data.token, query.id)
+        getStatusPendaftar(
+          session.user.user.data.token,
+          query.id,
+          token_permission
+        )
       );
       await store.dispatch(
         getAkademiByPelatihan(session.user.user.data.token, query.id)
       );
       await store.dispatch(
-        getPendaftaranPeserta(session.user.user.data.token, query.id)
+        getPendaftaranPeserta(
+          session.user.user.data.token,
+          token_permission,
+          query.id
+        )
       );
 
       return {

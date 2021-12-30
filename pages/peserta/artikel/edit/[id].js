@@ -55,7 +55,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       let success = false;
       if (session) {
         const dataPribadi = await store.dispatch(
-          getDataPribadi(session?.user.user.data.user.token)
+          getDataPribadi(session?.user.user.data.user.token, req.cookies.token_permission)
         );
         if (dataPribadi?.data.status == false || !dataPribadi?.data.status) {
           success = false;
@@ -65,10 +65,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailArtikelsPeserta(params.id, session?.user.user.data.user.token)
+        getDetailArtikelsPeserta(params.id, session?.user.user.data.user.token, req.cookies.token_permission)
       );
-      await store.dispatch(getAllKategori(session.user.user.data.Token));
-      await store.dispatch(getAllAkademi(session.user.user.data.Token));
+      await store.dispatch(getAllKategori(session.user.user.data.Token, req.cookies.token_permission));
+      await store.dispatch(getAllAkademi(session.user.user.data.Token, req.cookies.token_permission));
 
       return {
         props: {

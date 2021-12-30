@@ -43,6 +43,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthAdminSession(session);
+      const token_permission = req.cookies.token_permission;
       if (!middleware.status) {
         return {
           redirect: {
@@ -64,7 +65,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           null,
           null,
           null,
-          session.user.user.data.token
+          session.user.user.data.token,
+          token_permission
         )
       );
 

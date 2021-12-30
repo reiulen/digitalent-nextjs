@@ -19,6 +19,7 @@ import LoadingTable from "../../../LoadingTable";
 import IconArrow from "../../../assets/icon/Arrow";
 import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
+import Cookies from 'js-cookie'
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -31,6 +32,7 @@ import { DELETE_KATEGORI_RESET } from "../../../../redux/types/publikasi/kategor
 const Kategori = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const permission = Cookies.get("token_permission")
 
   const { loading, error, kategori } = useSelector(state => state.allKategori);
   const { paginateKategori } = useSelector(state => state.paginationKategori);
@@ -109,7 +111,7 @@ const Kategori = ({ token }) => {
       cancelButtonText: "Batal",
     }).then(result => {
       if (result.isConfirmed) {
-        dispatch(deleteKategori(id, token));
+        dispatch(deleteKategori(id, token, permission));
       }
     });
   };

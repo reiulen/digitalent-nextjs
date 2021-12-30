@@ -53,14 +53,14 @@ const TambahRole = ({ token }) => {
     backgroundColor: "#203E80",
   };
 
-  let list = allPermission.data.data;
+  let list = allPermission?.data?.data;
 
   let permission = [];
 
-  for (let i = 0; i < allPermission.data.data.length; i++) {
-    permission.push(allPermission.data.data[i]);
-    if (allPermission.data.data[i].list_sub_menu.length > 0) {
-      allPermission.data.data[i].list_sub_menu.forEach((item) => {
+  for (let i = 0; i < allPermission.data?.data.length; i++) {
+    permission.push(allPermission.data?.data[i]);
+    if (allPermission.data?.data[i].list_sub_menu.length > 0) {
+      allPermission.data?.data[i].list_sub_menu.forEach((item) => {
         permission.push(item);
         if (item.list_sub_menu.length > 0) {
           item.list_sub_menu.forEach((sub) => {

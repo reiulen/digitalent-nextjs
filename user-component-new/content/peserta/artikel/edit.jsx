@@ -14,6 +14,7 @@ import DatePicker from "react-datepicker";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import { Container } from "react-bootstrap";
 import { useQuill } from "react-quilljs";
+import Cookies from 'js-cookie'
 
 import styles from "../../../../styles/previewGaleri.module.css";
 
@@ -21,6 +22,7 @@ const EditArtikelPeserta = ({ session }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const permission = Cookies.get("token_permission")
 
   const detailArtikelsPeserta = useSelector(
     (state) => state.detailArtikelsPeserta
@@ -43,18 +45,18 @@ const EditArtikelPeserta = ({ session }) => {
   const [disablePublishDate, setDisablePublishDate] = useState(true);
   const [gambarDB, setGambarDB] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-      "publikasi/images/" +
-      detailArtikelsPeserta.artikel.data.gambar
+    "publikasi/images/" +
+    detailArtikelsPeserta.artikel.data.gambar
   );
   const [gambarPreview, setGambarPreview] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-      "publikasi/images/" +
-      detailArtikelsPeserta.artikel.data.gambar
+    "publikasi/images/" +
+    detailArtikelsPeserta.artikel.data.gambar
   );
   const [gambar, setGambar] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-      "publikasi/images/" +
-      detailArtikelsPeserta.artikel.data.gambar
+    "publikasi/images/" +
+    detailArtikelsPeserta.artikel.data.gambar
   );
 
   // const [gambar, setGambar] = useState("");
@@ -134,7 +136,7 @@ const EditArtikelPeserta = ({ session }) => {
           tag: tag,
           _method: "put",
         };
-        dispatch(updateArtikelPeserta(data, session.token, router.query.id));
+        dispatch(updateArtikelPeserta(data, session.token, router.query.id, permission));
       } else {
         const data = {
           isi_artikel: deskripsi,
@@ -145,7 +147,7 @@ const EditArtikelPeserta = ({ session }) => {
           tag: tag,
           _method: "put",
         };
-        dispatch(updateArtikelPeserta(data, session.token, router.query.id));
+        dispatch(updateArtikelPeserta(data, session.token, router.query.id, permission));
       }
     } else {
       simpleValidator.current.showMessages();
@@ -295,7 +297,7 @@ const EditArtikelPeserta = ({ session }) => {
                       <div style={{ width: "100%", height: "300px" }}>
                         <div
                           ref={quillRef}
-                          style={{fontFamily:'Poppins'}}
+                          style={{ fontFamily: 'Poppins' }}
                           onBlur={() =>
                             simpleValidator.current.showMessageFor("deskripsi")
                           }

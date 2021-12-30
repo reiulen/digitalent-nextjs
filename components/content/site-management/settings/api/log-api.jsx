@@ -21,6 +21,7 @@ import DatePicker from "react-datepicker";
 import IconCalender from "../../../../assets/icon/Calender";
 import { RESET_VALUE_SORTIR } from "../../../../../redux/types/site-management/settings/api.type";
 import styles from "../../../../../styles/sitemanagement/logApi.module.css";
+import Cookies from 'js-cookie'
 
 import styles2 from "../../../../../styles/previewGaleri.module.css";
 import stylesPag from "../../../../../styles/pagination.module.css";
@@ -65,7 +66,7 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
-    dispatch(getDetailLog(router.query.id, token));
+    dispatch(getDetailLog(router.query.id, token, Cookies.get("token_permission")));
   }, [
     dispatch,
     router.query.id,
@@ -281,7 +282,7 @@ const Table = ({ token }) => {
                             className={`${styles.btnExport} btn btn-rounded-full bg-blue-secondary text-white mt-2`}
                             type="button"
                             onClick={() =>
-                              dispatch(exportFileCSV(token, router.query.id))
+                              dispatch(exportFileCSV(token, router.query.id, Cookies.get("token_permission")))
                             }
                           >
                             Export .xlsx
@@ -312,8 +313,8 @@ const Table = ({ token }) => {
                     </thead>
                     <tbody>
                       {!listLog ||
-                      (listLog && listLog?.data?.length === 0) ||
-                      listLog?.data === undefined ? (
+                        (listLog && listLog?.data?.length === 0) ||
+                        listLog?.data === undefined ? (
                         <td className="align-middle text-center" colSpan={6}>
                           Data kosong
                         </td>
@@ -325,7 +326,7 @@ const Table = ({ token }) => {
                                 {listLog.page === 1
                                   ? index + 1
                                   : (listLog.page - 1) * listLog.limit +
-                                    (index + 1)}
+                                  (index + 1)}
                               </td>
                               <td className="align-middle text-left text-overflow-ens">
                                 {items.api_name}

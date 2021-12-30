@@ -6,15 +6,14 @@ import { putDataPrompt } from "../../../../../redux/actions/site-management/sett
 import styles from "../../../../../styles/previewGaleri.module.css";
 import Cookies from "js-cookie";
 
-
 export default function Prompt(props) {
   const allPrompt = useSelector((state) => state.allPrompt);
 
   const [notification, setNotification] = useState(
-    allPrompt.notification.training_rules.notification[0]?.status
+    allPrompt.notification?.training_rules.notification[0]?.status
   );
   const [email, setEmail] = useState(
-    allPrompt.notification.training_rules.email[0]?.status
+    allPrompt.notification?.training_rules.email[0]?.status
   );
 
   let dispatch = useDispatch();

@@ -44,7 +44,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(getDataGeneral(session.user.user.data.token));
+      await store.dispatch(getDataGeneral(session.user.user.data.token, req.cookies.token_permission));
 
       return {
         props: { session, title: "General - Site Management" },

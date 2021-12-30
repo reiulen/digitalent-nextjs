@@ -20,11 +20,13 @@ import { NEW_ARTIKEL_RESET, UPDATE_VIDEO_RESET } from '../../../../redux/types/p
 import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
+import Cookies from 'js-cookie'
 
 const EditVideo = ({ token }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
+    const permission = Cookies.get("token_permission")
 
     const importSwitch = () => import('bootstrap-switch-button-react')
     const [editorLoaded, setEditorLoaded] = useState(false)
@@ -191,7 +193,7 @@ const EditVideo = ({ token }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateVideo(data, token));
+                                dispatch(updateVideo(data, token, permission));
                             }
                         });
                 } else {
@@ -222,7 +224,7 @@ const EditVideo = ({ token }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateVideo(data, token));
+                                dispatch(updateVideo(data, token, permission));
                             }
                         });
                 }
@@ -258,7 +260,7 @@ const EditVideo = ({ token }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateVideo(data, token));
+                                dispatch(updateVideo(data, token, permission));
                             }
                         });
 
@@ -289,7 +291,7 @@ const EditVideo = ({ token }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateVideo(data, token));
+                                dispatch(updateVideo(data, token, permission));
                             }
                         });
                 }
