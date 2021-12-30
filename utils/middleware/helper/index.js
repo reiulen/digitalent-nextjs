@@ -141,7 +141,7 @@ export const helperUserStatusColor = (status, setLabel) => {
   else return setLabel("primary");
 };
 
-let SI_SYMBOL = ["", "k", "M", "G", "T", "P", "E"];
+let SI_SYMBOL = ["", "k", "M", "B", "T", "P", "E"];
 
 export const kFormatter = (number) => {
   // what tier? (determines SI symbol)
