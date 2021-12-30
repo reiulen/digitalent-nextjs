@@ -50,16 +50,16 @@ const StepTwo = ({ token, tokenPermission }) => {
   }, [dispatch, error, success, router]);
 
   const [startDate, setStartDate] = useState(
-    survey.start_at ? new Date(survey.start_at) : null
+    survey?.start_at ? new Date(survey?.start_at) : null
   );
   const [endDate, setEndDate] = useState(
-    survey.end_at ? new Date(survey.end_at) : null
+    survey?.end_at ? new Date(survey?.end_at) : null
   );
-  const [duration, setDuration] = useState(survey.duration || "");
+  const [duration, setDuration] = useState(survey?.duration || "");
   const [jumlah_soal, setJumlahSoal] = useState(
-    survey.questions_to_share || ""
+    survey?.questions_to_share || ""
   );
-  const [status, setStatus] = useState(survey.status);
+  const [status, setStatus] = useState(survey?.status);
   const [, forceUpdate] = useState();
 
   const saveDraft = () => {

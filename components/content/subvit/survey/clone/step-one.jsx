@@ -130,7 +130,7 @@ const StepOne = ({ token, tokenPermission }) => {
         category,
       };
 
-      dispatch(newCloneSurveyQuestionBanks(data, token));
+      dispatch(newCloneSurveyQuestionBanks(data, token, tokenPermission));
       localStorage.removeItem("clone1");
     } else {
       simpleValidator.current.showMessages();
@@ -168,7 +168,7 @@ const StepOne = ({ token, tokenPermission }) => {
         category,
       };
       localStorage.setItem("clone1", JSON.stringify(setData));
-      dispatch(newCloneSurveyQuestionBanks(data, token));
+      dispatch(newCloneSurveyQuestionBanks(data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
