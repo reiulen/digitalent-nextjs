@@ -62,11 +62,11 @@ const Navigationbar = ({ session }) => {
 
   useEffect(() => {
     // getFirebaseToken(setTokenFound);
-    console.log(Cookies.get("fcm_token"));
+    // console.log(Cookies.get("fcm_token"));
 
     const messaging = getMessaging();
     onMessage(messaging, (payload) => {
-      console.log("Message received. ", payload.notification);
+      // console.log("Message received. ", payload.notification);
       // toast.info(payload.notification.title);
       GetNotifikasi();
       setAlertNotif(true);
