@@ -500,7 +500,7 @@ const StepTwo = ({ token, tokenPermission }) => {
           <StepInput step="2" survey={survey} title="Survey"></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
-              Soal {survey.bank_soal + 1}
+              Soal {survey?.bank_soal + 1}
             </h2>
           </div>
           <div className="card-body pt-0">

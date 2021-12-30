@@ -24,18 +24,14 @@ const ImportParticipant = ({ token }) => {
   };
 
   const handleSelectFile = (e) => {
-    const type = ["application/vnd.ms-excel"];
+    const type = ["text/csv"];
     if (e.target.files[0]) {
-      if (e.target.files[0].size > 3000000) {
-        e.target.value = null;
-        SweatAlert("Oops...", "Data yang bisa dimasukkan hanya 3 MB", "error");
+      if (type.includes(e.target.files[0].type)) {
+        setFile(e.target.files[0]);
+        setFileName(e.target.files[0].name);
       } else {
-        if (type.includes(e.target.files[0].type)) {
-          setFile(e.target.files[0]);
-          setFileName(e.target.files[0].name);
-        } else {
-          SweatAlert("Oops...", "File hanya boleh CSV", "error");
-        }
+        SweatAlert("Oops...", "File hanya boleh CSV", "error");
+        e.target.value = null;
       }
     }
   };
@@ -141,9 +137,7 @@ const ImportParticipant = ({ token }) => {
                     </button>
                   </div>
                 )}
-                <p className="mt-3 text-muted">
-                  Format Image(.csv) & Maximal 3MB
-                </p>
+                <p className="mt-3 text-muted">Format Image(.csv)</p>
                 <input
                   type="file"
                   name="gambar"

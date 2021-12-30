@@ -107,7 +107,7 @@ const StepOne = ({ token, tokenPermission }) => {
         category: save ? save.category : category,
       };
 
-      dispatch(newSubtanceQuestionBanks(data, token));
+      dispatch(newSubtanceQuestionBanks(data, token, tokenPermission));
       localStorage.removeItem("step1");
     } else {
       simpleValidator.current.showMessages();
@@ -146,7 +146,7 @@ const StepOne = ({ token, tokenPermission }) => {
       };
 
       localStorage.setItem("step1", JSON.stringify(setData));
-      dispatch(newSubtanceQuestionBanks(data, token));
+      dispatch(newSubtanceQuestionBanks(data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

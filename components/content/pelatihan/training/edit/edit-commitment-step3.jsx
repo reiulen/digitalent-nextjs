@@ -11,10 +11,7 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
 
-import {
-  putTrainingStep3,
-  getEditTrainingStep2,
-} from "../../../../../redux/actions/pelatihan/training.actions";
+import { putTrainingStep3 } from "../../../../../redux/actions/pelatihan/training.actions";
 import Cookies from "js-cookie";
 
 const EditCommitmentStep3 = ({ token }) => {
@@ -40,7 +37,7 @@ const EditCommitmentStep3 = ({ token }) => {
   );
 
   useEffect(() => {
-    console.log(getEditTraining3);
+    console.log(commitment);
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),

@@ -135,6 +135,7 @@ const DetailReport = ({ token }) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: token_permission,
       },
     };
 
