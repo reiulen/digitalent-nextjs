@@ -64,13 +64,14 @@ export const getAllExportData =
     }
   };
 
-export const deleteExportDataAction = (id, token) => async (dispatch) => {
+export const deleteExportDataAction = (id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_EXPORT_DATA_REQUEST });
 
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission
       },
     };
 
