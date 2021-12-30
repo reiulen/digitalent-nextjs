@@ -382,7 +382,7 @@ const DashboardDigitalent = ({ token }) => {
             <div className="col-md-4 mb-8" key={i}>
               <TotalPerAkademi
                 group={row.name}
-                link={`/pelatihan/dashboard/${row}`}
+                link={`/pelatihan/dashboard/${row.name}`}
                 pendaftar={row.pendaftar}
                 peserta={row.peserta}
                 lulus={row.lulus}
