@@ -187,8 +187,8 @@ const DetailSurvey = ({ token, tokenPermission }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
-              Survey {survey.academy ? survey.academy.name : ""} -{" "}
-              {survey.theme ? survey.theme.name : ""}
+              Survey {survey?.academy ? survey?.academy.name : ""} -{" "}
+              {survey?.theme ? survey?.theme?.name : ""}
             </h2>
             {dataPermission &&
             dataPermission.roles.includes("Super Admin") &&
@@ -246,10 +246,10 @@ const DetailSurvey = ({ token, tokenPermission }) => {
                   </div>
                   <div className="col value-1">
                     <p>
-                      {survey.start_at &&
+                      {survey?.start_at &&
                         moment(survey && survey.start_at).format("ll")}{" "}
                       -{" "}
-                      {survey.end_at &&
+                      {survey?.end_at &&
                         moment(survey && survey.end_at).format("ll")}
                     </p>
                     <p>{(survey && survey.questions_to_share) || "-"} Soal</p>

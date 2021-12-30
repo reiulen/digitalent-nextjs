@@ -134,7 +134,7 @@ const StepOne = ({ token, tokenPermission }) => {
         category,
       };
 
-      dispatch(newCloneTriviaQuestionBanks(data, token));
+      dispatch(newCloneTriviaQuestionBanks(data, token, tokenPermission));
       localStorage.removeItem("clone3");
     } else {
       simpleValidator.current.showMessages();
@@ -175,7 +175,14 @@ const StepOne = ({ token, tokenPermission }) => {
 
       localStorage.setItem("clone3", JSON.stringify(setData));
 
-      dispatch(updatewTriviaQuestionBanks(router.query.id, data, token));
+      dispatch(
+        updatewTriviaQuestionBanks(
+          router.query.id,
+          data,
+          token,
+          tokenPermission
+        )
+      );
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

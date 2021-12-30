@@ -5,6 +5,7 @@ import { getSession } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 import { getPermissionSubvit } from "../../../redux/actions/subvit/subtance.actions";
+import { getAllTriviaQuestionDetail } from "../../../redux/actions/subvit/trivia-question-detail.action";
 
 const ListTrivia = dynamic(
   () => import("../../../components/content/subvit/trivia/list-trivia"),
