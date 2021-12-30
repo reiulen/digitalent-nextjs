@@ -171,7 +171,7 @@ const EditRegistrationStep2 = ({ token }) => {
   };
 
   const backHandler = () => {
-    router.push("/pelatihan/master-pendaftaran");
+    router.back();
   };
 
   const submitHandler = (e) => {

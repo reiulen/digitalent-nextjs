@@ -39,6 +39,7 @@ export const getFormBuilder = (token, id) => async (dispatch) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        "Host-Backend": "pelatihan",
       },
     };
 
@@ -66,6 +67,7 @@ export const getPelatihan = (token, id) => async (dispatch) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        "Host-Backend": "pelatihan",
       },
     };
 
@@ -94,6 +96,7 @@ export const newPendaftaranPelatihan =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          "Host-Backend": "pelatihan",
         },
       };
 

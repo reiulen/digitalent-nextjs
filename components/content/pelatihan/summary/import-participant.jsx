@@ -37,7 +37,8 @@ const ImportParticipant = ({ token }) => {
   };
 
   const handleCloseFile = () => {
-    setFileName("");
+    document.getElementById("upload-file").value = null;
+    setFileName("Belum ada File");
     setFile("");
   };
 
@@ -120,7 +121,7 @@ const ImportParticipant = ({ token }) => {
                   <i className="ri-upload-2-line mr-2 mt-1 text-white"></i>
                   Upload
                 </button>
-                {fileName !== "Belum ada File" && (
+                {fileName && fileName !== "Belum ada File" && (
                   <div
                     className="alert alert-light alert-dismissible mt-3 w-50"
                     role="alert"

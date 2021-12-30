@@ -36,21 +36,41 @@ const SubHeader = dynamic(() => import("./subheader.component"), {
 const ContentWrapper = dynamic(() => import("../wrapper/content.wrapper"), {
   ssr: false,
 });
-
-import Footer from "./footer.component";
+import axios from "axios";
 
 const Layout = ({ children, title = "Dashboard" }) => {
   const dispatch = useDispatch();
   const allFunctionls = useSelector((state) => state.allFunctionls);
   const [user, setUser] = useState();
+  const [token, setToken] = useState("");
   const [session, setSession] = useState();
-  const [sideBar, setSidebar] = useState([])
-  const handlerLogout = () => {
-    signOut();
-    localStorage.clear();
-    // {
-    //   callbackUrl: `${window.location.origin}/login/admin`,
-    // } LAGI DEVELOP JANGAN DIHAPUS
+  const [sideBar, setSidebar] = useState([]);
+  const handlerLogout = async () => {
+    // localStorage.clear();
+    // signOut();
+    const config = {
+      headers: {
+        Authorization: "Bearer " + session.token,
+      },
+    };
+    let link =
+      process.env.END_POINT_API_PARTNERSHIP + "api/authentication/logout";
+    if (user.roles[0] === "mitra") {
+      link =
+        process.env.END_POINT_API_PARTNERSHIP + "api/authentication/logout";
+      await axios
+        .post(link, config)
+        .then((res) => {
+          localStorage.clear();
+          signOut();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      localStorage.clear();
+      signOut();
+    }
   };
 
   const activeProfileAndOverlay = () => {
@@ -64,8 +84,8 @@ const Layout = ({ children, title = "Dashboard" }) => {
   useEffect(() => {
     getSession().then((session) => {
       setUser(session.user.user.data.user);
+      setToken(session.user.user.data.token);
       setSession(session);
-      
     });
   }, []);
 
@@ -93,34 +113,32 @@ const Layout = ({ children, title = "Dashboard" }) => {
       <div
         id="kt_quick_user"
         className={`offcanvas offcanvas-right p-10 ${
-          allFunctionls.isOverlayProfile && allFunctionls.isOverlayProfile
-            && "offcanvas-on"
-        }`}>
+          allFunctionls.isOverlayProfile &&
+          allFunctionls.isOverlayProfile &&
+          "offcanvas-on"
+        }`}
+      >
         <div className="offcanvas-header d-flex align-items-center justify-content-between pb-5">
           <h3 className="font-weight-bold m-0">User Profile</h3>
           <a
             className="btn btn-xs btn-icon btn-light btn-hover-primary"
             id="kt_quick_user_close"
-            onClick={() => activeProfileAndOverlay()}>
-            <i className="ki ki-close icon-xs text-muted"/>
+            onClick={() => activeProfileAndOverlay()}
+          >
+            <i className="ki ki-close icon-xs text-muted" />
           </a>
         </div>
 
         <div className="offcanvas-content pr-5 mr-n5">
           <div className="d-flex align-items-center mt-5">
             <div className="symbol symbol-100 mr-5">
-              <div
-                className="symbol-label"
-              >
+              <div className="symbol-label">
                 <Image
-                  src={
-                    "/assets/logo/mainlogo.png"
-                  }
+                  src={"/assets/logo/mainlogo.png"}
                   width={70}
                   height={70}
                   objectFit="cover"
                 />
-                
               </div>
               <i className="symbol-badge bg-success"></i>
             </div>
@@ -132,12 +150,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
                 {(user && user.name) || ""}
               </a>
               <div className="text-muted mt-1">
-                {
-                  user && user.mitra_profile ?
-                    "Mitra"
-                  :
-                    "Admin"
-                }
+                {user && user.mitra_profile ? "Mitra" : "Admin"}
               </div>
               <div className="navi mt-2">
                 <a href="#" className="navi-item">
