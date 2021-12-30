@@ -573,11 +573,11 @@ import {
 
 // ========== testimoni ========
 import {
-	allBerandaTestimoniReducer,
-	detailBerandaTestimoniReducer,
-	kategoriBerandaTestimoniReducer,
-	allTagBerandaTestimoniReducer,
-	cekLulusPelatihanTestimoniReducer,
+  allBerandaTestimoniReducer,
+  detailBerandaTestimoniReducer,
+  kategoriBerandaTestimoniReducer,
+  allTagBerandaTestimoniReducer,
+  cekLulusPelatihanTestimoniReducer,
 } from "../reducers/beranda/testimoni.reducers";
 
 //END BERANDA
@@ -959,7 +959,7 @@ const reducer = combineReducers({
   deleteTraining: deleteTrainingReducer,
   getEditTraining: getEditTrainingReducer,
   getEditTraining2: getEditTraining2Reducer,
-  getEditTraining3: getEditTrainingReducer,
+  getEditTraining3: getEditTraining3Reducer,
   getFormLPJ: getFormLPJReducer,
   newLPJ: newLPJReducer,
   getFormEvidence: getFormEvidenceReducer,
@@ -1098,12 +1098,12 @@ const reducer = combineReducers({
   allFaqContent: allFaqContentReducer,
   kategoriBerandaFaq: kategoriBerandaFaqReducer,
 
-  // ========== testimoni ======== 
-	allBerandaTestimoni : allBerandaTestimoniReducer,
-	detailBerandaTestimoni : detailBerandaTestimoniReducer,
-	kategoriBerandaTestimoni : kategoriBerandaTestimoniReducer,
-	allTagBerandaTestimoni : allTagBerandaTestimoniReducer,
-	cekLulusPelatihanTestimoni: cekLulusPelatihanTestimoniReducer,
+  // ========== testimoni ========
+  allBerandaTestimoni: allBerandaTestimoniReducer,
+  detailBerandaTestimoni: detailBerandaTestimoniReducer,
+  kategoriBerandaTestimoni: kategoriBerandaTestimoniReducer,
+  allTagBerandaTestimoni: allTagBerandaTestimoniReducer,
+  cekLulusPelatihanTestimoni: cekLulusPelatihanTestimoniReducer,
   //END BERANDA
 
   // ========== Riwayat Pelatihan ========
@@ -1466,7 +1466,7 @@ const reducer = combineReducers({
   deleteTraining: deleteTrainingReducer,
   getEditTraining: getEditTrainingReducer,
   getEditTraining2: getEditTraining2Reducer,
-  getEditTraining3: getEditTrainingReducer,
+  getEditTraining3: getEditTraining3Reducer,
   getFormLPJ: getFormLPJReducer,
   newLPJ: newLPJReducer,
   getFormEvidence: getFormEvidenceReducer,

@@ -840,16 +840,13 @@ export const getEditTrainingStep2 =
   };
 
 export const getEditTrainingStep3 =
-  (id, token, token_permission = "") =>
-  async (dispatch) => {
+  (id, token, token_permission) => async (dispatch) => {
     try {
       let link =
-        process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-tiga`;
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/pelatihan/get-step-tiga?pelatian_id=${id}`;
 
       const config = {
-        params: {
-          pelatian_id: id,
-        },
         headers: {
           Authorization: "Bearer " + token,
           Permission: token_permission,
@@ -857,6 +854,7 @@ export const getEditTrainingStep3 =
       };
 
       const { data } = await axios.get(link, config);
+
       dispatch({
         type: GET_EDIT_DATA_TRAINING3,
         payload: data,
