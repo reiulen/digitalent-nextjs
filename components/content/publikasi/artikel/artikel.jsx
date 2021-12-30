@@ -402,7 +402,7 @@ const Artikel = ({ token }) => {
             background="bg-light-warning"
             icon="new/mail-white.svg"
             color='#ffffff'
-            value={artikel.total_author === "" || artikel.total_author === undefined ? 0 : artikel.total_author}
+            value={artikel?.total_author === "" || artikel?.total_author === undefined ? 0 : artikel?.total_author}
             titleValue="Orang"
             title="Total Author"
             publishedVal=""

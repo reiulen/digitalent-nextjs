@@ -106,16 +106,16 @@ const DashbardPublikasi = ({ token, user }) => {
   ]);
 
   const [dataDashboardBerita, setDataDashboardBerita] = useState(
-    dashboard_publikasi.berita ? dashboard_publikasi.berita : null
+    dashboard_publikasi?.berita ? dashboard_publikasi?.berita : null
   );
   const [dataDashboardArtikel, setDataDashboardArtikel] = useState(
-    dashboard_publikasi.artikel ? dashboard_publikasi.artikel : null
+    dashboard_publikasi?.artikel ? dashboard_publikasi?.artikel : null
   );
   const [dataDashboardGallery, setDataDashboardGallery] = useState(
-    dashboard_publikasi.gallery ? dashboard_publikasi.gallery : null
+    dashboard_publikasi?.gallery ? dashboard_publikasi?.gallery : null
   );
   const [dataDashboardVideo, setDataDashboardVideo] = useState(
-    dashboard_publikasi.video ? dashboard_publikasi.video : null
+    dashboard_publikasi?.video ? dashboard_publikasi?.video : null
   );
 
   const titleToTrim = 30;
