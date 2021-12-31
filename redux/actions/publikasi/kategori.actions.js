@@ -24,7 +24,7 @@ import {
 
 import axios from "axios";
 
-export const getAllKategori = (token, permission) => async dispatch => {
+export const getAllKategori = (token, permission = "") => async dispatch => {
     try {
         dispatch({ type: KATEGORI_REQUEST });
         let link = process.env.END_POINT_API_PUBLIKASI + `api/kategori`;
