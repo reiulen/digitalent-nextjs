@@ -22,6 +22,7 @@ import {
   getDigitalentProvinsiPeserta,
 } from "../../../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
 import { dropdownTemabyAkademi } from "../../../../redux/actions/pelatihan/function.actions";
+import { helperHandlePercentage } from "../../../../utils/middleware/helper";
 
 import {
   BarChart,
@@ -326,10 +327,6 @@ const DashboardDigitalent = ({ token }) => {
     { id: 7, title: "Other", percent: 5, total: "100" },
   ];
 
-  const handlePercentage = (totalAdd, total) => {
-    return Math.ceil((100 * totalAdd) / total);
-  };
-
   return (
     <PageWrapper>
       <section className="opening-hello">
@@ -338,7 +335,7 @@ const DashboardDigitalent = ({ token }) => {
           text={"Pelatihan Digital Talent Scholarship"}
           value={totalPengguna?.total}
           statisticDay={totalPengguna?.total_penambahan}
-          dailyAdd={handlePercentage(
+          dailyAdd={helperHandlePercentage(
             totalPengguna?.total_penambahan,
             totalPengguna?.total
           )}
@@ -353,7 +350,7 @@ const DashboardDigitalent = ({ token }) => {
               title={"Total Seluruh Pendaftar"}
               value={totalPendaftar?.pendaftar?.total}
               statisticDay={totalPendaftar?.pendaftar?.total_penambahan}
-              dailyAdd={handlePercentage(
+              dailyAdd={helperHandlePercentage(
                 totalPendaftar?.pendaftar?.total_penambahan,
                 totalPendaftar?.pendaftar?.total
               )}
@@ -364,7 +361,7 @@ const DashboardDigitalent = ({ token }) => {
               title={"Total Seluruh Peserta"}
               value={totalPendaftar?.peserta?.total}
               statisticDay={totalPendaftar?.peserta?.total_penambahan}
-              dailyAdd={handlePercentage(
+              dailyAdd={helperHandlePercentage(
                 totalPendaftar?.peserta?.total_penambahan,
                 totalPendaftar?.peserta?.total
               )}
@@ -382,7 +379,7 @@ const DashboardDigitalent = ({ token }) => {
             <div className="col-md-4 mb-8" key={i}>
               <TotalPerAkademi
                 group={row.name}
-                link={`/pelatihan/dashboard/${row.name}`}
+                link={`/dashboard/${row.name}`}
                 pendaftar={row.pendaftar}
                 peserta={row.peserta}
                 lulus={row.lulus}

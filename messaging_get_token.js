@@ -1,5 +1,6 @@
 import { getApps, initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import Cookies from "js-cookie";
 
 const firebaseConfig = {
   apiKey: process.env.FB_API_KEY,
@@ -13,18 +14,19 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
-export const getFirebaseToken = (setTokenFound) => {
+export const getFirebaseToken = () => {
   const messaging = getMessaging();
   return getToken(messaging, { vapidKey: process.env.FB_FCM_KEY_PAIR })
     .then((currentToken) => {
       if (currentToken) {
-        console.log("current token for client: ", currentToken);
-        setTokenFound(true);
+        // console.log("current token for client: ", currentToken);
+        Cookies.set("fcm_token", currentToken);
+        // setTokenFound(true);
       } else {
         console.log(
           "No registration token available. Request permission to generate one."
         );
-        setTokenFound(false);
+        // setTokenFound(false);
       }
     })
     .catch((err) => {

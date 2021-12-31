@@ -211,8 +211,8 @@ export default function ListPesertaID({ token }) {
                 </div>
 
                 <Image
-                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate.certificate_result}`}
-                  alt={`image ${certificate.data.certificate.certificate_result}`}
+                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate?.data?.certificate?.certificate_result}`}
+                  alt={`image ${certificate?.data?.certificate?.certificate_result}`}
                   objectFit="fill"
                   width={842}
                   height={595}

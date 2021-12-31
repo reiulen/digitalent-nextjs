@@ -31,7 +31,7 @@ export default function DashboardBeasiswaPage(props) {
       loading: function loadingNow() {
         return <LoadingSkeleton />;
       },
-      ssr: false
+      ssr: false,
     }
   );
   const MyMap = dynamic(
@@ -59,6 +59,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthAdminSession(session);
+      const token_permission = req.cookies.token_permission;
       if (!middleware.status) {
         return {
           redirect: {
@@ -69,7 +70,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDigitalentTotalPengguna(session.user.user.data.token)
+        getDigitalentTotalPengguna(
+          session.user.user.data.token,
+          token_permission
+        )
       );
 
       await store.dispatch(
