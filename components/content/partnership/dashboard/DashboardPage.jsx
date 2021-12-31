@@ -306,7 +306,7 @@ export default function DashboardPage({ token }) {
                 allDashboard.data_dashboard && 
                 allDashboard.data_dashboard.data ?
                   allDashboard.data_dashboard.data.cooperation_active +
-                  allDashboard.data_dashboard.data.cooperation_approved
+                  allDashboard.data_dashboard.data.cooperation_non_active
                 :
                   0
               }
@@ -317,7 +317,7 @@ export default function DashboardPage({ token }) {
                 {!allDashboard.data_dashboard?.data?.cooperation_active
                   ? 0
                   : allDashboard?.data_dashboard?.data?.cooperation_active +
-                    allDashboard?.data_dashboard?.data?.cooperation_approved}
+                    allDashboard?.data_dashboard?.data?.cooperation_non_active}
               </span>
 
               <div className="col-12">
