@@ -1052,6 +1052,7 @@ const reducer = combineReducers({
   updatePekerjaan: updatePekerjaanReducer,
   getAsalSekolah: getAsalSekolahReducer,
   getRefPekerjaan: getRefPekerjaanReducer,
+  updateStatusWizzard: updateStatusWizzardReducer,
   //END PELATIHAN
 
   //BERANDA
@@ -1138,6 +1139,8 @@ const reducer = combineReducers({
   TTEP12Data: TTEP12DataReducer,
   sertifikatPeserta: sertifikatPesertaReducer,
   dropdownHelpdesk: dropdownHelpdeskReducer,
+  CheckStatusSertifikat: CheckStatusSertifikatReducer,
+
   // // DASHBOARD KABADAN
   // // ============= DTS ============
   // digitalentTotalPengguna: digitalentTotalPenggunaReducer,
@@ -1639,7 +1642,6 @@ const reducer = combineReducers({
   // TTEP12Data: TTEP12DataReducer,
   // sertifikatPeserta: sertifikatPesertaReducer,
   // dropdownHelpdesk: dropdownHelpdeskReducer,
-  // CheckStatusSertifikat: CheckStatusSertifikatReducer,
   // // DASHBOARD KABADAN
   // // ============= DTS ============
   // digitalentTotalPengguna: digitalentTotalPenggunaReducer,
