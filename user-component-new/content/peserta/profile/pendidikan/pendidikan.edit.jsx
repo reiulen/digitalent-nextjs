@@ -1384,7 +1384,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF 
               </small>
             </div>
           )}
@@ -1420,7 +1420,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF 
               </small>
             </div>
           )}
@@ -1456,7 +1456,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF 
               </small>
             </div>
           )}
@@ -2164,7 +2164,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF
               </small>
             </div>
           )}
@@ -2236,7 +2236,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   )}
                 </label>
                 <small className="text-muted">
-                  *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
+                  *JPG/JPEG/PNG/PDF
                 </small>
               </Form.Group>
             </Row>
@@ -2274,7 +2274,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF
               </small>
             </div>
           )}
@@ -2346,7 +2346,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   )}
                 </label>
                 <small className="text-muted">
-                  *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
+                  *JPG/JPEG/PNG/PDF 
                 </small>
               </Form.Group>
             </Row>
@@ -2384,7 +2384,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF 
               </small>
             </div>
           )}
@@ -2456,7 +2456,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   )}
                 </label>
                 <small className="text-muted">
-                  *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
+                  *JPG/JPEG/PNG/PDF 
                 </small>
               </Form.Group>
             </Row>
@@ -2494,7 +2494,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF 
               </small>
             </div>
           )}
@@ -2566,7 +2566,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   )}
                 </label>
                 <small className="text-muted">
-                  *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
+                  *JPG/JPEG/PNG/PDF 
                 </small>
               </Form.Group>
             </Row>
@@ -2604,7 +2604,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF 
               </small>
             </div>
           )}
@@ -2676,7 +2676,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   )}
                 </label>
                 <small className="text-muted">
-                  *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
+                  *JPG/JPEG/PNG/PDF 
                 </small>
               </Form.Group>
             </Row>

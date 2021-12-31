@@ -313,7 +313,7 @@ const Artikel = () => {
         setActiveTitle("Ada Apa di Digitalent")
         
         dispatch (getAllBerandaArtikel(
-            activePage, 
+            1, 
             keyword, 
             limit, 
             filterPublish, 
@@ -327,7 +327,7 @@ const Artikel = () => {
         if (router.query.tag){
             router.push (router.pathname)
             dispatch (getAllBerandaArtikel(
-                activePage, 
+                1, 
                 keyword, 
                 limit, 
                 filterPublish, 
@@ -345,7 +345,7 @@ const Artikel = () => {
     const handleFilterKeyword = (e) => {
         e.preventDefault();
         dispatch (getAllBerandaArtikel(
-            activePage, 
+            1, 
             keyword, 
             limit, 
             filterPublish, 
@@ -359,7 +359,7 @@ const Artikel = () => {
         if (router.query.tag){
             router.push (router.pathname)
             dispatch (getAllBerandaArtikel(
-                activePage, 
+                1, 
                 keyword, 
                 limit, 
                 filterPublish, 
@@ -392,7 +392,7 @@ const Artikel = () => {
 
     const submitFilter = () => {
         dispatch (getAllBerandaArtikel(
-            activePage, 
+            1, 
             keyword, 
             limit, 
             filterPublish, 
@@ -406,7 +406,7 @@ const Artikel = () => {
         if (router.query.tag){
             router.push (router.pathname)
             dispatch (getAllBerandaArtikel(
-                activePage, 
+                1, 
                 keyword, 
                 limit, 
                 filterPublish, 
@@ -424,7 +424,7 @@ const Artikel = () => {
     const handleFilterTag = (str) => {
         setActiveTitle(`#${str.toUpperCase()}`)
         dispatch (getAllBerandaArtikel(
-            activePage, 
+            1, 
             keyword, 
             limit, 
             filterPublish, 

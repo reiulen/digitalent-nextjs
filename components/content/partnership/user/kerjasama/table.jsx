@@ -382,7 +382,8 @@ const Table = ({ token }) => {
                               ref={(ref) => (selectRefKerjasama = ref)}
                               className="basic-single"
                               classNamePrefix="select"
-                              placeholder="Semua"
+                              // placeholder="Semua"
+                              placeholder={valueKerjaSama ? valueKerjaSama : "Semua"}
                               // defaultValue={allCooperationUser?.stateListKerjaSama[0]}
                               isDisabled={false}
                               isLoading={false}
@@ -400,7 +401,8 @@ const Table = ({ token }) => {
                               ref={(ref) => (selectRefStatus = ref)}
                               className="basic-single"
                               classNamePrefix="select"
-                              placeholder="Semua"
+                              // placeholder="Semua"
+                              placeholder={valueStatus ? valueStatus : "Semua"}
                               // defaultValue={allCooperationUser?.stateListStatus[0]}
                               isDisabled={false}
                               isLoading={false}

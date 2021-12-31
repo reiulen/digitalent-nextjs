@@ -18,6 +18,7 @@ import {
   Tooltip,
 } from "recharts";
 import { useRouter } from "next/dist/client/router";
+import { kFormatter } from "../../../../utils/middleware/helper/index";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getDashboardSubvit } from "../../../../redux/actions/subvit/subtance-question-detail.action";
@@ -44,9 +45,23 @@ const DashbardSubvit = ({ token }) => {
 
   let dataItem = [];
 
+  let dataItemModified = [];
+
   data.map((item) => {
-    return Object.entries(item).map((item) =>
-      dataItem.push({ name: item[0], value: item[1] })
+    return Object.entries(item).map((item) => {
+      dataItem.push({ name: item[0], value: item[1] });
+    });
+  });
+
+  dataItem.map((it) => {
+    dataItemModified.push(
+      it.name.includes("total_substansi")
+        ? { name: "Total  Substansi", value: it.value }
+        : it.name.includes("total_survey")
+        ? { name: "Total  Survey", value: it.value }
+        : it.name.includes("total_trivia")
+        ? { name: "Total  Trivia", value: it.value }
+        : it
     );
   });
 
@@ -310,7 +325,7 @@ const DashbardSubvit = ({ token }) => {
                           <PieChart>
                             <Tooltip />
                             <Pie
-                              data={dataItem.slice(0, 3)}
+                              data={dataItemModified.slice(0, 3)}
                               cx={250}
                               cy={150}
                               innerRadius={90}
@@ -332,9 +347,11 @@ const DashbardSubvit = ({ token }) => {
                                 position="center"
                                 className={styles.labelChart}
                               >
-                                {dashboard_subvit &&
-                                  dashboard_subvit?.chart &&
-                                  dashboard_subvit?.chart[3].total}
+                                {kFormatter(
+                                  dashboard_subvit &&
+                                    dashboard_subvit?.chart &&
+                                    dashboard_subvit?.chart[3].total
+                                )}
                               </Label>
                             </Pie>
                           </PieChart>
@@ -351,7 +368,7 @@ const DashbardSubvit = ({ token }) => {
                           <PieChart>
                             <Tooltip />
                             <Pie
-                              data={dataItem.slice(0, 3)}
+                              data={dataItemModified.slice(0, 3)}
                               cx={250}
                               cy={150}
                               innerRadius={100}
@@ -373,9 +390,11 @@ const DashbardSubvit = ({ token }) => {
                                 position="center"
                                 className={styles.labelChart}
                               >
-                                {dashboard_subvit &&
-                                  dashboard_subvit?.chart &&
-                                  dashboard_subvit?.chart[3].total}
+                                {kFormatter(
+                                  dashboard_subvit &&
+                                    dashboard_subvit?.chart &&
+                                    dashboard_subvit?.chart[3].total
+                                )}
                               </Label>
                             </Pie>
                           </PieChart>
@@ -482,7 +501,7 @@ const DashbardSubvit = ({ token }) => {
                           <PieChart>
                             <Tooltip />
                             <Pie
-                              data={dataItem.slice(0, 3)}
+                              data={dataItemModified.slice(0, 3)}
                               cx={250}
                               cy={150}
                               innerRadius={90}
@@ -504,9 +523,11 @@ const DashbardSubvit = ({ token }) => {
                                 position="center"
                                 className={styles.labelChart}
                               >
-                                {dashboard_subvit &&
-                                  dashboard_subvit?.chart &&
-                                  dashboard_subvit?.chart[3].total}
+                                {kFormatter(
+                                  dashboard_subvit &&
+                                    dashboard_subvit?.chart &&
+                                    dashboard_subvit?.chart[3].total
+                                )}
                               </Label>
                             </Pie>
                           </PieChart>
@@ -523,7 +544,7 @@ const DashbardSubvit = ({ token }) => {
                           <PieChart>
                             <Tooltip />
                             <Pie
-                              data={dataItem.slice(0, 3)}
+                              data={dataItemModified.slice(0, 3)}
                               cx={250}
                               cy={150}
                               innerRadius={100}
@@ -545,9 +566,11 @@ const DashbardSubvit = ({ token }) => {
                                 position="center"
                                 className={styles.labelChart}
                               >
-                                {dashboard_subvit &&
-                                  dashboard_subvit?.chart &&
-                                  dashboard_subvit?.chart[3].total}
+                                {kFormatter(
+                                  dashboard_subvit &&
+                                    dashboard_subvit?.chart &&
+                                    dashboard_subvit?.chart[3].total
+                                )}
                               </Label>
                             </Pie>
                           </PieChart>
