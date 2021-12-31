@@ -40,6 +40,19 @@ import {
   DTS_PRIBADI_PESERTA_REQUEST,
   DTS_PRIBADI_PESERTA_SUCCESS,
   DTS_PRIBADI_PESERTA_FAIL,
+  // DETAIL DASHBOARD
+  DTS_DETAIL_AKADEMI_PESERTA_REQUEST,
+  DTS_DETAIL_AKADEMI_PESERTA_SUCCESS,
+  DTS_DETAIL_AKADEMI_PESERTA_FAIL,
+  DTS_DETAIL_AKADEMI_PENDAFTAR_REQUEST,
+  DTS_DETAIL_AKADEMI_PENDAFTAR_SUCCESS,
+  DTS_DETAIL_AKADEMI_PENDAFTAR_FAIL,
+  DTS_DETAIL_TEMA_PENDAFTAR_REQUEST,
+  DTS_DETAIL_TEMA_PENDAFTAR_SUCCESS,
+  DTS_DETAIL_TEMA_PENDAFTAR_FAIL,
+  DTS_DETAIL_TEMA_PESERTA_REQUEST,
+  DTS_DETAIL_TEMA_PESERTA_SUCCESS,
+  DTS_DETAIL_TEMA_PESERTA_FAIL,
   CLEAR_ERRORS,
 } from "../../../types/dashboard-kabadan/dashboard/digitalent.type";
 
@@ -397,6 +410,136 @@ export const digitalentDataPribadiReducer = (
       };
 
     case DTS_PRIBADI_PESERTA_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+// DETAIL DASHBOARD
+export const detailAkademiPesertaReducer = (
+  state = { akademiPeserta: null },
+  action
+) => {
+  switch (action.type) {
+    case DTS_DETAIL_AKADEMI_PESERTA_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case DTS_DETAIL_AKADEMI_PESERTA_SUCCESS:
+      return {
+        loading: false,
+        akademiPeserta: action.payload.data,
+      };
+
+    case DTS_DETAIL_AKADEMI_PESERTA_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+export const detailAkademiPendaftarReducer = (
+  state = { akademiPendaftar: null },
+  action
+) => {
+  switch (action.type) {
+    case DTS_DETAIL_AKADEMI_PENDAFTAR_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case DTS_DETAIL_AKADEMI_PENDAFTAR_SUCCESS:
+      return {
+        loading: false,
+        akademiPendaftar: action.payload.data,
+      };
+
+    case DTS_DETAIL_AKADEMI_PENDAFTAR_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+export const detailTemaPesertaReducer = (
+  state = { temaPeserta: null },
+  action
+) => {
+  switch (action.type) {
+    case DTS_DETAIL_TEMA_PESERTA_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case DTS_DETAIL_TEMA_PESERTA_SUCCESS:
+      return {
+        loading: false,
+        temaPeserta: action.payload.data,
+      };
+
+    case DTS_DETAIL_TEMA_PESERTA_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+export const detailTemaPendaftarReducer = (
+  state = { temaPendaftar: null },
+  action
+) => {
+  switch (action.type) {
+    case DTS_DETAIL_TEMA_PENDAFTAR_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case DTS_DETAIL_TEMA_PENDAFTAR_SUCCESS:
+      return {
+        loading: false,
+        temaPendaftar: action.payload.data,
+      };
+
+    case DTS_DETAIL_TEMA_PENDAFTAR_FAIL:
       return {
         loading: false,
         error: action.payload,

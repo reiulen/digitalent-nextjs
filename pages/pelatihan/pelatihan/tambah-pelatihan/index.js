@@ -51,6 +51,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthAdminSession(session);
+      const token_permission = req.cookies.token_permission;
       if (!middleware.status) {
         return {
           redirect: {
@@ -74,7 +75,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(dropdownPenyelenggara(session.user.user.data.token));
       await store.dispatch(drowpdownFormBuilder(session.user.user.data.token));
       await store.dispatch(
-        getAllDataReference(session.user.user.data.token, true)
+        getAllDataReference(
+          session.user.user.data.token,
+          true,
+          token_permission
+        )
       );
 
       return {
