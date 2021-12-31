@@ -40,6 +40,11 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
   const { data: dataReferenceOption } = useSelector(
     (state) => state.allDataReference
   );
+
+  const { trainingData } = useSelector((state) => state.trainingStep1);
+  const { registrationData } = useSelector((state) => state.registrationStep2);
+  const { commitmentData } = useSelector((state) => state.commitmentStep3);
+
   const [dataOptions, setDataOptions] = useState([]);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
@@ -47,20 +52,25 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
   const [modalShow, setModalShow] = useState(false);
 
   // TITLE FORM
-  const [titleManual, setTitleManual] = useState(getEditTraining2.judul_form);
-  const [titleCopy, setTitleCopy] = useState(getEditTraining2.judul_form);
+  const [titleManual, setTitleManual] = useState(Object.getOwnPropertyNames(registrationData).length > 0
+  ? registrationData.judul_form : getEditTraining2.judul_form);
+  const [titleCopy, setTitleCopy] = useState(Object.getOwnPropertyNames(registrationData).length > 0
+  ? registrationData.judul_form : getEditTraining2.judul_form);
   // END TITLE FORM
 
   //  FORM BUILDER
   const [formBuilderManual, setFormBuilderManual] = useState(
-    getEditTraining2.FormBuilder
+    Object.getOwnPropertyNames(registrationData).length > 0
+  ? registrationData.formBuilder : getEditTraining2.FormBuilder
   );
   const [formBuilderCopy, setFormBuilderCopy] = useState(
-    getEditTraining2.FormBuilder
+    Object.getOwnPropertyNames(registrationData).length > 0
+  ? registrationData.formBuilder :getEditTraining2.FormBuilder
   );
   // END FORM BUILDER
 
-  const [viewForm, setViewForm] = useState(getEditTraining2.type_form);
+  const [viewForm, setViewForm] = useState( Object.getOwnPropertyNames(registrationData).length > 0
+  ? registrationData.type_form :getEditTraining2.type_form);
 
   useEffect(() => {
     const dataOptionsArr = [];
@@ -79,7 +89,21 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
   const optionsForm = dataForm.data || [];
 
   const [formBuilder, setFormBuilder] = useState(
-    getEditTraining2.FormBuilder || [
+    Object.getOwnPropertyNames(registrationData).length > 0
+    ? registrationData.formBuilder|| [
+      {
+        key: 1,
+        name: "",
+        element: "",
+        size: "",
+        option: "",
+        dataOption: "",
+        required: "0",
+        triggered: "0",
+        triggered_parent: [],
+        value: "",
+      },
+    ] : getEditTraining2.FormBuilder || [
       {
         key: 1,
         name: "",
@@ -279,13 +303,13 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
 
             <div className="form-group mt-9">
               <div className="text-right">
-                {/* <button
+                <button
                   className="btn btn-light-ghost-rounded-full mr-2"
                   type="button"
                   onClick={() => propsStep(1)}
                 >
                   Kembali
-                </button> */}
+                </button>
                 <button className="btn btn-primary-rounded-full" type="submit">
                   Simpan & Lanjut
                 </button>

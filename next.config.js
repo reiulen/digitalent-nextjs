@@ -15,9 +15,9 @@ module.exports = {
     ],
   },
   env: {
-    NEXTAUTH_URL: "http://dts-dev.majapahit.id",
+    NEXTAUTH_URL: "https://dts-dev.majapahit.id",
     LOGO_DTS:
-      "http://api-dts-dev.majapahit.id/pelatihan/storage/images/logo-dts.png",
+      "https://api-dts-dev.majapahit.id/pelatihan/storage/images/logo-dts.png",
     // PATH_URL: "http://dts-dev.majapahit.id",
 
     CAPTCHA_SITE_KEY: "6LeUmtIbAAAAAMltXjRDmRqns6MThDowaaYHz3YU",
@@ -70,13 +70,14 @@ module.exports = {
     END_POINT_API_BEASISWA: "https://api-dts-dev.majapahit.id/beasiswa/api/v1/",
     END_POINT_API_IMAGE_BEASISWA:
       "https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com",
-    END_POINT_API_BEASISWA_SCHOLARSHIP:
-      "http://api-dts-dev.majapahit.id/beasiswa/api/get-scholarship-data",
 
-    END_POINT_API_SIMONAS: "https://api-dts-dev.majapahit.id/simonas/api/v1/",
+    END_POINT_API_BEASISWA_SCHOLARSHIP:
+      "https://api-dts-dev.majapahit.id/beasiswa/api/get-scholarship-data",
 
     END_POINT_API_SIMONAS_JOB:
-      "http://api-dts-dev.majapahit.id/simonas/api/job",
+      "https://api-dts-dev.majapahit.id/simonas/api/job",
+
+    END_POINT_API_SIMONAS: "https://api-dts-dev.majapahit.id/simonas/api/v1/",
 
     END_POINT_API_IMAGE_LOGO_MITRA:
       "https://dts-partnership-dev.s3-ap-southeast-1.amazonaws.com",

@@ -40,9 +40,148 @@ import {
   DTS_PRIBADI_PESERTA_REQUEST,
   DTS_PRIBADI_PESERTA_SUCCESS,
   DTS_PRIBADI_PESERTA_FAIL,
+  // DETAIL DASHBOARD
+  DTS_DETAIL_AKADEMI_PENDAFTAR_REQUEST,
+  DTS_DETAIL_AKADEMI_PENDAFTAR_SUCCESS,
+  DTS_DETAIL_AKADEMI_PENDAFTAR_FAIL,
+  DTS_DETAIL_AKADEMI_PESERTA_REQUEST,
+  DTS_DETAIL_AKADEMI_PESERTA_SUCCESS,
+  DTS_DETAIL_AKADEMI_PESERTA_FAIL,
+  DTS_DETAIL_TEMA_PENDAFTAR_REQUEST,
+  DTS_DETAIL_TEMA_PENDAFTAR_SUCCESS,
+  DTS_DETAIL_TEMA_PENDAFTAR_FAIL,
+  DTS_DETAIL_TEMA_PESERTA_REQUEST,
+  DTS_DETAIL_TEMA_PESERTA_SUCCESS,
+  DTS_DETAIL_TEMA_PESERTA_FAIL,
   CLEAR_ERRORS,
 } from "../../../types/dashboard-kabadan/dashboard/digitalent.type";
 import axios from "axios";
+
+export const getDetailAkademiPendaftar =
+  (token, token_permission = "", slug, year = null) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: DTS_DETAIL_AKADEMI_PENDAFTAR_REQUEST });
+
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/formPendaftaran/dashboard-peserta-tema?slug=${slug}`;
+      if (year) link = link.concat(`&tahun=${year}`);
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+
+      dispatch({
+        type: DTS_DETAIL_AKADEMI_PENDAFTAR_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DTS_DETAIL_AKADEMI_PENDAFTAR_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+export const getDetailAkademiPeserta =
+  (token, token_permission = "", slug, year = null) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: DTS_DETAIL_AKADEMI_PESERTA_REQUEST });
+
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/formPendaftaran/dashboard-pengguna-tema?slug=${slug}`;
+      if (year) link = link.concat(`&tahun=${year}`);
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+
+      dispatch({
+        type: DTS_DETAIL_AKADEMI_PESERTA_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DTS_DETAIL_AKADEMI_PESERTA_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+export const getDetailTemaPeserta =
+  (token, token_permission = "", id, year = null) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: DTS_DETAIL_TEMA_PESERTA_REQUEST });
+
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/formPendaftaran/dashboard-pengguna-pelatihan?id=${id}`;
+      if (year) link = link.concat(`&tahun=${year}`);
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+
+      dispatch({
+        type: DTS_DETAIL_TEMA_PESERTA_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DTS_DETAIL_TEMA_PESERTA_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+export const getDetailTemaPendaftar =
+  (token, token_permission = "", id, page = null, year = null) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: DTS_DETAIL_TEMA_PENDAFTAR_REQUEST });
+
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/formPendaftaran/dashboard-peserta-pelatihan?id=${id}`;
+      if (page) link = link.concat(`&page=${page}`);
+      if (year) link = link.concat(`&tahun=${year}`);
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+
+      dispatch({
+        type: DTS_DETAIL_TEMA_PENDAFTAR_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DTS_DETAIL_TEMA_PENDAFTAR_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const getDigitalentTotalDataPendaftar =
   (token, token_permission = "") =>

@@ -20,7 +20,7 @@ export default function FormPengaduan() {
             src="https://chat.sociomile.com/livechat/61b28d9773bedb57087fe462"
             width="700px"
             // height="100%"
-            className=" mt-n10 p-0 border-0 ml-n29"
+            className=" mt-n10 p-0 border-0 ml-md-n29 ml-n4"
           />
         </div>
       </Sidebar>

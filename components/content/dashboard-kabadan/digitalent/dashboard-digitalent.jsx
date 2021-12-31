@@ -6,6 +6,7 @@ import Header from "../component/header.component";
 import CardTotal from "../component/card-total.component";
 import StatistikWrapper from "../wrapper/statistik.wrapper";
 import LoadingDashboard from "../component/loading-dashboard.component";
+import TotalPerAkademi from "../component/total-perakademi.component";
 
 import CardInfo from "../component/card-info.component";
 import ListCardInfo from "../component/list-card-info.component";
@@ -21,6 +22,7 @@ import {
   getDigitalentProvinsiPeserta,
 } from "../../../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
 import { dropdownTemabyAkademi } from "../../../../redux/actions/pelatihan/function.actions";
+import { helperHandlePercentage } from "../../../../utils/middleware/helper";
 
 import {
   BarChart,
@@ -325,10 +327,6 @@ const DashboardDigitalent = ({ token }) => {
     { id: 7, title: "Other", percent: 5, total: "100" },
   ];
 
-  const handlePercentage = (totalAdd, total) => {
-    return Math.ceil((100 * totalAdd) / total);
-  };
-
   return (
     <PageWrapper>
       <section className="opening-hello">
@@ -337,7 +335,7 @@ const DashboardDigitalent = ({ token }) => {
           text={"Pelatihan Digital Talent Scholarship"}
           value={totalPengguna?.total}
           statisticDay={totalPengguna?.total_penambahan}
-          dailyAdd={handlePercentage(
+          dailyAdd={helperHandlePercentage(
             totalPengguna?.total_penambahan,
             totalPengguna?.total
           )}
@@ -352,7 +350,7 @@ const DashboardDigitalent = ({ token }) => {
               title={"Total Seluruh Pendaftar"}
               value={totalPendaftar?.pendaftar?.total}
               statisticDay={totalPendaftar?.pendaftar?.total_penambahan}
-              dailyAdd={handlePercentage(
+              dailyAdd={helperHandlePercentage(
                 totalPendaftar?.pendaftar?.total_penambahan,
                 totalPendaftar?.pendaftar?.total
               )}
@@ -363,12 +361,32 @@ const DashboardDigitalent = ({ token }) => {
               title={"Total Seluruh Peserta"}
               value={totalPendaftar?.peserta?.total}
               statisticDay={totalPendaftar?.peserta?.total_penambahan}
-              dailyAdd={handlePercentage(
+              dailyAdd={helperHandlePercentage(
                 totalPendaftar?.peserta?.total_penambahan,
                 totalPendaftar?.peserta?.total
               )}
             />
           </div>
+        </div>
+      </section>
+
+      <section className="total-per-akademi mt-10">
+        <h2 className="title-section-dashboard">total per akademi</h2>
+        {}
+        <div className="row mt-5">
+          {/* {console.log(statistikAkademiPeserta)} */}
+          {dataStatistikAkademiPeserta.map((row, i) => (
+            <div className="col-md-4 mb-8" key={i}>
+              <TotalPerAkademi
+                group={row.name}
+                link={`/dashboard/${row.name}`}
+                pendaftar={row.pendaftar}
+                peserta={row.peserta}
+                lulus={row.lulus}
+                sertifikasi={row.sertifikasi}
+              />
+            </div>
+          ))}
         </div>
       </section>
 
@@ -412,7 +430,11 @@ const DashboardDigitalent = ({ token }) => {
                         <XAxis dataKey="name" />
                         <YAxis />
                         <Tooltip cursor={{ fill: "transparent" }} />
-                        <Bar dataKey="pendaftar" fill="#0063CC" />
+                        <Bar
+                          dataKey="pendaftar"
+                          fill="#0063CC"
+                          label={{ position: "top" }}
+                        />
                       </BarChart>
                     </ResponsiveContainer>
                   )}
@@ -457,9 +479,21 @@ const DashboardDigitalent = ({ token }) => {
                         <XAxis dataKey="name" />
                         <YAxis dataKey="pendaftar" />
                         <Tooltip cursor={{ fill: "transparent" }} />
-                        <Bar dataKey="peserta" fill="#203E80" />
-                        <Bar dataKey="lulus" fill="#1A3266" />
-                        <Bar dataKey="sertifikasi" fill="#007CFF" />
+                        <Bar
+                          label={{ position: "top" }}
+                          dataKey="peserta"
+                          fill="#203E80"
+                        />
+                        <Bar
+                          label={{ position: "top" }}
+                          dataKey="lulus"
+                          fill="#1A3266"
+                        />
+                        <Bar
+                          label={{ position: "top" }}
+                          dataKey="sertifikasi"
+                          fill="#007CFF"
+                        />
                         {/* <Bar dataKey="pendaftar" fill="#4CBDE2" /> */}
                       </BarChart>
                     </ResponsiveContainer>
