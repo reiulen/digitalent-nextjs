@@ -59,11 +59,11 @@ const ListSubstansi = ({ token, tokenPermission }) => {
         type: DELETE_SUBTANCE_QUESTION_BANKS_RESET,
       });
       dispatch(
-        getAllSubtanceQuestionBanks(1, "", limit, token, tokenPermission)
+        getAllSubtanceQuestionBanks(page, "", limit, token, tokenPermission)
       );
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [dispatch, isDeleted, limit, token, tokenPermission]);
+  }, [page, dispatch, isDeleted, limit, token, tokenPermission]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;

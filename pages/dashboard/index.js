@@ -71,8 +71,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getAllPermission(session.user.user.data.token)
       );
 
-      const url = data.data.redirect;
-      if (url != "/dashboard") {
+      const url = data?.data?.redirect;
+      if (url && url != "/dashboard") {
         return {
           redirect: {
             destination: url,

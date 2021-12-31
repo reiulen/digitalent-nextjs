@@ -52,7 +52,7 @@ export default function Kontak() {
                     width="100%"
                     height="270px"
                     id="gmap_canvas"
-                    src="https://maps.google.com/maps?q=kementrian%20komunikasi%20dan%20informatika&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                    src="https://maps.google.com/maps?width=600&amp;height=191&amp;hl=en&amp;q=Ministry of Communications and Informatics&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
                     scrolling="no"
                     frameBorder="0"
                     marginHeight="0"

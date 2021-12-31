@@ -44,9 +44,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      // await store.dispatch(
-      //   getDetailAdminSite(query.id, session.user.user.data.token)
-      // );
+      await store.dispatch(
+        getDetailAdminSite(query.id, session.user.user.data.token, req.cookies.token_permission)
+      );
       await store.dispatch(
         getEditAdminSite(query.id, session.user.user.data.token, req.cookies.token_permission)
       );

@@ -68,7 +68,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getDetailPelatihan(query.id, "", "sertifikat", token_permission)
       );
 
-      // console.log(session, "token");
       const data = await store.dispatch(
         getOptionsAcademyCloneSertifikat(
           session.user.user.data.token,

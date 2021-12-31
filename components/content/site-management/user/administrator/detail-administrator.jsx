@@ -15,6 +15,8 @@ const DetailAdmin = ({ token }) => {
   let dispatch = useDispatch();
 
   const editAdminSite = useSelector((state) => state.editAdminSite);
+  const detailAdminSite = useSelector(state => state.detailAdminSite)
+  console.log(detailAdminSite)
   const [search, setSearch] = useState(null);
 
   return (
@@ -36,7 +38,7 @@ const DetailAdmin = ({ token }) => {
                 className="fw-400 fz-16"
                 style={{ color: "#1F1F1F" }}
               >
-                {editAdminSite.adminSite?.data.name}
+                {detailAdminSite.adminSite?.data.name}
               </p>
             </div>
             <div className="form-group d-flex flex-column mt-4">
@@ -48,7 +50,7 @@ const DetailAdmin = ({ token }) => {
                 className="fw-400 fz-16"
                 style={{ color: "#1F1F1F" }}
               >
-                {editAdminSite.adminSite?.data.email}
+                {detailAdminSite.adminSite?.data.email}
               </p>
             </div>
             <div className="form-group d-flex flex-column mt-4">
@@ -60,7 +62,7 @@ const DetailAdmin = ({ token }) => {
                 className="fw-400 fz-16"
                 style={{ color: "#1F1F1F" }}
               >
-                {editAdminSite.adminSite?.data.status == 1
+                {detailAdminSite.adminSite?.data.status == 1
                   ? "Aktif"
                   : "Tidak Aktif"}
               </p>
@@ -68,7 +70,7 @@ const DetailAdmin = ({ token }) => {
             <div className="form-group d-flex flex-column mt-4">
               <p style={{ color: "#6C6C6C" }}>Role</p>
               <div className="d-flex ailgn-items-center">
-                {editAdminSite.adminSite?.data.roles.map((items, index) => {
+                {detailAdminSite.adminSite?.data.roles.map((items, index) => {
                   return (
                     <span
                       className="label label-lg label-inline"
@@ -90,7 +92,7 @@ const DetailAdmin = ({ token }) => {
                 Satuan Kerja
               </p>
               <div className="d-flex ailgn-items-center">
-                {editAdminSite.adminSite?.data.unit_works.map((item, index) => {
+                {detailAdminSite.adminSite?.data.unit_works.map((item, index) => {
                   return (
                     <span
                       className="label label-lg label-inline"
@@ -108,7 +110,7 @@ const DetailAdmin = ({ token }) => {
               </div>
             </div>
 
-            {editAdminSite.adminSite?.data.type_access === "akademi" ? (
+            {detailAdminSite.adminSite?.data.type_access === "akademi" ? (
               <div className="border-top pt-6">
                 <h3 className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5 titles-1">
                   Hak Akses Pelatihan
@@ -116,7 +118,7 @@ const DetailAdmin = ({ token }) => {
 
                 <div className="form-group d-flex flex-column mt-4 pb-6">
                   <div className="d-flex ailgn-items-center">
-                    {editAdminSite.adminSite?.data.training_access.map(
+                    {detailAdminSite.adminSite?.data.training_access.map(
                       (item, index) => {
                         return (
                           <span
@@ -170,7 +172,7 @@ const DetailAdmin = ({ token }) => {
                     </thead>
 
                     <tbody>
-                      {editAdminSite.adminSite?.data.training_access.map(
+                      {detailAdminSite.adminSite?.data.training_access.map(
                         (items, index) => {
                           return (
                             <tr key={index}>

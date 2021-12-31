@@ -319,7 +319,7 @@ const Berita = () => {
         setKategoriBerita(str)
         
         dispatch (getAllBerandaBerita(
-            activePage, 
+            1, 
             keyword, 
             limit, 
             filterPublish, 
@@ -333,7 +333,7 @@ const Berita = () => {
         if (router.query.tag){
             router.push (router.pathname)
             dispatch (getAllBerandaBerita(
-                activePage, 
+                1, 
                 keyword, 
                 limit, 
                 filterPublish, 
@@ -346,10 +346,10 @@ const Berita = () => {
         }
 
         // if (keyword){
-        //     router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${str}&category_academy=${category_academy}&tag=${tag}`)
+        //     router.push (`${router.pathname}?page=${1}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${str}&category_academy=${category_academy}&tag=${tag}`)
         
         // } else {
-        //     router.push (`${router.pathname}?page=${activePage}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${str}&category_academy=${category_academy}&tag=${tag}`)
+        //     router.push (`${router.pathname}?page=${1}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${str}&category_academy=${category_academy}&tag=${tag}`)
         // }
 
         window.scrollTo(0,0)
@@ -358,7 +358,7 @@ const Berita = () => {
     const handleFilterKeyword = (e) => {
         e.preventDefault();
         dispatch (getAllBerandaBerita(
-            activePage, 
+            1, 
             keyword, 
             limit, 
             filterPublish, 
@@ -372,7 +372,7 @@ const Berita = () => {
         if (router.query.tag){
             router.push (router.pathname)
             dispatch (getAllBerandaBerita(
-                activePage, 
+                1, 
                 keyword, 
                 limit, 
                 filterPublish, 
@@ -384,7 +384,7 @@ const Berita = () => {
             ))
         }
 
-        // router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+        // router.push (`${router.pathname}?page=${1}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
             
         window.scrollTo(0,0)
     }
@@ -407,7 +407,7 @@ const Berita = () => {
 
     const submitFilter = () => {
         dispatch (getAllBerandaBerita(
-            activePage, 
+            1, 
             keyword, 
             limit, 
             filterPublish, 
@@ -421,7 +421,7 @@ const Berita = () => {
         if (router.query.tag){
             router.push (router.pathname)
             dispatch (getAllBerandaBerita(
-                activePage, 
+                1, 
                 keyword, 
                 limit, 
                 filterPublish, 
@@ -434,10 +434,10 @@ const Berita = () => {
         }
 
         // if (keyword){
-        //     router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+        //     router.push (`${router.pathname}?page=${1}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
         
         // } else {
-        //     router.push (`${router.pathname}?page=${activePage}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+        //     router.push (`${router.pathname}?page=${1}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
         // }
 
         window.scrollTo(0,0)
@@ -446,7 +446,7 @@ const Berita = () => {
     const handleFilterTag = (str) => {
         setActiveTitle(`#${str.toUpperCase()}`)
         dispatch (getAllBerandaBerita(
-            activePage, 
+            1, 
             keyword, 
             limit, 
             filterPublish, 
@@ -458,10 +458,10 @@ const Berita = () => {
         ))
 
         // if (keyword){
-        //     router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${str}`)
+        //     router.push (`${router.pathname}?page=${1}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${str}`)
         
         // } else {
-        //     router.push (`${router.pathname}?page=${activePage}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${str}`)
+        //     router.push (`${router.pathname}?page=${1}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${str}`)
         // }
 
         window.scrollTo(0,0)

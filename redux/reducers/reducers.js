@@ -14,6 +14,10 @@ import {
   digitalentProvinsiPesertaReducer,
   digitalentProvinsiPendaftarReducer,
   digitalentDataPribadiReducer,
+  detailAkademiPendaftarReducer,
+  detailAkademiPesertaReducer,
+  detailTemaPendaftarReducer,
+  detailTemaPesertaReducer,
 } from "./dashboard-kabadan/dashboard/digitalent.reducers";
 // DASHBOARD BEASISWA
 import {
@@ -635,6 +639,10 @@ const reducer = combineReducers({
   digitalentProvinsiPeserta: digitalentProvinsiPesertaReducer,
   digitalentProvinsiPendaftar: digitalentProvinsiPendaftarReducer,
   digitalentDataPribadi: digitalentDataPribadiReducer,
+  detailAkademiPendaftar: detailAkademiPendaftarReducer,
+  detailAkademiPeserta: detailAkademiPesertaReducer,
+  detailTemaPendaftar: detailTemaPendaftarReducer,
+  detailTemaPeserta: detailTemaPesertaReducer,
   // ============= BEASISWA ============
   beasiswaTotalPengguna: beasiswaTotalPenggunaReducer,
   beasiswaTotalPendaftar: beasiswaTotalPendaftarReducer,
@@ -1044,6 +1052,7 @@ const reducer = combineReducers({
   updatePekerjaan: updatePekerjaanReducer,
   getAsalSekolah: getAsalSekolahReducer,
   getRefPekerjaan: getRefPekerjaanReducer,
+  updateStatusWizzard: updateStatusWizzardReducer,
   //END PELATIHAN
 
   //BERANDA
@@ -1130,6 +1139,8 @@ const reducer = combineReducers({
   TTEP12Data: TTEP12DataReducer,
   sertifikatPeserta: sertifikatPesertaReducer,
   dropdownHelpdesk: dropdownHelpdeskReducer,
+  CheckStatusSertifikat: CheckStatusSertifikatReducer,
+
   // // DASHBOARD KABADAN
   // // ============= DTS ============
   // digitalentTotalPengguna: digitalentTotalPenggunaReducer,
@@ -1631,7 +1642,6 @@ const reducer = combineReducers({
   // TTEP12Data: TTEP12DataReducer,
   // sertifikatPeserta: sertifikatPesertaReducer,
   // dropdownHelpdesk: dropdownHelpdeskReducer,
-  // CheckStatusSertifikat: CheckStatusSertifikatReducer,
   // // DASHBOARD KABADAN
   // // ============= DTS ============
   // digitalentTotalPengguna: digitalentTotalPenggunaReducer,

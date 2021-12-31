@@ -28,6 +28,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSidebar } from "../redux/actions/site-management/role.actions";
 
 import Layout from "../components/templates/layout.component";
+import { getFirebaseToken } from "../messaging_get_token";
 
 function MyApp({ Component, pageProps }) {
   SimpleReactValidator.addLocale("id", {
@@ -74,6 +75,7 @@ function MyApp({ Component, pageProps }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    getFirebaseToken();
     if (pageProps?.session?.user?.user?.data?.token) {
       if (!localStorage.getItem("sidebar")) {
         dispatch(getSidebar(pageProps?.session?.user?.user?.data?.token));
