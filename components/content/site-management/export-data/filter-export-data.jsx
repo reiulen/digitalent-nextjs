@@ -87,8 +87,8 @@ const UbahRole = ({ token, name }) => {
     const data = {
       button_type: 0,
       tahun: "",
-      dari: moment(datePelaksanaanStart).format("YYYY-MM-DD"),
-      sampai: moment(datePelaksanaanEnd).format("YYYY-MM-DD"),
+      dari: moment(datePelaksanaanStart).format("YYYY-MM-DD") === "Invalid date" ? "" : moment(datePelaksanaanStart).format("YYYY-MM-DD"),
+      sampai: moment(datePelaksanaanEnd).format("YYYY-MM-DD") === "Invalid date" ? "" : moment(datePelaksanaanEnd).format("YYYY-MM-DD"),
       akademi: akademi ? akademi.label : "",
       tema: tema ? tema.label : "",
       penyelenggara: penyelenggara ? penyelenggara.label : "",
@@ -105,8 +105,8 @@ const UbahRole = ({ token, name }) => {
     const data = {
       button_type: 1,
       tahun: "",
-      dari: moment(datePelaksanaanStart).format("YYYY-MM-DD"),
-      sampai: moment(datePelaksanaanEnd).format("YYYY-MM-DD"),
+      dari: moment(datePelaksanaanStart).format("YYYY-MM-DD") === "Invalid date" ? "" : moment(datePelaksanaanStart).format("YYYY-MM-DD"),
+      sampai: moment(datePelaksanaanEnd).format("YYYY-MM-DD") === "Invalid date" ? "" : moment(datePelaksanaanEnd).format("YYYY-MM-DD"),
       akademi: akademi ? akademi.label : "",
       tema: tema ? tema.label : "",
       penyelenggara: penyelenggara ? penyelenggara.label : "",

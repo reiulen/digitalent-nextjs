@@ -15,7 +15,7 @@ import {
   getAllListPelatihan,
 } from "../../../../../redux/actions/site-management/user/admin-site.action";
 import SimpleReactValidator from "simple-react-validator";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 
 const TambahApi = ({ token }) => {
   let dispatch = useDispatch();
@@ -31,12 +31,15 @@ const TambahApi = ({ token }) => {
 
   const editAdminSite = useSelector((state) => state.editAdminSite);
 
+  const [trainings, setTrainings] = useState(
+    editAdminSite?.adminSite?.data.training_access.filter((item) => {
+      return item.manage === 1;
+    })
+  );
   const [name, setName] = useState(editAdminSite?.adminSite?.data?.name);
   const [email, setEmail] = useState(editAdminSite?.adminSite?.data?.email);
-  const [search, setSearch] = useState(null)
-  const [status, setStatus] = useState(
-    editAdminSite?.adminSite?.data?.status
-  );
+  const [search, setSearch] = useState(null);
+  const [status, setStatus] = useState(editAdminSite?.adminSite?.data?.status);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [roleOption, setRoleOption] = useState(
@@ -67,10 +70,11 @@ const TambahApi = ({ token }) => {
   );
 
   const [akademiAkses, setAkademiAkses] = useState(
-    editAdminSite?.adminSite?.data?.type_access === "akademi" ?
-    editAdminSite?.adminSite?.data?.training_access?.map((items) => {
-      return { value: items.id, label: items.name, id: items.id };
-    }) : null
+    editAdminSite?.adminSite?.data?.type_access === "akademi"
+      ? editAdminSite?.adminSite?.data?.training_access?.map((items) => {
+          return { value: items.id, label: items.name, id: items.id };
+        })
+      : null
   );
   const [statusAcademy, setStatusAcademy] = useState([]);
   const [typeAccess, setTypeAccess] = useState(
@@ -100,22 +104,25 @@ const TambahApi = ({ token }) => {
     academyIds: editAdminSite?.adminSite?.data?.academy_ids,
   });
   const [sortListPelatihan, setSortListPelatihan] = useState(
-    editAdminSite?.adminSite?.data?.type_access !== "akademi" ? 
-    editAdminSite?.adminSite?.data.training_access.map((items) => {
-      return {
-        ...items,
-        value: items.id,
-        label: items.name,
-        manage: items.manage === 1 ? true : false,
-        view: items.view === 1 ? true : false,
-        allSelect: items.manage === 1 && items.view === 1 ? true: false,
-      };
-    }) :  allListPelatihan.data.map((items) => {
+    allListPelatihan.data
+    .map((items) => {
       return {
         ...items,
         manage: false,
         view: false,
         allSelect: false,
+      };
+    })
+    .map((item) => {
+      trainings.filter((filter) => {
+        if (filter.id === item.value) {
+          item.manage = true
+          item.view = true
+          item.allSelect = true
+        } 
+      });
+      return {
+        ...item,
       };
     })
   );
@@ -141,10 +148,9 @@ const TambahApi = ({ token }) => {
     let data = e.map((items) => {
       return items.value;
     });
-    setAkademi(data)
+    setAkademi(data);
     setAkademiAkses(e);
   };
-
 
   useEffect(() => {
     // dispatch(getDetailAdminSite(router.query.id, token));
@@ -173,7 +179,6 @@ const TambahApi = ({ token }) => {
       input.type = "password";
     }
   };
-
 
   const handleChangePelatihan = (e, index) => {
     let _temp = [...sortListPelatihan];
@@ -255,7 +260,7 @@ const TambahApi = ({ token }) => {
                   {
                     headers: {
                       authorization: `Bearer ${token}`,
-                      "Permission": Cookies.get("token_permission")
+                      Permission: Cookies.get("token_permission"),
                     },
                   }
                 );
@@ -300,7 +305,7 @@ const TambahApi = ({ token }) => {
                   {
                     headers: {
                       authorization: `Bearer ${token}`,
-                      "Permission": Cookies.get("token_permission")
+                      Permission: Cookies.get("token_permission"),
                     },
                   }
                 );
@@ -387,8 +392,8 @@ const TambahApi = ({ token }) => {
                   onBlur={(e) => {
                     simpleValidator.current.showMessageFor("status");
                   }}
-                  onChange={e => {
-                    setStatus(e.target.value)
+                  onChange={(e) => {
+                    setStatus(e.target.value);
                   }}
                 >
                   <option value="" selected disabled hidden>
@@ -426,14 +431,13 @@ const TambahApi = ({ token }) => {
                   )}
                 </div>
                 <p style={{ color: "#b7b5cf" }}>
-                Min 8 Karakter,
-                <br />
-                Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)
-                <br />
-                Min 1 Simbol dan Angka
-              </p>
+                  Min 8 Karakter,
+                  <br />
+                  Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)
+                  <br />
+                  Min 1 Simbol dan Angka
+                </p>
               </div>
-              
               <div className="form-group">
                 <label>Konfirmasi Password</label>
                 <div className="position-relative">
@@ -459,7 +463,6 @@ const TambahApi = ({ token }) => {
                   )}
                 </div>
               </div>
-            
               <div className="form-group">
                 <label>Role</label>
                 <Select
@@ -478,17 +481,24 @@ const TambahApi = ({ token }) => {
                   onChange={(e) => {
                     handleChangeRole(e);
                   }}
-                  options={allRolesList?.data?.list_role?.filter((items) => {
-                    if (items.status === 1) {
-                      return { ...items, label: items.name, value: items.name };
-                    }
-                  }).map(item => {
-                    return { ...item, label: item.name, value: item.name };
-                  }).filter((item) => {
-                    return !roleOption.some((filter) => {
-                      return item.label === filter.label;
-                    });
-                  })}
+                  options={allRolesList?.data?.list_role
+                    ?.filter((items) => {
+                      if (items.status === 1) {
+                        return {
+                          ...items,
+                          label: items.name,
+                          value: items.name,
+                        };
+                      }
+                    })
+                    .map((item) => {
+                      return { ...item, label: item.name, value: item.name };
+                    })
+                    .filter((item) => {
+                      return !roleOption.some((filter) => {
+                        return item.label === filter.label;
+                      });
+                    })}
                   onBlur={(e) => {
                     simpleValidator.current.showMessageFor("roleOption");
                   }}
@@ -530,7 +540,8 @@ const TambahApi = ({ token }) => {
                     })
                     .map((item) => {
                       return { ...item, label: item.name, value: item.name };
-                    }).filter((item) => {
+                    })
+                    .filter((item) => {
                       return !unitWorkOption.some((filter) => {
                         return item.label === filter.label;
                       });
@@ -560,8 +571,7 @@ const TambahApi = ({ token }) => {
                 >
                   <a
                     className={`nav-link ${
-                      editAdminSite?.adminSite?.data?.type_access ===
-                      "akademi"
+                      editAdminSite?.adminSite?.data?.type_access === "akademi"
                         ? "active"
                         : ""
                     }`}
@@ -572,7 +582,7 @@ const TambahApi = ({ token }) => {
                     aria-controls="home"
                     aria-selected="true"
                   >
-                    Akademi
+                    By Akademi
                   </a>
                 </li>
                 <li
@@ -594,18 +604,18 @@ const TambahApi = ({ token }) => {
                     aria-controls="profile"
                     aria-selected="false"
                   >
-                    Pelatihan
+                    By Pelatihan
                   </a>
                 </li>
               </ul>
               {}
               <div className="tab-content" id="myTabContent">
                 <div
-                 className={
-                  editAdminSite?.adminSite?.data?.type_access === "akademi"
-                    ? "tab-pane fade show active"
-                    : "tab-pane fade"
-                }
+                  className={
+                    editAdminSite?.adminSite?.data?.type_access === "akademi"
+                      ? "tab-pane fade show active"
+                      : "tab-pane fade"
+                  }
                   id="home"
                   role="tabpanel"
                   aria-labelledby="home-tab"
@@ -672,8 +682,10 @@ const TambahApi = ({ token }) => {
                                         borderTopLeftRadius: "0",
                                         borderBottomLeftRadius: "0",
                                       }}
-                                      onClick={e => {
-                                        dispatch(getAllListPelatihan(token, search))
+                                      onClick={(e) => {
+                                        dispatch(
+                                          getAllListPelatihan(token, search)
+                                        );
                                       }}
                                     >
                                       Cari
@@ -688,25 +700,15 @@ const TambahApi = ({ token }) => {
 
                       <table className="table table-separate table-head-custom table-checkable mt-5">
                         <thead style={{ backgroundColor: "#F2F7FC" }}>
-                        <tr>
-                            <th
-                              className="align-middle fz-16 fw-600"
-                            >
-                              No
-                            </th>
-                            <th
-                              className="align-middle fz-16 fw-600"
-                            >
+                          <tr>
+                            <th className="align-middle fz-16 fw-600">No</th>
+                            <th className="align-middle fz-16 fw-600">
                               ID Pelatihan
                             </th>
-                            <th
-                              className="align-middle fz-16 fw-600"
-                            >
+                            <th className="align-middle fz-16 fw-600">
                               Nama Pelatihan
                             </th>
-                            <th
-                              className="align-middle text-center fz-16 fw-600"
-                            >
+                            <th className="align-middle text-center fz-16 fw-600">
                               Access
                             </th>
                           </tr>
