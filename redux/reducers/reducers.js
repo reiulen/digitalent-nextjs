@@ -14,6 +14,10 @@ import {
   digitalentProvinsiPesertaReducer,
   digitalentProvinsiPendaftarReducer,
   digitalentDataPribadiReducer,
+  detailAkademiPendaftarReducer,
+  detailAkademiPesertaReducer,
+  detailTemaPendaftarReducer,
+  detailTemaPesertaReducer,
 } from "./dashboard-kabadan/dashboard/digitalent.reducers";
 // DASHBOARD BEASISWA
 import {
@@ -635,6 +639,10 @@ const reducer = combineReducers({
   digitalentProvinsiPeserta: digitalentProvinsiPesertaReducer,
   digitalentProvinsiPendaftar: digitalentProvinsiPendaftarReducer,
   digitalentDataPribadi: digitalentDataPribadiReducer,
+  detailAkademiPendaftar: detailAkademiPendaftarReducer,
+  detailAkademiPeserta: detailAkademiPesertaReducer,
+  detailTemaPendaftar: detailTemaPendaftarReducer,
+  detailTemaPeserta: detailTemaPesertaReducer,
   // ============= BEASISWA ============
   beasiswaTotalPengguna: beasiswaTotalPenggunaReducer,
   beasiswaTotalPendaftar: beasiswaTotalPendaftarReducer,

@@ -111,7 +111,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(dropdownAkademi(session.user.user.data.token));
       await store.dispatch(drowpdownFormBuilder(session.user.user.data.token));
       await store.dispatch(
-        getAllDataReference(session.user.user.data.token, true)
+        getAllDataReference(
+          session.user.user.data.token,
+          true,
+          token_permission
+        )
       );
 
       return {

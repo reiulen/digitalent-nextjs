@@ -10,9 +10,11 @@ import { SweatAlert } from "../../../../utils/middleware/helper";
 import { getSession } from "next-auth/client";
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
+import Cookies from "js-cookie";
 
 const LoginUser = () => {
   const router = useRouter();
+  const fcm_token = Cookies.get("fcm_token");
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [email, setEmail] = useState("");
@@ -22,7 +24,6 @@ const LoginUser = () => {
   const [, forceUpdate] = useState();
 
   const [hidePassword, setHidePassword] = useState(true);
-
   const handlerShowPassword = (value) => {
     setHidePassword(value);
     var input = document.getElementById("input-password");
@@ -43,6 +44,7 @@ const LoginUser = () => {
         password,
         role: "peserta",
         capcha: captcha,
+        fcm: fcm_token,
       };
       const result = await signIn("credentials", data);
 
