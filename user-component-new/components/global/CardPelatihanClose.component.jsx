@@ -3,13 +3,14 @@ import { Card, Button, Badge } from "react-bootstrap";
 import Image from "next/image";
 import moment from "moment";
 
-const CardPelatihanClose = ({ row }) => {
+const CardPelatihanClose = ({ row, onClick, detail }) => {
   return (
     <>
       <Button
         variant="transparent"
-        disabled
+        disabled={detail ? false : true}
         className={`p-0 mb-0 btn-disabled-pelatihan-new`}
+        onClick={onClick}
       >
         <div className={`parent-image-pelatihan-new-close`}>
           <Image
