@@ -21,7 +21,6 @@ const TambahArtikelPeserta = ({ session }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
-  const permission = Cookies.get("token_permission")
 
   const importSwitch = () => import("bootstrap-switch-button-react");
   const SwitchButton = dynamic(importSwitch, {
@@ -107,7 +106,7 @@ const TambahArtikelPeserta = ({ session }) => {
         kategori_id: kategori,
         tag: tag,
       };
-      dispatch(newArtikelPeserta(data, session.token, permission));
+      dispatch(newArtikelPeserta(data, session.token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

@@ -39,7 +39,6 @@ export const getAllBerandaGaleri =
         type: BERANDA_GALERI_SUCCESS,
         payload: data,
       });
-
     } catch (error) {
       dispatch({
         type: BERANDA_GALERI_FAIL,
