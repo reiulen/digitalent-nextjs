@@ -25,7 +25,6 @@ import {
 const Dashboard = ({ session, success }) => {
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const permission = Cookies.get("token_permission")
 
 	const allArtikelsPeserta = useSelector((state) => state.allArtikelsPeserta);
 	const deleteArtikel = useSelector((state) => state.deleteArtikel);
@@ -127,7 +126,7 @@ const Dashboard = ({ session, success }) => {
 											cancelButtonText: "Batal",
 										}).then((result) => {
 											if (result.isConfirmed) {
-												dispatch(deleteArtikelPeserta(item.id, session.token, permission));
+												dispatch(deleteArtikelPeserta(item.id, session.token));
 											}
 										});
 									}}
@@ -171,7 +170,7 @@ const Dashboard = ({ session, success }) => {
 
 	const handleSearch = () => {
 		dispatch(
-			getAllArtikelsPeserta(session.token, 1, limit, keyword, null, null, null, permission)
+			getAllArtikelsPeserta(session.token, 1, limit, keyword, null, null, null)
 		);
 	};
 
@@ -185,8 +184,7 @@ const Dashboard = ({ session, success }) => {
 				keyword,
 				null,
 				null,
-				null,
-				permission
+				null
 			)
 		);
 	};
@@ -211,8 +209,7 @@ const Dashboard = ({ session, success }) => {
 									null,
 									null,
 									null,
-									null,
-									permission
+									null
 								)
 							);
 						}}
@@ -233,8 +230,7 @@ const Dashboard = ({ session, success }) => {
 									null,
 									"1",
 									null,
-									null,
-									permission
+									null
 								)
 							);
 						}}
@@ -255,8 +251,7 @@ const Dashboard = ({ session, success }) => {
 									null,
 									"0",
 									null,
-									null,
-									permission
+									null
 								)
 							);
 						}}
@@ -441,8 +436,7 @@ const Dashboard = ({ session, success }) => {
 															keyword,
 															null,
 															null,
-															null,
-															permission
+															null
 														)
 													);
 												}}
@@ -524,8 +518,7 @@ const Dashboard = ({ session, success }) => {
 											limit,
 											keyword,
 											null,
-											null,
-											permission
+											null
 										)
 									);
 								}}
@@ -550,8 +543,7 @@ const Dashboard = ({ session, success }) => {
 												: null,
 											dateRegister[1] !== null
 												? moment(dateRegister[1]).format("YYYY-MM-DD")
-												: null,
-											permission
+												: null
 										)
 									);
 								}}

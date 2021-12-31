@@ -57,7 +57,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       let success = false;
       if (session) {
         const dataPribadi = await store.dispatch(
-          getDataPribadi(session?.user.user.data.user.token, req.cookies.token_permission)
+          getDataPribadi(session?.user.user.data.user.token)
         );
         if (dataPribadi?.data.status == false || !dataPribadi?.data.status) {
           success = false;
@@ -67,12 +67,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getAllArtikelsPeserta(session?.user.user.data.user.token, 1, 5, null, null, null, null, req.cookies.token_permission)
+        getAllArtikelsPeserta(session?.user.user.data.user.token)
       );
       await store.dispatch(
-        getDashboardPeserta(session?.user.user.data.user.token, req.cookies.token_permission)
+        getDashboardPeserta(session?.user.user.data.user.token)
       );
-      await store.dispatch(cekLulus(session?.user.user.data.user.token, req.cookies.token_permission));
+      await store.dispatch(cekLulus(session?.user.user.data.user.token));
 
       return {
         props: { data: "auth", session, title: "Dashboard - Peserta", success },
