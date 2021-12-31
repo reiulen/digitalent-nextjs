@@ -9,61 +9,59 @@ import { getCheckStatusSertifikat } from "../../redux/actions/beranda/check-sert
 import LoadingDetailAkademi from "../../user-component-new/components/loader/LoadingDetailAkademi";
 
 const CekStatus = dynamic(
-	() => import("../../user-component-new/content/home/cek_status/index"),
-	{
-		loading: function loadingNow() {
-			return <LoadingDetailAkademi />;
-		},
-		ssr: false,
-	}
+  () => import("../../user-component-new/content/home/cek_status/index"),
+  {
+    loading: function loadingNow() {
+      return <LoadingDetailAkademi />;
+    },
+    ssr: false,
+  }
 );
 
 const Layout = dynamic(
-	() => import("../../user-component-new/components/template/Layout.component"),
-	{ ssr: false }
+  () => import("../../user-component-new/components/template/Layout.component"),
+  { ssr: false }
 );
 
 export default function BerandaKontak(props) {
-	let session = null;
+  let session = null;
 
-	if (props.session) {
-		session = props.session.user.user.data.user;
-	}
+  if (props.session) {
+    session = props.session.user.user.data.user;
+  }
 
-	return (
-		<>
-			<div style={{ backgroundColor: "white" }}>
-				<Layout title="Cek Sertifikat" session={session}>
-					<CekStatus session={session}></CekStatus>
-				</Layout>
-			</div>
-		</>
-	);
+  return (
+    <>
+      <div style={{ backgroundColor: "white" }}>
+        <Layout title="Cek Sertifikat" session={session}>
+          <CekStatus session={session}></CekStatus>
+        </Layout>
+      </div>
+    </>
+  );
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-	(store) =>
-		async ({ query, req }) => {
-			const session = await getSession({ req });
+  (store) =>
+    async ({ query, req }) => {
+      const session = await getSession({ req });
 
-			let sessionToken = session?.user.user.data.user.token;
+      let sessionToken = session?.user.user.data.user.token;
 
-			await store.dispatch(getDataPribadi(sessionToken));
+      await store.dispatch(getDataPribadi(sessionToken));
 
-			await store.dispatch(getAllAkademi());
+      await store.dispatch(getAllAkademi());
 
-			// console.log(query, "ini query");
-			// }
-			if (query.registrasi) {
-				await store.dispatch(getCheckStatusSertifikat(query.registrasi));
-			}
+      if (query.registrasi) {
+        await store.dispatch(getCheckStatusSertifikat(query.registrasi));
+      }
 
-			return {
-				props: {
-					title: "Cek Sertifikat",
-					data: "auth",
-					session,
-				},
-			};
-		}
+      return {
+        props: {
+          title: "Cek Sertifikat",
+          data: "auth",
+          session,
+        },
+      };
+    }
 );
