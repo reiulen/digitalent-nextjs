@@ -26,9 +26,11 @@ import { useRouter } from "next/router";
 
 const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const dispatch = useDispatch();
-  const simpleValidator = useRef(new SimpleReactValidator({ 
-    locale: "id" 
-  }));
+  const simpleValidator = useRef(
+    new SimpleReactValidator({
+      locale: "id",
+    })
+  );
   const [, forceUpdate] = useState();
   const router = useRouter();
   const { data: dataAsalSekolah } = useSelector(
@@ -48,10 +50,10 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   } = useSelector((state) => state.updatePendidikan);
 
   const {
-		error: errorStatusWizzard,
-		loading: loadingStatusWizzard,
-		success: successStatusWizard,
-	} = useSelector((state) => state.updateStatusWizzard);
+    error: errorStatusWizzard,
+    loading: loadingStatusWizzard,
+    success: successStatusWizard,
+  } = useSelector((state) => state.updateStatusWizzard);
 
   const [jengjangPendidikan, setJenjangPendidikan] = useState(
     (pendidikan && {
@@ -82,7 +84,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     pendidikan ? pendidikan?.ijasah?.split("/ijasah/") : "Belum ada file"
   );
   // const [ijazah, setIjazah] = useState("");
-  const [ijazah, setIjazah] = useState(pendidikan?.ijasah ? pendidikan.ijasah : "");
+  const [ijazah, setIjazah] = useState(
+    pendidikan?.ijasah ? pendidikan.ijasah : ""
+  );
   const [ijazahPreview, setIjazahPreview] = useState("");
 
   const [dataSearch, setDataSearch] = useState([]);
@@ -97,7 +101,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     }
   }
   const [showInputCollegeName, setShowInputCollegeName] = useState(false);
-  const [errorOnIpk, setErrorOnIpk] = useState (false)
+  const [errorOnIpk, setErrorOnIpk] = useState(false);
   const validateLetter = /[a-zA-Z]/;
 
   const NoOptionsMessage = (props) => {
@@ -195,18 +199,17 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   };
 
   const stepBack = async () => {
-    let status = 2
+    let status = 2;
 
-    const data = await dispatch (updateWizzardStatus(status, token))
+    const data = await dispatch(updateWizzardStatus(status, token));
 
-    if (data?.status === true){
+    if (data?.status === true) {
       router.push("/peserta/wizzard/alamat");
-
     } else {
       SweatAlert("Gagal", errorStatusWizzard, "error");
-			dispatch(clearErrors());
+      dispatch(clearErrors());
     }
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -219,6 +222,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     }
     // if(asalSekolah.includes(''))
     if (jengjangPendidikan.label.includes("Tidak Sekolah")) {
+      // simpleValidator.current.fields[]
+      // simpleValidator.current.fields[]
+      simpleValidator.current.fields["lainya ( sekolah/ pt )"] = true;
       simpleValidator.current.fields["asal sekolah"] = true;
       simpleValidator.current.fields["ijazah"] = true;
       simpleValidator.current.fields["ipk"] = true;
@@ -234,7 +240,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
       jengjangPendidikan.label === "S1" ||
       jengjangPendidikan.label === "S2" ||
       jengjangPendidikan.label === "S3"
-    ){
+    ) {
       simpleValidator.current.fields["lainya ( sekolah/ pt )"] = true;
       simpleValidator.current.errorMessages["lainya ( sekolah/ pt )"] = null;
     }
@@ -325,7 +331,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
       dispatch(updateProfilePendidikan(data, token));
       window.scrollTo(0, 0);
     } else {
-     
       simpleValidator.current.showMessages();
       forceUpdate(1);
       Swal.fire({
@@ -344,17 +349,16 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 
   useEffect(() => {
     const validateIpk = /^[0-9]+\.[0-9][0-9][0-9][0-9]$/;
-    
+
     if (ipk >= 4) {
       setIpk(4);
     }
 
     if (validateIpk.test(ipk)) {
       setIpk(Math.round(ipk));
-      setErrorOnIpk(false)
-
+      setErrorOnIpk(false);
     } else {
-      setErrorOnIpk(true)
+      setErrorOnIpk(true);
     }
 
     const target = document.getElementById("formGridIpk");
@@ -362,24 +366,23 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
       target.onkeydown = (e) => {
         if (e.code == "Minus") {
           return false;
-
         }
 
         if (e.code == "NumpadAdd") {
           return false;
-        } 
+        }
 
         if (e.code == "NumpadSubtract") {
           return false;
-        } 
+        }
 
         if (e.code == "Equal") {
           return false;
-        } 
+        }
 
         if (e.code == "Comma") {
           return false;
-        } 
+        }
       };
     }
   }, [ipk]);
@@ -1479,7 +1482,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
                 <span className="text-muted">
-                  Gunakan titik "." dengan dua angka di belakang titik - Contoh : 3.75
+                  Gunakan titik "." dengan dua angka di belakang titik - Contoh
+                  : 3.75
                 </span>
                 {/* {
                   errorOnIpk === true ? 
@@ -1495,19 +1499,16 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                         className: "text-danger",
                       }
                 )} */}
-                {
-                  simpleValidator.current.message(
-                    "ipk",
-                    ipk,
-                    `required|numeric`,
-                    {
-                      className: "text-danger",
-                    }
-                  )
-                }
-            
+                {simpleValidator.current.message(
+                  "ipk",
+                  ipk,
+                  `required|numeric`,
+                  {
+                    className: "text-danger",
+                  }
+                )}
               </Form.Group>
-              
+
               <Form.Group as={Col} md={6} controlId="formGridTahun">
                 <Form.Label>Tahun Masuk</Form.Label>
                 <Form.Control
@@ -1864,7 +1865,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     className: "text-danger",
                   }
                 )}
-               
               </Form.Group>
             </Row>
           )}
@@ -1901,7 +1901,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     className: "text-danger",
                   }
                 )}
-                
               </Form.Group>
               <Form.Group as={Col} md={6} controlId="formGridTahun">
                 <Form.Label>Tahun Masuk</Form.Label>
@@ -1997,7 +1996,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     className: "text-danger",
                   }
                 )}
-                
               </Form.Group>
             </Row>
           )}
@@ -2034,7 +2032,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     className: "text-danger",
                   }
                 )}
-                
               </Form.Group>
               <Form.Group as={Col} md={6} controlId="formGridTahun">
                 <Form.Label>Tahun Masuk</Form.Label>
@@ -2100,7 +2097,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 )}
               </Form.Group>
-              
+
               <Form.Group as={Col} md={6} controlId="formGridIpk">
                 <Form.Label>IPK</Form.Label>
                 <Form.Control
@@ -2131,7 +2128,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     className: "text-danger",
                   }
                 )}
-                
               </Form.Group>
             </Row>
           )}
@@ -2705,17 +2701,17 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
         ) : (
           <div className="button-aksi mt-5 float-right">
             <Button
-							className={`${style.button_profile_batal} rounded-xl mr-2`}
-							type="button"
-							onClick={() => stepBack()}
-							disabled={loadingStatusWizzard ? true : false}
-						>
-							Kembali
-						</Button>
+              className={`${style.button_profile_batal} rounded-xl mr-2`}
+              type="button"
+              onClick={() => stepBack()}
+              disabled={loadingStatusWizzard ? true : false}
+            >
+              Kembali
+            </Button>
             <Button
               className={`${style.button_profile_simpan} rounded-xl`}
               type="submit"
-              disabled = {loadingUpdateData ? true : false}
+              disabled={loadingUpdateData ? true : false}
             >
               Lanjut
             </Button>
