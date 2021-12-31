@@ -760,7 +760,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 							</div>
 						</div>
 						<small className="text-muted">
-							* JPG/JPEG/PNG/PDF (Maksimal ukuran file 2 MB)
+							* JPG/JPEG/PNG/PDF
 						</small>
 					</div>
 					{/* <div className="form-group mb-5">

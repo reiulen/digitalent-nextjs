@@ -256,7 +256,7 @@ const Table = ({ token }) => {
                       permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
                         <button
                           type="button"
-                          onClick={() => dispatch(exportFileCSV(token))}
+                          onClick={() => dispatch(exportFileCSV(token, cookiePermission))}
                           className="btn btn-rounded-full bg-blue-secondary text-white ml-0"
                           style={{ width: "max-content" }}
                         >

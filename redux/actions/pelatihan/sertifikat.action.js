@@ -18,6 +18,7 @@ export const getSertifikatPeserta = (token, id) => async (dispatch) => {
     };
 
     const { data } = await axios.get(link, config);
+
     dispatch({
       type: SERTIFIKAT_SUCCESS,
       payload: data,

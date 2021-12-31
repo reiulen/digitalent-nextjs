@@ -275,6 +275,7 @@ const ReviewKerjasama = ({ token }) => {
                         className="form-control mt-2 border-0 ml-n4"
                         onChange={(e) => setPeriod(e.target.value)}
                         value={periodView}
+                        style={{MozAppearance: "textfield"}}
                       />
                     </div>
                     <div className="col-12 col-sm-6">
