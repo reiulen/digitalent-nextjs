@@ -45,9 +45,23 @@ const DashbardSubvit = ({ token }) => {
 
   let dataItem = [];
 
+  let dataItemModified = [];
+
   data.map((item) => {
-    return Object.entries(item).map((item) =>
-      dataItem.push({ name: item[0], value: item[1] })
+    return Object.entries(item).map((item) => {
+      dataItem.push({ name: item[0], value: item[1] });
+    });
+  });
+
+  dataItem.map((it) => {
+    dataItemModified.push(
+      it.name.includes("total_substansi")
+        ? { name: "Total  Substansi", value: it.value }
+        : it.name.includes("total_survey")
+        ? { name: "Total  Survey", value: it.value }
+        : it.name.includes("total_trivia")
+        ? { name: "Total  Trivia", value: it.value }
+        : it
     );
   });
 
@@ -311,7 +325,7 @@ const DashbardSubvit = ({ token }) => {
                           <PieChart>
                             <Tooltip />
                             <Pie
-                              data={dataItem.slice(0, 3)}
+                              data={dataItemModified.slice(0, 3)}
                               cx={250}
                               cy={150}
                               innerRadius={90}
@@ -354,7 +368,7 @@ const DashbardSubvit = ({ token }) => {
                           <PieChart>
                             <Tooltip />
                             <Pie
-                              data={dataItem.slice(0, 3)}
+                              data={dataItemModified.slice(0, 3)}
                               cx={250}
                               cy={150}
                               innerRadius={100}
@@ -487,7 +501,7 @@ const DashbardSubvit = ({ token }) => {
                           <PieChart>
                             <Tooltip />
                             <Pie
-                              data={dataItem.slice(0, 3)}
+                              data={dataItemModified.slice(0, 3)}
                               cx={250}
                               cy={150}
                               innerRadius={90}
@@ -530,7 +544,7 @@ const DashbardSubvit = ({ token }) => {
                           <PieChart>
                             <Tooltip />
                             <Pie
-                              data={dataItem.slice(0, 3)}
+                              data={dataItemModified.slice(0, 3)}
                               cx={250}
                               cy={150}
                               innerRadius={100}
