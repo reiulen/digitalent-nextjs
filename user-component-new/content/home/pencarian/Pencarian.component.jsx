@@ -374,7 +374,15 @@ const Pencarian = ({ session }) => {
                         )}
 
                         {row.status !== "Dibuka" ? (
-                          <CardPelatihanClose row={row} />
+                          <CardPelatihanClose
+                            onClick={() => {
+                              router.push(
+                                `/detail/pelatihan/${row?.id}?akademiId=${row?.akademi_id}`
+                              );
+                            }}
+                            detail
+                            row={row}
+                          />
                         ) : (
                           <Card
                             className="h-100 shadow-sm"

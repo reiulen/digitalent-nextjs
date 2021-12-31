@@ -48,7 +48,7 @@ export default function RiwayatPelatihanPage(props) {
 
   return (
     <>
-      <Layout title="Administrasi" session={session}>
+      <Layout title="Sertifikat - Peserta" session={session}>
         {!props.success ? (
           <BelumTersedia />
         ) : (
