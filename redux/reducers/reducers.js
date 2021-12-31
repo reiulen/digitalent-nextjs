@@ -1139,6 +1139,8 @@ const reducer = combineReducers({
   TTEP12Data: TTEP12DataReducer,
   sertifikatPeserta: sertifikatPesertaReducer,
   dropdownHelpdesk: dropdownHelpdeskReducer,
+  CheckStatusSertifikat: CheckStatusSertifikatReducer,
+
   // // DASHBOARD KABADAN
   // // ============= DTS ============
   // digitalentTotalPengguna: digitalentTotalPenggunaReducer,
@@ -1640,7 +1642,6 @@ const reducer = combineReducers({
   // TTEP12Data: TTEP12DataReducer,
   // sertifikatPeserta: sertifikatPesertaReducer,
   // dropdownHelpdesk: dropdownHelpdeskReducer,
-  // CheckStatusSertifikat: CheckStatusSertifikatReducer,
   // // DASHBOARD KABADAN
   // // ============= DTS ============
   // digitalentTotalPengguna: digitalentTotalPenggunaReducer,
