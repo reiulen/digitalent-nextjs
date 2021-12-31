@@ -137,6 +137,7 @@ export const fetchAllMK = (token, permission) => {
       partner: partnerState,
       keyword: keywordState,
     };
+
     const paramss = {
       page: 1,
       limit: 1000,
@@ -146,6 +147,7 @@ export const fetchAllMK = (token, permission) => {
       keyword: "",
       card: "",
     };
+
     const paramssz = {
       page: 1,
       limit: 1000,
@@ -179,15 +181,18 @@ export const fetchAllMK = (token, permission) => {
       );
 
       let totalData = dataSortirAll.data.data.list_cooperations.length;
+
       // get total data status aktif
       let resultDataActive = dataSortirAll.data.data.list_cooperations.filter(
         items => items.status.name === "aktif"
       );
+
       // get total data status tidak aktif
       let resultDataNonActive =
         dataSortirAll.data.data.list_cooperations.filter(
           items => items.status.name === "tidak aktif"
         );
+
       // get total data status !-- aktif && tidak aktif
       let resultDataAnother = dataSortirAll.data.data.list_cooperations.filter(
         items =>
@@ -601,11 +606,13 @@ export const exportFileCSV = (token,permission) => {
     let categories_cooporationState =
       getState().allMK.categories_cooporation || "";
     let partnerState = getState().allMK.partner || "";
-
+    let cardState = getState().allMK.card || "";
+    
     const paramssz = {
       status: statusState,
       categories_cooporation: categories_cooporationState,
       partner: partnerState,
+      card: cardState
     };
     try {
       let urlExport = await axios.get(
@@ -618,10 +625,21 @@ export const exportFileCSV = (token,permission) => {
           },
         }
       );
-      let url =
-        urlExport.config.url +
-        `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}`;
-      // window.location.href = url
+
+      // let url =
+      //   urlExport.config.url +
+      //   `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${cardState}`;
+
+      let url
+
+      if (cardState){
+        url = urlExport.config.url +
+          `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${cardState}`;
+
+      } else if (statusState){
+        url = urlExport.config.url +
+          `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}`;
+      }
 
       fetch(url, {
         paramssz,
@@ -632,8 +650,13 @@ export const exportFileCSV = (token,permission) => {
       })
         .then(response => response.blob())
         .then(blob => {
-          var _url = window.URL.createObjectURL(blob);
-          window.open(_url, "_blank").focus();
+          let _url = window.URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = _url
+          link.setAttribute("download", `Daftar Kerjasama Mitra.xlsx`);
+          document.body.appendChild(link);
+          link.click();
+          // window.open(_url, "_blank").focus();
         })
         .catch(error => {
           notify(error.response.data.message);
