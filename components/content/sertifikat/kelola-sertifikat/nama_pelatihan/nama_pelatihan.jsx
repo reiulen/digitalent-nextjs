@@ -220,7 +220,7 @@ export default function NamaPelatihanID({ token }) {
             null,
             { shallow: true }
         );
-    ;
+    };
     const [showModalFilter, setShowModalFilter] = useState(false);
 
     const [id, setId] = useState(null);
