@@ -2190,7 +2190,7 @@ export const helperFormatCheckbox = (formBuilderNon) => {
   return formBuilderFormat;
 };
 
-export const helperUnformatCheckbox = (formBuilderCheck) => {
+export const helperUnformatCheckbox = (formBuilderCheck, type = null) => {
   let formBuilderFormat;
   formBuilderCheck &&
     formBuilderCheck.map((rowBuilder, i) => {
@@ -2199,8 +2199,10 @@ export const helperUnformatCheckbox = (formBuilderCheck) => {
         let val = rowBuilder.value.join(",");
         rowBuilder.value = val;
       } else {
-        rowBuilder.value = "";
-        rowBuilder.fileName = "Belum ada file";
+        if (type === "admin") {
+          rowBuilder.value = "";
+          rowBuilder.fileName = "Belum ada file";
+        }
       }
       rowBuilder.triggered_parent.length > 0 &&
         rowBuilder.triggered_parent.map((rowParent, indexParent) => {
@@ -2215,8 +2217,10 @@ export const helperUnformatCheckbox = (formBuilderCheck) => {
                 let val = rowFormParent.value.join(",");
                 rowFormParent.value = val;
               } else {
-                rowFormParent.value = "";
-                rowFormParent.fileName = "Belum ada file";
+                if (type === "admin") {
+                  rowFormParent.value = "";
+                  rowFormParent.fileName = "Belum ada file";
+                }
               }
               rowFormParent.triggered_children.length > 0 &&
                 rowFormParent.triggered_children.map(
@@ -2233,8 +2237,10 @@ export const helperUnformatCheckbox = (formBuilderCheck) => {
                             let val = rowFormChildren.value.join(",");
                             rowFormChildren.value = val;
                           } else {
-                            rowFormChildren.value = "";
-                            rowFormChildren.fileName = "Belum ada file";
+                            if (type === "admin") {
+                              rowFormChildren.value = "";
+                              rowFormChildren.fileName = "Belum ada file";
+                            }
                           }
                           rowFormChildren.triggered_index.length > 0 &&
                             rowFormChildren.triggered_index.map(
@@ -2251,9 +2257,11 @@ export const helperUnformatCheckbox = (formBuilderCheck) => {
                                         let val = rowFormIndex.value.join(",");
                                         rowFormIndex.value = val;
                                       } else {
-                                        rowFormIndex.value = "";
-                                        rowFormIndex.fileName =
-                                          "Belum ada file";
+                                        if (type === "admin") {
+                                          rowFormIndex.value = "";
+                                          rowFormIndex.fileName =
+                                            "Belum ada file";
+                                        }
                                       }
                                       // console.log(rowFormIndex);
                                       // FOURTH FORM BUILDER OBJECT
