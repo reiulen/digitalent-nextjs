@@ -20,8 +20,8 @@ const Galeri = () => {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    const { galeri, loading: loadingGaleri } = useSelector((state) => state.allBerandaGaleri)
-    const { detail, loading: loadingDetail } = useSelector((state) => state.detailBerandaGaleri)
+    const { galeri, loading: loadingGaleri, error: errorAllGaleri } = useSelector((state) => state.allBerandaGaleri)
+    const { detail, loading: loadingDetail, error: errorDetail } = useSelector((state) => state.detailBerandaGaleri)
     const { kategori } = useSelector((state) => state.kategoriBerandaGaleri)
 
     const titleToTrim = 13;

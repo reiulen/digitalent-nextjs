@@ -39,7 +39,6 @@ export const getAllBerandaGaleri =
         type: BERANDA_GALERI_SUCCESS,
         payload: data,
       });
-
     } catch (error) {
       dispatch({
         type: BERANDA_GALERI_FAIL,
@@ -52,7 +51,7 @@ export const getDetailBerandaGaleri = (id) => async (dispatch) => {
   try {
     dispatch({ type: DETAIL_BERANDA_GALERI_REQUEST });
 
-    let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/gallery/${id}`;
+    let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/gallery/${id}`;
 
     const config = {
       headers: {

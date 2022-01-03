@@ -502,7 +502,7 @@ const TambahApi = ({ token }) => {
                     aria-controls="home"
                     aria-selected="true"
                   >
-                    Akademi
+                   By Akademi
                   </a>
                 </li>
                 <li
@@ -519,7 +519,7 @@ const TambahApi = ({ token }) => {
                     aria-controls="profile"
                     aria-selected="false"
                   >
-                    Pelatihan
+                   By Pelatihan
                   </a>
                 </li>
               </ul>

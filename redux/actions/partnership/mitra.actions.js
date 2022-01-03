@@ -172,7 +172,7 @@ export const cancelChangeProvinces = () => {
   };
 };
 
-export const exportFileCSV = (token) => {
+export const exportFileCSV = (token, permission) => {
   return async () => {
     try {
       let urlExport = await axios.get(
@@ -180,22 +180,27 @@ export const exportFileCSV = (token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            Permission: Cookies.get("token_permission")
+            Permission: permission
           },
         }
       );
-      var url = urlExport.config.url + `?authorization=Bearer ${token}`;
+      var url = urlExport.config.url + `?authorization=Bearer ${token}&Permission=${permission}`;
 
       fetch(url, {
         headers: {
           authorization: `Bearer ${token}`,
-          // Permission: Cookies.get("token_permission")
+          Permission: permission
         },
       })
         .then((response) => response.blob())
         .then((blob) => {
-          var _url = window.URL.createObjectURL(blob);
-          window.open(_url, "_blank").focus();
+          let _url = window.URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = _url
+          link.setAttribute("download", `Daftar Partner Mitra.xlsx`);
+          document.body.appendChild(link);
+          link.click();
+          // window.open(_url, "_blank").focus();
         })
         .catch((error) => {
           notify(error.response.data.message);
@@ -311,8 +316,12 @@ export const exportFileCSVDetail = (token, id) => {
       })
         .then((response) => response.blob())
         .then((blob) => {
-          var _url = window.URL.createObjectURL(blob);
-          window.open(_url, "_blank").focus();
+          let _url = window.URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = _url
+          link.setAttribute("download", `Daftar Detail Kerjasama Mitra.xlsx`);
+          document.body.appendChild(link);
+          link.click();
         })
         .catch((error) => {
           notify(error.response.data.message);
