@@ -22,7 +22,7 @@ import {
   dropdownPelatihanbyTema,
   dropdownTemabyAkademi,
 } from "../../../../redux/actions/pelatihan/function.actions";
-import { postFilterExportData } from "../../../../redux/actions/site-management/export-data.actions";
+import { postFilterExportData, getFilterExportData } from "../../../../redux/actions/site-management/export-data.actions";
 import { temaByAkademiReducer } from "../../../../redux/reducers/beranda/beranda.reducers";
 import Cookies from "js-cookie";
 
@@ -373,7 +373,7 @@ const UbahRole = ({ token, name }) => {
                       color: "#FFFFFF",
                       width: "max-content",
                     }}
-                    // onClick={() => handleAddInput()}
+                  // onClick={() => handleAddInput()}
                   >
                     <IconSearch className="mr-4" />
                     Search
@@ -428,11 +428,9 @@ const UbahRole = ({ token, name }) => {
                           const data = {
                             button_type: 0,
                             tahun: "",
-                            dari: moment(datePelaksanaanStart).format(
-                              "YYYY-MM-DD"
-                            ),
-                            sampai:
-                              moment(datePelaksanaanEnd).format("YYYY-MM-DD"),
+                            dari: datePelaksanaanStart ? moment(datePelaksanaanStart).format("YYYY-MM-DD") : "",
+                            sampai: datePelaksanaanEnd ?
+                              moment(datePelaksanaanEnd).format("YYYY-MM-DD") : "",
                             akademi: akademi ? akademi.label : "",
                             tema: tema ? tema.label : "",
                             penyelenggara: penyelenggara
