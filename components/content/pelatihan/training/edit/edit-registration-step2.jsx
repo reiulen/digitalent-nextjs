@@ -133,7 +133,7 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
       titleStore;
     }
     if (simpleValidator.current.allValid()) {
-      const valueForm = helperUnformatCheckbox(formBuilderStore);
+      const valueForm = helperUnformatCheckbox(formBuilderStore, "admin");
       const data = {
         judul_form: titleStore,
         Pelatian_id: parseInt(router.query.id),
