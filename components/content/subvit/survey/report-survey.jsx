@@ -15,7 +15,7 @@ import axios from "axios";
 import styles from "../trivia/edit/step.module.css";
 import { allReportSurveyQuestionBanks } from "../../../../redux/actions/subvit/survey-question.actions";
 
-const ReportSurvey = ({ token }) => {
+const ReportSurvey = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -76,6 +76,7 @@ const ReportSurvey = ({ token }) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission || "",
       },
     };
 

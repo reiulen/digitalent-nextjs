@@ -17,6 +17,8 @@ const FormLPJ = ({ token }) => {
 
   const { data: dataLPJ } = useSelector((state) => state.getFormLPJ.data);
 
+  console.log(dataLPJ);
+
   const { pelatihan: dataTraining } = useSelector(
     (state) => state.getPelatihan
   );

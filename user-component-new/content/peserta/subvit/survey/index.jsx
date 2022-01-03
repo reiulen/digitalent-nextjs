@@ -245,9 +245,9 @@ const SubtansiUser = ({ token }) => {
 
     setD(index);
     if (item.key.includes(sessionStorage.getItem(index + "a"))) {
-      sessionStorage.removeItem(index + "a", item.key);
+      sessionStorage.removeItem(index + "a" + router.query.id, item.key);
     } else {
-      sessionStorage.setItem(index + "a", item.key);
+      sessionStorage.setItem(index + "a" + router.query.id, item.key);
     }
 
     for (let i = 0; i < sessionStorage.length; i++) {
@@ -1114,8 +1114,9 @@ const SubtansiUser = ({ token }) => {
                                 >
                                   <Card
                                     className={
-                                      sessionStorage.getItem(index + "a") ===
-                                      item.key
+                                      sessionStorage.getItem(
+                                        index + "a" + router.query.id
+                                      ) === item.key
                                         ? styles.answer
                                         : styles.boxAnswer
                                     }
@@ -1499,7 +1500,7 @@ const SubtansiUser = ({ token }) => {
                   <td>
                     {" "}
                     Peserta wajib menjawab seluruh survey yang berjumlah{" "}
-                    {question || 50}&nbsp; pertanyaan.
+                    {question || " "}&nbsp; pertanyaan.
                   </td>
                 </tr>
                 <tr>
@@ -1518,7 +1519,7 @@ const SubtansiUser = ({ token }) => {
                   <td>
                     {" "}
                     Waktu yang tersedia untuk mengisi survey ini {time ||
-                      5}{" "}
+                      " "}{" "}
                     Menit.
                   </td>
                 </tr>

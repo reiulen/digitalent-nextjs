@@ -253,9 +253,10 @@ const StepTwo = ({ token, tokenPermission }) => {
         Permission: tokenPermission || "",
       },
     };
+
     await axios
       .get(
-        proccess.env.END_POINT_API_SUBVIT +
+        process.env.END_POINT_API_SUBVIT +
           "api/survey-question-bank-details/template",
         config
       )

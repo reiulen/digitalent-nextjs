@@ -1005,7 +1005,7 @@ const SubtansiUser = ({ token }) => {
                   <td>
                     {" "}
                     Peserta wajib menjawab seluruh TRIVIA yang berjumlah{" "}
-                    {question || 50} pertanyaan.
+                    {question || " "} pertanyaan.
                   </td>
                 </tr>
                 <tr>
@@ -1024,7 +1024,7 @@ const SubtansiUser = ({ token }) => {
                   <td>
                     {" "}
                     Waktu yang tersedia untuk mengisi TRIVIA ini {time ||
-                      5}{" "}
+                      " "}{" "}
                     Menit.
                   </td>
                 </tr>
