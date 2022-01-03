@@ -22,7 +22,6 @@ const EditArtikelPeserta = ({ session }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
-  const permission = Cookies.get("token_permission")
 
   const detailArtikelsPeserta = useSelector(
     (state) => state.detailArtikelsPeserta
@@ -136,7 +135,7 @@ const EditArtikelPeserta = ({ session }) => {
           tag: tag,
           _method: "put",
         };
-        dispatch(updateArtikelPeserta(data, session.token, router.query.id, permission));
+        dispatch(updateArtikelPeserta(data, session.token, router.query.id));
       } else {
         const data = {
           isi_artikel: deskripsi,
@@ -147,7 +146,7 @@ const EditArtikelPeserta = ({ session }) => {
           tag: tag,
           _method: "put",
         };
-        dispatch(updateArtikelPeserta(data, session.token, router.query.id, permission));
+        dispatch(updateArtikelPeserta(data, session.token, router.query.id));
       }
     } else {
       simpleValidator.current.showMessages();
