@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
+import StepInputClone from "/components/StepInputClone";
 import LoadingPage from "../../../../LoadingPage";
 import ObjectiveComponent from "./step-2/objective-component";
 import MultipleChoiceComponent from "./step-2/multiple-choice-component";
@@ -497,7 +498,11 @@ const StepTwo = ({ token, tokenPermission }) => {
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="2" survey={survey} title="Survey"></StepInput>
+          {localStorage.getItem("clone") === "true" ? (
+            <StepInputClone step="3" />
+          ) : (
+            <StepInput step="2" survey={survey} title="Survey" />
+          )}
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
               Soal {survey?.bank_soal + 1}

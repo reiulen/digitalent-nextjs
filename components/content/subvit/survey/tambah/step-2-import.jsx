@@ -22,6 +22,7 @@ import { useRouter } from "next/router";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
+import StepInputClone from "/components/StepInputClone";
 import LoadingTable from "../../../../LoadingTable";
 import ButtonAction from "../../../../ButtonAction";
 import axios from "axios";
@@ -332,7 +333,11 @@ const StepTwo = ({ token, tokenPermission }) => {
       )}
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="2" title="Survey"></StepInput>
+          {localStorage.getItem("clone") === "true" ? (
+            <StepInputClone step="3" />
+          ) : (
+            <StepInput step="2" title="Survey" />
+          )}
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">Metode Import .csv/.xls</h2>
           </div>

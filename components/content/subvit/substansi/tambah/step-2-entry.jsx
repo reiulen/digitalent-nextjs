@@ -13,6 +13,8 @@ import { useRouter } from "next/router";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
+import StepInputClone from "/components/StepInputClone";
+
 import LoadingPage from "../../../../LoadingPage";
 import styles from "../../trivia/edit/step.module.css";
 
@@ -377,7 +379,11 @@ const StepTwo = ({ token, tokenPermission }) => {
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="2" title="Substansi"></StepInput>
+          {localStorage.getItem("clone") === "true" ? (
+            <StepInputClone step="3" />
+          ) : (
+            <StepInput step="2" title="Substansi" />
+          )}
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
               Soal {subtance && subtance.bank_soal + 1}

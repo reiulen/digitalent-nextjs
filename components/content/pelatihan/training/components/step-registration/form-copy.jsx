@@ -56,7 +56,9 @@ const FormCopy = ({
           value={{ value: title, label: title }}
           onChange={(e) => {
             funcTitle(e.label);
-            dispatch(getDetailMasterPelatihan(e.value, token));
+            dispatch(
+              getDetailMasterPelatihan(e.value, token, token_permission)
+            );
           }}
         />
         <small className="form-text text-danger">
