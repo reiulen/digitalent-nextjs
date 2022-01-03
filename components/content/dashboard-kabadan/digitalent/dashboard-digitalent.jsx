@@ -33,14 +33,14 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import moment from "moment";
-
+import MyMap from "../component/map-digitalent.component";
 import PaginationDashboard from "../component/pagination-dashbaord.component";
 import Cookies from "js-cookie";
 
 const DashboardDigitalent = ({ token }) => {
-  const MyMap = dynamic(() => import("../component/map-digitalent.component"), {
-    ssr: false,
-  });
+  // const MyMap = dynamic(() => import("../component/map-digitalent.component"), {
+  //   ssr: true,
+  // });
   const dispatch = useDispatch();
   const token_permission = Cookies.get("token_permission");
 
@@ -756,7 +756,7 @@ const DashboardDigitalent = ({ token }) => {
             <div className="row">
               <div className="map-penyebaran col-md-12 mt-5">
                 <div id="map">
-                  <MyMap data={dataWilayah} />
+                  <MyMap data={wilayah} />
                 </div>
               </div>
             </div>
