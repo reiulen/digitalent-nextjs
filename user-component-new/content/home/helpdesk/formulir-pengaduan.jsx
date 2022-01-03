@@ -24,7 +24,7 @@ export default function FormPengaduan() {
     const [name, setName] = useState("");
     const [handphone, setHandphone] = useState("");
     const [email, setEmail] = useState("");
-    const [platform, setPlatform] = useState(data.dropdown[0]?.value);
+    const [platform, setPlatform] = useState(data.dropdown[0]?.value || 0);
     const [captcha, setCaptcha] = useState("");
     const [, forceUpdate] = useState();
     const [deskripsi, setDeskripsi] = useState("");
