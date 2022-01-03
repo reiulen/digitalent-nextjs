@@ -198,7 +198,8 @@ const DetailAkademi = ({ session }) => {
     if (session && session.token) {
       const data = await dispatch(checkRegisterPelatihan(index, session.token));
       if (data.status === true) {
-        router.push(`/peserta/form-pendaftaran?id=${index}`);
+        // router.push(`/peserta/form-pendaftaran?id=${index}`);
+        window.location.href = `/peserta/form-pendaftaran?id=${index}`;
       } else if (data.status === false) {
         let errMessage = data.message;
         SweatAlert("Gagal", errMessage, "error");

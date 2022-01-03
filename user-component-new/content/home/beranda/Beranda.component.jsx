@@ -304,7 +304,8 @@ const Beranda = ({ session }) => {
     if (session) {
       const data = await dispatch(checkRegisterPelatihan(id, session.token));
       if (data.status === true) {
-        router.push(`/peserta/form-pendaftaran?id=${id}`);
+        // router.push(`/peserta/form-pendaftaran?id=${id}`);
+        window.location.href = `/peserta/form-pendaftaran?id=${id}`;
       } else if (data.status === false) {
         let errMessage = data.message;
         SweatAlert("Gagal", errMessage, "error");
@@ -1073,7 +1074,7 @@ const Beranda = ({ session }) => {
               ) : (
                 <div className="row">
                   <h1 className="text-center text-muted col-12 font-weight-bolder">
-                    {arr === true
+                    {arr === true && tema !== null
                       ? "Pelatihan Belum Tersedia"
                       : "Tema Belum Tersedia"}
                   </h1>

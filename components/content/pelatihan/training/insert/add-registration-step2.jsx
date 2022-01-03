@@ -210,7 +210,7 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
       });
     } else {
       if (simpleValidator.current.allValid()) {
-        const valueForm = helperUnformatCheckbox(formBuilderStore);
+        const valueForm = helperUnformatCheckbox(formBuilderStore, "admin");
         const data = {
           judul_form: titleStore,
           type_form: viewForm,
