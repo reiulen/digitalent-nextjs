@@ -6,7 +6,9 @@ import {
   Popup,
   CircleMarker,
 } from "react-leaflet";
+import { icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
+
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
 import { useEffect } from "react";
@@ -20,19 +22,34 @@ const MapDigitalent = ({ data = [] }) => {
     { key: 3, position: [0.893191, 114.5267946], provinsi: "Kalimantan" },
   ];
   const [dataWilayah, setDataWilayah] = useState([]);
-  var LeafIcon = L.Icon.extend({
+
+  const LeafIcon = L.Icon.extend({
     options: {
-      iconSize: [38, 95],
+      iconSize: [22, 30],
       shadowSize: [50, 64],
-      iconAnchor: [22, 94],
-      shadowAnchor: [4, 62],
-      popupAnchor: [-3, -76],
+      iconAnchor: [10, 30],
+      shadowAnchor: [10, 62],
+      popupAnchor: [0, -10],
     },
   });
 
-  var greenIcon = new LeafIcon({
-    iconUrl: "http://leafletjs.com/examples/custom-icons/leaf-green.png",
-    shadowUrl: "http://leafletjs.com/examples/custom-icons/leaf-shadow.png",
+  const icon1 = new LeafIcon({
+    iconUrl: "/assets/icon/icon_map_dashboard_kabadan/1.png",
+  });
+  const icon2 = new LeafIcon({
+    iconUrl: "/assets/icon/icon_map_dashboard_kabadan/2.png",
+  });
+  const icon3 = new LeafIcon({
+    iconUrl: "/assets/icon/icon_map_dashboard_kabadan/3.png",
+  });
+  const icon4 = new LeafIcon({
+    iconUrl: "/assets/icon/icon_map_dashboard_kabadan/4.png",
+  });
+  const icon5 = new LeafIcon({
+    iconUrl: "/assets/icon/icon_map_dashboard_kabadan/5.png",
+  });
+  const icon6 = new LeafIcon({
+    iconUrl: "/assets/icon/icon_map_dashboard_kabadan/6.png",
   });
 
   useEffect(() => {
@@ -55,10 +72,6 @@ const MapDigitalent = ({ data = [] }) => {
     }
   }, [data]);
 
-  useEffect(() => {
-    console.log(dataWilayah, "ini data wilayah");
-  }, [dataWilayah]);
-
   return (
     <>
       <MapContainer
@@ -74,34 +87,6 @@ const MapDigitalent = ({ data = [] }) => {
         />
 
         {/* <Marker position={[-55.023709, -65.933949]} animate={true}> */}
-        <Marker
-          position={[-1.062401, 120.5465227]}
-          animate={true}
-          icon={greenIcon}
-        >
-          <Popup>
-            <div className="row">
-              <div className="col-md-12 text-left">
-                <p className="fw-600 fz-12 m-0 p-0">TEST 123</p>
-              </div>
-
-              <>
-                <div className="col-md-9 text-left">
-                  <p className="text-dashboard-neutral">Pendaftar</p>
-                  <p className="text-dashboard-neutral">Peserta</p>
-                  <p className="text-dashboard-neutral">Lulus</p>
-                  <p className="text-dashboard-neutral">Sertifikasi</p>
-                </div>
-                <div className="col-md-3 text-right">
-                  <p className="text-dashboard-primary">TEST 123</p>
-                  <p className="text-dashboard-primary">TEST 123</p>
-                  <p className="text-dashboard-primary">TEST 123</p>
-                  <p className="text-dashboard-primary">DATA SERTIFIKATI</p>
-                </div>
-              </>
-            </div>
-          </Popup>
-        </Marker>
 
         {dataWilayah.length > 0 &&
           dataWilayah.map((row, i) => {
@@ -110,7 +95,19 @@ const MapDigitalent = ({ data = [] }) => {
                 key={i}
                 position={row?.position}
                 animate={true}
-                icon={greenIcon}
+                icon={
+                  row?.pendaftar <= 25000
+                    ? icon6
+                    : row?.pendaftar <= 50000
+                    ? icon5
+                    : row?.pendaftar <= 75000
+                    ? icon4
+                    : row?.pendaftar <= 100000
+                    ? icon3
+                    : row?.pendaftar <= 125000
+                    ? icon2
+                    : icon1
+                }
               >
                 <Popup>
                   <div className="row">
