@@ -24,7 +24,7 @@ import {
 } from "../../../../redux/actions/pelatihan/function.actions";
 import { postFilterExportData } from "../../../../redux/actions/site-management/export-data.actions";
 import { temaByAkademiReducer } from "../../../../redux/reducers/beranda/beranda.reducers";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 
 const UbahRole = ({ token, name }) => {
   let dispatch = useDispatch();
@@ -87,8 +87,14 @@ const UbahRole = ({ token, name }) => {
     const data = {
       button_type: 0,
       tahun: "",
-      dari: moment(datePelaksanaanStart).format("YYYY-MM-DD") === "Invalid date" ? "" : moment(datePelaksanaanStart).format("YYYY-MM-DD"),
-      sampai: moment(datePelaksanaanEnd).format("YYYY-MM-DD") === "Invalid date" ? "" : moment(datePelaksanaanEnd).format("YYYY-MM-DD"),
+      dari:
+        moment(datePelaksanaanStart).format("YYYY-MM-DD") === "Invalid date"
+          ? ""
+          : moment(datePelaksanaanStart).format("YYYY-MM-DD"),
+      sampai:
+        moment(datePelaksanaanEnd).format("YYYY-MM-DD") === "Invalid date"
+          ? ""
+          : moment(datePelaksanaanEnd).format("YYYY-MM-DD"),
       akademi: akademi ? akademi.label : "",
       tema: tema ? tema.label : "",
       penyelenggara: penyelenggara ? penyelenggara.label : "",
@@ -96,8 +102,29 @@ const UbahRole = ({ token, name }) => {
       provinsi: provinsi ? provinsi.label : "",
       kota: kota ? kota.label : "",
     };
-
-    dispatch(postFilterExportData(token, data, null, null, Cookies.get("token_permission"), name));
+    if (
+      datePelaksanaanStart === null &&
+      datePelaksanaanEnd === null &&
+      akademi == null &&
+      tema === null &&
+      penyelenggara == null &&
+      pelatihan == null &&
+      provinsi == null &&
+      kota == null
+    ) {
+      Swal.fire("Oppss", "Isi Field dengan benar minimal 1", "error");
+    } else {
+      dispatch(
+        postFilterExportData(
+          token,
+          data,
+          null,
+          null,
+          Cookies.get("token_permission"),
+          name
+        )
+      );
+    }
   };
 
   const handleSubmit = (e) => {
@@ -105,8 +132,14 @@ const UbahRole = ({ token, name }) => {
     const data = {
       button_type: 1,
       tahun: "",
-      dari: moment(datePelaksanaanStart).format("YYYY-MM-DD") === "Invalid date" ? "" : moment(datePelaksanaanStart).format("YYYY-MM-DD"),
-      sampai: moment(datePelaksanaanEnd).format("YYYY-MM-DD") === "Invalid date" ? "" : moment(datePelaksanaanEnd).format("YYYY-MM-DD"),
+      dari:
+        moment(datePelaksanaanStart).format("YYYY-MM-DD") === "Invalid date"
+          ? ""
+          : moment(datePelaksanaanStart).format("YYYY-MM-DD"),
+      sampai:
+        moment(datePelaksanaanEnd).format("YYYY-MM-DD") === "Invalid date"
+          ? ""
+          : moment(datePelaksanaanEnd).format("YYYY-MM-DD"),
       akademi: akademi ? akademi.label : "",
       tema: tema ? tema.label : "",
       penyelenggara: penyelenggara ? penyelenggara.label : "",
@@ -115,19 +148,41 @@ const UbahRole = ({ token, name }) => {
       kota: kota ? kota.label : "",
     };
     if (datePelaksanaanEnd !== null) {
-      Swal.fire({
-        title: "Apakah anda yakin ?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Ya !",
-        cancelButtonText: "Batal",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          dispatch(postFilterExportData(token, data, null, null, Cookies.get("token_permission"), name));
-        }
-      });
+      if (
+        datePelaksanaanStart === null &&
+        datePelaksanaanEnd === null &&
+        akademi == null &&
+        tema === null &&
+        penyelenggara == null &&
+        pelatihan == null &&
+        provinsi == null &&
+        kota == null
+      ) {
+        Swal.fire("Oppss", "Isi Field dengan benar minimal 1", "error");
+      } else {
+        Swal.fire({
+          title: "Apakah anda yakin ?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Ya !",
+          cancelButtonText: "Batal",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            dispatch(
+              postFilterExportData(
+                token,
+                data,
+                null,
+                null,
+                Cookies.get("token_permission"),
+                name
+              )
+            );
+          }
+        });
+      }
     } else {
       Swal.fire("Oppss", "isi tanggal dengan benar", "error");
     }
@@ -388,7 +443,15 @@ const UbahRole = ({ token, name }) => {
                             kota: kota ? kota.label : "",
                           };
 
-                          dispatch(postFilterExportData(token, data, e, limit,Cookies.get("token_permission")));
+                          dispatch(
+                            postFilterExportData(
+                              token,
+                              data,
+                              e,
+                              limit,
+                              Cookies.get("token_permission")
+                            )
+                          );
                         }}
                         nextPageText={">"}
                         prevPageText={"<"}

@@ -93,104 +93,104 @@ export const deleteExportDataAction = (id, token, tokenPermission) => async (dis
 };
 
 export const getDetailsExportData =
-  (id, token, page = 1, cari = "", limit = 5,tokenPermission ) =>
-  async (dispatch) => {
-    const params = {
-      page: page,
-      cari: cari,
-      limit: limit,
-    };
-
-    try {
-      dispatch({
-        type: DETAIL_EXPORT_DATA_REQUEST,
-      });
-      const config = {
-        params,
-        headers: {
-          Authorization: "Bearer " + token,
-          Permission: tokenPermission,
-        },
+  (id, token, page = 1, cari = "", limit = 5, tokenPermission) =>
+    async (dispatch) => {
+      const params = {
+        page: page,
+        cari: cari,
+        limit: limit,
       };
 
-      let link =
-        process.env.END_POINT_API_SITE_MANAGEMENT + `api/export/detail/${id}`;
+      try {
+        dispatch({
+          type: DETAIL_EXPORT_DATA_REQUEST,
+        });
+        const config = {
+          params,
+          headers: {
+            Authorization: "Bearer " + token,
+            Permission: tokenPermission,
+          },
+        };
 
-      const { data } = await axios.get(link, config);
+        let link =
+          process.env.END_POINT_API_SITE_MANAGEMENT + `api/export/detail/${id}`;
 
-      dispatch({
-        type: DETAIL_EXPORT_DATA_SUCCESS,
-        payload: data.exports,
-      });
-    } catch (error) {
-      dispatch({
-        type: DETAIL_EXPORT_DATA_FAIL,
-      });
-    }
-  };
+        const { data } = await axios.get(link, config);
+
+        dispatch({
+          type: DETAIL_EXPORT_DATA_SUCCESS,
+          payload: data.exports,
+        });
+      } catch (error) {
+        dispatch({
+          type: DETAIL_EXPORT_DATA_FAIL,
+        });
+      }
+    };
 
 export const postFilterExportData =
   (token, datas, page = 1, limit = 5, tokenPermission, name) =>
-  async (dispatch) => {
-    try {
-      dispatch({
-        type: POST_EXPORT_DATA_REQUEST,
-      });
+    async (dispatch) => {
+      try {
+        dispatch({
+          type: POST_EXPORT_DATA_REQUEST,
+        });
 
-      let config = null;
+        let config = null;
 
-      if (datas.button_type === 1) {
-        config = {
-          params: {
-            page,
-            limit,
-          },
-          headers: {
-            Authorization: "Bearer " + token,
-            Permission: tokenPermission,
-          },
-          responseType: "arraybuffer",
-        };
-      } else {
-        config = {
-          params: {
-            page,
-            limit,
-          },
-          headers: {
-            Authorization: "Bearer " + token,
-            Permission: tokenPermission,
-          },
-        };
+        if (datas.button_type === 1) {
+          config = {
+            params: {
+              page,
+              limit,
+            },
+            headers: {
+              Authorization: "Bearer " + token,
+              Permission: tokenPermission,
+            },
+            responseType: "arraybuffer",
+          };
+        } else {
+          config = {
+            params: {
+              page,
+              limit,
+            },
+            headers: {
+              Authorization: "Bearer " + token,
+              Permission: tokenPermission,
+            },
+          };
+        }
+
+        let link = process.env.END_POINT_API_SITE_MANAGEMENT + `api/export/store`;
+
+        const data = await axios.post(link, datas, config);
+
+        if (datas.button_type === 1) {
+          const url = window.URL.createObjectURL(new Blob([data.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", `${name}.zip`);
+          document.body.appendChild(link);
+          link.click();
+          window.location = "/site-management/export-data"
+        }
+
+        dispatch({
+          type: POST_EXPORT_DATA_SUCCESS,
+          payload: data.data,
+        });
+      } catch (error) {
+        Swal.fire("Ooppss", "Service Excel Bermasalah", "error").then(
+          () => { }
+        );
+        dispatch({
+          type: POST_EXPORT_DATA_FAIL,
+        });
       }
-
-      let link = process.env.END_POINT_API_SITE_MANAGEMENT + `api/export/store`;
-
-      const data = await axios.post(link, datas, config);
-
-      if (datas.button_type === 1) {
-        const url = window.URL.createObjectURL(new Blob([data.data]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", `${name}.zip`);
-        document.body.appendChild(link);
-        link.click();
-        window.location="/site-management/export-data"
-      }
-
-      dispatch({
-        type: POST_EXPORT_DATA_SUCCESS,
-        payload: data.data,
-      });
-    } catch (error) {
-      Swal.fire("Ooppss", "Service Excel Bermasalah", "error").then(
-        () => {}
-      );
-      dispatch({
-        type: POST_EXPORT_DATA_FAIL,
-      });
-    }
-  };
+    };
 
 export const setPage = (page) => {
   return {
