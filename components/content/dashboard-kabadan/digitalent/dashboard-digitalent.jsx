@@ -522,7 +522,7 @@ const DashboardDigitalent = ({ token }) => {
                     <PaginationDashboard
                       total={statistikMitraPendaftar?.total}
                       perPage={statistikMitraPendaftar?.perPage}
-                      title="Pendaftar"
+                      title="Mitra"
                       activePage={pageMitraPendaftaran}
                       funcPagination={(value) => {
                         setPageMitraPendaftaran(value);
@@ -554,7 +554,7 @@ const DashboardDigitalent = ({ token }) => {
                     <PaginationDashboard
                       total={statistikMitraPeserta?.total}
                       perPage={statistikMitraPeserta?.perPage}
-                      title="Peserta"
+                      title="Mitra"
                       activePage={pageMitraPeserta}
                       funcPagination={(value) => {
                         setPageMitraPeserta(value);

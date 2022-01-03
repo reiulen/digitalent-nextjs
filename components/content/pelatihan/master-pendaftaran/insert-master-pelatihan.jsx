@@ -181,7 +181,7 @@ const AddMasterPelatihan = ({ token }) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      const valueForm = helperUnformatCheckbox(formBuilder);
+      const valueForm = helperUnformatCheckbox(formBuilder, "admin");
       const data = {
         judul_form: title,
         formBuilder: valueForm,

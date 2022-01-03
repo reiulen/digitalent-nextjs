@@ -30,6 +30,7 @@ import {
 
 import PaginationDashboard from "../component/pagination-dashbaord.component";
 import LoadingDashboard from "../component/loading-dashboard.component";
+import { helperHandlePercentage } from "../../../../utils/middleware/helper";
 
 const DashboardBeasiswa = ({ token }) => {
   const dispatch = useDispatch();
@@ -213,10 +214,6 @@ const DashboardBeasiswa = ({ token }) => {
     });
   }
 
-  const handlePercentage = (totalAdd, total) => {
-    return Math.ceil((100 * totalAdd) / total);
-  };
-
   return (
     <PageWrapper>
       <section className="opening-hello">
@@ -225,7 +222,7 @@ const DashboardBeasiswa = ({ token }) => {
           text={"Beasiswa Kominfo"}
           value={totalPengguna?.total}
           statisticDay={totalPengguna?.total_penambahan}
-          dailyAdd={handlePercentage(
+          dailyAdd={helperHandlePercentage(
             totalPengguna?.total_penambahan,
             totalPengguna?.total
           )}
