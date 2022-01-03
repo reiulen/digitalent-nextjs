@@ -15,6 +15,7 @@ import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
 import Select from "react-select";
 import IconReview from "../../../assets/icon/Review";
+import {Modal} from "react-bootstrap"
 
 import {
   getSingleValue,
@@ -52,6 +53,13 @@ const DetailDataKerjasama = ({ token }) => {
   const [keyWord, setKeyWord] = useState("");
   const [valueStatus, setValueStatus] = useState("");
   const [valueKerjaSama, setValueKerjaSama] = useState("");
+  const [showModal, setShowModal] = useState(false)
+  const [valueStatusCard, setValueStatusCard] = useState ("")
+
+  const handleValueStatus = (value, string) => {
+    setValueStatus(value)
+    setValueStatusCard(string)
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -62,6 +70,7 @@ const DetailDataKerjasama = ({ token }) => {
     event.preventDefault();
     dispatch(changeValueStatus(valueStatus));
     dispatch(changeValueKerjaSama(valueKerjaSama));
+    setShowModal(false)
   };
 
   const resetValueSort = () => {
@@ -70,6 +79,8 @@ const DetailDataKerjasama = ({ token }) => {
     setValueKerjaSama("");
     setValueStatus("");
     setKeyWord("");
+    setShowModal(false)
+    setValueStatusCard("")
 
     dispatch({
       type: RESET_VALUE_SORTIR,
@@ -213,7 +224,7 @@ const DetailDataKerjasama = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark titles-1">
-              Kerjasama &nbsp; 
+              Kerjasama &nbsp;
               {mitraDetailAll?.mitraDetailAll?.data?.title}
             </h3>
           </div>
@@ -222,28 +233,33 @@ const DetailDataKerjasama = ({ token }) => {
             <div className="row">
               <div className="col-12 col-xl-6">
                 <div className="position-relative overflow-hidden w-100 mt-0 mt-sm-5">
-                  <IconSearch
-                    style={{ left: "10" }}
-                    className="left-center-absolute"
-                  />
-                  <input
-                    id="kt_datatable_search_query"
-                    type="text"
-                    className="form-control pl-10"
-                    placeholder="Cari..."
-                    onChange={(e) => setKeyWord(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    onClick={(e) => handleSubmit(e)}
-                    className="btn bg-blue-primary text-white right-center-absolute"
-                    style={{
-                      borderTopLeftRadius: "0",
-                      borderBottomLeftRadius: "0",
-                    }}
+                  <form
+                    onSubmit={(e) => handleSubmit(e)}
                   >
-                    Cari
-                  </button>
+                    <IconSearch
+                      style={{ left: "10" }}
+                      className="left-center-absolute"
+                    />
+                    <input
+                      id="kt_datatable_search_query"
+                      type="text"
+                      className="form-control pl-10"
+                      placeholder="Cari..."
+                      onChange={(e) => setKeyWord(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      onClick={(e) => handleSubmit(e)}
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                    >
+                      Cari
+                    </button>
+                  </form>
+                  
                 </div>
               </div>
               <div className="col-12 col-xl-6">
@@ -254,6 +270,7 @@ const DetailDataKerjasama = ({ token }) => {
                     data-toggle="modal"
                     data-target="#exampleModalCenter"
                     style={{ color: "#464646"}}
+                    onClick={() => setShowModal(true)}
                   >
                     <div className="d-flex align-items-center">
                       <IconFilter className="mr-3" />
@@ -261,111 +278,103 @@ const DetailDataKerjasama = ({ token }) => {
                     </div>
                     <IconArrow fill="#E4E6EF" width="11" height="11" />
                   </button>
-                  {/* modal */}
-                  <form className="form text-left">
-                    <div
-                      className="modal fade"
-                      id="exampleModalCenter"
-                      tabIndex="-1"
-                      role="dialog"
-                      aria-labelledby="exampleModalCenterTitle"
-                      aria-hidden="true"
-                    >
-                      <div
-                        className="modal-dialog modal-dialog-centered"
-                        role="document"
-                      >
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5
-                              className="modal-title"
-                              id="exampleModalLongTitle"
-                            >
-                              Filter
-                            </h5>
-                            <button
-                              type="button"
-                              className="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <IconClose />
-                            </button>
-                          </div>
 
-                          <div
-                            className="modal-body text-left"
-                            style={{ height: "400px" }}
-                          >
-                            <div className="fv-row mb-10">
-                              <label className="required fw-bold fs-6 mb-2">
-                                Kategori Kerjasama
-                              </label>
-                              <Select
-                                ref={(ref) => (selectRefKerjasama = ref)}
-                                className="basic-single"
-                                classNamePrefix="select"
-                                placeholder="Semua"
-                                defaultValue={
-                                  mitraDetailAll.stateListKerjaSama[0]
-                                }
-                                isDisabled={false}
-                                isLoading={false}
-                                isClearable={false}
-                                isRtl={false}
-                                isSearchable={true}
-                                name="color"
-                                onChange={(e) =>
-                                  setValueKerjaSama(e?.cooperation_categories)
-                                }
-                                options={mitraDetailAll.stateListKerjaSama}
-                              />
-                            </div>
-                            <div className="fv-row mb-10">
-                              <label className="required fw-bold fs-6 mb-2">
-                                Status
-                              </label>
-                              <Select
-                                ref={(ref) => (selectRefStatus = ref)}
-                                className="basic-single"
-                                classNamePrefix="select"
-                                placeholder="Semua"
-                                defaultValue={mitraDetailAll.stateListStatus[0]}
-                                isDisabled={false}
-                                isLoading={false}
-                                isClearable={false}
-                                isRtl={false}
-                                isSearchable={true}
-                                name="color"
-                                onChange={(e) => setValueStatus(e?.name_en)}
-                                options={mitraDetailAll.stateListStatus}
-                              />
-                            </div>
-                          </div>
-                          <div className="modal-footer">
-                            <div className="d-flex justify-content-end align-items-center">
-                              <button
-                                className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
-                                type="button"
-                                data-dismiss="modal"
-                                aria-label="Close"
-                                onClick={() => resetValueSort()}
-                              >
-                                Reset
-                              </button>
-                              <button
-                                className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
-                                type="button"
-                                onClick={(e) => handleSubmitSearchMany(e)}
-                              >
-                                Terapkan
-                              </button>
-                            </div>
-                          </div>
-                        </div>
+                  {/* modal */}
+                  <Modal
+                    centered={true}
+                    show={showModal}
+                    onHide={() => setShowModal(false)}
+                  >
+                    <Modal.Header>
+                      <h5
+                        className="modal-title"
+                        id="exampleModalLongTitle"
+                      >
+                        Filter
+                      </h5>
+                      <button
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                        onClick={() => setShowModal(false)}
+                      >
+                        <IconClose />
+                      </button>
+                    </Modal.Header>
+                    <Modal.Body
+                      className="text-left"
+                      style={{ height: "400px" }}
+                    >
+                      <div className="fv-row mb-10">
+                        <label className="required fw-bold fs-6 mb-2">
+                          Kategori Kerjasama
+                        </label>
+                        <Select
+                          ref={(ref) => (selectRefKerjasama = ref)}
+                          className="basic-single"
+                          classNamePrefix="select"
+                          // placeholder="Semua"
+                          // defaultValue={
+                          //   mitraDetailAll.stateListKerjaSama[0]
+                          // }
+                          placeholder={valueKerjaSama ? valueKerjaSama : "Semua"}
+                          isDisabled={false}
+                          isLoading={false}
+                          isClearable={false}
+                          isRtl={false}
+                          isSearchable={true}
+                          name="color"
+                          onChange={(e) =>
+                            setValueKerjaSama(e?.cooperation_categories)
+                          }
+                          options={mitraDetailAll.stateListKerjaSama}
+                        />
                       </div>
-                    </div>
-                  </form>
+                      <div className="fv-row mb-10">
+                        <label className="required fw-bold fs-6 mb-2">
+                          Status
+                        </label>
+                        <Select
+                          ref={(ref) => (selectRefStatus = ref)}
+                          className="basic-single"
+                          classNamePrefix="select"
+                          // placeholder="Semua"
+                          // defaultValue={mitraDetailAll.stateListStatus[0]}
+                          placeholder={valueStatusCard ? valueStatusCard : "Semua"}
+                          isDisabled={false}
+                          isLoading={false}
+                          isClearable={false}
+                          isRtl={false}
+                          isSearchable={true}
+                          name="color"
+                          // onChange={(e) => setValueStatus(e?.name_en)}
+                          onChange={(e) => handleValueStatus(e?.name_en, e?.label)}
+                          options={mitraDetailAll.stateListStatus}
+                        />
+                      </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <div className="d-flex justify-content-end align-items-center">
+                        <button
+                          className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
+                          type="button"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                          onClick={() => resetValueSort()}
+                        >
+                          Reset
+                        </button>
+                        <button
+                          className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
+                          type="button"
+                          onClick={(e) => handleSubmitSearchMany(e)}
+                        >
+                          Terapkan
+                        </button>
+                      </div>
+                    </Modal.Footer>
+                  </Modal>
                   {/* end modal */}
 
                   {/* btn export */}

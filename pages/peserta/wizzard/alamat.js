@@ -40,7 +40,7 @@ export default function WizzardProfilePage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
-      <Layout title="Informasi Pribadi Peserta - Pelatihan" session={session}>
+      <Layout title="Alamat Peserta - Pelatihan" session={session}>
         <WizzardAlamat session={session} />
       </Layout>
     </>

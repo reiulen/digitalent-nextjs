@@ -349,45 +349,6 @@ const StepTwo = ({ token, tokenPermission }) => {
                     htmlFor="staticEmail"
                     className=" col-form-label font-weight-bold pb-0"
                   >
-                    Passing Grade
-                  </p>
-                  <div className="input-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      aria-describedby="basic-addon2"
-                      placeholder="80"
-                      value={passing_grade}
-                      onChange={(e) => handlePassingGrade(e.target.value)}
-                      onBlur={() =>
-                        simpleValidator.current.showMessageFor("passing grade")
-                      }
-                    />
-                    <div className="input-group-append">
-                      <span
-                        className="input-group-text bg-primary text-white"
-                        id="basic-addon2"
-                      >
-                        Nilai
-                      </span>
-                    </div>
-                  </div>
-
-                  {simpleValidator.current.message(
-                    "passing grade",
-                    passing_grade,
-                    "required",
-                    { className: "text-danger" }
-                  )}
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <div className="col-sm-12 col-md-12">
-                  <p
-                    htmlFor="staticEmail"
-                    className=" col-form-label font-weight-bold pb-0"
-                  >
                     Status
                   </p>
                   <select

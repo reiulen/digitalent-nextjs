@@ -83,7 +83,7 @@ export const getAllArtikelsPeserta =
     publish = null,
     startdate = null,
     enddate = null,
-    permission
+    // permission
   ) =>
     async (dispatch) => {
       try {
@@ -101,7 +101,7 @@ export const getAllArtikelsPeserta =
           },
           headers: {
             Authorization: "Bearer " + token,
-            "Permission": permission
+            // "Permission": permission
           },
         };
 
@@ -143,12 +143,12 @@ export const getDetailArtikel = (id, token, permission) => async (dispatch) => {
   }
 };
 
-export const getDetailArtikelsPeserta = (id, token, permission) => async (dispatch) => {
+export const getDetailArtikelsPeserta = (id, token) => async (dispatch) => {
   try {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        "Permission": permission
+        // "Permission": permission
       },
     };
 

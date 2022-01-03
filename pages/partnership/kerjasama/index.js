@@ -32,7 +32,7 @@ export default function KerjaSamaPage(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req }) => {
+    async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {

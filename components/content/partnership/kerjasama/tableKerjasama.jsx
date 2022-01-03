@@ -61,6 +61,21 @@ const Table = ({ token }) => {
   const [valueKerjaSama, setValueKerjaSama] = useState("");
   const [isChangeOption, setIsChangeOption] = useState(false);
   const [showModal, setShowModal] = useState(false)
+  const [valueStatusCard, setValueStatusCard] = useState ("")
+
+  const handleValueStatusCard = async (value) => {   
+    const data = await dispatch (changeValueStatusCard(value))
+
+    // if (data.type){
+    //   dispatch (changeValueStatus(""))
+    // }
+  }
+
+  const handleValueStatus = (value, string) => {
+    setValueStatus(value)
+    setValueStatusCard(string)
+  }
+
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
   };
@@ -69,6 +84,7 @@ const Table = ({ token }) => {
     dispatch(changeValueMitra(valueMitra));
     dispatch(changeValueStatus(valueStatus));
     dispatch(changeValueKerjaSama(valueKerjaSama));
+    dispatch(changeValueStatusCard(""))
     setShowModal(false)
   };
   const resetValueSort = () => {
@@ -76,6 +92,7 @@ const Table = ({ token }) => {
     selectRefMitra.select.clearValue();
     selectRefStatus.select.clearValue();
     setShowModal(false)
+    setValueStatusCard("")
     dispatch({
       type: RESET_VALUE_SORTIR,
     });
@@ -158,7 +175,7 @@ const Table = ({ token }) => {
     allMK?.status_delete, 
     allMK?.status_list, 
     token,
-    // cookiePermission
+    cookiePermission
   ]);
 
   const [sumWillExpire, setSumWillExpire] = useState(0);
@@ -271,7 +288,8 @@ const Table = ({ token }) => {
             titleValue=""
             title="Kerjasama Aktif"
             publishedVal="1"
-            routePublish={() => dispatch(changeValueStatusCard("active"))}
+            // routePublish={() => dispatch(changeValueStatusCard("active"))}
+            routePublish={() => handleValueStatusCard("active")}
             backgroundCard="/assets/icon/clipboard-check-green.svg"
           />
           </div>
@@ -286,7 +304,8 @@ const Table = ({ token }) => {
               titleValue=""
               title="Pengajuan Kerjasama"
               publishedVal="1"
-              routePublish={() => dispatch(changeValueStatusCard("submission"))}
+              // routePublish={() => dispatch(changeValueStatusCard("submission"))}
+              routePublish={() => handleValueStatusCard("submission")}
               backgroundCard="/assets/icon/clipboard-list-yellow.svg"
             />
           </div>
@@ -301,7 +320,8 @@ const Table = ({ token }) => {
               titleValue=""
               title="Kerjasama akan Habis"
               publishedVal="1"
-              routePublish={() => dispatch(changeValueStatusCard("will_expire"))}
+              // routePublish={() => dispatch(changeValueStatusCard("will_expire"))}
+              routePublish={() => handleValueStatusCard("will_expire")}
               backgroundCard="/assets/icon/clipboard-cross-red.svg"
             />
           </div>
@@ -421,7 +441,7 @@ const Table = ({ token }) => {
                                 ref={(ref) => (selectRefMitra = ref)}
                                 className="basic-single"
                                 classNamePrefix="select"
-                                placeholder="Semua"
+                                placeholder={valueMitra ? valueMitra : "Semua"}
                                 isDisabled={false}
                                 isLoading={false}
                                 isClearable={false}
@@ -438,7 +458,8 @@ const Table = ({ token }) => {
                                 ref={(ref) => (selectRefKerjasama = ref)}
                                 className="basic-single"
                                 classNamePrefix="select"
-                                placeholder="Semua"
+                                // placeholder="Semua"
+                                placeholder={valueKerjaSama ? valueKerjaSama : "Semua"}
                                 isDisabled={false}
                                 isLoading={false}
                                 isClearable={false}
@@ -455,14 +476,20 @@ const Table = ({ token }) => {
                                 ref={(ref) => (selectRefStatus = ref)}
                                 className="basic-single"
                                 classNamePrefix="select"
-                                placeholder="Semua"
+                                // placeholder="Semua"
+                                placeholder={valueStatusCard ? valueStatusCard : "Semua"}
                                 isDisabled={false}
                                 isLoading={false}
                                 isClearable={false}
                                 isRtl={false}
                                 isSearchable={true}
                                 name="color"
-                                onChange={(e) => setValueStatus(e?.name_en)}
+                                // onChange={
+                                //   (e) => setValueStatus(e?.name_en)
+                                // }
+                                onChange={
+                                  (e) => handleValueStatus(e?.name_en, e?.label)
+                                }
                                 options={allMK?.stateListStatus}
                               />
                             </div>
