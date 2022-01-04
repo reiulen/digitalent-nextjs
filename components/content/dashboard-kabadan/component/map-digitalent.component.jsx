@@ -96,17 +96,17 @@ const MapDigitalent = ({ data = [] }) => {
                 position={row?.position}
                 animate={true}
                 icon={
-                  row?.pendaftar <= 25000
-                    ? icon6
-                    : row?.pendaftar <= 50000
-                    ? icon5
-                    : row?.pendaftar <= 75000
-                    ? icon4
-                    : row?.pendaftar <= 100000
-                    ? icon3
-                    : row?.pendaftar <= 125000
+                  row?.pendaftar >= 125000
+                    ? icon1
+                    : row?.pendaftar >= 100000
                     ? icon2
-                    : icon1
+                    : row?.pendaftar >= 75000
+                    ? icon3
+                    : row?.pendaftar >= 50000
+                    ? icon4
+                    : row?.pendaftar >= 25000
+                    ? icon5
+                    : icon6
                 }
               >
                 <Popup>
