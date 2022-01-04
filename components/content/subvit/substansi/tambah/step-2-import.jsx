@@ -23,6 +23,7 @@ import { useRouter } from "next/router";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
+import StepInputClone from "/components/StepInputClone";
 import LoadingTable from "../../../../LoadingTable";
 import axios from "axios";
 import styles from "../../trivia/edit/step.module.css";
@@ -299,7 +300,14 @@ const StepTwo = ({ token, tokenPermission }) => {
         config
       )
       .then((res) => {
-        window.location.href = res.data.data[0];
+        // window.location.href = res.data.data[0];
+        res.data.data.map((row, i) => {
+          if (i === 0) {
+            window.open(row);
+          } else {
+            window.location.href = row;
+          }
+        });
       });
   };
 
@@ -371,7 +379,11 @@ const StepTwo = ({ token, tokenPermission }) => {
       )}
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="2" title="Substansi"></StepInput>
+          {localStorage.getItem("clone") === "true" ? (
+            <StepInputClone step="3" />
+          ) : (
+            <StepInput step="2" title="Substansi" />
+          )}
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">Metode Import .csv/.xls</h2>
           </div>

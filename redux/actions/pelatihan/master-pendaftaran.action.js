@@ -99,7 +99,8 @@ export const setValueStatus = (text) => {
 };
 
 export const getDetailMasterPelatihan =
-  (id, token, token_permission) => async (dispatch) => {
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
     try {
       dispatch({ type: DETAIL_MASTER_TRAINING_REQUEST });
       let link =
