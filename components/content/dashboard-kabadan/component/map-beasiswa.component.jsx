@@ -82,15 +82,15 @@ const MapBeasiswa = () => {
             position={row.position}
             animate={true}
             icon={
-              row?.pendaftar >= 125
+              row?.pendaftar >= 125000
                 ? icon1
-                : row?.pendaftar >= 100
+                : row?.pendaftar >= 100000
                 ? icon2
-                : row?.pendaftar >= 75
+                : row?.pendaftar >= 75000
                 ? icon3
-                : row?.pendaftar >= 50
+                : row?.pendaftar >= 50000
                 ? icon4
-                : row?.pendaftar >= 25
+                : row?.pendaftar >= 25000
                 ? icon5
                 : icon6
             }
