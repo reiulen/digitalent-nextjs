@@ -37,6 +37,7 @@ const TestSubstansi = ({ token }) => {
       .then((res) => {
         setQuestion(res.data.total_questions);
         setTime(res.data.duration);
+        console.log(res.data.duration);
       });
   }, [routerTraining, routerTema, token]);
 
