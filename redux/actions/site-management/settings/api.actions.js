@@ -249,6 +249,9 @@ export const getDetailLog = (id, token, tokenPermission) => async (dispatch, get
     let fromState = getState().listLog.from;
     let toState = getState().listLog.to;
 
+    console.log (fromState)
+    console.log (toState)
+
     const params = {
       page: pageState,
       cari: cariState,
@@ -272,6 +275,7 @@ export const getDetailLog = (id, token, tokenPermission) => async (dispatch, get
       type: DETAIL_LOG_API_SUCCESS,
       payload: data,
     });
+
   } catch (error) {
     dispatch({
       type: DETAIL_LOG_API_FAIL,

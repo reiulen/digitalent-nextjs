@@ -189,7 +189,7 @@ const Table = ({ token }) => {
             {
               permission ?
                 permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.mitra.manage") ?
-                  <div className="col-12 col-md-5 col-xl-3 ml-md-n6 ml-n10 mt-sm-0 mt-n5">
+                  <div className="col-12 col-md-4 col-xl-4 ml-md-n6 ml-n10 mt-sm-0 mt-n5">
                     <Link href="/partnership/mitra/tambah">
                       <a className="btn btn-rounded-full bg-blue-primary text-white mt-4 d-flex justify-content-center">
                         <IconAdd
@@ -198,9 +198,10 @@ const Table = ({ token }) => {
                           height="16"
                           fill="rgba(255,255,255,1)"
                         />
-                        <div className="text-truncate">
+                        {/* <div className="text-truncate">
                           Tambah Mitra Baru 
-                        </div>
+                        </div> */}
+                        Tambah Mitra Baru 
                       </a>
                     </Link>
                   </div>
@@ -305,7 +306,7 @@ const Table = ({ token }) => {
                     allMitra?.mitraAll?.data?.list_mitras?.length === 0 ? (
                     <tr>
                       <td colSpan="6" className="text-center">
-                        <h4>Data tidak ditemukan</h4>
+                        <h4>Data Kosong</h4>
                       </td>
                     </tr>
                   ) : (
@@ -431,25 +432,35 @@ const Table = ({ token }) => {
                                         </div>
                                       </a>
                                     </Link>
-      
-                                    <button
-                                      className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
-                                      onClick={() =>
-                                        router.push(
-                                          {
-                                            pathname: `/partnership/mitra/edit/${item.id}`,
-                                          },
-                                          undefined,
-                                          { shallow: true }
-                                        )
-                                      }
-                                    >
-                                      <IconPencil />
-                                      <div className="text-hover-show-hapus">
-                                        Ubah
-                                      </div>
-                                    </button>
-      
+                                    {
+                                      item.status === 0 && 
+                                      item.address === null &&
+                                      item.indonesia_cities_id === null && 
+                                      item.indonesia_provinces_id === null &&
+                                      item.pic_contact_number === null && 
+                                      item.pic_email === null && 
+                                      item.pic_name === null &&
+                                      item.postal_code === null ? 
+                                        <div className="mr-3"></div>
+                                      :
+                                        <button
+                                          className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
+                                          onClick={() =>
+                                            router.push(
+                                              {
+                                                pathname: `/partnership/mitra/edit/${item.id}`,
+                                              },
+                                              undefined,
+                                              { shallow: true }
+                                            )
+                                          }
+                                        >
+                                          <IconPencil />
+                                          <div className="text-hover-show-hapus">
+                                            Ubah
+                                          </div>
+                                        </button>
+                                    }
                                     <button
                                       className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                       onClick={() => handleDelete(item.id)}
@@ -472,20 +483,24 @@ const Table = ({ token }) => {
                     })
                   )
                 }
-                pagination={
-                  <Pagination
-                    activePage={allMitra?.page}
-                    itemsCountPerPage={allMitra?.mitraAll?.data?.perPage}
-                    totalItemsCount={allMitra?.mitraAll?.data?.total}
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
+                
+                pagination={ 
+                  allMitra?.mitraAll?.data?.total > 5 ?
+                    <Pagination
+                      activePage={allMitra?.page}
+                      itemsCountPerPage={allMitra?.mitraAll?.data?.perPage}
+                      totalItemsCount={allMitra?.mitraAll?.data?.total}
+                      pageRangeDisplayed={3}
+                      onChange={(page) => dispatch(setPage(page))}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  :
+                    null
                 }
                 onChangeLimit={(e) => dispatch(setLimit(e.target.value))}
                 totalData={allMitra?.totalDataMitra}

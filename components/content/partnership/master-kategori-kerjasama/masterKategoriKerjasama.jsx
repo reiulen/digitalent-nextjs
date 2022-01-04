@@ -305,26 +305,31 @@ const Table = ({ token }) => {
                   </table>
                 )}
               </div>
-
               <div className="row">
                 <div className="table-pagination paginate-cs col-12 col-md-8 overflow-auto">
-                  <Pagination
-                    activePage={allMKCooporation?.page}
-                    itemsCountPerPage={
-                      allMKCooporation?.mk_cooporation?.data?.perPage
-                    }
-                    totalItemsCount={
-                      allMKCooporation?.mk_cooporation?.data?.total
-                    }
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
+                  {
+                    allMKCooporation?.mk_cooporation?.data?.total > 5 ?
+                      <Pagination
+                        activePage={allMKCooporation?.page}
+                        itemsCountPerPage={
+                          allMKCooporation?.mk_cooporation?.data?.perPage
+                        }
+                        totalItemsCount={
+                          allMKCooporation?.mk_cooporation?.data?.total
+                        }
+                        pageRangeDisplayed={3}
+                        onChange={(page) => dispatch(setPage(page))}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
+                    :
+                      null
+                  }
+                  
                 </div>
                 <div className="table-total ml-auto col-12 col-md-4 d-flex justify-content-md-end">
                   <div className="row">

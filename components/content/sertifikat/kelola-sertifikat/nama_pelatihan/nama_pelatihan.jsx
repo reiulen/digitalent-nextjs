@@ -607,7 +607,7 @@ export default function NamaPelatihanID({ token }) {
                                               className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                               data-toggle="tooltip"
                                               data-placement="bottom"
-                                              title="Detail"
+                                              title="User"
                                             >
                                               <i className="ri-file-user-fill p-0 text-white"></i>
                                             </a>
