@@ -166,6 +166,18 @@ const CardPelatihanQuickView = ({
                     </div>
                   </div>
                   <div className="d-flex align-items-start">
+                    {/* SHAREOVERLAY */}
+                    <ShareOverlay
+                      url={`http://dts-dev.majapahit.id/detail/pelatihan/${row.id}`}
+                      quote={row.name}
+                    >
+                      <button
+                        className="roundedss-border btn btn-white mx-6"
+                        disabled={row.status !== "Dibuka" && true}
+                      >
+                        <IconShare className="cursor-pointer" />
+                      </button>
+                    </ShareOverlay>
                     <button
                       disabled={row.status !== "Dibuka" && true}
                       className="roundedss-border btn btn-white"
@@ -191,19 +203,6 @@ const CardPelatihanQuickView = ({
                         <i className="text-danger ri-heart-fill p-0" />
                       )}
                     </button>
-
-                    {/* SHAREOVERLAY */}
-                    <ShareOverlay
-                      url={`http://dts-dev.majapahit.id/detail/pelatihan/${row.id}`}
-                      quote={row.name}
-                    >
-                      <button
-                        className="roundedss-border btn btn-white mx-6"
-                        disabled={row.status !== "Dibuka" && true}
-                      >
-                        <IconShare className="cursor-pointer" />
-                      </button>
-                    </ShareOverlay>
 
                     <div onClick={() => funcClosePelatihan(i)}>
                       <IconClose className="cursor-pointer" />
