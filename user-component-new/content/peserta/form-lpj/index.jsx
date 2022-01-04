@@ -17,8 +17,6 @@ const FormLPJ = ({ token }) => {
 
   const { data: dataLPJ } = useSelector((state) => state.getFormLPJ.data);
 
-  console.log(dataLPJ);
-
   const { pelatihan: dataTraining } = useSelector(
     (state) => state.getPelatihan
   );
@@ -79,29 +77,27 @@ const FormLPJ = ({ token }) => {
       form_lpj: initial,
     };
 
-    console.log(setData);
-
-    // Swal.fire({
-    //   title: "Apakah Anda Yakin ?",
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   confirmButtonColor: "#3085d6",
-    //   cancelButtonColor: "#d33",
-    //   confirmButtonText: "Iya",
-    //   cancelButtonText: "Batal",
-    // }).then((result) => {
-    //   if (result.isConfirmed) {
-    //     axios
-    //       .post(link, setData, config)
-    //       .then((res) => {
-    //         SweatAlert("Berhasil", res.data.data.message, "success");
-    //         router.push("/peserta/riwayat-pelatihan");
-    //       })
-    //       .catch((err) => {
-    //         SweatAlert("Gagal", err.response.data.message, "error");
-    //       });
-    //   }
-    // });
+    Swal.fire({
+      title: "Apakah Anda Yakin ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Iya",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .post(link, setData, config)
+          .then((res) => {
+            SweatAlert("Berhasil", res.data.data.message, "success");
+            router.push("/peserta/riwayat-pelatihan");
+          })
+          .catch((err) => {
+            SweatAlert("Gagal", err.response.data.message, "error");
+          });
+      }
+    });
   };
 
   const handleBack = () => {
