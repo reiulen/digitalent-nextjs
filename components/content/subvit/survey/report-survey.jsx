@@ -14,10 +14,12 @@ import { Badge, Modal } from "react-bootstrap";
 import axios from "axios";
 import styles from "../trivia/edit/step.module.css";
 import { allReportSurveyQuestionBanks } from "../../../../redux/actions/subvit/survey-question.actions";
+import Cookies from "js-cookie";
 
-const ReportSurvey = ({ token }) => {
+const ReportSurvey = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   const { loading, error, survey } = useSelector(
     (state) => state.allReportSurveyQuestionBanks
@@ -76,6 +78,7 @@ const ReportSurvey = ({ token }) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: token_permission,
       },
     };
 
