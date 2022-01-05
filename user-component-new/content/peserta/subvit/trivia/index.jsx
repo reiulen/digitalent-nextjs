@@ -155,6 +155,7 @@ const SubtansiUser = ({ token }) => {
       dispatch(postResultTrivia(setData, token));
       localStorage.clear();
       router.push(`/peserta/done-trivia`);
+      console.log("useEffect Pertama", setData);
     }
   }, [count, router, error, dispatch, token]);
 
@@ -304,12 +305,16 @@ const SubtansiUser = ({ token }) => {
   let multi = [];
 
   const handleAnswerCheckbox = (e) => {
-    if (multi.includes(e.key)) {
-      multi.splice(multi.indexOf(e.key), 1);
-      sessionStorage.setItem(router.query.id, JSON.stringify(multi));
+    const list =
+      sessionStorage.getItem(router.query.id) !== null
+        ? [...JSON.parse(sessionStorage.getItem(router.query.id))]
+        : [];
+    if (list.includes(e.key)) {
+      list.splice(list.indexOf(e.key), 1);
+      sessionStorage.setItem(router.query.id, JSON.stringify(list));
     } else {
-      multi.push(e.key);
-      sessionStorage.setItem(router.query.id, JSON.stringify(multi));
+      list.push(e.key);
+      sessionStorage.setItem(router.query.id, JSON.stringify(list));
     }
   };
 
@@ -351,7 +356,7 @@ const SubtansiUser = ({ token }) => {
       data.list_questions &&
       data.list_questions[parseInt(router.query.id) - 1].type === "checkbox"
     ) {
-      sessionStorage.setItem(router.query.id, multi);
+      // sessionStorage.setItem(router.query.id, multi);
     } else if (
       data &&
       data.list_questions &&
@@ -385,6 +390,7 @@ const SubtansiUser = ({ token }) => {
       localStorage.clear();
       setOpen(true);
       handleNext();
+      console.log("useEffect kelima", times);
     }
   }, [times, data, router]);
 
