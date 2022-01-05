@@ -60,6 +60,18 @@ class MyDocument extends Document {
           {/* <!--end::Layout Themes--> */}
           <link rel="shortcut icon" href="/assets/icon/mainlogo.svg" />
 
+          <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+            integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+            crossOrigin="true"
+          />
+          <script
+            src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossOrigin="true"
+          ></script>
+
           <script
             type="text/javascript"
             src="/assets/plugins/global/plugins.bundle.min.js"
