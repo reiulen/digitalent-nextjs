@@ -544,7 +544,6 @@ const Table = ({ token }) => {
                 </div>
               </div>
             </div>
-
             <div className="table-page mt-5">
               <div className="table-responsive">
                 {allMK.statusLoad === "process" ? (
@@ -894,19 +893,25 @@ const Table = ({ token }) => {
               </div>
               <div className="row">
                 <div className="table-pagination col-12 col-md-8 overflow-auto">
-                  <Pagination
-                    activePage={allMK.page}
-                    itemsCountPerPage={allMK?.m_cooporation?.data?.perPage}
-                    totalItemsCount={allMK?.m_cooporation?.data?.total}
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
+                  {
+                    allMK?.m_cooporation?.data?.total > 5 ?
+                      <Pagination
+                        activePage={allMK.page}
+                        itemsCountPerPage={allMK?.m_cooporation?.data?.perPage}
+                        totalItemsCount={allMK?.m_cooporation?.data?.total}
+                        pageRangeDisplayed={3}
+                        onChange={(page) => dispatch(setPage(page))}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
+                    :
+                      null
+                  }
+                  
                 </div>
                 <div className="table-total col-12 col-md-4 d-flex justify-content-md-end ml-md-0 ml-4">
                   <div className="row mt-4">
@@ -928,12 +933,18 @@ const Table = ({ token }) => {
                         <option value="40">40</option>
                         <option value="50">50</option>
                       </select>
+                      
                     </div>
-                    <div className="col-8 my-auto">
-                      <p className="align-middle mt-3" style={{ color: "#B5B5C3" }}>
-                        Total Data {allMK?.m_cooporation?.data && allMK?.m_cooporation?.data?.total}
-                      </p>
-                    </div>
+                    {
+                      allMK?.m_cooporation?.data?.total > 5 ?
+                        <div className="col-8 my-auto">
+                          <p className="align-middle mt-3" style={{ color: "#B5B5C3" }}>
+                            Total Data {allMK?.m_cooporation?.data && allMK?.m_cooporation?.data?.total}
+                          </p>
+                        </div>
+                      :
+                        null
+                    }
                   </div>
                 </div>
               </div>

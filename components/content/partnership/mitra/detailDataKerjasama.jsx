@@ -989,6 +989,7 @@ const DetailDataKerjasama = ({ token }) => {
                     linkClass="page-link"
                   />
                 }
+                
                 onChangeLimit={(e) => dispatch(setLimitDetail(e.target.value))}
                 totalData={
                   mitraDetailAll?.mitraDetailAll &&
