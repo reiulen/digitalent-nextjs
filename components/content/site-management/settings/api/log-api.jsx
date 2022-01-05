@@ -17,7 +17,6 @@ import {
   exportFileCSV,
 } from "../../../../../redux/actions/site-management/settings/api.actions";
 import moment from "moment";
-import { Modal } from "react-bootstrap";
 import Swal from "sweetalert2";
 import DatePicker from "react-datepicker";
 import IconCalender from "../../../../assets/icon/Calender";
@@ -50,7 +49,6 @@ const Table = ({ token }) => {
 
   const [froms, setFroms] = useState("");
   const [tos, setTos] = useState("");
-  const [showModal, setShowModal] = useState(false)
 
   const onChangePeriodeDateStart = (date) => {
     setFroms(moment(date).format("YYYY-MM-DD"));
@@ -179,7 +177,6 @@ const Table = ({ token }) => {
                             className={`${styles.filterBtn} avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2`}
                             onClick={() => setShowModal(true)}
                             style={{ color: "#464646" }}
-                            onClick={()=> setShowModal(true)}
                           >
                             <div
                               className={`${styles.iconFilter} d-flex align-items-center`}
