@@ -17,6 +17,8 @@ import {
   exportFileCSV,
 } from "../../../../../redux/actions/site-management/settings/api.actions";
 import moment from "moment";
+import { Modal } from "react-bootstrap";
+import Swal from "sweetalert2";
 import DatePicker from "react-datepicker";
 import IconCalender from "../../../../assets/icon/Calender";
 import { RESET_VALUE_SORTIR } from "../../../../../redux/types/site-management/settings/api.type";
@@ -32,6 +34,9 @@ const Table = ({ token }) => {
 
   const listLog = useSelector((state) => state.listLog);
   const [valueSearch, setValueSearch] = useState("");
+  const [pages, setPages] = useState(1);
+  const [limit, setLimit] = useState(5);
+  const [showModal, setShowModal] = useState(false);
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
   };
@@ -39,6 +44,7 @@ const Table = ({ token }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(searchCooporation(valueSearch));
+    dispatch(getDetailLog(router.query.id, token, Cookies.get("token_permission")));
   };
 
   const [froms, setFroms] = useState("");
@@ -54,7 +60,17 @@ const Table = ({ token }) => {
 
   const handleSubmitSearchMany = (event) => {
     event.preventDefault();
-    dispatch(changeDates(froms, tos));
+    if (froms === "") {
+      Swal.fire('Oops !', 'From tidak boleh kosong', 'error')
+    } else if (tos === "") {
+      Swal.fire('Oops !', 'To tidak boleh kosong', 'error')
+    } else {
+      dispatch(changeDates(froms, tos));
+      dispatch(
+        getDetailLog(router.query.id, token, Cookies.get("token_permission"))
+      );
+      setShowModal(false)
+    }
   };
 
   const resetValueSort = () => {
@@ -63,18 +79,17 @@ const Table = ({ token }) => {
     dispatch({
       type: RESET_VALUE_SORTIR,
     });
+    setShowModal(false)
   };
 
   useEffect(() => {
-    dispatch(getDetailLog(router.query.id, token, Cookies.get("token_permission")));
+    dispatch(
+      getDetailLog(router.query.id, token, Cookies.get("token_permission"))
+    );
   }, [
     dispatch,
     router.query.id,
-    listLog?.cari,
-    listLog?.page,
     listLog?.limit,
-    listLog?.from,
-    listLog?.to,
     token,
   ]);
 
@@ -159,122 +174,100 @@ const Table = ({ token }) => {
                           <button
                             type="button"
                             className={`${styles.filterBtn} avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2`}
-                            data-toggle="modal"
-                            data-target="#exampleModalCenter"
+                            onClick={() => setShowModal(true)}
                             style={{ color: "#464646" }}
                           >
                             <div
                               className={`${styles.iconFilter} d-flex align-items-center`}
                             >
                               <IconFilter className="mr-3" />
-                              Pilih Filter
+                              Filter
                             </div>
                             <IconArrow fill="#E4E6EF" width="11" height="11" />
                           </button>
-                          {/* modal */}
-                          <form className="form text-left">
-                            <div
-                              className="modal fade"
-                              id="exampleModalCenter"
-                              tabIndex="-1"
-                              role="dialog"
-                              aria-labelledby="exampleModalCenterTitle"
-                              aria-hidden="true"
-                            >
-                              <div
-                                className="modal-dialog modal-dialog-centered"
-                                role="document"
-                              >
-                                <div className="modal-content">
-                                  <div className="modal-header">
-                                    <h5
-                                      className="modal-title"
-                                      id="exampleModalLongTitle"
-                                    >
-                                      Filter
-                                    </h5>
-                                    <button
-                                      type="button"
-                                      className="close"
-                                      data-dismiss="modal"
-                                      aria-label="Close"
-                                    >
-                                      <IconClose />
-                                    </button>
-                                  </div>
 
-                                  <div
-                                    className="modal-body text-left"
-                                    style={{ height: "400px" }}
-                                  >
-                                    <div className="fv-row mb-10">
-                                      <label>From</label>
-                                      <div className="d-flex align-items-center position-relative datepicker-w mt-2">
-                                        <DatePicker
-                                          className="form-search-date form-control cursor-pointer"
-                                          onChange={(date) =>
-                                            onChangePeriodeDateStart(date)
-                                          }
-                                          value={froms}
-                                          dateFormat="YYYY-MM-DD"
-                                          placeholderText="From"
-                                          minDate={moment().toDate()}
-                                        />
-                                        <IconCalender
-                                          className="right-center-absolute"
-                                          style={{ right: "10px" }}
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="fv-row mb-10">
-                                      <label>To</label>
-                                      <div className="d-flex align-items-center position-relative datepicker-w mt-2">
-                                        <DatePicker
-                                          className="form-search-date form-control cursor-pointer"
-                                          onChange={(date) =>
-                                            onChangePeriodeDateEnd(date)
-                                          }
-                                          value={tos}
-                                          disabled={!froms}
-                                          dateFormat="YYYY-MM-DD"
-                                          placeholderText="To"
-                                          minDate={moment(froms).toDate()}
-                                        />
-                                        <IconCalender
-                                          className="right-center-absolute"
-                                          style={{ right: "10px" }}
-                                        />
-                                      </div>
-                                    </div>
+                          <Modal
+                            show={showModal}
+                            onHide={() => setShowModal(false)}
+                            aria-labelledby="contained-modal-title-vcenter"
+                            centered
+                          >
+                            <Modal.Header>
+                              <Modal.Title>Filter</Modal.Title>
+                              <button
+                                type="button"
+                                className="close"
+                                onClick={() => setShowModal(false)}
+                              >
+                                <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+                              </button>
+                            </Modal.Header>
+                            <Modal.Body>
+                              <div
+                                className="modal-body text-left"
+                                style={{ height: "400px" }}
+                              >
+                                <div className="fv-row mb-10">
+                                  <label>From</label>
+                                  <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                                    <DatePicker
+                                      className="form-search-date form-control cursor-pointer"
+                                      onChange={(date) =>
+                                        onChangePeriodeDateStart(date)
+                                      }
+                                      value={froms}
+                                      dateFormat="YYYY-MM-DD"
+                                      placeholderText="From"
+                                      minDate={moment().toDate()}
+                                    />
+                                    <IconCalender
+                                      className="right-center-absolute"
+                                      style={{ right: "10px" }}
+                                    />
                                   </div>
-                                  <div className="modal-footer">
-                                    <div className="d-flex justify-content-end align-items-center">
-                                      <button
-                                        className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
-                                        type="button"
-                                        data-dismiss="modal"
-                                        aria-label="Close"
-                                        onClick={() => resetValueSort()}
-                                      >
-                                        Reset
-                                      </button>
-                                      <button
-                                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
-                                        type="button"
-                                        onClick={(e) =>
-                                          handleSubmitSearchMany(e)
-                                        }
-                                      >
-                                        Terapkan
-                                      </button>
-                                    </div>
+                                </div>
+                                <div className="fv-row mb-10">
+                                  <label>To</label>
+                                  <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                                    <DatePicker
+                                      className="form-search-date form-control cursor-pointer"
+                                      onChange={(date) =>
+                                        onChangePeriodeDateEnd(date)
+                                      }
+                                      value={tos}
+                                      disabled={!froms}
+                                      dateFormat="YYYY-MM-DD"
+                                      placeholderText="To"
+                                      minDate={moment(froms).toDate()}
+                                    />
+                                    <IconCalender
+                                      className="right-center-absolute"
+                                      style={{ right: "10px" }}
+                                    />
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          </form>
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <button
+                                className="btn btn-white-ghost-rounded-full"
+                                type="button"
+                                onClick={() => resetValueSort()}
+                              >
+                                Reset
+                              </button>
+                              <button
+                                className="btn btn-primary-rounded-full"
+                                type="button"
+                                onClick={(e) =>
+                                  handleSubmitSearchMany(e)
+                                }
+                              >
+                                Terapkan
+                              </button>
+                            </Modal.Footer>
+                          </Modal>
                         </div>
-                        {/* end modal */}
 
                         {/* btn export */}
                         <div className="col-12 col-md-6 col-lg-6 col-xl-4">
@@ -323,10 +316,11 @@ const Table = ({ token }) => {
                           return (
                             <tr key={index}>
                               <td className="align-middle text-left">
-                                {listLog.page === 1
+                                {index + limit * (pages - 1) + 1}
+                                {/* {listLog.page === 1
                                   ? index + 1
                                   : (listLog.page - 1) * listLog.limit +
-                                  (index + 1)}
+                                  (index + 1)} */}
                               </td>
                               <td className="align-middle text-left text-overflow-ens">
                                 {items.api_name}

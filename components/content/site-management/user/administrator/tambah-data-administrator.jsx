@@ -502,7 +502,7 @@ const TambahApi = ({ token }) => {
                     aria-controls="home"
                     aria-selected="true"
                   >
-                   By Akademi
+                    Pilih Akademi
                   </a>
                 </li>
                 <li
@@ -519,7 +519,7 @@ const TambahApi = ({ token }) => {
                     aria-controls="profile"
                     aria-selected="false"
                   >
-                   By Pelatihan
+                    Pilih Pelatihan
                   </a>
                 </li>
               </ul>
@@ -564,35 +564,43 @@ const TambahApi = ({ token }) => {
                               <div className="row w-100">
                                 <div className="col-12 col-sm-6">
                                   <div className="position-relative overflow-hidden w-100">
-                                    <IconSearch
-                                      style={{ left: "10" }}
-                                      className="left-center-absolute"
-                                    />
-                                    <input
-                                      id="kt_datatable_search_query"
-                                      type="text"
-                                      value={search}
-                                      className="form-control pl-10"
-                                      placeholder="Ketik disini untuk Pencarian..."
-                                      onChange={(e) =>
-                                        setSearch(e.target.value)
-                                      }
-                                    />
-                                    <button
-                                      type="button"
-                                      className="btn bg-blue-primary text-white right-center-absolute"
-                                      style={{
-                                        borderTopLeftRadius: "0",
-                                        borderBottomLeftRadius: "0",
-                                      }}
-                                      onClick={(e) => {
-                                        dispatch(
-                                          getAllListPelatihan(token, search)
-                                        );
-                                      }}
+                                    <form onSubmit={(e) => {
+                                      e.preventDefault();
+                                      dispatch(
+                                        getAllListPelatihan(token, search)
+                                      );
+                                    }}
                                     >
-                                      Cari
-                                    </button>
+                                      <IconSearch
+                                        style={{ left: "10" }}
+                                        className="left-center-absolute"
+                                      />
+                                      <input
+                                        id="kt_datatable_search_query"
+                                        type="text"
+                                        value={search}
+                                        className="form-control pl-10"
+                                        placeholder="Ketik disini untuk Pencarian..."
+                                        onChange={(e) =>
+                                          setSearch(e.target.value)
+                                        }
+                                      />
+                                      <button
+                                        type="button"
+                                        className="btn bg-blue-primary text-white right-center-absolute"
+                                        style={{
+                                          borderTopLeftRadius: "0",
+                                          borderBottomLeftRadius: "0",
+                                        }}
+                                        onClick={(e) => {
+                                          dispatch(
+                                            getAllListPelatihan(token, search)
+                                          );
+                                        }}
+                                      >
+                                        Cari
+                                      </button>
+                                    </form>
                                   </div>
                                 </div>
                               </div>
