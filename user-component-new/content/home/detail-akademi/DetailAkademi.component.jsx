@@ -198,7 +198,8 @@ const DetailAkademi = ({ session }) => {
     if (session && session.token) {
       const data = await dispatch(checkRegisterPelatihan(index, session.token));
       if (data.status === true) {
-        router.push(`/peserta/form-pendaftaran?id=${index}`);
+        // router.push(`/peserta/form-pendaftaran?id=${index}`);
+        window.location.href = `/peserta/form-pendaftaran?id=${index}`;
       } else if (data.status === false) {
         let errMessage = data.message;
         SweatAlert("Gagal", errMessage, "error");
@@ -416,7 +417,7 @@ const DetailAkademi = ({ session }) => {
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
                     <Form.Label className="fz-14">
-                      Tanggal Mulai Pelaksanaan
+                      Tanggal Mulai Pendaftaran
                     </Form.Label>
                     <Form.Control
                       className="form-control pr-5"
@@ -432,7 +433,7 @@ const DetailAkademi = ({ session }) => {
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
                     <Form.Label className="fz-14">
-                      Tanggal Akhir Pelaksanaan
+                      Tanggal Akhir Pendaftaran
                     </Form.Label>
                     <Form.Control
                       className="form-control pr-5"

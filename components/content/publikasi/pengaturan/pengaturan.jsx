@@ -220,7 +220,7 @@ const Pengaturan = ({ token }) => {
                                 <h3 className="card-title font-weight-bolder text-dark">Pengaturan Publikasi</h3>
                             </div> */}
                             <div className="card-body">
-                                <form>
+                                {/* <form> */}
                                     <div className="form-group row form-inline">
                                         <label htmlFor="staticEmail" className="col-12 col-md-2 col-lg-3 col-xl-2 col-form-label">Upload Image</label>
                                         <div className={`${styles.uploadImage} col-7 col-md-4 col-lg-4 col-xl-3`}>
@@ -374,7 +374,7 @@ const Pengaturan = ({ token }) => {
                                         </div>
 
                                     </div>
-                                </form>
+                                {/* </form> */}
                             </div>
                         </div>
                         :

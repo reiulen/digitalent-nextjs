@@ -189,7 +189,8 @@ const SubtansiUser = ({ token }) => {
     ],
   };
 
-  let multi = [];
+  // let multi = new Array();
+  const [multi, setMulti] = useState([]);
 
   const [data, setData] = useState();
 
@@ -235,19 +236,28 @@ const SubtansiUser = ({ token }) => {
   let keyMap = [];
 
   const handleMultiple = (item, index) => {
-    if (multi.includes(item.key)) {
-      multi.splice(multi.indexOf(item.key), 1);
-      sessionStorage.setItem(router.query.id, JSON.stringify(multi));
+    const list =
+      sessionStorage.getItem(router.query.id) !== null
+        ? [...JSON.parse(sessionStorage.getItem(router.query.id))]
+        : [];
+    if (list.includes(item.key)) {
+      list.splice(list.indexOf(item.key), 1);
+      sessionStorage.setItem(router.query.id, JSON.stringify(list));
     } else {
-      multi.push(item.key);
-      sessionStorage.setItem(router.query.id, JSON.stringify(multi));
+      list.push(item.key);
+      sessionStorage.setItem(router.query.id, JSON.stringify(list));
     }
 
+    // useles
+    setMulti(list);
     setD(index);
-    if (item.key.includes(sessionStorage.getItem(index + "a"))) {
-      sessionStorage.removeItem(index + "a", item.key);
+
+    if (
+      item.key.includes(sessionStorage.getItem(router.query.id + index + "a"))
+    ) {
+      sessionStorage.removeItem(router.query.id + index + "a", item.key);
     } else {
-      sessionStorage.setItem(index + "a", item.key);
+      sessionStorage.setItem(router.query.id + index + "a", item.key);
     }
 
     for (let i = 0; i < sessionStorage.length; i++) {
@@ -266,6 +276,7 @@ const SubtansiUser = ({ token }) => {
 
   const handleNext = () => {
     const page = parseInt(router.query.id) + 1;
+    setMulti([]);
     router.push(
       `${router.pathname.slice(0, 23)}/${page}?theme_id=${
         router.query.theme_id || 1
@@ -393,6 +404,13 @@ const SubtansiUser = ({ token }) => {
     if (e.sub && e.sub.length > 0) {
       sessionStorage.setItem(`${router.query.id}e`, e.key);
       setOpen(!open);
+      let val;
+      if (sessionStorage.getItem(`${router.query.id}tg`) === null) {
+        val = true;
+      } else {
+        val = !sessionStorage.getItem(`${router.query.id}tg`);
+      }
+      sessionStorage.setItem(`${router.query.id}tg`, val);
     } else {
       sessionStorage.setItem(`${router.query.id}e`, e.key);
     }
@@ -405,16 +423,28 @@ const SubtansiUser = ({ token }) => {
     setListAnswer(sessionStorage.getItem(`${router.query.id}tr`));
   };
 
-  const handleTriggered2 = (e) => {
-    let ansTw = [
-      sessionStorage.getItem(router.query.id + "e"),
-      sessionStorage.getItem(router.query.id + "tr"),
-      e.key,
-    ];
-    sessionStorage.setItem(`${router.query.id}td`, e.key);
-    sessionStorage.setItem(router.query.id, JSON.stringify(ansTw));
+  const handleTriggered2 = (e, parent, index) => {
+    let ansTw;
+    if (sessionStorage.getItem(router.query.id) === null) {
+      ansTw = [];
+    } else {
+      ansTw = [...JSON.parse(sessionStorage.getItem(router.query.id))];
+    }
+    const data = { id: parent, key: e.key };
+    const filter = ansTw.filter((val) => val.id === parent);
+    if (filter.length > 0) {
+      ansTw.filter((val, i) => {
+        if (val.id === parent) {
+          ansTw[i].key = e.key;
+        }
+      });
+    } else {
+      ansTw.push(data);
+    }
 
-    setListAnswer2(sessionStorage.getItem(`${router.query.id}td`));
+    sessionStorage.setItem(router.query.id + parent + "td", e.key);
+    sessionStorage.setItem(router.query.id, JSON.stringify(ansTw));
+    setListAnswer2(sessionStorage.getItem(router.query.id + parent + "td"));
   };
 
   const handleObject = (e) => {
@@ -459,6 +489,7 @@ const SubtansiUser = ({ token }) => {
 
   return (
     <>
+      {/* {console.log(multi)} */}
       <Container className={styles.baseAll} fluid>
         <Card className={styles.cardTop}>
           <Row>
@@ -584,8 +615,17 @@ const SubtansiUser = ({ token }) => {
                       </div>
                     )}
                   </h1>
-                  <hr hidden={open === true} />
-                  {open === false ? (
+                  <hr
+                    hidden={
+                      sessionStorage.getItem(`${router.query.id}tg`) !== null
+                        ? sessionStorage.getItem(`${router.query.id}tg`) ===
+                          true
+                        : false
+                    }
+                  />
+
+                  {sessionStorage.getItem(`${router.query.id}tg`) === null ||
+                  sessionStorage.getItem(`${router.query.id}tg`) === false ? (
                     data &&
                     data.list_questions[parseInt(router.query.id) - 1]
                       ?.answer !== null &&
@@ -659,6 +699,9 @@ const SubtansiUser = ({ token }) => {
                               className={
                                 sessionStorage.getItem(
                                   router.query.id + "e"
+                                ) !== null &&
+                                sessionStorage.getItem(
+                                  router.query.id + "e"
                                 ) === item.key
                                   ? styles.answer
                                   : styles.boxAnswer
@@ -694,9 +737,16 @@ const SubtansiUser = ({ token }) => {
                     </Card>
                   )}
 
-                  <Collapse in={open} dimension="width">
+                  <Collapse
+                    in={
+                      sessionStorage.getItem(`${router.query.id}tg`) !== null
+                        ? sessionStorage.getItem(`${router.query.id}tg`)
+                        : false
+                    }
+                    dimension="width"
+                  >
                     <div id="example-collapse-text">
-                      {sub?.sub?.map((a) => {
+                      {sub?.sub?.map((a, parent) => {
                         return (
                           <>
                             {a.image !== null && a.image !== "" ? (
@@ -784,13 +834,19 @@ const SubtansiUser = ({ token }) => {
                                         >
                                           <Card
                                             className={
-                                              listAnswer === ans.key
+                                              sessionStorage.getItem(
+                                                router.query.id + parent + "td"
+                                              ) === ans.key
                                                 ? styles.answer
                                                 : styles.boxAnswer
                                             }
                                             key={index}
                                             onClick={() => {
-                                              handleTriggered(ans, index);
+                                              handleTriggered(
+                                                ans,
+                                                parent,
+                                                index
+                                              );
                                             }}
                                           >
                                             <table>
@@ -814,23 +870,31 @@ const SubtansiUser = ({ token }) => {
                             ) : (
                               <>
                                 <h1 className={styles.soal}>
-                                  {" "}
                                   <div className="p-2">{a.question}</div>{" "}
                                 </h1>
                                 <hr />
                                 {a.answer.map((ans, index) => {
                                   return (
                                     <>
-                                      {" "}
+                                      {/* {console.log(
+                                        sessionStorage.getItem(
+                                          router.query.id +
+                                            parent +
+                                            index +
+                                            "td"
+                                        )
+                                      )} */}
                                       <Card
                                         className={
-                                          listAnswer2 === ans.key
+                                          sessionStorage.getItem(
+                                            router.query.id + parent + "td"
+                                          ) === ans.key
                                             ? styles.answer
                                             : styles.boxAnswer
                                         }
                                         key={index}
                                         onClick={() => {
-                                          handleTriggered2(ans, index);
+                                          handleTriggered2(ans, parent, index);
                                         }}
                                       >
                                         <table>
@@ -956,7 +1020,9 @@ const SubtansiUser = ({ token }) => {
                                 >
                                   <Card
                                     className={
-                                      listAnswer === item.key
+                                      sessionStorage.getItem(
+                                        router.query.id
+                                      ) === item.key
                                         ? styles.answer
                                         : styles.boxAnswer
                                     }
@@ -1114,8 +1180,9 @@ const SubtansiUser = ({ token }) => {
                                 >
                                   <Card
                                     className={
-                                      sessionStorage.getItem(index + "a") ===
-                                      item.key
+                                      sessionStorage.getItem(
+                                        router.query.id + index + "a"
+                                      ) === item.key
                                         ? styles.answer
                                         : styles.boxAnswer
                                     }
@@ -1139,8 +1206,9 @@ const SubtansiUser = ({ token }) => {
                             ) : (
                               <Card
                                 className={
-                                  sessionStorage.getItem(index + "a") ===
-                                  item.key
+                                  sessionStorage.getItem(
+                                    router.query.id + index + "a"
+                                  ) === item.key
                                     ? styles.answer
                                     : styles.boxAnswer
                                 }
@@ -1219,13 +1287,14 @@ const SubtansiUser = ({ token }) => {
                     </h1>
                     <hr />
                     <Form>
+                      {console.log()}
                       <Form.Control
                         as="textarea"
                         rows={5}
                         placeholder="Jelaskan jawaban Anda di sini..."
                         className={styles.textArea}
                         onChange={(event) => handleAnswerText(event)}
-                        value={localStorage.getItem(`${router.query.id}`)}
+                        value={sessionStorage.getItem(router.query.id)}
                       />
                     </Form>
                   </>
@@ -1499,7 +1568,7 @@ const SubtansiUser = ({ token }) => {
                   <td>
                     {" "}
                     Peserta wajib menjawab seluruh survey yang berjumlah{" "}
-                    {question || 50}&nbsp; pertanyaan.
+                    {question || " "}&nbsp; pertanyaan.
                   </td>
                 </tr>
                 <tr>
@@ -1518,7 +1587,7 @@ const SubtansiUser = ({ token }) => {
                   <td>
                     {" "}
                     Waktu yang tersedia untuk mengisi survey ini {time ||
-                      5}{" "}
+                      " "}{" "}
                     Menit.
                   </td>
                 </tr>

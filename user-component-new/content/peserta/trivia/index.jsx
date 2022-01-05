@@ -37,6 +37,7 @@ const TestSubstansi = ({ token }) => {
       .then((res) => {
         setQuestion(res.data.total_questions);
         setTime(res.data.duration);
+        console.log(res.data.duration);
       });
   }, [routerTraining, routerTema, token]);
 
@@ -73,7 +74,7 @@ const TestSubstansi = ({ token }) => {
                 <td>
                   {" "}
                   Peserta wajib menjawab seluruh trivia yang berjumlah{" "}
-                  {question || 50} pertanyaan.
+                  {question || " "} pertanyaan.
                 </td>
               </tr>
               <tr>
@@ -91,7 +92,8 @@ const TestSubstansi = ({ token }) => {
                 <td>&nbsp;</td>
                 <td>
                   {" "}
-                  Waktu yang tersedia untuk mengisi trivia ini {time || 5}{" "}
+                  Waktu yang tersedia untuk mengisi trivia ini {time ||
+                    " "}{" "}
                   Menit.
                 </td>
               </tr>

@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
 import { useSelector } from "react-redux";
+import * as L from "leaflet";
 
 const MapSimonas = () => {
   const {
@@ -25,6 +26,35 @@ const MapSimonas = () => {
     });
   }
 
+  const LeafIcon = L.Icon.extend({
+    options: {
+      iconSize: [22, 30],
+      shadowSize: [50, 64],
+      iconAnchor: [10, 30],
+      shadowAnchor: [10, 62],
+      popupAnchor: [0, -10],
+    },
+  });
+
+  const icon1 = new LeafIcon({
+    iconUrl: "/assets/icon/icon_map_dashboard_kabadan/1.png",
+  });
+  const icon2 = new LeafIcon({
+    iconUrl: "/assets/icon/icon_map_dashboard_kabadan/2.png",
+  });
+  const icon3 = new LeafIcon({
+    iconUrl: "/assets/icon/icon_map_dashboard_kabadan/3.png",
+  });
+  const icon4 = new LeafIcon({
+    iconUrl: "/assets/icon/icon_map_dashboard_kabadan/4.png",
+  });
+  const icon5 = new LeafIcon({
+    iconUrl: "/assets/icon/icon_map_dashboard_kabadan/5.png",
+  });
+  const icon6 = new LeafIcon({
+    iconUrl: "/assets/icon/icon_map_dashboard_kabadan/6.png",
+  });
+
   return (
     <>
       <MapContainer
@@ -38,7 +68,24 @@ const MapSimonas = () => {
           attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
         />
         {dataSimonasMapPendaftar.map((row, i) => (
-          <Marker key={i} position={row.position} animate={true}>
+          <Marker
+            key={i}
+            position={row.position}
+            animate={true}
+            icon={
+              row?.job >= 125000
+                ? icon1
+                : row?.job >= 100000
+                ? icon2
+                : row?.job >= 75000
+                ? icon3
+                : row?.job >= 50000
+                ? icon4
+                : row?.job >= 25000
+                ? icon5
+                : icon6
+            }
+          >
             <Popup>
               <div className="row">
                 <div className="col-md-12 text-left">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import dynamic from "next/dynamic";
 
@@ -7,7 +7,7 @@ import CardTotal from "../component/card-total.component";
 import StatistikWrapper from "../wrapper/statistik.wrapper";
 import LoadingDashboard from "../component/loading-dashboard.component";
 import TotalPerAkademi from "../component/total-perakademi.component";
-
+import DashboardHeader from "../../pelatihan/dashboard/dashboard-header.component";
 import CardInfo from "../component/card-info.component";
 import ListCardInfo from "../component/list-card-info.component";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,14 +33,14 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import moment from "moment";
-
+import MyMap from "../component/map-digitalent.component";
 import PaginationDashboard from "../component/pagination-dashbaord.component";
 import Cookies from "js-cookie";
 
 const DashboardDigitalent = ({ token }) => {
-  const MyMap = dynamic(() => import("../component/map-digitalent.component"), {
-    ssr: false,
-  });
+  // const MyMap = dynamic(() => import("../component/map-digitalent.component"), {
+  //   ssr: true,
+  // });
   const dispatch = useDispatch();
   const token_permission = Cookies.get("token_permission");
 
@@ -329,6 +329,22 @@ const DashboardDigitalent = ({ token }) => {
 
   return (
     <PageWrapper>
+      <DashboardHeader
+        funcFilterYear={(value) => {
+          // Akademi Peserta
+          dispatch(
+            getDigitalentStatistikAkademiPendaftar(
+              token,
+              token_permission,
+              value
+            )
+          );
+          // Akademi Pendaftar
+          dispatch(
+            getDigitalentStatistikAkademiPeserta(token, token_permission, value)
+          );
+        }}
+      />
       <section className="opening-hello">
         <Header
           name={"Kepala Badan Litbang SDM Kementerian Kominfo"}
@@ -341,7 +357,6 @@ const DashboardDigitalent = ({ token }) => {
           )}
         />
       </section>
-
       <section className="total-pengguna mt-10">
         <h2 className="title-section-dashboard">total peserta</h2>
         <div className="row mt-5">
@@ -369,12 +384,10 @@ const DashboardDigitalent = ({ token }) => {
           </div>
         </div>
       </section>
-
       <section className="total-per-akademi mt-10">
         <h2 className="title-section-dashboard">total per akademi</h2>
         {}
         <div className="row mt-5">
-          {/* {console.log(statistikAkademiPeserta)} */}
           {dataStatistikAkademiPeserta.map((row, i) => (
             <div className="col-md-4 mb-8" key={i}>
               <TotalPerAkademi
@@ -389,7 +402,6 @@ const DashboardDigitalent = ({ token }) => {
           ))}
         </div>
       </section>
-
       <section className="statistik-peserta mt-5">
         <h2 className="title-section-dashboard">statistik peserta</h2>
         <div className="row mt-5">
@@ -398,16 +410,16 @@ const DashboardDigitalent = ({ token }) => {
               <div className="card-body py-4">
                 <StatistikWrapper
                   title={"Pesebaran Pendaftaran Akademi"}
-                  funcFilterYear={(value) => {
-                    setFilterStatistikAkademiPendaftar(value);
-                    dispatch(
-                      getDigitalentStatistikAkademiPendaftar(
-                        token,
-                        token_permission,
-                        value
-                      )
-                    );
-                  }}
+                  // funcFilterYear={(value) => {
+                  //   setFilterStatistikAkademiPendaftar(value);
+                  //   dispatch(
+                  //     getDigitalentStatistikAkademiPendaftar(
+                  //       token,
+                  //       token_permission,
+                  //       value
+                  //     )
+                  //   );
+                  // }}
                   year={year}
                 />
 
@@ -447,16 +459,16 @@ const DashboardDigitalent = ({ token }) => {
               <div className="card-body py-4">
                 <StatistikWrapper
                   title={"Pesebaran Peserta Akademi"}
-                  funcFilterYear={(value) => {
-                    setFilterStatistikAkademiPeserta(value);
-                    dispatch(
-                      getDigitalentStatistikAkademiPeserta(
-                        token,
-                        token_permission,
-                        value
-                      )
-                    );
-                  }}
+                  // funcFilterYear={(value) => {
+                  //   setFilterStatistikAkademiPeserta(value);
+                  // dispatch(
+                  //   getDigitalentStatistikAkademiPeserta(
+                  //     token,
+                  //     token_permission,
+                  //     value
+                  //   )
+                  //   );
+                  // }}
                   year={year}
                 />
 
@@ -504,7 +516,6 @@ const DashboardDigitalent = ({ token }) => {
           </div>
         </div>
       </section>
-
       <section className="statistik-mitra mt-5">
         <h2 className="title-section-dashboard">statistik mitra</h2>
         <div className="row mt-5">
@@ -522,7 +533,7 @@ const DashboardDigitalent = ({ token }) => {
                     <PaginationDashboard
                       total={statistikMitraPendaftar?.total}
                       perPage={statistikMitraPendaftar?.perPage}
-                      title="Pendaftar"
+                      title="Mitra"
                       activePage={pageMitraPendaftaran}
                       funcPagination={(value) => {
                         setPageMitraPendaftaran(value);
@@ -554,7 +565,7 @@ const DashboardDigitalent = ({ token }) => {
                     <PaginationDashboard
                       total={statistikMitraPeserta?.total}
                       perPage={statistikMitraPeserta?.perPage}
-                      title="Peserta"
+                      title="Mitra"
                       activePage={pageMitraPeserta}
                       funcPagination={(value) => {
                         setPageMitraPeserta(value);
@@ -574,7 +585,6 @@ const DashboardDigitalent = ({ token }) => {
           </div>
         </div>
       </section>
-
       <section className="table-pendaftaran mt-5">
         <div className="row">
           <div className="col-md-12">
@@ -649,7 +659,6 @@ const DashboardDigitalent = ({ token }) => {
           </div>
         </div>
       </section>
-
       <section className="peta-penyebaran-peserta mt-10">
         <div className="card card-custom bg-white">
           <div className="card-body">
@@ -756,7 +765,7 @@ const DashboardDigitalent = ({ token }) => {
             <div className="row">
               <div className="map-penyebaran col-md-12 mt-5">
                 <div id="map">
-                  <MyMap data={dataWilayah} />
+                  <MyMap data={wilayah} />
                 </div>
               </div>
             </div>

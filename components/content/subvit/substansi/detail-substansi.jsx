@@ -336,12 +336,11 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
               {subtance && subtance.academy ? subtance.academy.name : ""} -{" "}
               {subtance && subtance.theme ? subtance.theme.name : ""}
             </h2>
-            {dataPermission &&
-            dataPermission.roles.includes("Super Admin") &&
-            dataPermission &&
-            dataPermission.permissions.includes(
-              "subvit.manage" && "subvit.substansi.manage"
-            ) ? (
+            {(dataPermission && dataPermission.roles.includes("Super Admin")) ||
+            (dataPermission &&
+              dataPermission.permissions.includes(
+                "subvit.manage" && "subvit.substansi.manage"
+              )) ? (
               <div className="card-toolbar">
                 <Link href={`/subvit/substansi/edit?id=${id}`}>
                   <a className="btn btn-primary-rounded-full font-weight-bolder px-7 py-3 mt-2 btn-block">
@@ -538,12 +537,11 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
               <h2 className="card-title h2 text-dark">Bank Soal</h2>
               {/* <label htmlFor=""></label> */}
             </div>
-            {dataPermission &&
-            dataPermission.roles.includes("Super Admin") &&
-            dataPermission &&
-            dataPermission.permissions.includes(
-              "subvit.manage" && "subvit.substansi.manage"
-            ) ? (
+            {(dataPermission && dataPermission.roles.includes("Super Admin")) ||
+            (dataPermission &&
+              dataPermission.permissions.includes(
+                "subvit.manage" && "subvit.substansi.manage"
+              )) ? (
               <div className="card-toolbar">
                 <a
                   className="btn btn-primary-rounded-full font-weight-bolder px-7 py-3 mt-2 btn-block"

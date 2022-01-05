@@ -642,7 +642,7 @@ const ListTraining = ({ token }) => {
   }
 
   const handleModalRevisi = (id) => {
-    dispatch(getListRevisi(token, id));
+    dispatch(getListRevisi(token, id, token_permission));
     setShowModalRevisi(true);
   };
 

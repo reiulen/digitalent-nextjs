@@ -60,6 +60,7 @@ export const getDetailBerandaGaleri = (id) => async (dispatch) => {
     };
 
     const { data } = await axios.get(link, config);
+    // console.log (data)
 
     dispatch({
       type: DETAIL_BERANDA_GALERI_SUCCESS,

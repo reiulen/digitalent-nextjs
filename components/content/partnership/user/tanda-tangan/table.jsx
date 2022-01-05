@@ -335,23 +335,29 @@ const Table = ({ token }) => {
 
               <div className="row">
                 <div className="table-pagination col-12 col-md-8">
-                  <Pagination
-                    activePage={allTandaTanganUser?.page}
-                    itemsCountPerPage={
-                      allTandaTanganUser?.tanda_tangan?.data?.perPage
-                    }
-                    totalItemsCount={
-                      allTandaTanganUser?.tanda_tangan?.data?.total
-                    }
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
+                  {
+                    allTandaTanganUser?.tanda_tangan?.data?.total > 5 ?
+                      <Pagination
+                        activePage={allTandaTanganUser?.page}
+                        itemsCountPerPage={
+                          allTandaTanganUser?.tanda_tangan?.data?.perPage
+                        }
+                        totalItemsCount={
+                          allTandaTanganUser?.tanda_tangan?.data?.total
+                        }
+                        pageRangeDisplayed={3}
+                        onChange={(page) => dispatch(setPage(page))}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
+                    :
+                      null
+                  }
+                  
                 </div>
                 <div className="table-total col-12 col-md-4 d-flex justify-content-md-end ml-md-0 ml-4">
                   <div className="row mt-4">
@@ -375,6 +381,7 @@ const Table = ({ token }) => {
                         <option value="40">40</option>
                         <option value="50">50</option>
                       </select>
+                      
                     </div>
                     <div className="col-8 my-auto">
                       <p

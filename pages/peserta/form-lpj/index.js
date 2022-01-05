@@ -42,8 +42,8 @@ export default function FormLPJ(props) {
 
   useEffect(() => {
     if (pelatihan) {
-      dispatch(getPelatihan(session.token, pelatihan.pelatihan_berjalan.id));
-      dispatch(getFormLPJ(session.token, pelatihan.pelatihan_berjalan.id));
+      dispatch(getPelatihan(session.token, props.id));
+      dispatch(getFormLPJ(session.token, props.id));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pelatihan, session]);
@@ -80,7 +80,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       return {
-        props: { data: "auth", session, title: "Form LPJ" },
+        props: {
+          data: "auth",
+          session,
+          title: "Form LPJ",
+          id: query.id_pelatihan,
+        },
       };
     }
 );

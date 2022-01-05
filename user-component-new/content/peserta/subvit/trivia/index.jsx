@@ -125,6 +125,7 @@ const SubtansiUser = ({ token }) => {
 
   useEffect(() => {
     // Handle Error akan langsung ke done
+
     if (error) {
       router.push(`/peserta/done-trivia`);
       const setData = {
@@ -154,6 +155,7 @@ const SubtansiUser = ({ token }) => {
       dispatch(postResultTrivia(setData, token));
       localStorage.clear();
       router.push(`/peserta/done-trivia`);
+      console.log("useEffect Pertama", setData);
     }
   }, [count, router, error, dispatch, token]);
 
@@ -303,25 +305,41 @@ const SubtansiUser = ({ token }) => {
   let multi = [];
 
   const handleAnswerCheckbox = (e) => {
-    if (multi.includes(e.key)) {
-      multi.splice(multi.indexOf(e.key), 1);
-      sessionStorage.setItem(router.query.id, JSON.stringify(multi));
+    const list =
+      sessionStorage.getItem(router.query.id) !== null
+        ? [...JSON.parse(sessionStorage.getItem(router.query.id))]
+        : [];
+    if (list.includes(e.key)) {
+      list.splice(list.indexOf(e.key), 1);
+      sessionStorage.setItem(router.query.id, JSON.stringify(list));
     } else {
-      multi.push(e.key);
-      sessionStorage.setItem(router.query.id, JSON.stringify(multi));
+      list.push(e.key);
+      sessionStorage.setItem(router.query.id, JSON.stringify(list));
     }
   };
 
   const handlePageNext = () => {
     // setTimes(tt[router.query.id]);
+    console.log(tt[router.query.id]);
     const page = parseInt(router.query.id) + 1;
     if (parseInt(router.query.id) === data?.total_questions) {
+      // const setData = {
+      //   list: null,
+      //   training_id: router.query.training_id,
+      //   type: "trivia",
+      // };
       const setData = {
-        list: null,
+        list: data.list_questions.map((item, index) => {
+          return {
+            ...item,
+            participant_answer: sessionStorage.getItem(index + 1),
+          };
+        }),
         training_id: router.query.training_id,
         type: "trivia",
       };
       dispatch(postResultTrivia(setData, token));
+      localStorage.clear();
       router.push("/peserta/done-trivia");
     } else {
       router.push(
@@ -338,7 +356,7 @@ const SubtansiUser = ({ token }) => {
       data.list_questions &&
       data.list_questions[parseInt(router.query.id) - 1].type === "checkbox"
     ) {
-      sessionStorage.setItem(router.query.id, multi);
+      // sessionStorage.setItem(router.query.id, multi);
     } else if (
       data &&
       data.list_questions &&
@@ -361,6 +379,7 @@ const SubtansiUser = ({ token }) => {
     if (times >= 0) {
       const secondsLeft = setInterval(() => {
         setTimes((c) => c - 1);
+        // console.log(data.list_questions[0].duration);
         let timeLeftVar = ToTime(times);
         setHour2(timeLeftVar.h);
         setMinute2(timeLeftVar.m);
@@ -371,6 +390,7 @@ const SubtansiUser = ({ token }) => {
       localStorage.clear();
       setOpen(true);
       handleNext();
+      console.log("useEffect kelima", times);
     }
   }, [times, data, router]);
 
@@ -405,7 +425,7 @@ const SubtansiUser = ({ token }) => {
               <Button
                 className={styles.btnHelp}
                 variant="link"
-                onClick={handleModalSoal}
+                onClick={() => handleModalSoal}
               >
                 <div className="d-flex flex-row">
                   <div className="p-2">
@@ -1005,7 +1025,7 @@ const SubtansiUser = ({ token }) => {
                   <td>
                     {" "}
                     Peserta wajib menjawab seluruh TRIVIA yang berjumlah{" "}
-                    {question || 50} pertanyaan.
+                    {question || " "} pertanyaan.
                   </td>
                 </tr>
                 <tr>
@@ -1024,7 +1044,7 @@ const SubtansiUser = ({ token }) => {
                   <td>
                     {" "}
                     Waktu yang tersedia untuk mengisi TRIVIA ini {time ||
-                      5}{" "}
+                      " "}{" "}
                     Menit.
                   </td>
                 </tr>

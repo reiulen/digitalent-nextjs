@@ -52,25 +52,36 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
   const [modalShow, setModalShow] = useState(false);
 
   // TITLE FORM
-  const [titleManual, setTitleManual] = useState(Object.getOwnPropertyNames(registrationData).length > 0
-  ? registrationData.judul_form : getEditTraining2.judul_form);
-  const [titleCopy, setTitleCopy] = useState(Object.getOwnPropertyNames(registrationData).length > 0
-  ? registrationData.judul_form : getEditTraining2.judul_form);
+  const [titleManual, setTitleManual] = useState(
+    Object.getOwnPropertyNames(registrationData).length > 0
+      ? registrationData.judul_form
+      : getEditTraining2.judul_form
+  );
+  const [titleCopy, setTitleCopy] = useState(
+    Object.getOwnPropertyNames(registrationData).length > 0
+      ? registrationData.judul_form
+      : getEditTraining2.judul_form
+  );
   // END TITLE FORM
 
   //  FORM BUILDER
   const [formBuilderManual, setFormBuilderManual] = useState(
     Object.getOwnPropertyNames(registrationData).length > 0
-  ? registrationData.formBuilder : getEditTraining2.FormBuilder
+      ? registrationData.formBuilder
+      : getEditTraining2.FormBuilder
   );
   const [formBuilderCopy, setFormBuilderCopy] = useState(
     Object.getOwnPropertyNames(registrationData).length > 0
-  ? registrationData.formBuilder :getEditTraining2.FormBuilder
+      ? registrationData.formBuilder
+      : getEditTraining2.FormBuilder
   );
   // END FORM BUILDER
 
-  const [viewForm, setViewForm] = useState( Object.getOwnPropertyNames(registrationData).length > 0
-  ? registrationData.type_form :getEditTraining2.type_form);
+  const [viewForm, setViewForm] = useState(
+    Object.getOwnPropertyNames(registrationData).length > 0
+      ? registrationData.type_form
+      : getEditTraining2.type_form
+  );
 
   useEffect(() => {
     const dataOptionsArr = [];
@@ -90,33 +101,34 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
 
   const [formBuilder, setFormBuilder] = useState(
     Object.getOwnPropertyNames(registrationData).length > 0
-    ? registrationData.formBuilder|| [
-      {
-        key: 1,
-        name: "",
-        element: "",
-        size: "",
-        option: "",
-        dataOption: "",
-        required: "0",
-        triggered: "0",
-        triggered_parent: [],
-        value: "",
-      },
-    ] : getEditTraining2.FormBuilder || [
-      {
-        key: 1,
-        name: "",
-        element: "",
-        size: "",
-        option: "",
-        dataOption: "",
-        required: "0",
-        triggered: "0",
-        triggered_parent: [],
-        value: "",
-      },
-    ]
+      ? registrationData.formBuilder || [
+          {
+            key: 1,
+            name: "",
+            element: "",
+            size: "",
+            option: "",
+            dataOption: "",
+            required: "0",
+            triggered: "0",
+            triggered_parent: [],
+            value: "",
+          },
+        ]
+      : getEditTraining2.FormBuilder || [
+          {
+            key: 1,
+            name: "",
+            element: "",
+            size: "",
+            option: "",
+            dataOption: "",
+            required: "0",
+            triggered: "0",
+            triggered_parent: [],
+            value: "",
+          },
+        ]
   );
 
   const closePreviewHandler = () => {
@@ -155,7 +167,7 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
       titleStore;
     }
     if (simpleValidator.current.allValid()) {
-      const valueForm = helperUnformatCheckbox(formBuilderStore);
+      const valueForm = helperUnformatCheckbox(formBuilderStore, "admin");
       const data = {
         judul_form: titleStore,
         Pelatian_id: parseInt(router.query.id),
