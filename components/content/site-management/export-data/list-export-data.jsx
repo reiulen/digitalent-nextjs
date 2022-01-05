@@ -46,6 +46,7 @@ const Table = ({ token }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteExportDataAction(id, token, Cookies.get("token_permission")));
+        dispatch(getAllExportData(token, Cookies.get("token_permission")));
       }
     });
   };
@@ -61,12 +62,12 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
-    dispatch(getAllExportData(token , Cookies.get("token_permission")));
-    if (deleteExportData?.isDeleted) {
-      Swal.fire("Berhasil", "Data berhasil dihapus", "success").then(() => {
-        dispatch(getAllExportData(token, Cookies.get("token_permission")));
-      });
-    }
+    dispatch(getAllExportData(token, Cookies.get("token_permission")));
+    // if (deleteExportData?.isDeleted) {
+    //   Swal.fire("Berhasil", "Data berhasil dihapus", "success").then(() => {
+    //     dispatch(getAllExportData(token, Cookies.get("token_permission")));
+    //   });
+    // }
   }, [
     dispatch,
     allExportData.cari,
@@ -123,17 +124,17 @@ const Table = ({ token }) => {
                   {localStorage
                     .getItem("permissions")
                     .includes("site_management.export_data.manage") && (
-                    <div className="d-flex justify-content-end mt-4">
-                      <Link
-                        href="/site-management/export-data/filter-export-data"
-                        passHref
-                      >
-                        <a className="btn btn-rounded-full bg-blue-secondary text-white">
-                          Filter Data
-                        </a>
-                      </Link>
-                    </div>
-                  )}
+                      <div className="d-flex justify-content-end mt-4">
+                        <Link
+                          href="/site-management/export-data/filter-export-data"
+                          passHref
+                        >
+                          <a className="btn btn-rounded-full bg-blue-secondary text-white">
+                            Filter Data
+                          </a>
+                        </Link>
+                      </div>
+                    )}
                 </div>
               </div>
             </div>
@@ -170,8 +171,8 @@ const Table = ({ token }) => {
                                 {allExportData.page === 1
                                   ? index + 1
                                   : (allExportData.page - 1) *
-                                      allExportData.limit +
-                                    (index + 1)}
+                                  allExportData.limit +
+                                  (index + 1)}
                               </td>
                               <td className="align-middle text-left">
                                 {items?.user?.name || "-"}
@@ -188,23 +189,23 @@ const Table = ({ token }) => {
                                     .includes(
                                       "site_management.export_data.manage"
                                     ) && (
-                                    <button
-                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
-                                      onClick={() =>
-                                        dispatch(exportFileCSV(items.id, token, Cookies.get("token_permission")))
-                                      }
-                                    >
-                                      <Image
-                                        src="/assets/icon/download.svg"
-                                        width={16}
-                                        height={16}
-                                        alt="download"
-                                      />
-                                      <div className="text-hover-show-hapus">
-                                        Unduh
-                                      </div>
-                                    </button>
-                                  )}
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
+                                        onClick={() =>
+                                          dispatch(exportFileCSV(items.id, token, Cookies.get("token_permission")))
+                                        }
+                                      >
+                                        <Image
+                                          src="/assets/icon/download.svg"
+                                          width={16}
+                                          height={16}
+                                          alt="download"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Unduh
+                                        </div>
+                                      </button>
+                                    )}
 
                                   {/* <button
                             className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
@@ -222,33 +223,33 @@ const Table = ({ token }) => {
                                     .includes(
                                       "site_management.export_data.view"
                                     ) && (
-                                    <Link
-                                      href={`/site-management/export-data/detail-data/${items.id}`}
-                                    >
-                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3">
-                                        <IconEye width="16" height="16" />
-                                        <div className="text-hover-show-hapus">
-                                          Detail
-                                        </div>
-                                      </a>
-                                    </Link>
-                                  )}
+                                      <Link
+                                        href={`/site-management/export-data/detail-data/${items.id}`}
+                                      >
+                                        <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3">
+                                          <IconEye width="16" height="16" />
+                                          <div className="text-hover-show-hapus">
+                                            Detail
+                                          </div>
+                                        </a>
+                                      </Link>
+                                    )}
 
                                   {localStorage
                                     .getItem("permissions")
                                     .includes(
                                       "site_management.export_data.manage"
                                     ) && (
-                                    <button
-                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                      onClick={(e) => handleDelete(e, items.id)}
-                                    >
-                                      <IconDelete width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Hapus
-                                      </div>
-                                    </button>
-                                  )}
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        onClick={(e) => handleDelete(e, items.id)}
+                                      >
+                                        <IconDelete width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Hapus
+                                        </div>
+                                      </button>
+                                    )}
                                 </div>
                               </td>
                             </tr>

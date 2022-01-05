@@ -12,6 +12,7 @@ import {
 } from "../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { wrapper } from "../../../redux/store";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { getAllPermission } from "../../../redux/actions/utils/utils.actions";
 
 const KelolaSertifikat = dynamic(
   () =>
@@ -53,15 +54,29 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       const token_permission = req.cookies.token_permission;
-      await store.dispatch(
-        getAllSertifikat(session.user.user.data.token, token_permission)
+      const dataPermission = await store.dispatch(
+        getAllPermission(session.user.user.data.token)
       );
-      await store.dispatch(
-        getOptionsAcademy(session.user.user.data.token, token_permission)
+
+      const data = await store.dispatch(
+        getAllSertifikat(
+          session.user.user.data.token,
+          dataPermission?.data?.tokenPermission
+        )
       );
 
       await store.dispatch(
-        getOptionsTheme(session.user.user.data.token, token_permission)
+        getOptionsAcademy(
+          session.user.user.data.token,
+          dataPermission.data.tokenPermission
+        )
+      );
+
+      await store.dispatch(
+        getOptionsTheme(
+          session.user.user.data.token,
+          dataPermission.data.tokenPermission
+        )
       );
 
       return {

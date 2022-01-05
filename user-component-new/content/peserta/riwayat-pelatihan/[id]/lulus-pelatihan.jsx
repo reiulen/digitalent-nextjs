@@ -214,7 +214,7 @@ export default function RiwayatPelatihanDetail(props) {
                         router.push(`/peserta/form-lpj`);
                       }}
                     >
-                      Isi Laporan Pertangung Jawaban
+                      Isi Laporan Pertangungjawaban
                       <i className="ri-arrow-right-s-line mr-2"></i>
                     </CustomButton>
                   </Fragment>

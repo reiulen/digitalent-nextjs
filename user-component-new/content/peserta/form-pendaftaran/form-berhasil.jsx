@@ -65,6 +65,7 @@ const FormBerhasil = ({ token }) => {
                         dataPelatihan.thumbnail
                       : "/assets/media/default-card.png"
                   }`}
+                  style={{ objectFit: "cover", height: "150px" }}
                 />
               </Col>
               <Col md={9}>
@@ -147,7 +148,6 @@ const FormBerhasil = ({ token }) => {
             <a
               className="text-primary font-weight-bolder"
               onClick={() => {
-                router.push("/peserta");
                 dispatch({ type: PENDAFTARAN_PELATIHAN_RESET });
               }}
             >

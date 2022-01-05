@@ -11,8 +11,10 @@ import { SweatAlert } from "../../../../utils/middleware/helper";
 import LoadingTable from "../../../../components/LoadingTable";
 import Swal from "sweetalert2";
 import QRCode from "qrcode.react";
+import { useRouter } from "next/router";
 
 export default function RiwayatPelatihanDetail({ session }) {
+  const router = useRouter();
   const {
     data: { data },
   } = useSelector((state) => state.sertifikatPeserta);
@@ -119,17 +121,14 @@ export default function RiwayatPelatihanDetail({ session }) {
               </div>
             </div>
             <div className="card-toolbar">
-              <Link
-                passHref
-                href={`/peserta/riwayat-pelatihan/${data?.data_user?.nama_pelatihan
-                  .split(" ")
-                  .join("-")
-                  .toLowerCase()}`}
+              <a
+                className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3"
+                onClick={() => {
+                  router.back();
+                }}
               >
-                <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3">
-                  Kembali
-                </a>
-              </Link>
+                Kembali
+              </a>
             </div>
           </div>
           {/* END HEADER */}

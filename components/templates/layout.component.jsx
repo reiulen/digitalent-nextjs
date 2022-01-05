@@ -37,6 +37,7 @@ const ContentWrapper = dynamic(() => import("../wrapper/content.wrapper"), {
   ssr: false,
 });
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const Layout = ({ children, title = "Dashboard" }) => {
   const dispatch = useDispatch();
@@ -62,6 +63,8 @@ const Layout = ({ children, title = "Dashboard" }) => {
         .post(link, config)
         .then((res) => {
           localStorage.clear();
+          Cookies.remove("token_permission");
+          Cookies.remove("tema_pelatihan_id");
           signOut();
         })
         .catch((err) => {
