@@ -289,22 +289,25 @@ const Sidebar = ({ session }) => {
                           aria-haspopup="true"
                           onClick={() => activeSubItemPartnershipMitra()}
                         >
-                          <Link href={items.href} passHref>
-                            <a
-                              className="menu-link"
-                              style={{ paddingLeft: "1.5rem" }}
-                            >
-                              <Image
-                                alt="icon-sidebar-logo"
-                                src={`/${items.icon}`}
-                                width={24}
-                                height={24}
-                              />
-                              <span className="menu-text ml-6">
-                                {items.name}
-                              </span>
-                            </a>
-                          </Link>
+                          {/* <Link href={items.href} passHref> */}
+                          <a
+                            className="menu-link"
+                            style={{
+                              paddingLeft: "1.5rem",
+                            }}
+                            onClick={() => {
+                              window.location.href = items.href;
+                            }}
+                          >
+                            <Image
+                              alt="icon-sidebar-logo"
+                              src={`/${items.icon}`}
+                              width={24}
+                              height={24}
+                            />
+                            <span className="menu-text ml-6">{items.name}</span>
+                          </a>
+                          {/* </Link> */}
                         </li>
                       );
                     })}
@@ -365,16 +368,26 @@ const Sidebar = ({ session }) => {
                                     )
                                   }
                                 >
-                                  <Link href={item.href} passHref>
-                                    <a
-                                      className="menu-link"
-                                      style={{ paddingLeft: "5.5rem" }}
-                                    >
-                                      <span className="menu-text">
-                                        {item.name}
-                                      </span>
-                                    </a>
-                                  </Link>
+                                  {/* <Link
+                                                                        href={
+                                                                            item.href
+                                                                        }
+                                                                        passHref
+                                                                    > */}
+                                  <a
+                                    className="menu-link"
+                                    style={{
+                                      paddingLeft: "5.5rem",
+                                    }}
+                                    onClick={() => {
+                                      window.location.href = item.href;
+                                    }}
+                                  >
+                                    <span className="menu-text">
+                                      {item.name}
+                                    </span>
+                                  </a>
+                                  {/* </Link> */}
                                 </li>
                               ) : (
                                 <li
@@ -397,7 +410,9 @@ const Sidebar = ({ session }) => {
                                 >
                                   <a
                                     className="menu-link menu-toggle"
-                                    style={{ paddingLeft: "5.5rem" }}
+                                    style={{
+                                      paddingLeft: "5.5rem",
+                                    }}
                                   >
                                     <span className="menu-text">
                                       {item.name}
@@ -416,7 +431,7 @@ const Sidebar = ({ session }) => {
                                                 : ""
                                             }`}
                                             aria-haspopup="true"
-                                            onClick={(e) =>{
+                                            onClick={(e) => {
                                               // e.preventDefault()
                                               // location.reload();
                                               // window.location = child2.href
@@ -428,22 +443,27 @@ const Sidebar = ({ session }) => {
                                                 "parent",
                                                 child2.selected,
                                                 idx
-                                              )
+                                              );
                                             }}
                                             key={idx}
                                           >
-                                            <Link href={child2.href} passHref>
-                                              <a
-                                                className="menu-link"
-                                                r                          style={{
-                                                  paddingLeft: "6.5rem",
-                                                }}
-                                              >
-                                                <span className="menu-text">
-                                                  {child2.name}
-                                                </span>
-                                              </a>
-                                            </Link>
+                                            {/* <Link> */}
+                                            <a
+                                              className="menu-link"
+                                              r
+                                              style={{
+                                                paddingLeft: "6.5rem",
+                                              }}
+                                              onClick={() => {
+                                                window.location.href =
+                                                  child2.href;
+                                              }}
+                                            >
+                                              <span className="menu-text">
+                                                {child2.name}
+                                              </span>
+                                            </a>
+                                            {/* </Link> */}
                                           </li>
                                         );
                                       })}

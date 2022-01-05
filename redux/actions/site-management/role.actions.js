@@ -119,15 +119,15 @@ export const postRoles = (sendData, token, tokenPermission) => {
           window.location = "/site-management/role";
         });
       } else {
-        Swal.fire("Oopss", data.message, "error").then(() => { });
+        Swal.fire("Oopss", data.message, "error").then(() => {});
       }
     } catch (error) {
       if (error.message.includes("400")) {
         Swal.fire("Oopss", "Nama Role Sudah ada Sebelumnya !", "error").then(
-          () => { }
+          () => {}
         );
       } else {
-        Swal.fire("Oopss", error.message, "error").then(() => { });
+        Swal.fire("Oopss", error.message, "error").then(() => {});
       }
       dispatch({
         type: POST_ROLES_FAIL,
@@ -165,26 +165,27 @@ export const getDetailRoles =
     }
   };
 
-export const getAllPermission = (token, tokenPermission) => async (dispatch) => {
-  try {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-        Permission: tokenPermission,
-      },
-    };
+export const getAllPermission =
+  (token, tokenPermission) => async (dispatch) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
 
-    let link =
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/permission/parent`;
+      let link =
+        process.env.END_POINT_API_SITE_MANAGEMENT + `api/permission/parent`;
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: PERMISSION_BY_PARENT,
-      payload: data,
-    });
-  } catch (error) { }
-};
+      dispatch({
+        type: PERMISSION_BY_PARENT,
+        payload: data,
+      });
+    } catch (error) {}
+  };
 
 export const updateRoles =
   (sendData, token, tokenPermission) => async (dispatch) => {
@@ -239,7 +240,7 @@ export const getSidebar = (token) => async (dispatch) => {
       type: GET_SIDEBAR,
       payload: data,
     });
-  } catch (error) { }
+  } catch (error) {}
 };
 
 export const setPage = (page) => {
