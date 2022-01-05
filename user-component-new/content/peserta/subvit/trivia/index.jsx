@@ -125,6 +125,7 @@ const SubtansiUser = ({ token }) => {
 
   useEffect(() => {
     // Handle Error akan langsung ke done
+
     if (error) {
       router.push(`/peserta/done-trivia`);
       const setData = {
@@ -314,14 +315,26 @@ const SubtansiUser = ({ token }) => {
 
   const handlePageNext = () => {
     // setTimes(tt[router.query.id]);
+    console.log(tt[router.query.id]);
     const page = parseInt(router.query.id) + 1;
     if (parseInt(router.query.id) === data?.total_questions) {
+      // const setData = {
+      //   list: null,
+      //   training_id: router.query.training_id,
+      //   type: "trivia",
+      // };
       const setData = {
-        list: null,
+        list: data.list_questions.map((item, index) => {
+          return {
+            ...item,
+            participant_answer: sessionStorage.getItem(index + 1),
+          };
+        }),
         training_id: router.query.training_id,
         type: "trivia",
       };
       dispatch(postResultTrivia(setData, token));
+      localStorage.clear();
       router.push("/peserta/done-trivia");
     } else {
       router.push(
@@ -361,6 +374,7 @@ const SubtansiUser = ({ token }) => {
     if (times >= 0) {
       const secondsLeft = setInterval(() => {
         setTimes((c) => c - 1);
+        // console.log(data.list_questions[0].duration);
         let timeLeftVar = ToTime(times);
         setHour2(timeLeftVar.h);
         setMinute2(timeLeftVar.m);
@@ -405,7 +419,7 @@ const SubtansiUser = ({ token }) => {
               <Button
                 className={styles.btnHelp}
                 variant="link"
-                onClick={handleModalSoal}
+                onClick={() => handleModalSoal}
               >
                 <div className="d-flex flex-row">
                   <div className="p-2">
@@ -1005,7 +1019,7 @@ const SubtansiUser = ({ token }) => {
                   <td>
                     {" "}
                     Peserta wajib menjawab seluruh TRIVIA yang berjumlah{" "}
-                    {question || 50} pertanyaan.
+                    {question || " "} pertanyaan.
                   </td>
                 </tr>
                 <tr>
@@ -1024,7 +1038,7 @@ const SubtansiUser = ({ token }) => {
                   <td>
                     {" "}
                     Waktu yang tersedia untuk mengisi TRIVIA ini {time ||
-                      5}{" "}
+                      " "}{" "}
                     Menit.
                   </td>
                 </tr>

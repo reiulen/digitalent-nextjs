@@ -14,7 +14,7 @@ import styles from "../trivia/edit/step.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Badge } from "react-bootstrap";
 
-const ReportTrivia = ({ token }) => {
+const ReportTrivia = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -63,6 +63,7 @@ const ReportTrivia = ({ token }) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission || "",
       },
     };
 

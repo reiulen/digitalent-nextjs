@@ -27,7 +27,7 @@ const Done = () => {
   );
 
   const handleDone = () => {
-    router.push("/peserta/form-lpj");
+    router.push(`/peserta/form-lpj?id_pelatihan=${dataTraining?.id}`);
   };
   return (
     <>

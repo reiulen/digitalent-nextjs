@@ -73,7 +73,7 @@ const TestSubstansi = ({ token }) => {
                 <td>
                   {" "}
                   Peserta wajib menjawab seluruh survey yang berjumlah &nbsp;
-                  {question || 50} pertanyaan.
+                  {question || " "} pertanyaan.
                 </td>
               </tr>
               <tr>
@@ -91,7 +91,8 @@ const TestSubstansi = ({ token }) => {
                 <td>&nbsp;</td>
                 <td>
                   {" "}
-                  Waktu yang tersedia untuk mengisi survey ini {time || 5}{" "}
+                  Waktu yang tersedia untuk mengisi survey ini {time ||
+                    " "}{" "}
                   Menit.
                 </td>
               </tr>

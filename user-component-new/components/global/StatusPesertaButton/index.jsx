@@ -102,7 +102,7 @@ export default function ButtonStatusPeserta({ data, token }) {
           </CustomButton>
           <CustomButton
             click={() => {
-              router.push(`/peserta/form-lpj`);
+              router.push(`/peserta/form-lpj?id_pelatihan=${data?.id}`);
             }}
           >
             <i className="ri-file-text-line mr-2"></i>
@@ -143,7 +143,7 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             disabled={!data?.lpj}
             click={() => {
-              router.push(`/peserta/form-lpj`);
+              router.push(`/peserta/form-lpj?id_pelatihan=${data?.id}`);
             }}
           >
             Isi Laporan Pertangung Jawaban
@@ -337,7 +337,7 @@ export default function ButtonStatusPeserta({ data, token }) {
             disabled={data?.lpj ? false : true}
             outline
             click={() => {
-              router.push(`/peserta/form-lpj`);
+              router.push(`/peserta/form-lpj?id_pelatihan=${data?.id}`);
             }}
           >
             <i className="ri-file-text-line mr-2"></i>
