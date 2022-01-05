@@ -404,6 +404,13 @@ const SubtansiUser = ({ token }) => {
     if (e.sub && e.sub.length > 0) {
       sessionStorage.setItem(`${router.query.id}e`, e.key);
       setOpen(!open);
+      let val;
+      if (sessionStorage.getItem(`${router.query.id}tg`) === null) {
+        val = true;
+      } else {
+        val = !sessionStorage.getItem(`${router.query.id}tg`);
+      }
+      sessionStorage.setItem(`${router.query.id}tg`, val);
     } else {
       sessionStorage.setItem(`${router.query.id}e`, e.key);
     }
@@ -417,14 +424,26 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handleTriggered2 = (e, parent, index) => {
-    let ansTw = [
-      sessionStorage.getItem(router.query.id + "e"),
-      sessionStorage.getItem(router.query.id + parent + "td"),
-      e.key,
-    ];
+    let ansTw;
+    if (sessionStorage.getItem(router.query.id) === null) {
+      ansTw = [];
+    } else {
+      ansTw = [...JSON.parse(sessionStorage.getItem(router.query.id))];
+    }
+    const data = { id: parent, key: e.key };
+    const filter = ansTw.filter((val) => val.id === parent);
+    if (filter.length > 0) {
+      ansTw.filter((val, i) => {
+        if (val.id === parent) {
+          ansTw[i].key = e.key;
+        }
+      });
+    } else {
+      ansTw.push(data);
+    }
+
     sessionStorage.setItem(router.query.id + parent + "td", e.key);
     sessionStorage.setItem(router.query.id, JSON.stringify(ansTw));
-
     setListAnswer2(sessionStorage.getItem(router.query.id + parent + "td"));
   };
 
@@ -596,8 +615,17 @@ const SubtansiUser = ({ token }) => {
                       </div>
                     )}
                   </h1>
-                  <hr hidden={open === true} />
-                  {open === false ? (
+                  <hr
+                    hidden={
+                      sessionStorage.getItem(`${router.query.id}tg`) !== null
+                        ? sessionStorage.getItem(`${router.query.id}tg`) ===
+                          true
+                        : false
+                    }
+                  />
+
+                  {sessionStorage.getItem(`${router.query.id}tg`) === null ||
+                  sessionStorage.getItem(`${router.query.id}tg`) === false ? (
                     data &&
                     data.list_questions[parseInt(router.query.id) - 1]
                       ?.answer !== null &&
@@ -709,7 +737,14 @@ const SubtansiUser = ({ token }) => {
                     </Card>
                   )}
 
-                  <Collapse in={open} dimension="width">
+                  <Collapse
+                    in={
+                      sessionStorage.getItem(`${router.query.id}tg`) !== null
+                        ? sessionStorage.getItem(`${router.query.id}tg`)
+                        : false
+                    }
+                    dimension="width"
+                  >
                     <div id="example-collapse-text">
                       {sub?.sub?.map((a, parent) => {
                         return (
@@ -835,7 +870,6 @@ const SubtansiUser = ({ token }) => {
                             ) : (
                               <>
                                 <h1 className={styles.soal}>
-                                  {" "}
                                   <div className="p-2">{a.question}</div>{" "}
                                 </h1>
                                 <hr />
@@ -1253,13 +1287,14 @@ const SubtansiUser = ({ token }) => {
                     </h1>
                     <hr />
                     <Form>
+                      {console.log()}
                       <Form.Control
                         as="textarea"
                         rows={5}
                         placeholder="Jelaskan jawaban Anda di sini..."
                         className={styles.textArea}
                         onChange={(event) => handleAnswerText(event)}
-                        value={localStorage.getItem(`${router.query.id}`)}
+                        value={sessionStorage.getItem(router.query.id)}
                       />
                     </Form>
                   </>
