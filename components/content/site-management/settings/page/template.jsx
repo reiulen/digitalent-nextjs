@@ -127,6 +127,18 @@ export default function Template(props) {
                 className: "text-danger",
               })}
             </div>
+
+            {
+              status.label !== "Tes Substansi" ? null :
+              <div className="text-muted">
+                <h6 style={{fontSize:'12px'}}>Keterangan Status</h6>
+                <ul style={{fontSize:'11px'}}>
+                  <li>Gunakan <span className="text-danger">type</span> untuk menampilkan status tipe subvit peserta (Tes Substansi, Trivia, atau Survey).</li>
+                  <li>Gunakan <span className="text-danger">pelatihan</span> untuk menampilkan pelatihan yang diikuti oleh peserta.</li>
+                </ul>
+              </div>
+            }
+
             <div className="form-group mr-4">
               <label>Subject</label>
               <input

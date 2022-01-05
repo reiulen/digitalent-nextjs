@@ -146,7 +146,7 @@ export default function ButtonStatusPeserta({ data, token }) {
               router.push(`/peserta/form-lpj?id_pelatihan=${data?.id}`);
             }}
           >
-            Isi Laporan Pertangung Jawaban
+            Isi Laporan Pertangungjawaban
             <i className="ri-arrow-right-s-line mr-2"></i>
           </CustomButton>
         </Fragment>
