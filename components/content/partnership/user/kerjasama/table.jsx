@@ -745,19 +745,25 @@ const Table = ({ token }) => {
               </div>
               <div className="row">
                 <div className="table-pagination col-12 col-md-8 overflow-auto">
-                  <Pagination
-                    activePage={allCooperationUser?.page}
-                    itemsCountPerPage={allCooperationUser?.cooperationMitra?.data?.perPage}
-                    totalItemsCount={allCooperationUser?.cooperationMitra?.data?.total}
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
+                  {
+                    allCooperationUser?.cooperationMitra?.data?.total > 5 ?
+                      <Pagination
+                        activePage={allCooperationUser?.page}
+                        itemsCountPerPage={allCooperationUser?.cooperationMitra?.data?.perPage}
+                        totalItemsCount={allCooperationUser?.cooperationMitra?.data?.total}
+                        pageRangeDisplayed={3}
+                        onChange={(page) => dispatch(setPage(page))}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
+                    :
+                      null
+                  }
+                  
                 </div>
                 <div className="table-total col-12 col-md-4 d-flex justify-content-md-end ml-md-0 ml-4">
                   <div className="row mt-4">
@@ -779,6 +785,7 @@ const Table = ({ token }) => {
                         <option value="40">40</option>
                         <option value="50">50</option>
                       </select>
+                      
                     </div>
                     <div className="col-8 my-auto">
                       <p className="align-middle mt-3" style={{ color: "#B5B5C3" }}>

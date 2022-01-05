@@ -272,6 +272,7 @@ export const getDetailLog = (id, token, tokenPermission) => async (dispatch, get
       type: DETAIL_LOG_API_SUCCESS,
       payload: data,
     });
+
   } catch (error) {
     dispatch({
       type: DETAIL_LOG_API_FAIL,
