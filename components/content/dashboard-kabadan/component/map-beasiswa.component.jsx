@@ -35,7 +35,7 @@ const MapBeasiswa = () => {
     className: `rounded-full w-25px h-25px bg-danger align-items-center justify-content-center`,
     html: `<div>tes</div>`,
   });
-  console.log(L.divIcon());
+
   const LeafIcon = L.Icon.extend({
     options: {
       iconSize: [22, 30],

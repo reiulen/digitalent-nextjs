@@ -327,15 +327,10 @@ const DashboardDigitalent = ({ token }) => {
     { id: 7, title: "Other", percent: 5, total: "100" },
   ];
 
-  useEffect(() => {
-    console.log(dataStatistikAkademiPendaftar, "ini data");
-  }, [dataStatistikAkademiPendaftar]);
-
   return (
     <PageWrapper>
       <DashboardHeader
         funcFilterYear={(value) => {
-          console.log(value, "ini value");
           // Akademi Peserta
           dispatch(
             getDigitalentStatistikAkademiPendaftar(
@@ -393,7 +388,6 @@ const DashboardDigitalent = ({ token }) => {
         <h2 className="title-section-dashboard">total per akademi</h2>
         {}
         <div className="row mt-5">
-          {/* {console.log(statistikAkademiPeserta)} */}
           {dataStatistikAkademiPeserta.map((row, i) => (
             <div className="col-md-4 mb-8" key={i}>
               <TotalPerAkademi
