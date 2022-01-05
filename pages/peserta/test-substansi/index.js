@@ -77,10 +77,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
       await store.dispatch(getAllAkademi());
 
-      if (query.no) {
+      if (query.no || query.id) {
         //jika ada query id
         const data = await store.dispatch(
-          getDetailRiwayatPelatihan(query.no, session.user.user.data.user.token)
+          getDetailRiwayatPelatihan(
+            query.no || query.id,
+            session.user.user.data.user.token
+          )
         );
         if (data) {
           const status = data.data.status;
