@@ -23,14 +23,22 @@ const FormLPJ = ({ token }) => {
 
   // let initial =
 
-  const [initial, setInitial] = useState(
-    dataLPJ?.map((item, index) => {
-      return {
-        ...item,
-        value: "0",
-      };
-    })
-  );
+  const [initial, setInitial] = useState(null);
+
+  useEffect(() => {
+    if (dataLPJ) {
+      setInitial((prev) => {
+        const arr = [];
+        dataLPJ.map((item, index) => {
+          arr.push({
+            ...item,
+            value: "0",
+          });
+        });
+        return arr;
+      });
+    }
+  }, [dataLPJ]);
 
   const [konfirmasi, setKonfirmasi] = useState("0");
   const [value, setValue] = useState("");
