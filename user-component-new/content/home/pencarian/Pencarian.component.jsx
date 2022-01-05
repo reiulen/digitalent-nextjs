@@ -243,7 +243,7 @@ const Pencarian = ({ session }) => {
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
                     <Form.Label className="fz-14">
-                      Tanggal Mulai Pelaksanaan
+                      Tanggal Mulai Pendaftaran
                     </Form.Label>
                     <Form.Control
                       className="form-control pr-5"
@@ -259,7 +259,7 @@ const Pencarian = ({ session }) => {
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
                     <Form.Label className="fz-14">
-                      Tanggal Akhir Pelaksanaan
+                      Tanggal Akhir Pendaftaran
                     </Form.Label>
                     <Form.Control
                       className="form-control pr-5"
