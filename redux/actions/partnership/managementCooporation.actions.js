@@ -639,6 +639,10 @@ export const exportFileCSV = (token,permission) => {
       } else if (statusState){
         url = urlExport.config.url +
           `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}`;
+
+      } else if (!cardState && !statusState){
+        url = urlExport.config.url +
+          `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}`
       }
 
       fetch(url, {

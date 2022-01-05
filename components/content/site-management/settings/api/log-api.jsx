@@ -24,6 +24,7 @@ import IconCalender from "../../../../assets/icon/Calender";
 import { RESET_VALUE_SORTIR } from "../../../../../redux/types/site-management/settings/api.type";
 import styles from "../../../../../styles/sitemanagement/logApi.module.css";
 import Cookies from 'js-cookie'
+import {Modal} from "react-bootstrap"
 
 import styles2 from "../../../../../styles/previewGaleri.module.css";
 import stylesPag from "../../../../../styles/pagination.module.css";
@@ -49,6 +50,7 @@ const Table = ({ token }) => {
 
   const [froms, setFroms] = useState("");
   const [tos, setTos] = useState("");
+  const [showModal, setShowModal] = useState(false)
 
   const onChangePeriodeDateStart = (date) => {
     setFroms(moment(date).format("YYYY-MM-DD"));
@@ -76,6 +78,7 @@ const Table = ({ token }) => {
   const resetValueSort = () => {
     setFroms("");
     setTos("");
+    setShowModal(false)
     dispatch({
       type: RESET_VALUE_SORTIR,
     });
@@ -176,6 +179,7 @@ const Table = ({ token }) => {
                             className={`${styles.filterBtn} avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2`}
                             onClick={() => setShowModal(true)}
                             style={{ color: "#464646" }}
+                            onClick={()=> setShowModal(true)}
                           >
                             <div
                               className={`${styles.iconFilter} d-flex align-items-center`}
@@ -416,6 +420,102 @@ const Table = ({ token }) => {
           </div>
         </div>
       </div>
+
+      {/* Modal */}
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+      >
+        <Modal.Header>
+            <Modal.Title>
+              <h5
+                id="exampleModalLongTitle"
+              >
+                Filter
+              </h5>
+            </Modal.Title>
+
+            <button
+              type="button"
+              className="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <IconClose />
+            </button>
+        </Modal.Header>
+
+        <Modal.Body
+          style={{ height: "400px" }}
+        >
+          <div className="fv-row mb-10">
+            <label>From</label>
+            <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+              <DatePicker
+                className="form-search-date form-control cursor-pointer"
+                onChange={(date) =>
+                  onChangePeriodeDateStart(date)
+                }
+                value={froms}
+                dateFormat="YYYY-MM-DD"
+                placeholderText="From"
+                minDate={moment().toDate()}
+              />
+              <IconCalender
+                className="right-center-absolute"
+                style={{ right: "10px" }}
+              />
+            </div>
+          </div>
+          <div className="fv-row mb-10">
+            <label>To</label>
+            <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+              <DatePicker
+                className="form-search-date form-control cursor-pointer"
+                onChange={(date) =>
+                  onChangePeriodeDateEnd(date)
+                }
+                value={tos}
+                disabled={!froms}
+                dateFormat="YYYY-MM-DD"
+                placeholderText="To"
+                minDate={moment(froms).toDate()}
+              />
+              <IconCalender
+                className="right-center-absolute"
+                style={{ right: "10px" }}
+              />
+            </div>
+          </div>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <div className="d-flex justify-content-end align-items-center">
+            <button
+              className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+              onClick={() => resetValueSort()}
+            >
+              Reset
+            </button>
+            <button
+              className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
+              type="button"
+              // onClick={(e) =>
+              //   handleSubmitSearchMany(e)
+              // }
+              onClick={() =>
+                handleSubmitSearchMany()
+              }
+            >
+              Terapkan
+            </button>
+          </div>
+        </Modal.Footer>
+      </Modal>
+
     </PageWrapper>
   );
 };

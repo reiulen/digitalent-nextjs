@@ -64,14 +64,18 @@ const TambahTandaTangan = ({ token }) => {
     e.preventDefault();
     if (nama === "") {
       setError({ ...error, nama: "Harus isi nama" });
+      Swal.fire("Gagal", "Harap isi data dengan benar", "error");
     } else if (jabatan === "") {
       setError({ ...error, jabatan: "Harus isi jabatan" });
+      Swal.fire("Gagal", "Harap isi data dengan benar", "error");
     } else if (tandaTangan === "") {
       setError({
         ...error,
         tandaTangan:
           "Pastikan sudah mengisi tanda tangan dan tekan tombol Buat tanda tangan",
       });
+      Swal.fire("Gagal", "Harap isi data dengan benar", "error");
+      
     } else {
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
