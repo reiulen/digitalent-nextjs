@@ -369,21 +369,27 @@ const Table = ({ token }) => {
 
               <div className="row">
                 <div className="table-pagination col-12 col-md-8 overflow-auto">
-                  <Pagination
-                    activePage={allTandaTangan?.page}
-                    itemsCountPerPage={
-                      allTandaTangan?.tanda_tangan?.data?.perPage
-                    }
-                    totalItemsCount={allTandaTangan?.tanda_tangan?.data?.total}
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
+                  {
+                    allTandaTangan?.tanda_tangan?.data?.total > 5 ?
+                      <Pagination
+                        activePage={allTandaTangan?.page}
+                        itemsCountPerPage={
+                          allTandaTangan?.tanda_tangan?.data?.perPage
+                        }
+                        totalItemsCount={allTandaTangan?.tanda_tangan?.data?.total}
+                        pageRangeDisplayed={3}
+                        onChange={(page) => dispatch(setPage(page))}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
+                    :
+                      null
+                  }
+                  
                 </div>
                 <div className="table-total ml-5 col-12 col-md-4 d-flex justify-content-md-end ml-md-0">
                   <div className="row">
