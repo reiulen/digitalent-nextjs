@@ -207,7 +207,7 @@ const Table = ({ token }) => {
                         .list_cooperation_categories.length === 0 ? (
                         <tr>
                           <td colSpan="4" className="text-center">
-                            <h4>Data tidak ditemukan</h4>
+                            <h4>Data Kosong</h4>
                           </td>
                         </tr>
                       ) : (
