@@ -245,14 +245,15 @@ export const getDigitalentTotalPengguna =
   };
 
 export const getDigitalentStatistikAkademiPeserta =
-  (token, token_permission = "", tahun) =>
+  (token, token_permission = "", tahun = "") =>
   async (dispatch) => {
     try {
       dispatch({ type: DTS_STATISTIK_AKADEMI_PESERTA_REQUEST });
 
       let link =
-        process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/peserta-akademi`;
-      if (tahun) link = link.concat(`?tahun=${tahun}`);
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/akademi/peserta-akademi?tahun=${tahun}`;
+      // if (tahun) link = link.concat(`?tahun=${tahun}`);
 
       const config = {
         headers: {
@@ -276,15 +277,15 @@ export const getDigitalentStatistikAkademiPeserta =
   };
 
 export const getDigitalentStatistikAkademiPendaftar =
-  (token, token_permission = "", tahun) =>
+  (token, token_permission = "", tahun = "") =>
   async (dispatch) => {
     try {
       dispatch({ type: DTS_STATISTIK_AKADEMI_PENDAFTAR_REQUEST });
 
       let link =
         process.env.END_POINT_API_PELATIHAN +
-        `api/v1/akademi/pendaftaran-akademi`;
-      if (tahun) link = link.concat(`?tahun=${tahun}`);
+        `api/v1/akademi/pendaftaran-akademi?tahun=${tahun}`;
+      // if (tahun) link = link.concat(`?tahun=${tahun}`);
 
       const config = {
         headers: {

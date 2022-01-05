@@ -4,20 +4,25 @@ import Link from "next/link";
 
 const DashboardHeader = ({ funcFilterYear, path = "" }) => {
   const router = useRouter();
-  const year = ["2021", "2020", "2019", "2018", "2017", "2016"];
+  const year = ["Semua", "2021", "2020", "2019", "2018", "2017", "2016"];
   return (
-    <div className="d-flex justify-content-between flex-wrap">
-      <h2 className="title-section-dashboard d-flex">
-        {router.pathname !== "/pelatihan/dashboard" && (
-          <div
-            className="ri-arrow-left-s-line mr-3"
-            onClick={() => router.back()}
-            style={{ cursor: "pointer" }}
-          ></div>
-        )}
-        Dashboard {path}
-      </h2>
-      <button className="btn btn-outline-primary-dashboard px-8">
+    <div
+      className={`d-flex justify-content-${
+        router.pathname != "/dashboard" ? "between" : "end"
+      } flex-wrap`}
+    >
+      {router.pathname !== "/pelatihan/dashboard" ||
+        (router.pathname != "/dashboard" && (
+          <h2 className="title-section-dashboard d-flex">
+            <div
+              className="ri-arrow-left-s-line mr-3"
+              onClick={() => router.back()}
+              style={{ cursor: "pointer" }}
+            ></div>
+            Dashboard {path}
+          </h2>
+        ))}
+      <a className="px-8 rounded-full" style={{ border: "1px solid #215480" }}>
         <div className="d-flex flex-wrap align-items-center">
           <p className="mt-4 mr-3 text-dashboard-neutral">Pilih Tahun:</p>
           <select
@@ -26,13 +31,13 @@ const DashboardHeader = ({ funcFilterYear, path = "" }) => {
           >
             {year &&
               year.map((row, i) => (
-                <option key={i} value={row}>
+                <option key={i} value={row.includes("Semua") ? "" : row}>
                   {row}
                 </option>
               ))}
           </select>
         </div>
-      </button>
+      </a>
     </div>
   );
 };
