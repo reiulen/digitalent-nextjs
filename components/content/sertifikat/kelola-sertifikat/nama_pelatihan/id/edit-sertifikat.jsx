@@ -583,6 +583,10 @@ export default function EditSertifikat({ token }) {
                 </div>
               </div>
             </div>
+            <div className="px-5 fz-12">
+              * Direkomendasikan menggunakan device laptop atau komputer untuk
+              membuat sertifikat.
+            </div>
             {/* END HEADER */}
             {/* START BODY */}
             <div className="card-body border-top" style={{ width: "100%" }}>
