@@ -25,6 +25,7 @@ const ImportParticipant = ({ token }) => {
 
   const handleSelectFile = (e) => {
     const type = ["text/csv"];
+    // "application/vnd.ms-excel"
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
         setFile(e.target.files[0]);
@@ -87,7 +88,7 @@ const ImportParticipant = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header mt-3">
             <h1
-              className="card-title text-dark mt-2"
+              className="card-title text-dark mt-2 text-break"
               style={{ fontSize: "24px" }}
             >
               Import Peserta Pelatihan / {pelatihan}

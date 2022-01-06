@@ -321,7 +321,7 @@ const DetailSummary = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header mt-3">
             <h1
-              className="card-title text-dark mt-2"
+              className="card-title text-dark mt-2 text-break"
               style={{ fontSize: "24px" }}
             >
               {dataPelatihan.akademi} / {dataPelatihan.tema} /{" "}
