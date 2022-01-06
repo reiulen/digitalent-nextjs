@@ -357,7 +357,6 @@ const DashboardDigitalent = ({ token }) => {
             getDigitalentStatistikAkademiPeserta(token, token_permission, value)
           );
         }}
-        year={year}
       />
       <section className="opening-hello">
         <Header

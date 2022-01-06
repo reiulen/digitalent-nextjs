@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-const DashboardHeader = ({
-  funcFilterYear,
-  path = "",
-  year = ["Semua", "2022", "2021", "2020", "2019", "2018", "2017", "2016"],
-}) => {
+const DashboardHeader = ({ funcFilterYear, path = "" }) => {
   const router = useRouter();
+  const [year, setYear] = useState(null);
+
+  useEffect(() => {
+    const current = +moment().utc().format("YYYY");
+    console.log(typeof current);
+    const arr = [];
+    for (let i = 2017; i <= current; i++) {
+      arr.push(i);
+    }
+    arr.push("Semua");
+    arr.reverse();
+    setYear(arr);
+  }, []);
 
   return (
     <div
