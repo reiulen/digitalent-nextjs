@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import AuthWrapper from "../../../../wrapper/auth.wrapper";
 import Swal from "sweetalert2";
 import { useSelector, useDispatch } from "react-redux";
-import axios from 'axios'
+import axios from "axios";
 import { RESET_STATUS } from "../../../../../redux/types/partnership/user/authentication.type";
 const RecoveryMitra = () => {
   const router = useRouter();
@@ -20,7 +20,7 @@ const RecoveryMitra = () => {
     e.preventDefault();
     if (email === "") {
       setError({ ...error, email: "Email tidak boleh kosong" });
-      Swal.fire("Gagal", `Email tidak boleh kosong`, "error")
+      Swal.fire("Gagal", `Email tidak boleh kosong`, "error");
     } else {
       Swal.fire({
         title: "Apakah anda yakin ?",
@@ -31,7 +31,7 @@ const RecoveryMitra = () => {
         cancelButtonText: "Batal",
         confirmButtonText: "Ya !",
         dismissOnDestroy: false,
-      }).then(async(result) => {
+      }).then(async (result) => {
         if (result.value) {
           let formData = new FormData();
           formData.append("email", email);
@@ -41,12 +41,12 @@ const RecoveryMitra = () => {
               formData
             );
             Swal.fire(
-        "Berhasil",
-        "Link reset password telah dikirm, silahkan cek email anda",
-        "success"
-      )
+              "Berhasil",
+              "Link reset password telah dikirm, silahkan cek email anda",
+              "success"
+            );
           } catch (error) {
-            Swal.fire("Gagal", `${error.response.data.message}`, "error")
+            Swal.fire("Gagal", `${error.response.data.message}`, "error");
           }
         }
       });
@@ -55,7 +55,7 @@ const RecoveryMitra = () => {
 
   useEffect(() => {
     if (allAuthentication?.status === "error") {
-      Swal.fire("Gagal", `${allAuthentication?.errorRegister}`, "error")
+      Swal.fire("Gagal", `${allAuthentication?.errorRegister}`, "error");
     } else if (allAuthentication?.status === "success") {
       // jika sukses
       Swal.fire(
@@ -80,7 +80,10 @@ const RecoveryMitra = () => {
 
   return (
     <>
-      <AuthWrapper image="multiethnic-businesswoman.svg" title="Pemulihan Password">
+      <AuthWrapper
+        image="multiethnic-businesswoman.svg"
+        title="Pemulihan Password"
+      >
         <div
           className="col-lg-7 d-flex flex-wrap align-content-center"
           style={{ background: "#1A4367" }}
@@ -101,7 +104,7 @@ const RecoveryMitra = () => {
                   fontSize: "32px",
                   color: "#ffffff",
                   fontWeight: "700",
-                  fontFamily: "Rubik",
+                  fontFamily: "Poppins",
                   lineHeight: "38px",
                 }}
               >
