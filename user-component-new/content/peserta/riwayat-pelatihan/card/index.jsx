@@ -27,10 +27,15 @@ export default function CardTemplateOriginal({ data, session }) {
   }, [data.status]);
 
   useEffect(() => {
-    if (name.includes("/")) {
+    if (name.includes("/") || name.includes(" ")) {
       name.replaceAll("/", "-");
+      setName((prev) => {
+        let str = "";
+        str = prev.replaceAll("/", "-");
+        str = str.replaceAll(" ", "-");
+        return str;
+      });
     }
-    console.log(name, "ini namenya");
   }, [name]);
 
   return (
@@ -74,20 +79,14 @@ export default function CardTemplateOriginal({ data, session }) {
                 return router.push(`/peserta/administrasi?id=${data.id}`);
               if (data.status.includes("seleksi akhir")) {
                 return router.push(
-                  `/peserta/riwayat-pelatihan/${data.name
-                    .split(" ")
-                    .join("-")
-                    .toLowerCase()}?no=${data.id}`
+                  `/peserta/riwayat-pelatihan/${name}?no=${data.id}`
                 );
               }
               if (data.status.includes("tes substansi")) {
                 return router.push(`/peserta/test-substansi?id=${data.id}`);
               } else {
                 return router.push(
-                  `/peserta/riwayat-pelatihan/${data.name
-                    .split(" ")
-                    .join("-")
-                    .toLowerCase()}?no=${data.id}`
+                  `/peserta/riwayat-pelatihan/${name}?no=${data.id}`
                 );
               }
             }}
