@@ -24,8 +24,8 @@ const ImportParticipant = ({ token }) => {
   };
 
   const handleSelectFile = (e) => {
-    const type = ["text/csv"];
-    // "application/vnd.ms-excel"
+    const type = ["text/csv", "application/vnd.ms-excel"];
+
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
         setFile(e.target.files[0]);
