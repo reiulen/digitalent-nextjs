@@ -2,18 +2,13 @@ import React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-const DashboardHeader = ({ funcFilterYear, path = "" }) => {
+const DashboardHeader = ({
+  funcFilterYear,
+  path = "",
+  year = ["Semua", "2022", "2021", "2020", "2019", "2018", "2017", "2016"],
+}) => {
   const router = useRouter();
-  const year = [
-    "Semua",
-    "2022",
-    "2021",
-    "2020",
-    "2019",
-    "2018",
-    "2017",
-    "2016",
-  ];
+
   return (
     <div
       className={`d-flex justify-content-${
@@ -40,7 +35,7 @@ const DashboardHeader = ({ funcFilterYear, path = "" }) => {
           >
             {year &&
               year.map((row, i) => (
-                <option key={i} value={row.includes("Semua") ? "" : row}>
+                <option key={i} value={row == "Semua" ? "" : row}>
                   {row}
                 </option>
               ))}

@@ -122,16 +122,8 @@ const DashboardDigitalent = ({ token }) => {
   //   (state) => state.drowpdownTemabyAkademi
   // );
 
-  const year = [
-    "Semua",
-    "2022",
-    "2021",
-    "2020",
-    "2019",
-    "2018",
-    "2017",
-    "2016",
-  ];
+  const [year, setYear] = useState(null);
+
   const dataStatistikAkademiPendaftar = [];
   if (statistikAkademiPendaftar && statistikAkademiPendaftar.length > 0) {
     statistikAkademiPendaftar.map((row, i) => {
@@ -336,6 +328,18 @@ const DashboardDigitalent = ({ token }) => {
     { id: 7, title: "Other", percent: 5, total: "100" },
   ];
 
+  useEffect(() => {
+    const current = +moment().utc().format("YYYY");
+    console.log(typeof current);
+    const arr = [];
+    for (let i = 2017; i <= current; i++) {
+      arr.push(i);
+    }
+    arr.push("Semua");
+    arr.reverse();
+    setYear(arr);
+  }, []);
+
   return (
     <PageWrapper>
       <DashboardHeader
@@ -353,6 +357,7 @@ const DashboardDigitalent = ({ token }) => {
             getDigitalentStatistikAkademiPeserta(token, token_permission, value)
           );
         }}
+        year={year}
       />
       <section className="opening-hello">
         <Header
