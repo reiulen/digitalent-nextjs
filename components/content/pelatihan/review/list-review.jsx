@@ -363,48 +363,48 @@ const ListReview = ({ token }) => {
             background="cardMenunggu"
             icon="new/mail-white.svg"
             color="#FFFFFF"
-            value={cardReview[1].count}
+            value={cardReview[1]?.count}
             titleValue=""
             title="Menunggu Review"
-            publishedVal={cardReview[1].status}
+            publishedVal={cardReview[1]?.status}
             routePublish={() =>
-              handlePublish(cardReview[1].status, cardReview[1].condisi)
+              handlePublish(cardReview[1]?.status, cardReview[1]?.condisi)
             }
           />
           <CardPage
             background="cardSelesai"
             icon="new/open-book.svg"
             color="#FFFFFF"
-            value={cardReview[0].count}
+            value={cardReview[0]?.count}
             titleValue=""
             title="Revisi"
-            publishedVal={cardReview[0].status}
+            publishedVal={cardReview[0]?.status}
             routePublish={() =>
-              handlePublish(cardReview[0].status, cardReview[0].condisi)
+              handlePublish(cardReview[0]?.status, cardReview[0]?.condisi)
             }
           />
           <CardPage
             background="cardDisetujui"
             icon="new/done-circle.svg"
             color="#FFFFFF"
-            value={cardReview[2].count}
+            value={cardReview[2]?.count}
             titleValue=""
             title="Disetujui"
-            publishedVal={cardReview[2].status}
+            publishedVal={cardReview[2]?.status}
             routePublish={() =>
-              handlePublish(cardReview[2].status, cardReview[2].condisi)
+              handlePublish(cardReview[2]?.status, cardReview[2]?.condisi)
             }
           />
           <CardPage
             background="cardRevisi"
             icon="new/error-circle.svg"
             color="#FFFFFF"
-            value={cardReview[3].count}
+            value={cardReview[3]?.count}
             titleValue=""
             title="Ditolak"
-            publishedVal={cardReview[3].status}
+            publishedVal={cardReview[3]?.status}
             routePublish={() =>
-              handlePublish(cardReview[3].status, cardReview[3].condisi)
+              handlePublish(cardReview[3]?.status, cardReview[3]?.condisi)
             }
           />
         </div>
