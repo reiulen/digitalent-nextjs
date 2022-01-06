@@ -66,33 +66,32 @@ const Table = ({ token }) => {
       Swal.fire('Oops !', 'To tidak boleh kosong', 'error')
     } else {
       dispatch(changeDates(froms, tos));
-      dispatch(
-        getDetailLog(router.query.id, token, Cookies.get("token_permission"))
-      );
       setShowModal(false)
     }
   };
-
+  
   const resetValueSort = () => {
     setFroms("");
     setTos("");
-    setShowModal(false)
     dispatch({
       type: RESET_VALUE_SORTIR,
     });
-    setShowModal(false)
-  };
-
-  useEffect(() => {
     dispatch(
       getDetailLog(router.query.id, token, Cookies.get("token_permission"))
     );
-  }, [
-    dispatch,
-    router.query.id,
-    listLog?.limit,
-    token,
-  ]);
+    setShowModal(false)
+  };
+
+  // useEffect(() => {
+  //   dispatch(
+  //     getDetailLog(router.query.id, token, Cookies.get("token_permission"))
+  //   );
+  // }, [
+  //   dispatch,
+  //   router.query.id,
+  //   listLog?.limit,
+  //   token,
+  // ]);
 
   return (
     <PageWrapper>
@@ -419,7 +418,7 @@ const Table = ({ token }) => {
       </div>
 
       {/* Modal */}
-      <Modal
+      {/* <Modal
         show={showModal}
         onHide={() => setShowModal(false)}
       >
@@ -511,7 +510,7 @@ const Table = ({ token }) => {
             </button>
           </div>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
 
     </PageWrapper>
   );
