@@ -32,7 +32,7 @@ const DetailPelatihan = ({ session }) => {
   const { pelatihan } = useSelector((state) => state.detailPelatihan);
 
   useEffect(() => {
-    if (pelatihan.Status === "Close") {
+    if (pelatihan?.Status === "Close") {
       router.back();
     }
   }, [pelatihan, router]);

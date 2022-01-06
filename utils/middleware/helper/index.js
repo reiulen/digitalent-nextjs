@@ -6,8 +6,8 @@ import CheckboxReference from "../../../components/content/pelatihan/training/co
 import { options, element, size } from "./data";
 
 export const helperHandlePercentage = (totalAdd, total) => {
-  if (totalAdd != 0 && total != 0) {
-    return Math.ceil((100 * totalAdd) / total);
+  if (+totalAdd != 0 && +total != 0) {
+    return Math.ceil((100 * +totalAdd) / +total);
   }
   return 0;
 };
