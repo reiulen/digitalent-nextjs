@@ -122,7 +122,16 @@ const DashboardDigitalent = ({ token }) => {
   //   (state) => state.drowpdownTemabyAkademi
   // );
 
-  const year = ["2021", "2020", "2019", "2018", "2017", "2016"];
+  const year = [
+    "Semua",
+    "2022",
+    "2021",
+    "2020",
+    "2019",
+    "2018",
+    "2017",
+    "2016",
+  ];
   const dataStatistikAkademiPendaftar = [];
   if (statistikAkademiPendaftar && statistikAkademiPendaftar.length > 0) {
     statistikAkademiPendaftar.map((row, i) => {

@@ -17,7 +17,7 @@ export default function CardTemplateOriginal({ data, session }) {
   const dateFrom = moment(data.pelatihan_mulai).utc().format("LL");
   const dateTo = moment(data.pelatihan_selesai).utc().format("LL");
   const [label, setLabel] = useState();
-
+  const [name, setName] = useState(data?.name);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
@@ -25,6 +25,13 @@ export default function CardTemplateOriginal({ data, session }) {
   useEffect(() => {
     helperUserStatusColor(data.status, setLabel);
   }, [data.status]);
+
+  useEffect(() => {
+    if (name.includes("/")) {
+      name.replaceAll("/", "-");
+    }
+    console.log(name, "ini namenya");
+  }, [name]);
 
   return (
     <Fragment>
