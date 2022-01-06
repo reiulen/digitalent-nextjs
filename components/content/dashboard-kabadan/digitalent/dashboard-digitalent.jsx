@@ -118,9 +118,10 @@ const DashboardDigitalent = ({ token }) => {
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
     (state) => state.drowpdownAkademi
   );
-  // const drowpdownTemabyAkademi = useSelector(
-  //   (state) => state.drowpdownTemabyAkademi
-  // );
+
+  const drowpdownTemabyAkademi = useSelector(
+    (state) => state.drowpdownTemabyAkademi
+  );
 
   const [year, setYear] = useState(null);
 
@@ -330,7 +331,6 @@ const DashboardDigitalent = ({ token }) => {
 
   useEffect(() => {
     const current = +moment().utc().format("YYYY");
-    console.log(typeof current);
     const arr = [];
     for (let i = 2017; i <= current; i++) {
       arr.push(i);
@@ -339,6 +339,15 @@ const DashboardDigitalent = ({ token }) => {
     arr.reverse();
     setYear(arr);
   }, []);
+
+  useEffect(() => {
+    if (academyPesertaWilayah) {
+      setThemePesertaWilayah("");
+    }
+    if (academyPesertaWilayah == "") {
+      setThemePesertaWilayah("");
+    }
+  }, [academyPesertaWilayah]);
 
   return (
     <PageWrapper>
@@ -734,14 +743,14 @@ const DashboardDigitalent = ({ token }) => {
                       }}
                     >
                       <option value="">Semua</option>
-                      {/* {drowpdownTemabyAkademi &&
-                        drowpdownTemabyAkademi.data &&
-                        drowpdownTemabyAkademi.data.data.length > 0 &&
-                        drowpdownTemabyAkademi.data.data.map((row, i) => (
+                      {drowpdownTemabyAkademi &&
+                        drowpdownTemabyAkademi?.data &&
+                        drowpdownTemabyAkademi?.data?.data?.length > 0 &&
+                        drowpdownTemabyAkademi?.data?.data?.map((row, i) => (
                           <option key={i} value={row.value}>
                             {row.label}
                           </option>
-                        ))} */}
+                        ))}
                     </select>
                   </div>
                   <div className="d-flex flex-wrap align-items-center">
