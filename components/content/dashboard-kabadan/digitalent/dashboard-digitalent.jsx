@@ -118,11 +118,13 @@ const DashboardDigitalent = ({ token }) => {
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
     (state) => state.drowpdownAkademi
   );
-  // const drowpdownTemabyAkademi = useSelector(
-  //   (state) => state.drowpdownTemabyAkademi
-  // );
 
-  const year = ["2021", "2020", "2019", "2018", "2017", "2016"];
+  const drowpdownTemabyAkademi = useSelector(
+    (state) => state.drowpdownTemabyAkademi
+  );
+
+  const [year, setYear] = useState(null);
+
   const dataStatistikAkademiPendaftar = [];
   if (statistikAkademiPendaftar && statistikAkademiPendaftar.length > 0) {
     statistikAkademiPendaftar.map((row, i) => {
@@ -326,6 +328,26 @@ const DashboardDigitalent = ({ token }) => {
     { id: 6, title: "D4", percent: 10, total: "500" },
     { id: 7, title: "Other", percent: 5, total: "100" },
   ];
+
+  useEffect(() => {
+    const current = +moment().utc().format("YYYY");
+    const arr = [];
+    for (let i = 2017; i <= current; i++) {
+      arr.push(i);
+    }
+    arr.push("Semua");
+    arr.reverse();
+    setYear(arr);
+  }, []);
+
+  useEffect(() => {
+    if (academyPesertaWilayah) {
+      setThemePesertaWilayah("");
+    }
+    if (academyPesertaWilayah == "") {
+      setThemePesertaWilayah("");
+    }
+  }, [academyPesertaWilayah]);
 
   return (
     <PageWrapper>
@@ -721,14 +743,14 @@ const DashboardDigitalent = ({ token }) => {
                       }}
                     >
                       <option value="">Semua</option>
-                      {/* {drowpdownTemabyAkademi &&
-                        drowpdownTemabyAkademi.data &&
-                        drowpdownTemabyAkademi.data.data.length > 0 &&
-                        drowpdownTemabyAkademi.data.data.map((row, i) => (
+                      {drowpdownTemabyAkademi &&
+                        drowpdownTemabyAkademi?.data &&
+                        drowpdownTemabyAkademi?.data?.data?.length > 0 &&
+                        drowpdownTemabyAkademi?.data?.data?.map((row, i) => (
                           <option key={i} value={row.value}>
                             {row.label}
                           </option>
-                        ))} */}
+                        ))}
                     </select>
                   </div>
                   <div className="d-flex flex-wrap align-items-center">

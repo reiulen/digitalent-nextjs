@@ -84,8 +84,16 @@ const EditTipeSoal = ({ token, tokenPermission }) => {
   };
 
   const handleBobot = (e) => {
-    if (e === "" || helperRegexNumber.test(e)) {
-      setValue(e);
+    if (e.target.value === "" || helperRegexNumber.test(e.target.value)) {
+      e.target.value = Math.max(
+        Number(e.target.min),
+        Math.min(Number(e.target.max), Number(e.target.value))
+      );
+      if (e.target.value < 30) {
+        setValue(e.target.value);
+      } else {
+        setValue(e.target.value);
+      }
     }
   };
 
@@ -155,11 +163,13 @@ const EditTipeSoal = ({ token, tokenPermission }) => {
                     type="text"
                     className="form-control"
                     placeholder="*Contoh: 2"
-                    onChange={(e) => handleBobot(e.target.value)}
+                    onChange={(e) => handleBobot(e)}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("bobot nilai")
                     }
                     value={value}
+                    min={0}
+                    max={100}
                   />
                   {simpleValidator.current.message(
                     "bobot nilai",

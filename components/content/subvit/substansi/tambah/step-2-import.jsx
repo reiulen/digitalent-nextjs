@@ -293,6 +293,9 @@ const StepTwo = ({ token, tokenPermission }) => {
       },
     };
 
+    // Cookies.set("Authorization", "Bearer " + token);
+    // Cookies.set("Permission", tokenPermission);
+
     await axios
       .get(
         process.env.END_POINT_API_SUBVIT +
@@ -304,6 +307,22 @@ const StepTwo = ({ token, tokenPermission }) => {
         res.data.data.map((row, i) => {
           if (i === 0) {
             window.open(row);
+            //     var req = new XMLHttpRequest();
+            //     req.open("GET", row, true); //true means request will be async
+            //     req.onreadystatechange = function (aEvt) {
+            //       if (req.readyState == 4) {
+            //         if (req.status === 200) {
+            //           console.log(aEvt);
+            //           window.location.href = aEvt.currentTarget;
+            //         } else {
+            //           console.log("tidak berhasil");
+            //         }
+            //       }
+            //     };
+            //     req.setRequestHeader("Authorization", "Bearer " + token);
+            //     req.setRequestHeader("Permission", tokenPermission);
+            //     req.send();
+            //   }
           } else {
             window.location.href = row;
           }

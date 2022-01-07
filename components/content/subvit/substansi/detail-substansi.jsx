@@ -617,12 +617,12 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
                       <th>Kategori</th>
                       <th>Bobot</th>
                       <th>Status</th>
-                      {dataPermission &&
-                      dataPermission.roles.includes("Super Admin") &&
-                      dataPermission &&
-                      dataPermission.permissions.includes(
-                        "subvit.manage" && "subvit.substansi.manage"
-                      ) ? (
+                      {(dataPermission &&
+                        dataPermission.roles.includes("Super Admin")) ||
+                      (dataPermission &&
+                        dataPermission.permissions.includes(
+                          "subvit.manage" && "subvit.substansi.manage"
+                        )) ? (
                         <th>Aksi</th>
                       ) : (
                         ""
@@ -668,12 +668,14 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
                                 )}
                               </td>
                               <td className="align-middle">
-                                {dataPermission &&
-                                dataPermission.roles.includes("Super Admin") &&
-                                dataPermission &&
-                                dataPermission.permissions.includes(
-                                  "subvit.manage" && "subvit.substansi.manage"
-                                ) ? (
+                                {(dataPermission &&
+                                  dataPermission.roles.includes(
+                                    "Super Admin"
+                                  )) ||
+                                (dataPermission &&
+                                  dataPermission.permissions.includes(
+                                    "subvit.manage" && "subvit.substansi.manage"
+                                  )) ? (
                                   <div className="d-flex">
                                     <Link
                                       href={`edit-soal-substansi?id=${question.id}&no=${i}`}
