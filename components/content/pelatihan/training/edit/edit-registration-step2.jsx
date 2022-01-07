@@ -64,7 +64,6 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
   const [viewForm, setViewForm] = useState(getEditTraining2.type_form);
 
   useEffect(() => {
-    dispatch(getEditTrainingStep2(router.query.id, token));
     const dataOptionsArr = [];
     if (dataReferenceOption) {
       dataReferenceOption.list_reference.map((row, i) => {

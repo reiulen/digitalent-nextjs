@@ -614,182 +614,183 @@ const ListSurvey = ({ token, tokenPermission }) => {
         <Modal.Body style={{ overflowY: "scroll", height: "500px" }}>
           <Row>
             <Col ms={12}>
-              {survey_question_detail?.list_questions && (
-                <>
-                  {survey_question_detail?.list_questions?.map(
-                    (item, index) => {
-                      return (
-                        <>
-                          <Card
-                            style={{
-                              padding: "15px",
-                              marginBottom: "10px",
-                            }}
-                          >
-                            <h4>Soal {index + 1}</h4>
-                            <Card
-                              style={{
-                                marginTop: "10px",
+              {survey_question_detail?.list_questions &&
+                survey_question_detail?.list_questions?.map((item, index) => {
+                  return (
+                    <>
+                      <Card
+                        style={{
+                          padding: "15px",
+                          marginBottom: "10px",
+                        }}
+                      >
+                        <h4>Soal {index + 1}</h4>
+                        <Card
+                          style={{
+                            marginTop: "10px",
 
-                                padding: "15px",
-                              }}
-                            >
-                              <div className="d-flex flex-row">
-                                <div className="mr-3">
-                                  {item.question_image ? (
-                                    <Image
-                                      src={
-                                        process.env.END_POINT_API_IMAGE_SUBVIT +
-                                        item.question_image
-                                      }
-                                      alt=""
-                                      width={70}
-                                      height={70}
-                                    />
-                                  ) : (
-                                    ""
-                                  )}
-                                </div>
-                                <div>
-                                  {" "}
-                                  <h5>{item.question}</h5>
-                                </div>
-                              </div>
-
-                              {item.answer !== null ? (
-                                JSON.parse(item?.answer).map((anw) => {
-                                  return (
-                                    <>
-                                      <div className="d-flex flex-row ">
-                                        <div className="mt-6">
-                                          {anw.image !== "" ? (
-                                            <Image
-                                              src={
-                                                process.env
-                                                  .END_POINT_API_IMAGE_SUBVIT +
-                                                anw.image
-                                              }
-                                              alt=""
-                                              width={40}
-                                              height={40}
-                                            />
-                                          ) : (
-                                            ""
-                                          )}
-                                        </div>
-                                        <div style={{ width: "100%" }}>
-                                          <Card
-                                            onClick={() => setOpen(true)}
-                                            style={{
-                                              padding: "5px",
-                                              marginTop: "15px",
-                                              margin: "10px",
-                                            }}
-                                            className={
-                                              anw.key === item.answer_key
-                                                ? styles.answer
-                                                : ""
-                                            }
-                                          >
-                                            <p
-                                              style={{
-                                                padding: "5px",
-                                                marginTop: "5px",
-                                              }}
-                                            >
-                                              {anw.key} . {anw.option}
-                                            </p>
-                                          </Card>
-                                        </div>
-                                      </div>
-
-                                      <Collapse
-                                        in={open}
-                                        dimension="width"
-                                        style={{ padding: "10px 20px" }}
-                                      >
-                                        <div id="example-collapse-text">
-                                          {anw?.sub?.map((s) => {
-                                            return (
-                                              <>
-                                                <div className="d-flex flex-row">
-                                                  <div className="mr-3">
-                                                    {s.image !== "" ? (
-                                                      <Image
-                                                        src={
-                                                          process.env
-                                                            .END_POINT_API_IMAGE_SUBVIT +
-                                                          s.image
-                                                        }
-                                                        alt=""
-                                                        width={70}
-                                                        height={70}
-                                                      />
-                                                    ) : (
-                                                      ""
-                                                    )}
-                                                  </div>
-                                                  <div>
-                                                    {" "}
-                                                    <h5>{s.question}</h5>
-                                                  </div>
-                                                </div>
-                                                {s.answer.map((sw) => {
-                                                  return (
-                                                    <>
-                                                      <Card
-                                                        style={{
-                                                          padding: "5px",
-                                                          marginTop: "15px",
-                                                          margin: "10px",
-                                                        }}
-                                                        className={
-                                                          sw.key ===
-                                                          item.answer_key
-                                                            ? styles.answer
-                                                            : ""
-                                                        }
-                                                      >
-                                                        <p
-                                                          style={{
-                                                            padding: "5px",
-                                                            marginTop: "5px",
-                                                          }}
-                                                        >
-                                                          {sw.key} . {sw.option}
-                                                        </p>
-                                                      </Card>
-                                                    </>
-                                                  );
-                                                })}
-                                              </>
-                                            );
-                                          })}
-                                        </div>
-                                      </Collapse>
-                                    </>
-                                  );
-                                })
-                              ) : (
-                                <Form>
-                                  <Form.Control
-                                    as="textarea"
-                                    style={{ marginTop: "10px" }}
-                                    rows={5}
-                                    placeholder="Jelaskan jawaban Anda di sini..."
-                                    className={styles.textArea}
-                                    disabled
-                                  />
-                                </Form>
+                            padding: "15px",
+                          }}
+                        >
+                          <div className="d-flex flex-row">
+                            <div className="mr-3">
+                              {item.question_image && (
+                                <Image
+                                  src={
+                                    process.env.END_POINT_API_IMAGE_SUBVIT +
+                                    item.question_image
+                                  }
+                                  alt=""
+                                  width={70}
+                                  height={70}
+                                />
                               )}
-                            </Card>
-                          </Card>
-                        </>
-                      );
-                    }
-                  )}
-                </>
-              )}
+                            </div>
+                            <div>
+                              <h5>{item.question}</h5>
+                            </div>
+                          </div>
+
+                          {item.answer !== null ? (
+                            JSON.parse(item?.answer).map((anw) => {
+                              return (
+                                <>
+                                  <div className="d-flex flex-row ">
+                                    <div className="mt-6">
+                                      {anw.image !== "" && (
+                                        <Image
+                                          src={
+                                            process.env
+                                              .END_POINT_API_IMAGE_SUBVIT +
+                                            anw.image
+                                          }
+                                          alt=""
+                                          width={40}
+                                          height={40}
+                                        />
+                                      )}
+                                    </div>
+                                    <div style={{ width: "100%" }}>
+                                      <Card
+                                        onClick={() => setOpen(true)}
+                                        style={{
+                                          padding: "5px",
+                                          marginTop: "15px",
+                                          margin: "10px",
+                                        }}
+                                        className={
+                                          anw.key === item.answer_key
+                                            ? styles.answer
+                                            : ""
+                                        }
+                                      >
+                                        <p
+                                          style={{
+                                            padding: "5px",
+                                            marginTop: "5px",
+                                          }}
+                                        >
+                                          {anw.key} . {anw.option}
+                                        </p>
+                                      </Card>
+                                    </div>
+                                  </div>
+
+                                  <Collapse
+                                    in={open}
+                                    dimension="width"
+                                    style={{ padding: "10px 20px" }}
+                                  >
+                                    <div id="example-collapse-text">
+                                      {anw?.sub?.map((s) => {
+                                        return (
+                                          <>
+                                            <div className="d-flex flex-row">
+                                              <div className="mr-3">
+                                                {s.image !== "" && (
+                                                  <Image
+                                                    src={
+                                                      process.env
+                                                        .END_POINT_API_IMAGE_SUBVIT +
+                                                      s.image
+                                                    }
+                                                    alt=""
+                                                    width={70}
+                                                    height={70}
+                                                  />
+                                                )}
+                                              </div>
+                                              <div>
+                                                <h5>{s.question}</h5>
+                                              </div>
+                                            </div>
+                                            {s.answer.map((sw) => {
+                                              return (
+                                                <>
+                                                  <div className="d-flex flex-row align-items-center">
+                                                    <div className="mr-10">
+                                                      {sw.image !== "" && (
+                                                        <Image
+                                                          src={
+                                                            process.env
+                                                              .END_POINT_API_IMAGE_SUBVIT +
+                                                            sw.image
+                                                          }
+                                                          alt=""
+                                                          width={40}
+                                                          height={40}
+                                                        />
+                                                      )}
+                                                    </div>
+                                                    <Card
+                                                      style={{
+                                                        padding: "5px",
+                                                        marginTop: "15px",
+                                                        margin: "10px",
+                                                      }}
+                                                      className={
+                                                        sw.key ===
+                                                        item.answer_key
+                                                          ? styles.answer
+                                                          : ""
+                                                      }
+                                                    >
+                                                      <div>
+                                                        <p>
+                                                          {sw.key}
+                                                          {""}. {sw.option}
+                                                        </p>
+                                                      </div>
+                                                    </Card>
+                                                  </div>
+                                                </>
+                                              );
+                                            })}
+                                          </>
+                                        );
+                                      })}
+                                    </div>
+                                  </Collapse>
+                                </>
+                              );
+                            })
+                          ) : (
+                            <Form>
+                              <Form.Control
+                                as="textarea"
+                                style={{ marginTop: "10px" }}
+                                rows={5}
+                                placeholder="Jelaskan jawaban Anda di sini..."
+                                className={styles.textArea}
+                                disabled
+                              />
+                            </Form>
+                          )}
+                        </Card>
+                      </Card>
+                    </>
+                  );
+                })}
             </Col>
           </Row>
         </Modal.Body>

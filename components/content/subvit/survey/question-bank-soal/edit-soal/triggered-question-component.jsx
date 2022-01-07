@@ -312,7 +312,9 @@ const TriggeredQuestionComponent = ({
                             className="custom-file-label"
                             htmlFor="customFile"
                           >
-                            {row.image_name ? row.image_name : "Pilih Gambar"}
+                            {row.image_name || row.imageName
+                              ? row.image_name || row.imageName
+                              : "Pilih Gambar"}
                           </label>
                         </div>
                       </div>
@@ -416,8 +418,8 @@ const TriggeredQuestionComponent = ({
                                   className="custom-file-label"
                                   htmlFor="customFile"
                                 >
-                                  {rowY.image_name
-                                    ? rowY.image_name
+                                  {rowY.image_name || rowY.imageName
+                                    ? rowY.image_name || rowY.imageName
                                     : "Pilih Gambar"}
                                 </label>
                               </div>
@@ -470,9 +472,7 @@ const TriggeredQuestionComponent = ({
                                             className="col-md-2 p-0 pl-3"
                                             key={k}
                                           >
-                                            {rowX.image_preview === "" ? (
-                                              ""
-                                            ) : (
+                                            {rowX.image_preview !== null && (
                                               <Image
                                                 src={
                                                   rowX.image_preview &&
