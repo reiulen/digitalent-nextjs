@@ -136,7 +136,8 @@ const EditKategori = ({ token }) => {
                                         name=""
                                         id=""
                                         value={jenis_kategori}
-                                        className={`${styles.selectKategori} form-control`}
+                                        disabled
+                                        className={`${styles.selectKategori} form-control cursor-notallowed`}
                                         onChange={e => setJenisKategori(e.target.value)}
                                         onBlur={e => { setJenisKategori(e.target.value); simpleValidator.current.showMessageFor("jenis kategori") }} >
                                         <option value="Berita">Berita</option>

@@ -72,8 +72,8 @@ const TambahApi = ({ token }) => {
   const [akademiAkses, setAkademiAkses] = useState(
     editAdminSite?.adminSite?.data?.type_access === "akademi"
       ? editAdminSite?.adminSite?.data?.training_access?.map((items) => {
-          return { value: items.id, label: items.name, id: items.id };
-        })
+        return { value: items.id, label: items.name, id: items.id };
+      })
       : null
   );
   const [statusAcademy, setStatusAcademy] = useState([]);
@@ -103,8 +103,8 @@ const TambahApi = ({ token }) => {
     trainingAccess: editAdminSite?.adminSite?.data?.training_access,
     academyIds: editAdminSite?.adminSite?.data?.academy_ids,
   });
-  const [sortListPelatihan, setSortListPelatihan] = useState(
-    allListPelatihan.data
+
+  const sortListPelatihan = allListPelatihan.data
     .map((items) => {
       return {
         ...items,
@@ -114,18 +114,41 @@ const TambahApi = ({ token }) => {
       };
     })
     .map((item) => {
-      trainings.filter((filter) => {
+      trainings?.filter((filter) => {
         if (filter.id === item.value) {
           item.manage = true
           item.view = true
           item.allSelect = true
-        } 
+        }
       });
       return {
         ...item,
       };
     })
-  );
+
+  // const [sortListPelatihan, setSortListPelatihan] = useState(
+  //   allListPelatihan.data
+  //     .map((items) => {
+  //       return {
+  //         ...items,
+  //         manage: false,
+  //         view: false,
+  //         allSelect: false,
+  //       };
+  //     })
+  //     .map((item) => {
+  //       trainings?.filter((filter) => {
+  //         if (filter.id === item.value) {
+  //           item.manage = true
+  //           item.view = true
+  //           item.allSelect = true
+  //         }
+  //       });
+  //       return {
+  //         ...item,
+  //       };
+  //     })
+  // );
   const [, forceUpdate] = useState();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
@@ -347,320 +370,323 @@ const TambahApi = ({ token }) => {
             </h3>
           </div>
           <div className="card-body pt-0">
-            <form>
-              <div className="form-group">
-                <label>Nama Lengkap</label>
+            {/* <form> */}
+            <div className="form-group">
+              <label>Nama Lengkap</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+                className="form-control"
+                placeholder="Masukkan nama lengkap"
+                onBlur={(e) => {
+                  simpleValidator.current.showMessageFor("name");
+                }}
+              />
+              {simpleValidator.current.message("name", name, "required", {
+                className: "text-danger",
+              })}
+            </div>
+            <div className="form-group">
+              <label>Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                className="form-control"
+                placeholder="Masukkan email"
+                onBlur={(e) => {
+                  simpleValidator.current.showMessageFor("email");
+                }}
+              />
+              {simpleValidator.current.message("email", email, "required", {
+                className: "text-danger",
+              })}
+            </div>
+            <div className="form-group">
+              <label>Status</label>
+              <select
+                className="form-control"
+                value={status}
+                onBlur={(e) => {
+                  simpleValidator.current.showMessageFor("status");
+                }}
+                onChange={(e) => {
+                  setStatus(e.target.value);
+                }}
+              >
+                <option value="" selected disabled hidden>
+                  Pilih status
+                </option>
+                <option value="1">Aktif</option>
+                <option value="0">Tidak Aktif</option>
+              </select>
+              {simpleValidator.current.message("status", status, "required", {
+                className: "text-danger",
+              })}
+            </div>
+            <div className="form-group">
+              <label>Password</label>
+              <div className="position-relative">
                 <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => {
-                    setName(e.target.value);
-                  }}
+                  type="password"
+                  id="input-password"
                   className="form-control"
-                  placeholder="Masukkan nama lengkap"
-                  onBlur={(e) => {
-                    simpleValidator.current.showMessageFor("name");
-                  }}
+                  placeholder="Masukkan password"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
-                {simpleValidator.current.message("name", name, "required", {
-                  className: "text-danger",
-                })}
-              </div>
-              <div className="form-group">
-                <label>Email</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                  className="form-control"
-                  placeholder="Masukkan email"
-                  onBlur={(e) => {
-                    simpleValidator.current.showMessageFor("email");
-                  }}
-                />
-                {simpleValidator.current.message("email", email, "required", {
-                  className: "text-danger",
-                })}
-              </div>
-              <div className="form-group">
-                <label>Status</label>
-                <select
-                  className="form-control"
-                  value={status}
-                  onBlur={(e) => {
-                    simpleValidator.current.showMessageFor("status");
-                  }}
-                  onChange={(e) => {
-                    setStatus(e.target.value);
-                  }}
-                >
-                  <option value="" selected disabled hidden>
-                    Pilih status
-                  </option>
-                  <option value="1">Aktif</option>
-                  <option value="0">Tidak Aktif</option>
-                </select>
-                {simpleValidator.current.message("status", status, "required", {
-                  className: "text-danger",
-                })}
-              </div>
-              <div className="form-group">
-                <label>Password</label>
-                <div className="position-relative">
-                  <input
-                    type="password"
-                    id="input-password"
-                    className="form-control"
-                    placeholder="Masukkan password"
-                    onChange={(e) => setPassword(e.target.value)}
+                {hidePassword === true ? (
+                  <i
+                    className="ri-eye-fill right-center-absolute cursor-pointer"
+                    style={{ right: "10px" }}
+                    onClick={() => handlerShowPassword(false)}
                   />
-                  {hidePassword === true ? (
-                    <i
-                      className="ri-eye-fill right-center-absolute cursor-pointer"
-                      style={{ right: "10px" }}
-                      onClick={() => handlerShowPassword(false)}
-                    />
-                  ) : (
-                    <i
-                      className="ri-eye-off-fill right-center-absolute cursor-pointer"
-                      style={{ right: "10px" }}
-                      onClick={() => handlerShowPassword(true)}
-                    />
-                  )}
-                </div>
-                <p style={{ color: "#b7b5cf" }}>
-                  Min 8 Karakter,
-                  <br />
-                  Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)
-                  <br />
-                  Min 1 Simbol dan Angka
-                </p>
-              </div>
-              <div className="form-group">
-                <label>Konfirmasi Password</label>
-                <div className="position-relative">
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="confirm-input-password"
-                    placeholder="Masukkan konfirmasi password"
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                ) : (
+                  <i
+                    className="ri-eye-off-fill right-center-absolute cursor-pointer"
+                    style={{ right: "10px" }}
+                    onClick={() => handlerShowPassword(true)}
                   />
-                  {hidePasswordConfirm === true ? (
-                    <i
-                      className="ri-eye-fill right-center-absolute cursor-pointer"
-                      style={{ right: "10px" }}
-                      onClick={() => handlerShowPasswordConfirm(false)}
-                    />
-                  ) : (
-                    <i
-                      className="ri-eye-off-fill right-center-absolute cursor-pointer"
-                      style={{ right: "10px" }}
-                      onClick={() => handlerShowPasswordConfirm(true)}
-                    />
-                  )}
-                </div>
-              </div>
-              <div className="form-group">
-                <label>Role</label>
-                <Select
-                  value={roleOption}
-                  className="basic-single"
-                  classNamePrefix="select"
-                  placeholder="Pilih data role"
-                  isDisabled={false}
-                  isLoading={false}
-                  isMulti
-                  // defaultInputValue={}
-                  isClearable={false}
-                  isRtl={false}
-                  isSearchable={true}
-                  name="color"
-                  onChange={(e) => {
-                    handleChangeRole(e);
-                  }}
-                  options={allRolesList?.data?.list_role
-                    ?.filter((items) => {
-                      if (items.status === 1) {
-                        return {
-                          ...items,
-                          label: items.name,
-                          value: items.name,
-                        };
-                      }
-                    })
-                    .map((item) => {
-                      return { ...item, label: item.name, value: item.name };
-                    })
-                    .filter((item) => {
-                      return !roleOption.some((filter) => {
-                        return item.label === filter.label;
-                      });
-                    })}
-                  onBlur={(e) => {
-                    simpleValidator.current.showMessageFor("roleOption");
-                  }}
-                />
-                {simpleValidator.current.message(
-                  "roleOption",
-                  roleOption,
-                  "required",
-                  {
-                    className: "text-danger",
-                  }
                 )}
               </div>
-              <div className="form-group">
-                <label htmlFor="exampleSelect1">Satuan Kerja</label>
-                <Select
-                  value={unitWorkOption}
-                  className="basic-single"
-                  classNamePrefix="select"
-                  placeholder="Pilih data satuan kerja"
-                  isDisabled={false}
-                  isLoading={false}
-                  isMulti
-                  // defaultInputValue={}
-                  isClearable={false}
-                  isRtl={false}
-                  isSearchable={true}
-                  name="color"
-                  onChange={(e) => handleChangeUnitWork(e)}
-                  options={allUnitWorkList?.data?.unit_work
-                    ?.filter((items) => {
-                      if (items.status === "1") {
-                        return {
-                          ...items,
-                          label: items.name,
-                          value: items.name,
-                        };
-                      }
-                    })
-                    .map((item) => {
-                      return { ...item, label: item.name, value: item.name };
-                    })
-                    .filter((item) => {
-                      return !unitWorkOption.some((filter) => {
-                        return item.label === filter.label;
-                      });
-                    })}
-                  onBlur={(e) => {
-                    simpleValidator.current.showMessageFor("unitWorkOption");
-                  }}
+              <p style={{ color: "#b7b5cf" }}>
+                Min 8 Karakter,
+                <br />
+                Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)
+                <br />
+                Min 1 Simbol dan Angka
+              </p>
+            </div>
+            <div className="form-group">
+              <label>Konfirmasi Password</label>
+              <div className="position-relative">
+                <input
+                  type="password"
+                  className="form-control"
+                  id="confirm-input-password"
+                  placeholder="Masukkan konfirmasi password"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
-                {simpleValidator.current.message(
-                  "unitWorkOption",
-                  unitWorkOption,
-                  "required",
-                  {
-                    className: "text-danger",
-                  }
+                {hidePasswordConfirm === true ? (
+                  <i
+                    className="ri-eye-fill right-center-absolute cursor-pointer"
+                    style={{ right: "10px" }}
+                    onClick={() => handlerShowPasswordConfirm(false)}
+                  />
+                ) : (
+                  <i
+                    className="ri-eye-off-fill right-center-absolute cursor-pointer"
+                    style={{ right: "10px" }}
+                    onClick={() => handlerShowPasswordConfirm(true)}
+                  />
                 )}
-              </div>{" "}
-              {/* hak akses disini */}
-              <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1">
-                Hak Akses Pelatihan
-              </h3>
-              <ul className="nav nav-tabs" id="myTab" role="tablist">
-                <li
-                  className="nav-item"
-                  role="presentation"
-                  onClick={() => setTypeAccess("akademi")}
-                >
-                  <a
-                    className={`nav-link ${
-                      editAdminSite?.adminSite?.data?.type_access === "akademi"
-                        ? "active"
-                        : ""
+              </div>
+            </div>
+            <div className="form-group">
+              <label>Role</label>
+              <Select
+                value={roleOption}
+                className="basic-single"
+                classNamePrefix="select"
+                placeholder="Pilih data role"
+                isDisabled={false}
+                isLoading={false}
+                isMulti
+                // defaultInputValue={}
+                isClearable={false}
+                isRtl={false}
+                isSearchable={true}
+                name="color"
+                onChange={(e) => {
+                  handleChangeRole(e);
+                }}
+                options={allRolesList?.data?.list_role
+                  ?.filter((items) => {
+                    if (items.status === 1) {
+                      return {
+                        ...items,
+                        label: items.name,
+                        value: items.name,
+                      };
+                    }
+                  })
+                  .map((item) => {
+                    return { ...item, label: item.name, value: item.name };
+                  })
+                  .filter((item) => {
+                    return !roleOption?.some((filter) => {
+                      return item.label === filter.label;
+                    });
+                  })}
+                onBlur={(e) => {
+                  simpleValidator.current.showMessageFor("roleOption");
+                }}
+              />
+              {simpleValidator.current.message(
+                "roleOption",
+                roleOption,
+                "required",
+                {
+                  className: "text-danger",
+                }
+              )}
+            </div>
+            <div className="form-group">
+              <label htmlFor="exampleSelect1">Satuan Kerja</label>
+              <Select
+                value={unitWorkOption}
+                className="basic-single"
+                classNamePrefix="select"
+                placeholder="Pilih data satuan kerja"
+                isDisabled={false}
+                isLoading={false}
+                isMulti
+                // defaultInputValue={}
+                isClearable={false}
+                isRtl={false}
+                isSearchable={true}
+                name="color"
+                onChange={(e) => handleChangeUnitWork(e)}
+                options={allUnitWorkList?.data?.unit_work
+                  ?.filter((items) => {
+                    if (items.status === "1") {
+                      return {
+                        ...items,
+                        label: items.name,
+                        value: items.name,
+                      };
+                    }
+                  })
+                  .map((item) => {
+                    return { ...item, label: item.name, value: item.name };
+                  })
+                  .filter((item) => {
+                    return !unitWorkOption?.some((filter) => {
+                      return item.label === filter.label;
+                    });
+                  })}
+                onBlur={(e) => {
+                  simpleValidator.current.showMessageFor("unitWorkOption");
+                }}
+              />
+              {simpleValidator.current.message(
+                "unitWorkOption",
+                unitWorkOption,
+                "required",
+                {
+                  className: "text-danger",
+                }
+              )}
+            </div>{" "}
+            {/* hak akses disini */}
+            <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1">
+              Hak Akses Pelatihan
+            </h3>
+            <ul className="nav nav-tabs" id="myTab" role="tablist">
+              <li
+                className="nav-item"
+                role="presentation"
+                onClick={() => setTypeAccess("akademi")}
+              >
+                <a
+                  className={`nav-link ${editAdminSite?.adminSite?.data?.type_access === "akademi"
+                    ? "active"
+                    : ""
                     }`}
-                    id="home-tab"
-                    data-toggle="tab"
-                    href="#home"
-                    role="tab"
-                    aria-controls="home"
-                    aria-selected="true"
-                  >
-                    By Akademi
-                  </a>
-                </li>
-                <li
-                  className="nav-item"
-                  role="presentation"
-                  onClick={() => setTypeAccess("pelatihan")}
+                  id="home-tab"
+                  data-toggle="tab"
+                  href="#home"
+                  role="tab"
+                  aria-controls="home"
+                  aria-selected="true"
                 >
-                  <a
-                    className={`nav-link ${
-                      editAdminSite?.adminSite?.data?.type_access ===
-                      "pelatihan"
-                        ? "active"
-                        : ""
+                  Pilih Akademi
+                </a>
+              </li>
+              <li
+                className="nav-item"
+                role="presentation"
+                onClick={() => setTypeAccess("pelatihan")}
+              >
+                <a
+                  className={`nav-link ${editAdminSite?.adminSite?.data?.type_access ===
+                    "pelatihan"
+                    ? "active"
+                    : ""
                     }`}
-                    id="profile-tab"
-                    data-toggle="tab"
-                    href="#profile"
-                    role="tab"
-                    aria-controls="profile"
-                    aria-selected="false"
-                  >
-                    By Pelatihan
-                  </a>
-                </li>
-              </ul>
-              {}
-              <div className="tab-content" id="myTabContent">
-                <div
-                  className={
-                    editAdminSite?.adminSite?.data?.type_access === "akademi"
-                      ? "tab-pane fade show active"
-                      : "tab-pane fade"
-                  }
-                  id="home"
-                  role="tabpanel"
-                  aria-labelledby="home-tab"
+                  id="profile-tab"
+                  data-toggle="tab"
+                  href="#profile"
+                  role="tab"
+                  aria-controls="profile"
+                  aria-selected="false"
                 >
-                  <div className="form-group mt-6">
-                    <label htmlFor="exampleSelect1">Akademi</label>
-                    <Select
-                      value={akademiAkses}
-                      className="basic-single"
-                      classNamePrefix="select"
-                      placeholder="Pilih status"
-                      isMulti
-                      isDisabled={false}
-                      isLoading={false}
-                      isClearable={false}
-                      isRtl={false}
-                      isSearchable={true}
-                      name="color"
-                      onChange={(e) => changeListAcademy(e)}
-                      options={allAcademyList.data.data}
-                    />
-                  </div>
+                  Pilih Pelatihan
+                </a>
+              </li>
+            </ul>
+            { }
+            <div className="tab-content" id="myTabContent">
+              <div
+                className={
+                  editAdminSite?.adminSite?.data?.type_access === "akademi"
+                    ? "tab-pane fade show active"
+                    : "tab-pane fade"
+                }
+                id="home"
+                role="tabpanel"
+                aria-labelledby="home-tab"
+              >
+                <div className="form-group mt-6">
+                  <label htmlFor="exampleSelect1">Akademi</label>
+                  <Select
+                    value={akademiAkses}
+                    className="basic-single"
+                    classNamePrefix="select"
+                    placeholder="Pilih status"
+                    isMulti
+                    isDisabled={false}
+                    isLoading={false}
+                    isClearable={false}
+                    isRtl={false}
+                    isSearchable={true}
+                    name="color"
+                    onChange={(e) => changeListAcademy(e)}
+                    options={allAcademyList.data.data}
+                  />
                 </div>
-                <div
-                  className={
-                    editAdminSite?.adminSite?.data?.type_access === "pelatihan"
-                      ? "tab-pane fade show active"
-                      : "tab-pane fade"
-                  }
-                  id="profile"
-                  role="tabpanel"
-                  aria-labelledby="profile-tab"
-                >
-                  <div className="table-page mt-5">
-                    <div className="table-responsive">
-                      <div className="table-filter">
-                        <div className="row align-items-center">
-                          <div className="col-lg-12 col-xl-12">
-                            <form
-                              // onSubmit={handleSubmit}
-                              className="d-flex align-items-center w-100"
-                            >
-                              <div className="row w-100">
-                                <div className="col-12 col-sm-6">
-                                  <div className="position-relative overflow-hidden w-100">
+              </div>
+              <div
+                className={
+                  editAdminSite?.adminSite?.data?.type_access === "pelatihan"
+                    ? "tab-pane fade show active"
+                    : "tab-pane fade"
+                }
+                id="profile"
+                role="tabpanel"
+                aria-labelledby="profile-tab"
+              >
+                <div className="table-page mt-5">
+                  <div className="table-responsive">
+                    <div className="table-filter">
+                      <div className="row align-items-center">
+                        <div className="col-lg-12 col-xl-12">
+                          <div className="d-flex align-items-center w-100">
+                            <div className="row w-100">
+                              <div className="col-12 col-sm-6">
+                                <div className="position-relative overflow-hidden w-100">
+                                  <form
+                                    onSubmit={(e) => {
+                                      e.preventDefault();
+                                      dispatch(
+                                        getAllListPelatihan(token, search)
+                                      );
+                                    }}
+                                  >
                                     <IconSearch
                                       style={{ left: "10" }}
                                       className="left-center-absolute"
@@ -690,31 +716,36 @@ const TambahApi = ({ token }) => {
                                     >
                                       Cari
                                     </button>
-                                  </div>
+                                  </form>
                                 </div>
                               </div>
-                            </form>
+                            </div>
                           </div>
                         </div>
                       </div>
+                    </div>
 
-                      <table className="table table-separate table-head-custom table-checkable mt-5">
-                        <thead style={{ backgroundColor: "#F2F7FC" }}>
+                    <table className="table table-separate table-head-custom table-checkable mt-5">
+                      <thead style={{ backgroundColor: "#F2F7FC" }}>
+                        <tr>
+                          <th className="align-middle fz-16 fw-600">No</th>
+                          <th className="align-middle fz-16 fw-600">
+                            ID Pelatihan
+                          </th>
+                          <th className="align-middle fz-16 fw-600">
+                            Nama Pelatihan
+                          </th>
+                          <th className="align-middle text-center fz-16 fw-600">
+                            Access
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {sortListPelatihan && sortListPelatihan.length === 0 ?
                           <tr>
-                            <th className="align-middle fz-16 fw-600">No</th>
-                            <th className="align-middle fz-16 fw-600">
-                              ID Pelatihan
-                            </th>
-                            <th className="align-middle fz-16 fw-600">
-                              Nama Pelatihan
-                            </th>
-                            <th className="align-middle text-center fz-16 fw-600">
-                              Access
-                            </th>
+                            <td className='align-middle text-center' colSpan={4}>Data Kosong</td>
                           </tr>
-                        </thead>
-                        <tbody>
-                          {sortListPelatihan.map((items, index) => {
+                          : sortListPelatihan.map((items, index) => {
                             return (
                               <tr key={index}>
                                 <td className="py-8 border-bottom">
@@ -743,13 +774,13 @@ const TambahApi = ({ token }) => {
                               </tr>
                             );
                           })}
-                        </tbody>
-                      </table>
-                    </div>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
-            </form>
+            </div>
+            {/* </form> */}
             <div className="form-group row mt-8">
               <div className="col-sm-12 d-flex justify-content-end">
                 <Link href="/site-management/user/administrator" passHref>
