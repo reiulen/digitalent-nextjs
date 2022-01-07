@@ -53,6 +53,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       const token_permission = req.cookies.token_permission;
+      const Permission = await store.dispatch(
+        getAllPermission(session.user.user.data.token)
+      );
+
       await store.dispatch(
         getAllListReview(
           null,
@@ -66,23 +70,35 @@ export const getServerSideProps = wrapper.getServerSideProps(
           null,
           null,
           session.user.user.data.token,
-          token_permission
+          Permission?.data?.tokenPermission
         )
       );
-      await store.dispatch(
-        getCardReview(session.user.user.data.token, token_permission)
+      const data = await store.dispatch(
+        getCardReview(
+          session.user.user.data.token,
+          Permission?.data?.tokenPermission
+        )
       );
+
       await store.dispatch(
-        dropdownAkademi(session.user.user.data.token, token_permission)
+        dropdownAkademi(
+          session.user.user.data.token,
+          Permission?.data?.tokenPermission
+        )
       );
+
       await store.dispatch(
-        dropdownTema(session.user.user.data.token, token_permission)
+        dropdownTema(
+          session.user.user.data.token,
+          Permission?.data?.tokenPermission
+        )
       );
+
       await store.dispatch(
-        dropdownPenyelenggara(session.user.user.data.token, token_permission)
-      );
-      await store.dispatch(
-        getAllPermission(session.user.user.data.token, token_permission)
+        dropdownPenyelenggara(
+          session.user.user.data.token,
+          Permission?.data?.tokenPermission
+        )
       );
 
       return {

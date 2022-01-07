@@ -266,30 +266,33 @@ export const dropdownTema =
     }
   };
 
-export const dropdownTemabyAkademi = (id, token) => async (dispatch) => {
-  try {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-    const { data } = await axios.get(
-      process.env.END_POINT_API_PELATIHAN +
-        `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${id}`,
-      config
-    );
+export const dropdownTemabyAkademi =
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
+      const { data } = await axios.get(
+        process.env.END_POINT_API_PELATIHAN +
+          `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${id}`,
+        config
+      );
 
-    dispatch({
-      type: GET_DROPDOWN_TEMA_BY_AKADEMI,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ERROR_DROPDOWN_TEMA_BY_AKADEMI,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: GET_DROPDOWN_TEMA_BY_AKADEMI,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ERROR_DROPDOWN_TEMA_BY_AKADEMI,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const dropdownPelatihan =
   (token, tokenPermission) => async (dispatch) => {
