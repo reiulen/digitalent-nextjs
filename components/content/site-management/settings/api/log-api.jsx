@@ -419,7 +419,7 @@ const Table = ({ token }) => {
       </div>
 
       {/* Modal */}
-      <Modal
+      {/* <Modal
         show={showModal}
         onHide={() => setShowModal(false)}
       >
@@ -511,7 +511,7 @@ const Table = ({ token }) => {
             </button>
           </div>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
 
     </PageWrapper>
   );

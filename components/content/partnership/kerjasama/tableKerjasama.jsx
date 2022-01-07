@@ -577,7 +577,8 @@ const Table = ({ token }) => {
                       {allMK?.m_cooporation?.data && allMK?.m_cooporation?.data?.list_cooperations?.length === 0 ? (
                         <tr>
                           <td colSpan="8" className="text-center">
-                            <h4>Data tidak ditemukan</h4>
+                            {/* <h4>Data tidak ditemukan</h4> */}
+                            Data Kosong
                           </td>
                         </tr>
                       ) : (
