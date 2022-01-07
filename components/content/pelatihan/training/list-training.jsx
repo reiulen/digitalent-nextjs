@@ -927,9 +927,10 @@ const ListTraining = ({ token }) => {
                                   }`}
                                   key={i}
                                   value={row.status_publish}
-                                  onChange={(e) =>
-                                    handleStatusPublish(row.id, e.target.value)
-                                  }
+                                  onChange={(e) => {
+                                    handleStatusPublish(row.id, e.target.value);
+                                    setPage(1);
+                                  }}
                                   disabled={
                                     row.status_substansi === "revisi" ||
                                     row.status_pelatihan ===
@@ -984,12 +985,13 @@ const ListTraining = ({ token }) => {
                                   }
                                   key={i}
                                   value={row.status_pelatihan}
-                                  onChange={(e) =>
+                                  onChange={(e) => {
                                     handleStatusPelatihan(
                                       row.id,
                                       e.target.value
-                                    )
-                                  }
+                                    );
+                                    setPage(1);
+                                  }}
                                   disabled={
                                     (row.status_pelatihan ===
                                       "review substansi" ||
@@ -1053,6 +1055,7 @@ const ListTraining = ({ token }) => {
                                 ) && (
                                   <div className="d-flex flex-row">
                                     {!(
+                                      row.status_pelatihan === "dibatalkan" ||
                                       row.status_pelatihan === "pelatihan" ||
                                       row.status_substansi === "ditolak" ||
                                       row.status_pelatihan === "selesai"
@@ -1109,6 +1112,7 @@ const ListTraining = ({ token }) => {
                                     {!(
                                       row.status_pelatihan ===
                                         "review substansi" ||
+                                      row.status_pelatihan === "dibatalkan" ||
                                       row.status_substansi === "ditolak"
                                     ) && (
                                       <Link
@@ -1125,6 +1129,7 @@ const ListTraining = ({ token }) => {
                                       </Link>
                                     )}
                                     {!(
+                                      row.status_pelatihan === "dibatalkan" ||
                                       row.status_substansi === "ditolak" ||
                                       row.status_pelatihan ===
                                         "review substansi" ||

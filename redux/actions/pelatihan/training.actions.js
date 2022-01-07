@@ -811,7 +811,8 @@ export const getEditTrainingStep1 =
   };
 
 export const getEditTrainingStep2 =
-  (id, token, token_permission) => async (dispatch) => {
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
     try {
       dispatch({
         type: REQUEST_EDIT_DATA_TRAINING2,

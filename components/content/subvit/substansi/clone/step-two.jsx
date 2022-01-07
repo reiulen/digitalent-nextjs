@@ -296,6 +296,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                         <th>Kategori</th>
                         <th>Bobot</th>
                         <th>Status</th>
+                        <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -353,6 +354,22 @@ const StepTwo = ({ token, tokenPermission }) => {
                                       Draft
                                     </span>
                                   )}
+                                </td>
+                                <td className="align-middle">
+                                  <Link
+                                    href={`/subvit/substansi/edit-soal-substansi?id=${
+                                      question.id
+                                    }&no=${i + 1}`}
+                                  >
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Edit"
+                                    >
+                                      <i className="ri-pencil-fill p-0 text-white"></i>
+                                    </a>
+                                  </Link>
                                 </td>
                               </tr>
                             );

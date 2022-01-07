@@ -4,7 +4,16 @@ import Link from "next/link";
 
 const DashboardHeader = ({ funcFilterYear, path = "" }) => {
   const router = useRouter();
-  const [year, setYear] = useState(null);
+  const [year, setYear] = useState([
+    "Semua",
+    "2022",
+    "2021",
+    "2020",
+    "2019",
+    "2018",
+    "2017",
+    "2016",
+  ]);
 
   useEffect(() => {
     const current = +moment().utc().format("YYYY");

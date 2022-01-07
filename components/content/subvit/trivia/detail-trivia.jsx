@@ -173,12 +173,11 @@ const DetailTrivia = ({ token, tokenPermission }) => {
               {trivia && trivia.theme && "-"}{" "}
               {trivia && trivia.theme ? trivia.theme.name : ""}
             </h2>
-            {dataPermission &&
-            dataPermission.roles.includes("Super Admin") &&
-            dataPermission &&
-            dataPermission.permissions.includes(
-              "subvit.manage" && "subvit.trivia.manage"
-            ) ? (
+            {(dataPermission && dataPermission.roles.includes("Super Admin")) ||
+            (dataPermission &&
+              dataPermission.permissions.includes(
+                "subvit.manage" && "subvit.trivia.manage"
+              )) ? (
               <div className="card-toolbar">
                 <Link href={`/subvit/trivia/edit?id=${id}`}>
                   <a className="btn btn-primary-rounded-full px-7 font-weight-bold btn-block ">
@@ -263,12 +262,11 @@ const DetailTrivia = ({ token, tokenPermission }) => {
               <h2 className="card-title h2 text-dark">Bank Soal</h2>
               {/* <label htmlFor=""></label> */}
             </div>
-            {dataPermission &&
-            dataPermission.roles.includes("Super Admin") &&
-            dataPermission &&
-            dataPermission.permissions.includes(
-              "subvit.manage" && "subvit.trivia.manage"
-            ) ? (
+            {(dataPermission && dataPermission.roles.includes("Super Admin")) ||
+            (dataPermission &&
+              dataPermission.permissions.includes(
+                "subvit.manage" && "subvit.trivia.manage"
+              )) ? (
               <div className="card-toolbar">
                 <a
                   className="btn btn-primary-rounded-full px-7 font-weight-bold btn-block"
@@ -324,12 +322,12 @@ const DetailTrivia = ({ token, tokenPermission }) => {
                       <th>ID Soal</th>
                       <th>Soal</th>
                       <th>Status</th>
-                      {dataPermission &&
-                      dataPermission.roles.includes("Super Admin") &&
-                      dataPermission &&
-                      dataPermission.permissions.includes(
-                        "subvit.manage" && "subvit.trivia.manage"
-                      ) ? (
+                      {(dataPermission &&
+                        dataPermission.roles.includes("Super Admin")) ||
+                      (dataPermission &&
+                        dataPermission.permissions.includes(
+                          "subvit.manage" && "subvit.trivia.manage"
+                        )) ? (
                         <th>Aksi</th>
                       ) : (
                         ""
@@ -378,12 +376,12 @@ const DetailTrivia = ({ token, tokenPermission }) => {
                                   </span>
                                 )}
                               </td>
-                              {dataPermission &&
-                              dataPermission.roles.includes("Super Admin") &&
-                              dataPermission &&
-                              dataPermission.permissions.includes(
-                                "subvit.manage" && "subvit.trivia.manage"
-                              ) ? (
+                              {(dataPermission &&
+                                dataPermission.roles.includes("Super Admin")) ||
+                              (dataPermission &&
+                                dataPermission.permissions.includes(
+                                  "subvit.manage" && "subvit.trivia.manage"
+                                )) ? (
                                 <td className="align-middle">
                                   <div className="d-flex">
                                     <Link
