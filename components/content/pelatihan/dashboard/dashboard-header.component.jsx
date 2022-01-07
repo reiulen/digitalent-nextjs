@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
 const DashboardHeader = ({ funcFilterYear, path = "" }) => {
   const router = useRouter();
-  const year = ["Semua", "2021", "2020", "2019", "2018", "2017", "2016"];
+  const [year, setYear] = useState([
+    "Semua",
+    "2022",
+    "2021",
+    "2020",
+    "2019",
+    "2018",
+    "2017",
+    "2016",
+  ]);
+
+  useEffect(() => {
+    const current = +moment().utc().format("YYYY");
+    console.log(typeof current);
+    const arr = [];
+    for (let i = 2017; i <= current; i++) {
+      arr.push(i);
+    }
+    arr.push("Semua");
+    arr.reverse();
+    setYear(arr);
+  }, []);
+
   return (
     <div
       className={`d-flex justify-content-${
@@ -31,7 +53,7 @@ const DashboardHeader = ({ funcFilterYear, path = "" }) => {
           >
             {year &&
               year.map((row, i) => (
-                <option key={i} value={row.includes("Semua") ? "" : row}>
+                <option key={i} value={row == "Semua" ? "" : row}>
                   {row}
                 </option>
               ))}

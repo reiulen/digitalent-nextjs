@@ -305,8 +305,8 @@ const Table = ({ token }) => {
                   ) : allMitra?.mitraAll?.data &&
                     allMitra?.mitraAll?.data?.list_mitras?.length === 0 ? (
                     <tr>
-                      <td colSpan="6" className="text-center">
-                        <h4>Data Kosong</h4>
+                      <td colSpan={6} className='align-middle text-center'>
+                          Data Kosong
                       </td>
                     </tr>
                   ) : (

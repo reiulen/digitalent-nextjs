@@ -2,13 +2,13 @@ import React, { useState } from "react";
 
 import Image from "next/image";
 
-const ObjectiveComponent = ({ props_answer }) => {
-  const [answer, setSoalList] = useState([
-    { key: "A", option: "", image: "", imageName: "Choose File" },
-    { key: "B", option: "", image: "", imageName: "Choose File" },
-    { key: "C", option: "", image: "", imageName: "Choose File" },
-    { key: "D", option: "", image: "", imageName: "Choose File" },
-  ]);
+const ObjectiveComponent = ({ answer, props_answer }) => {
+  // const [answer, setSoalList] = useState([
+  //   { key: "A", option: "", image: "", imageName: "Choose File" },
+  //   { key: "B", option: "", image: "", imageName: "Choose File" },
+  //   { key: "C", option: "", image: "", imageName: "Choose File" },
+  //   { key: "D", option: "", image: "", imageName: "Choose File" },
+  // ]);
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -26,7 +26,7 @@ const ObjectiveComponent = ({ props_answer }) => {
         reader.readAsDataURL(e.target.files[0]);
       }
     }
-    setSoalList(list);
+    // setSoalList(list);
     props_answer(list);
   };
 
@@ -37,7 +37,7 @@ const ObjectiveComponent = ({ props_answer }) => {
       let key = String.fromCharCode(65 + i);
       list[i]["key"] = key;
     });
-    setSoalList(list);
+    // setSoalList(list);
     props_answer(list);
   };
 
@@ -45,10 +45,10 @@ const ObjectiveComponent = ({ props_answer }) => {
     const lastobj = answer[answer.length - 1];
     const keyindex = lastobj.key.charCodeAt(0);
     const newKey = String.fromCharCode(keyindex + 1);
-    setSoalList([
-      ...answer,
-      { key: newKey, question: "", image: "", is_right: false },
-    ]);
+    // setSoalList([
+    //   ...answer,
+    //   { key: newKey, question: "", image: "", is_right: false },
+    // ]);
     props_answer([
       ...answer,
       { key: newKey, question: "", image: "", is_right: false },

@@ -301,7 +301,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
 
             <div className="card-body pt-0">
               <div className="title row">
-                {question_image != "" ? (
+                {question_image_preview != "" && (
                   <div className="col-md-3">
                     <Image
                       src={question_image_preview}
@@ -312,8 +312,6 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
                       objectFit="cover"
                     />
                   </div>
-                ) : (
-                  ""
                 )}
                 <div className="col-md-7 pt-2">
                   <input
