@@ -14,17 +14,27 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import LoadingTable from "../../../../components/LoadingTable";
 import moment from "moment";
+import { helperUserStatusColor } from "../../../../utils/middleware/helper";
 
 const Dashboard = ({ session, success }) => {
   const router = useRouter();
   const { error: errorDashboard, dataDashboard } = useSelector(
     (state) => state.dashboardPeserta
   );
-  // useEffect(() => {
-  //   if (!success) {
-  //     router.push("/peserta/wizzard");
-  //   }
-  // }, [success]);
+
+  const [labelBerjalan, setLabelBerjalan] = useState("primary");
+  const [labelAkhir, setLabelAkhir] = useState("primary");
+
+  useEffect(() => {
+    let status = dataDashboard?.pelatihan?.pelatihan_berjalan?.status;
+    let statusAkhir = dataDashboard?.pelatihan?.pelatihan_selesi?.status;
+    if (status) {
+      helperUserStatusColor(status, setLabelBerjalan);
+    }
+    if (statusAkhir) {
+      helperUserStatusColor(statusAkhir, setLabelAkhir);
+    }
+  }, []);
 
   const [loadingBeasiswa, setLoadingBeasiswa] = useState(true);
 
@@ -257,8 +267,8 @@ const Dashboard = ({ session, success }) => {
             Object.keys(dataDashboard?.pelatihan.pelatihan_berjalan).length >
               0 && (
               <Col md={6} className="mb-4 px-2">
-                <Card className="rounded-xl h-100">
-                  <Card.Body>
+                <Card className="rounded-xl h-100 ">
+                  <Card.Body className="p-md-9 p-6">
                     <Card.Title>
                       <p className={style.card_title}>Pelatihan Terkini</p>
                     </Card.Title>
@@ -302,7 +312,7 @@ const Dashboard = ({ session, success }) => {
                           }
                         </Badge>
                       </Card.ImgOverlay>
-                      <Card.Body className="position-relative">
+                      <Card.Body className="position-relative p-4 p-md-8">
                         <div className={style.bungkus_mitra_pelatihan}>
                           <Image
                             src={
@@ -377,38 +387,44 @@ const Dashboard = ({ session, success }) => {
                               className={`${style.text_date_register} pl-2 text-capitalize`}
                             >
                               Status :{" "}
-                              {dataDashboard?.pelatihan?.pelatihan_berjalan?.lpj
-                                ? "Isi LPJ"
-                                : dataDashboard?.pelatihan?.pelatihan_berjalan
-                                    ?.survei
-                                ? "Isi Survey"
-                                : dataDashboard?.pelatihan?.pelatihan_berjalan
-                                    ?.status == "pelatihan" &&
-                                  dataDashboard?.pelatihan?.pelatihan_berjalan
-                                    .midtest &&
-                                  !dataDashboard?.pelatihan?.pelatihan_berjalan
-                                    .trivia
-                                ? "Kerjakan Mid Test"
-                                : dataDashboard?.pelatihan?.pelatihan_berjalan
-                                    ?.status == "pelatihan" &&
-                                  dataDashboard?.pelatihan?.pelatihan_berjalan
-                                    .trivia
-                                ? "kerjakan trivia"
-                                : dataDashboard?.pelatihan?.pelatihan_berjalan
-                                    ?.status == "survey belum tersedia" ||
-                                  dataDashboard?.pelatihan?.pelatihan_berjalan.status.includes(
-                                    "survey"
-                                  )
-                                ? "Isi Survey"
-                                : dataDashboard?.pelatihan?.pelatihan_berjalan?.status.includes(
-                                    "LPJ"
-                                  ) ||
-                                  dataDashboard?.pelatihan?.pelatihan_berjalan.status.includes(
-                                    "lpj"
-                                  )
-                                ? "Isi LPJ"
-                                : dataDashboard?.pelatihan?.pelatihan_berjalan
-                                    ?.status}
+                              <span
+                                style={{ borderRadius: "50px" }}
+                                className={`label label-inline label-light-${labelBerjalan} font-weight-bolder p-7 p-md-4 text-center text-capitalize mr-5`}
+                              >
+                                {dataDashboard?.pelatihan?.pelatihan_berjalan
+                                  ?.lpj
+                                  ? "Isi LPJ"
+                                  : dataDashboard?.pelatihan?.pelatihan_berjalan
+                                      ?.survei
+                                  ? "Isi Survey"
+                                  : dataDashboard?.pelatihan?.pelatihan_berjalan
+                                      ?.status == "pelatihan" &&
+                                    dataDashboard?.pelatihan?.pelatihan_berjalan
+                                      .midtest &&
+                                    !dataDashboard?.pelatihan
+                                      ?.pelatihan_berjalan.trivia
+                                  ? "Kerjakan Mid Test"
+                                  : dataDashboard?.pelatihan?.pelatihan_berjalan
+                                      ?.status == "pelatihan" &&
+                                    dataDashboard?.pelatihan?.pelatihan_berjalan
+                                      .trivia
+                                  ? "kerjakan trivia"
+                                  : dataDashboard?.pelatihan?.pelatihan_berjalan
+                                      ?.status == "survey belum tersedia" ||
+                                    dataDashboard?.pelatihan?.pelatihan_berjalan.status.includes(
+                                      "survey"
+                                    )
+                                  ? "Isi Survey"
+                                  : dataDashboard?.pelatihan?.pelatihan_berjalan?.status.includes(
+                                      "LPJ"
+                                    ) ||
+                                    dataDashboard?.pelatihan?.pelatihan_berjalan.status.includes(
+                                      "lpj"
+                                    )
+                                  ? "Isi LPJ"
+                                  : dataDashboard?.pelatihan?.pelatihan_berjalan
+                                      ?.status}
+                              </span>
                             </span>
                           </div>
                         </div>
@@ -460,7 +476,7 @@ const Dashboard = ({ session, success }) => {
                   }}
                   style={{ cursor: "pointer" }}
                 >
-                  <Card.Body>
+                  <Card.Body className="p-md-9 p-6">
                     <Card.Title>
                       <p className={style.card_title}>Pelatihan Sebelumnya</p>
                     </Card.Title>
@@ -568,38 +584,43 @@ const Dashboard = ({ session, success }) => {
                               className={`${style.text_date_register} pl-2 text-capitalize`}
                             >
                               Status :{" "}
-                              {dataDashboard?.pelatihan?.pelatihan_selesi?.lpj
-                                ? "Isi LPJ"
-                                : dataDashboard?.pelatihan?.pelatihan_selesi
-                                    ?.survei
-                                ? "Isi Survey"
-                                : dataDashboard?.pelatihan?.pelatihan_selesi
-                                    ?.status == "pelatihan" &&
-                                  dataDashboard?.pelatihan?.pelatihan_selesi
-                                    .midtest &&
-                                  !dataDashboard?.pelatihan?.pelatihan_selesi
-                                    .trivia
-                                ? "Kerjakan Mid Test"
-                                : dataDashboard?.pelatihan?.pelatihan_selesi
-                                    ?.status == "pelatihan" &&
-                                  dataDashboard?.pelatihan?.pelatihan_selesi
-                                    .trivia
-                                ? "kerjakan trivia"
-                                : dataDashboard?.pelatihan?.pelatihan_selesi
-                                    ?.status == "survey belum tersedia" ||
-                                  dataDashboard?.pelatihan?.pelatihan_selesi.status.includes(
-                                    "survey"
-                                  )
-                                ? "Isi Survey"
-                                : dataDashboard?.pelatihan?.pelatihan_selesi?.status.includes(
-                                    "LPJ"
-                                  ) ||
-                                  dataDashboard?.pelatihan?.pelatihan_selesi.status.includes(
-                                    "lpj"
-                                  )
-                                ? "Isi LPJ"
-                                : dataDashboard?.pelatihan?.pelatihan_selesi
-                                    ?.status}
+                              <span
+                                style={{ borderRadius: "50px" }}
+                                className={`label label-inline label-light-${labelAkhir} font-weight-bolder p-7 p-md-4 text-center text-capitalize mr-5`}
+                              >
+                                {dataDashboard?.pelatihan?.pelatihan_selesi?.lpj
+                                  ? "Isi LPJ"
+                                  : dataDashboard?.pelatihan?.pelatihan_selesi
+                                      ?.survei
+                                  ? "Isi Survey"
+                                  : dataDashboard?.pelatihan?.pelatihan_selesi
+                                      ?.status == "pelatihan" &&
+                                    dataDashboard?.pelatihan?.pelatihan_selesi
+                                      .midtest &&
+                                    !dataDashboard?.pelatihan?.pelatihan_selesi
+                                      .trivia
+                                  ? "Kerjakan Mid Test"
+                                  : dataDashboard?.pelatihan?.pelatihan_selesi
+                                      ?.status == "pelatihan" &&
+                                    dataDashboard?.pelatihan?.pelatihan_selesi
+                                      .trivia
+                                  ? "kerjakan trivia"
+                                  : dataDashboard?.pelatihan?.pelatihan_selesi
+                                      ?.status == "survey belum tersedia" ||
+                                    dataDashboard?.pelatihan?.pelatihan_selesi.status.includes(
+                                      "survey"
+                                    )
+                                  ? "Isi Survey"
+                                  : dataDashboard?.pelatihan?.pelatihan_selesi?.status.includes(
+                                      "LPJ"
+                                    ) ||
+                                    dataDashboard?.pelatihan?.pelatihan_selesi.status.includes(
+                                      "lpj"
+                                    )
+                                  ? "Isi LPJ"
+                                  : dataDashboard?.pelatihan?.pelatihan_selesi
+                                      ?.status}
+                              </span>
                             </span>
                           </div>
                         </div>
