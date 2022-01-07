@@ -478,13 +478,8 @@ const UbahRole = ({ token, name }) => {
                               const data = {
                                 button_type: 0,
                                 tahun: "",
-                                dari: moment(datePelaksanaanStart).format(
-                                  "YYYY-MM-DD"
-                                ),
-                                sampai:
-                                  moment(datePelaksanaanEnd).format(
-                                    "YYYY-MM-DD"
-                                  ),
+                                dari: datePelaksanaanStart ? moment(datePelaksanaanStart).format("YYYY-MM-DD") : "",
+                                sampai: datePelaksanaanEnd ? moment(datePelaksanaanEnd).format("YYYY-MM-DD") : "",
                                 akademi: akademi ? akademi.label : "",
                                 tema: tema ? tema.label : "",
                                 penyelenggara: penyelenggara

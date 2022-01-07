@@ -248,9 +248,9 @@ const ListTraining = ({ token }) => {
     if (statusSuccess) {
       dispatch(
         getAllTraining(
-          null,
-          null,
-          null,
+          page,
+          search,
+          limit,
           null,
           null,
           null,
@@ -264,6 +264,7 @@ const ListTraining = ({ token }) => {
           token_permission
         )
       );
+
       dispatch({
         type: CLEAR_STATUS,
       });

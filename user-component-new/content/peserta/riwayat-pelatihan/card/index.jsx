@@ -17,7 +17,7 @@ export default function CardTemplateOriginal({ data, session }) {
   const dateFrom = moment(data.pelatihan_mulai).utc().format("LL");
   const dateTo = moment(data.pelatihan_selesai).utc().format("LL");
   const [label, setLabel] = useState();
-
+  const [name, setName] = useState(data?.name);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
@@ -25,6 +25,18 @@ export default function CardTemplateOriginal({ data, session }) {
   useEffect(() => {
     helperUserStatusColor(data.status, setLabel);
   }, [data.status]);
+
+  useEffect(() => {
+    if (name.includes("/") || name.includes(" ")) {
+      name.replaceAll("/", "-");
+      setName((prev) => {
+        let str = "";
+        str = prev.replaceAll("/", "-");
+        str = str.replaceAll(" ", "-");
+        return str;
+      });
+    }
+  }, [name]);
 
   return (
     <Fragment>
@@ -67,20 +79,14 @@ export default function CardTemplateOriginal({ data, session }) {
                 return router.push(`/peserta/administrasi?id=${data.id}`);
               if (data.status.includes("seleksi akhir")) {
                 return router.push(
-                  `/peserta/riwayat-pelatihan/${data.name
-                    .split(" ")
-                    .join("-")
-                    .toLowerCase()}?no=${data.id}`
+                  `/peserta/riwayat-pelatihan/${name}?no=${data.id}`
                 );
               }
               if (data.status.includes("tes substansi")) {
                 return router.push(`/peserta/test-substansi?id=${data.id}`);
               } else {
                 return router.push(
-                  `/peserta/riwayat-pelatihan/${data.name
-                    .split(" ")
-                    .join("-")
-                    .toLowerCase()}?no=${data.id}`
+                  `/peserta/riwayat-pelatihan/${name}?no=${data.id}`
                 );
               }
             }}

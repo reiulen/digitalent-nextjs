@@ -478,13 +478,14 @@ const Table = ({ token }) => {
                         valueSearch ?
                             <tr>
                               <td colSpan="8" className="text-center">
-                                <h4>Data tidak ditemukan</h4>
+                                {/* <h4>Data tidak ditemukan</h4> */}
+                                Data Kosong
                               </td>
                             </tr>
                           :
                             <tr>
                               <td colSpan="8" className="text-center">
-                                <h4>Data kosong</h4>
+                                Data Kosong
                               </td>
                             </tr>
                       ) : (

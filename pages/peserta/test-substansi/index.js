@@ -117,7 +117,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           } else {
             //jika gak ada gw cek di riwayat pelatihan ada gak datanya
             const { data } = await store.dispatch(
-              getAllRiwayatPelatihanPeserta(session?.user.user.data.user.token)
+              getAllRiwayatPelatihanPeserta(
+                session?.user.user.data.user.token,
+                100
+              )
             );
             success = false;
             const list = data.list.filter((item) => {

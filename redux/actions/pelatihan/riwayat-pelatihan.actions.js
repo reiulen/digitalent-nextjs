@@ -17,7 +17,8 @@ import {
 import axios from "axios";
 
 export const getAllRiwayatPelatihanPeserta =
-  token => async (dispatch, getState) => {
+  (token, limit = 5) =>
+  async (dispatch, getState) => {
     try {
       dispatch({ type: RIWAYAT_PELATIHAN_REQUEST });
       let link =
@@ -27,7 +28,8 @@ export const getAllRiwayatPelatihanPeserta =
         getState().getAllRiwayatPelatihanPeserta.peserta || "all";
       let keywordState = getState().getAllRiwayatPelatihanPeserta.keyword || "";
       let pageState = getState().getAllRiwayatPelatihanPeserta.page || 1;
-      let limitState = getState().getAllRiwayatPelatihanPeserta.limit || 5;
+      let limitState =
+        limit || getState().getAllRiwayatPelatihanPeserta.limit || 5;
       let sedang_berjalan =
         getState().getAllRiwayatPelatihanPeserta.sedang_berjalan || "0";
       let selesai = getState().getAllRiwayatPelatihanPeserta.selesai || "0";
@@ -61,42 +63,42 @@ export const getAllRiwayatPelatihanPeserta =
     }
   };
 
-export const setValuePeserta = text => {
+export const setValuePeserta = (text) => {
   return {
     type: SET_PESERTA_VALUE,
     text,
   };
 };
 
-export const searchKeyword = text => {
+export const searchKeyword = (text) => {
   return {
     type: SET_KEYWORD_VALUE,
     text,
   };
 };
 
-export const setValuePage = text => {
+export const setValuePage = (text) => {
   return {
     type: SET_PAGE_VALUE,
     text,
   };
 };
 
-export const setValueLimit = text => {
+export const setValueLimit = (text) => {
   return {
     type: SET_LIMIT_VALUE,
     text,
   };
 };
 
-export const setPelatihanBerjalanValue = text => {
+export const setPelatihanBerjalanValue = (text) => {
   return {
     type: SET_PELATIHAN_BERJALAN_VALUE,
     text,
   };
 };
 
-export const setPelatihanSelesaiValue = text => {
+export const setPelatihanSelesaiValue = (text) => {
   return {
     type: SET_PELATIHAN_SELESAI_VALUE,
     text,
