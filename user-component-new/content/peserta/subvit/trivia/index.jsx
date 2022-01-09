@@ -78,12 +78,25 @@ const SubtansiUser = ({ token }) => {
   const [modalResponsive, setModalResponsive] = useState(false);
   const [count, setCount] = useState(random_trivia && random_trivia.time_left);
 
-  let tt = [];
+  // let tt = [];
 
-  random_trivia?.list_questions.map((it) => {
-    tt.push(it.duration / 1000);
-  });
+  // random_trivia?.list_questions.map((it) => {
+  //   tt.push(it.duration / 1000);
+  // });
 
+  const [times, setTimes] = useState(null);
+
+  useEffect(() => {
+    const time =
+      random_trivia?.list_questions[parseInt(router.query.id) - 1].duration /
+      1000;
+
+    if (time <= 0) {
+      setTimes(3000);
+    } else {
+      setTimes(time);
+    }
+  }, [random_trivia]);
   // MASIH DIPAKE
   // $(window).on("popstate", function () {
   //   router.push("/peserta/done-trivia");
@@ -94,12 +107,6 @@ const SubtansiUser = ({ token }) => {
   //   };
   //   dispatch(postResultTrivia(setData, token));
   // });
-
-  const [times, setTimes] = useState(
-    tt[parseInt(router.query.id) - 1] <= 0
-      ? 3000
-      : tt[parseInt(router.query.id) - 1]
-  );
 
   const [modalDone, setModalDone] = useState(false);
   const [open, setOpen] = useState(false);
@@ -304,7 +311,7 @@ const SubtansiUser = ({ token }) => {
 
   let multi = [];
 
-  const handleAnswerCheckbox = (e) => {
+  const handleAnswerCheckbox = (e, index) => {
     const list =
       sessionStorage.getItem(router.query.id) !== null
         ? [...JSON.parse(sessionStorage.getItem(router.query.id))]
@@ -316,11 +323,17 @@ const SubtansiUser = ({ token }) => {
       list.push(e.key);
       sessionStorage.setItem(router.query.id, JSON.stringify(list));
     }
+    if (
+      sessionStorage.getItem(router.query.id + index) !== null &&
+      sessionStorage.getItem(router.query.id + index) === e.key
+    ) {
+      sessionStorage.removeItem(router.query.id + index);
+    } else {
+      sessionStorage.setItem(router.query.id + index, e.key);
+    }
   };
 
   const handlePageNext = () => {
-    // setTimes(tt[router.query.id]);
-    console.log(tt[router.query.id]);
     const page = parseInt(router.query.id) + 1;
     if (parseInt(router.query.id) === data?.total_questions) {
       // const setData = {
@@ -387,9 +400,10 @@ const SubtansiUser = ({ token }) => {
       }, 1000);
       return () => clearInterval(secondsLeft);
     } else {
-      localStorage.clear();
-      setOpen(true);
-      handleNext();
+      // localStorage.clear();
+      // setOpen(true);
+      // handleNext();
+      window.location.reload();
       console.log("useEffect kelima", times);
     }
   }, [times, data, router]);
@@ -716,7 +730,9 @@ const SubtansiUser = ({ token }) => {
                               <input
                                 className="quiz_checkbox"
                                 type="checkbox"
-                                onChange={() => handleAnswerCheckbox(item)}
+                                onChange={() =>
+                                  handleAnswerCheckbox(item, index)
+                                }
                               />
                               <div className="single_quiz_card">
                                 <div className="quiz_card_content">
@@ -735,7 +751,17 @@ const SubtansiUser = ({ token }) => {
                           <input
                             className="quiz_checkbox"
                             type="checkbox"
-                            onChange={() => handleAnswerCheckbox(item)}
+                            checked={
+                              sessionStorage.getItem(
+                                router.query.id + index
+                              ) !== null &&
+                              sessionStorage.getItem(
+                                router.query.id + index
+                              ) === item.key
+                                ? true
+                                : false
+                            }
+                            onChange={() => handleAnswerCheckbox(item, index)}
                           />
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
