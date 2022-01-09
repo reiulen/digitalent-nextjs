@@ -84,6 +84,7 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [image_file, setImageFile] = useState(null);
   const [typeSave, setTypeSave] = useState("lanjut");
   const [limit, setLimit] = useState(null);
+  const [successType, setSuccessType] = useState(null);
 
   useEffect(() => {
     dispatch(
@@ -93,6 +94,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     //   dispatch(clearErrors());
     // }
     if (successFile) {
+      localStorage.setItem("successFile", question_file.name);
       getAllSurveyQuestionDetail(id, 1, null, "", token, tokenPermission);
     }
 
@@ -134,6 +136,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     }
 
     if (valid) {
+      localStorage.removeItem("successFile");
       localStorage.removeItem("step-1");
       localStorage.removeItem("method");
       dispatch({
@@ -153,21 +156,23 @@ const StepTwo = ({ token, tokenPermission }) => {
     e.preventDefault();
     let valid = true;
 
-    if (!successImages) {
-      valid = false;
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data gambar dengan benar !",
-      });
-    }
-    if (!successFile) {
-      valid = false;
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data soal dengan benar !",
-      });
+    if (localStorage.getItem("successFile") === null) {
+      if (!successImages) {
+        valid = false;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data gambar dengan benar !",
+        });
+      }
+      if (!successFile) {
+        valid = false;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data soal dengan benar !",
+        });
+      }
     }
 
     if (valid) {
@@ -196,6 +201,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(importFileSurveyQuestionDetail(data, token, tokenPermission));
+        setSuccessType("file");
       }
     });
   };
@@ -206,6 +212,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     data.append("image_file", image_file, image_file.name);
 
     dispatch(importImagesSurveyQuestionDetail(data, token, tokenPermission));
+    setSuccessType("images");
   };
 
   const handlePagination = (pageNumber) => {
@@ -377,7 +384,10 @@ const StepTwo = ({ token, tokenPermission }) => {
                       onChange={(e) => setQuestionFile(e.target.files[0])}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      {question_file ? question_file.name : "Choose File"}
+                      {question_file ||
+                      localStorage.getItem("successFile") !== null
+                        ? localStorage.getItem("successFile")
+                        : "Choose file"}
                     </label>
                   </div>
                   <span className="text-muted">
@@ -469,30 +479,30 @@ const StepTwo = ({ token, tokenPermission }) => {
                 </div>
               </div>
               <div className="table-page" style={{ marginTop: "20px" }}>
-                <div className="mb-5">
-                  {!successFile || successImages ? (
-                    <h2 className="text-success">Sukses Import Gambar</h2>
-                  ) : (
+                {console.log(successType)}
+                {successFile && successType === "file" && (
+                  <div className="mb-5">
+                    {console.log("masuk disini")}
                     <h2 className="text-success">Sukses Import Soal</h2>
-                  )}
-
-                  <span className="text-muted">
-                    {!successFile || successImages
-                      ? survey_question_images?.success +
-                        survey_question_images?.failed
-                      : survey_question_file?.success +
-                        survey_question_file?.failed}{" "}
-                    Total Import |{" "}
-                    {!successFile || successImages
-                      ? survey_question_images?.success
-                      : survey_question_file?.success}{" "}
-                    Sukses di Import |{" "}
-                    {!successFile || successImages
-                      ? survey_question_images?.failed
-                      : survey_question_file?.failed}{" "}
-                    Gagal di import
-                  </span>
-                </div>
+                    <span className="text-muted">
+                      {survey_question_file.success +
+                        survey_question_file.failed}{" "}
+                      Total Import | {survey_question_file.success} Sukses di
+                      Import | {survey_question_file.failed} Gagal di import
+                    </span>
+                  </div>
+                )}
+                {successImages && successType === "images" && (
+                  <div className="mb-5">
+                    <h2 className="text-success">Sukses Import Gambar</h2>
+                    <span className="text-muted">
+                      {survey_question_images.success +
+                        survey_question_images.failed}{" "}
+                      Total Import | {survey_question_images.success} Sukses di
+                      Import | {survey_question_images.failed} Gagal di import
+                    </span>
+                  </div>
+                )}
 
                 <div className="table-responsive">
                   <LoadingTable loading={loading} />
@@ -661,7 +671,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                           `/subvit/survey/clone/step-3?id=${router.query.id}`
                         );
                       } else {
-                        router.push("/subvit/survey/tambah");
+                        router.back();
                       }
                     }}
                   >

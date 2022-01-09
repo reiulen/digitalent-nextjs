@@ -295,7 +295,6 @@ const StepTwo = ({ token, tokenPermission }) => {
                         <th>No</th>
                         <th>ID Soal</th>
                         <th>Soal</th>
-
                         <th>Status</th>
                       </tr>
                     </thead>
