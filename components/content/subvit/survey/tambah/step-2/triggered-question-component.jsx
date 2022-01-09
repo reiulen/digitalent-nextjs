@@ -178,8 +178,13 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
     const list = [...answer];
 
     if (index == null && parent == null) {
-      const lastobj = list[list.length - 1];
-      const keyIndex = lastobj.key.charCodeAt(0);
+      let keyIndex;
+      if (list.length > 0) {
+        const lastobj = list[list.length - 1];
+        keyIndex = lastobj.key.charCodeAt(0);
+      } else {
+        keyIndex = 64;
+      }
       const newKey = String.fromCharCode(keyIndex + 1);
       const newObj = {
         key: newKey,
@@ -193,9 +198,14 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
     }
 
     if ((index != null, parent != null)) {
+      let keyIndex;
       const listArrAnswer = list[index].sub[parent].answer;
-      const lastobj = listArrAnswer[listArrAnswer.length - 1];
-      const keyIndex = lastobj.key.charCodeAt(0);
+      if (listArrAnswer.length > 0) {
+        const lastobj = listArrAnswer[listArrAnswer.length - 1];
+        keyIndex = lastobj.key.charCodeAt(0);
+      } else {
+        keyIndex = 64;
+      }
       const newKey = String.fromCharCode(keyIndex + 1);
       const newObj = { key: newKey, option: "", image: "", type: type };
       listArrAnswer.push(newObj);

@@ -201,7 +201,7 @@ const StepOne = ({ token, tokenPermission }) => {
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
-          <StepInputPublish step="1"></StepInputPublish>
+          <StepInputPublish step="1" type="Trivia" />
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">Publish Soal</h2>
           </div>

@@ -1,6 +1,6 @@
 import React from "react";
 
-const StepInputPublish = ({ step }) => {
+const StepInputPublish = ({ step, type = "" }) => {
   let stepBg1 = "bg-neutral";
   let stepBg2 = "bg-neutral";
   let stepNumber1 = "text-white";
@@ -40,7 +40,7 @@ const StepInputPublish = ({ step }) => {
                   </h1>
                 </div>
                 <div className="my-5">
-                  <h5 className={`${textHeader1}`}>Buat Soal</h5>
+                  <h5 className={`${textHeader1}`}>Buat Soal {type}</h5>
                   <p className={`${textDesc1}`}>Masukan Informasi Soal</p>
                 </div>
               </div>
@@ -57,7 +57,7 @@ const StepInputPublish = ({ step }) => {
                   </h1>
                 </div>
                 <div className="my-5">
-                  <h5 className={`${textHeader2}`}>Publish</h5>
+                  <h5 className={`${textHeader2}`}>Publish {type}</h5>
                   <p className={`${textDesc2}`}>Tentukan Tanggal Publishnya</p>
                 </div>
               </div>

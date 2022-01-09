@@ -85,6 +85,7 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [limit, setLimit] = useState(null);
   const [fileSoalName, setFileSoalName] = useState("");
   const [imageFileName, setImageFileName] = useState("");
+  const [successType, setSuccessType] = useState(null);
 
   useEffect(() => {
     dispatch(
@@ -94,6 +95,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     //     dispatch(clearErrors())
     // }
     if (successFile) {
+      localStorage.setItem("successFile", question_file.name);
       dispatch(
         getAllTriviaQuestionDetail(id, 1, "", null, token, tokenPermission)
       );
@@ -123,26 +125,29 @@ const StepTwo = ({ token, tokenPermission }) => {
   const saveDraft = () => {
     let valid = true;
 
-    if (!successImages) {
-      valid = false;
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data gambar dengan benar !",
-      });
-    }
-    if (!successFile) {
-      valid = false;
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data soal dengan benar !",
-      });
+    if (localStorage.getItem("successFile") === null) {
+      if (!successImages) {
+        valid = false;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data gambar dengan benar !",
+        });
+      }
+      if (!successFile) {
+        valid = false;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data soal dengan benar !",
+        });
+      }
     }
 
     if (valid) {
       localStorage.removeItem("method");
       localStorage.removeItem("step1");
+      localStorage.removeItem("successFile");
       dispatch(
         {
           type: IMPORT_FILE_TRIVIA_QUESTION_DETAIL_RESET,
@@ -166,21 +171,23 @@ const StepTwo = ({ token, tokenPermission }) => {
     e.preventDefault();
     let valid = true;
 
-    if (!successImages) {
-      valid = false;
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data gambar dengan benar !",
-      });
-    }
-    if (!successFile) {
-      valid = false;
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data soal dengan benar !",
-      });
+    if (localStorage.getItem("successFile") === null) {
+      if (!successImages) {
+        valid = false;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data gambar dengan benar !",
+        });
+      }
+      if (!successFile) {
+        valid = false;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data soal dengan benar !",
+        });
+      }
     }
 
     if (valid) {
@@ -208,7 +215,8 @@ const StepTwo = ({ token, tokenPermission }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(importFileTriviaQuestionDetail(data, token));
+        dispatch(importFileTriviaQuestionDetail(data, token, tokenPermission));
+        setSuccessType("file");
       }
     });
   };
@@ -219,6 +227,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     data.append("image_file", image_file, image_file.name);
 
     dispatch(importImagesTriviaQuestionDetail(data, token, tokenPermission));
+    setSuccessType("images");
   };
 
   const handlePagination = (pageNumber) => {
@@ -380,7 +389,10 @@ const StepTwo = ({ token, tokenPermission }) => {
                       onChange={(event) => handleQuestionFile(event)}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      {question_file ? fileSoalName : "Choose file"}
+                      {question_file ||
+                      localStorage.getItem("successFile") !== null
+                        ? localStorage.getItem("successFile")
+                        : "Choose file"}
                     </label>
                   </div>
                   <span className="text-muted">
@@ -473,30 +485,28 @@ const StepTwo = ({ token, tokenPermission }) => {
               </div>
 
               <div className="table-page" style={{ marginTop: "20px" }}>
-                <div className="mb-5">
-                  {!successFile || successImages ? (
-                    <h2 className="text-success">Sukses Import Gambar</h2>
-                  ) : (
+                {successFile && successType === "file" && (
+                  <div className="mb-5">
                     <h2 className="text-success">Sukses Import Soal</h2>
-                  )}
-
-                  <span className="text-muted">
-                    {!successFile || successImages
-                      ? trivia_question_images?.success +
-                        trivia_question_images?.failed
-                      : trivia_question_file?.success +
-                        trivia_question_file?.failed}{" "}
-                    Total Import |{" "}
-                    {!successFile || successImages
-                      ? trivia_question_images?.success
-                      : trivia_question_file?.success}{" "}
-                    Sukses di Import |{" "}
-                    {!successFile || successImages
-                      ? trivia_question_images?.failed
-                      : trivia_question_file?.failed}{" "}
-                    Gagal di import
-                  </span>
-                </div>
+                    <span className="text-muted">
+                      {trivia_question_file.success +
+                        trivia_question_file.failed}{" "}
+                      Total Import | {trivia_question_file.success} Sukses di
+                      Import | {trivia_question_file.failed} Gagal di import
+                    </span>
+                  </div>
+                )}
+                {successImages && successType === "images" && (
+                  <div className="mb-5">
+                    <h2 className="text-success">Sukses Import Gambar</h2>
+                    <span className="text-muted">
+                      {trivia_question_images.success +
+                        trivia_question_images.failed}{" "}
+                      Total Import | {trivia_question_images.success} Sukses di
+                      Import | {trivia_question_images.failed} Gagal di import
+                    </span>
+                  </div>
+                )}
                 <div className="table-responsive">
                   <LoadingTable loading={loading} />
 
@@ -671,7 +681,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                           `/subvit/trivia/clone/step-3?id=${router.query.id}`
                         );
                       } else {
-                        router.push("/subvit/trivia/tambah");
+                        router.back();
                       }
                     }}
                   >

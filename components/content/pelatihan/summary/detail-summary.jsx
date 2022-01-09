@@ -213,8 +213,23 @@ const DetailSummary = ({ token }) => {
             value={statusPendaftar[0].count}
             titleValue=""
             title="Pendaftar"
-            publishedVal=""
+            publishedVal="pendaftar"
             routePublish={() => {}}
+            search={(e) => {
+              dispatch(
+                getPendaftaranPeserta(
+                  token,
+                  token_permission,
+                  id,
+                  null,
+                  5,
+                  1,
+                  "",
+                  statusPeserta === null ? "" : statusPeserta.value,
+                  statusTesSubstansi === null ? "" : statusTesSubstansi.value
+                )
+              );
+            }}
           />
           <CardPage
             background="cardSetuju"
@@ -229,14 +244,14 @@ const DetailSummary = ({ token }) => {
               dispatch(
                 getPendaftaranPeserta(
                   token,
+                  token_permission,
                   id,
                   null,
                   5,
                   1,
                   "verified",
                   statusPeserta === null ? "" : statusPeserta.value,
-                  statusTesSubstansi === null ? "" : statusTesSubstansi.value,
-                  token_permission
+                  statusTesSubstansi === null ? "" : statusTesSubstansi.value
                 )
               );
             }}
@@ -253,14 +268,14 @@ const DetailSummary = ({ token }) => {
               dispatch(
                 getPendaftaranPeserta(
                   token,
+                  token_permission,
                   id,
                   null,
                   5,
                   1,
                   null,
                   statusPeserta === null ? "" : statusPeserta.value,
-                  "lulus",
-                  token_permission
+                  "lulus"
                 )
               );
             }}
@@ -278,14 +293,14 @@ const DetailSummary = ({ token }) => {
               dispatch(
                 getPendaftaranPeserta(
                   token,
+                  token_permission,
                   id,
                   null,
                   5,
                   1,
                   "verified",
                   statusPeserta === null ? "" : statusPeserta.value,
-                  "lulus",
-                  token_permission
+                  "lulus"
                 )
               )
             }
@@ -302,14 +317,14 @@ const DetailSummary = ({ token }) => {
               dispatch(
                 getPendaftaranPeserta(
                   token,
+                  token_permission,
                   id,
                   null,
                   5,
                   1,
                   null,
                   "diterima",
-                  null,
-                  token_permission
+                  null
                 )
               )
             }

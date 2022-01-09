@@ -243,7 +243,7 @@ const StepTwo = ({ token, tokenPermission }) => {
         break;
       case "triggered_question":
         answer_triggered.forEach((row, j) => {
-          if (row.option == "" && row.image == "") {
+          if (row.option == "" && row.image == "" && row.type !== "empty") {
             valid = false;
             Swal.fire({
               icon: "error",
@@ -655,7 +655,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                           `/subvit/survey/clone/step-3?id=${router.query.id}`
                         );
                       } else {
-                        router.push("/subvit/survey/tambah");
+                        router.back();
                       }
                     }}
                   >
