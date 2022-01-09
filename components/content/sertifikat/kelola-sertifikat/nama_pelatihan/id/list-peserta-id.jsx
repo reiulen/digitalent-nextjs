@@ -105,7 +105,7 @@ export default function ListPesertaID({ token }) {
         const a = document.createElement("a");
         a.download = `Sertifikat - ${nama} ${noRegis}.png`;
         a.target = "_blank";
-        a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${check.data.file_pdf}`;
+        a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${check.data.fileName}`;
         a.click();
         setLoading(false);
       }
