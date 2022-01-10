@@ -569,11 +569,21 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
     return currentDate.getTime() < selectedDate.getTime();
   };
 
+  useEffect(() => {
+    console.log(umum, tuna_netra, tuna_rungu, tuna_daksa);
+    console.log(
+      typeof umum,
+      typeof tuna_netra,
+      typeof tuna_rungu,
+      typeof tuna_daksa
+    );
+  }, [umum, tuna_daksa, tuna_netra, tuna_rungu]);
+
   const submitHandler = (e) => {
     e.preventDefault();
     // router.push("/pelatihan/pelatihan/tambah-pelatihan/tambah-registrasi");
     if (simpleValidator.current.allValid()) {
-      if (!umum && !tuna_daksa && !tuna_netra && !tuna_rungu) {
+      if (umum == 0 && tuna_daksa == 0 && tuna_netra == 0 && tuna_rungu == 0) {
         Swal.fire({
           icon: "error",
           title: "Oops...",
@@ -1698,7 +1708,13 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   className="form-check-input"
                   defaultChecked={umum === "1"}
                   value={umum}
-                  onClick={() => setUmum(!umum)}
+                  onClick={() => {
+                    if (umum == 0) {
+                      setUmum("1");
+                    } else if (umum == 1) {
+                      setUmum("0");
+                    }
+                  }}
                 />
                 <label className="form-check-label">Umum</label>
               </div>
@@ -1709,7 +1725,13 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   className="form-check-input"
                   defaultChecked={tuna_netra === "1"}
                   value={tuna_netra}
-                  onClick={() => setTunaNetra(!tuna_netra)}
+                  onClick={() => {
+                    if (tuna_netra == 0) {
+                      setTunaNetra("1");
+                    } else if (tuna_netra == 1) {
+                      setTunaNetra("0");
+                    }
+                  }}
                 />
                 <label className="form-check-label">Tuna Netra</label>
               </div>
@@ -1720,7 +1742,13 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   className="form-check-input"
                   defaultChecked={tuna_rungu === "1"}
                   value={tuna_rungu}
-                  onClick={() => setTunaRungu(!tuna_rungu)}
+                  onClick={() => {
+                    if (tuna_rungu == 0) {
+                      setTunaRungu("1");
+                    } else if (tuna_rungu == 1) {
+                      setTunaRungu("0");
+                    }
+                  }}
                 />
                 <label className="form-check-label">Tuna Rungu</label>
               </div>
@@ -1731,7 +1759,13 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   className="form-check-input"
                   defaultChecked={tuna_daksa === "1"}
                   value={tuna_daksa}
-                  onClick={() => setTunaDaksa(!tuna_daksa)}
+                  onClick={() => {
+                    if (tuna_daksa == 0) {
+                      setTunaDaksa("1");
+                    } else if (tuna_daksa == 1) {
+                      setTunaDaksa("0");
+                    }
+                  }}
                 />
                 <label className="form-check-label">Tuna Daksa</label>
               </div>

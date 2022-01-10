@@ -247,7 +247,7 @@ export const updateTriviaQuestionDetail =
   };
 
 export const importFileTriviaQuestionDetail =
-  (triviaDetailFile, token) => async (dispatch) => {
+  (triviaDetailFile, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: IMPORT_FILE_TRIVIA_QUESTION_DETAIL_REQUEST,
@@ -256,6 +256,7 @@ export const importFileTriviaQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -279,7 +280,7 @@ export const importFileTriviaQuestionDetail =
   };
 
 export const importImagesTriviaQuestionDetail =
-  (triviaDetailImages, token) => async (dispatch) => {
+  (triviaDetailImages, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: IMPORT_IMAGES_TRIVIA_QUESTION_DETAIL_REQUEST,
@@ -287,6 +288,7 @@ export const importImagesTriviaQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 

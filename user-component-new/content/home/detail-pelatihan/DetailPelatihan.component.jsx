@@ -32,7 +32,7 @@ const DetailPelatihan = ({ session }) => {
   const { pelatihan } = useSelector((state) => state.detailPelatihan);
 
   useEffect(() => {
-    if (pelatihan.Status === "Close") {
+    if (pelatihan?.Status === "Close") {
       router.back();
     }
   }, [pelatihan, router]);
@@ -123,7 +123,7 @@ const DetailPelatihan = ({ session }) => {
           <Col md={12} lg={8}>
             <div className="rounded my-5">
               <div className="ml-2 mb-3 title-pelatihan">
-                <h1 className="fw-700 fz-40">{pelatihan?.name}</h1>
+                <h1 className="fw-700 fz-40 text-break ">{pelatihan?.name}</h1>
 
                 <div className="d-flex align-items-center mt-5 mt-md-1">
                   <p className="mr-6 fz-18 fw-500">{pelatihan?.akademi}</p>
@@ -173,7 +173,7 @@ const DetailPelatihan = ({ session }) => {
                         Pendaftar
                       </p>
                       <p className="fz-16 fw-400">
-                        {pelatihan?.kuota_peserta} Peserta
+                        {pelatihan?.kuota_pendaftar} Pendaftar
                       </p>
                     </div>
                   </div>
@@ -336,8 +336,8 @@ const DetailPelatihan = ({ session }) => {
                 />
 
                 <div className="ml-4">
-                  <p className="fw-600 fz-18 mb-2">Kuota</p>
-                  <p className="fz-16">{pelatihan?.kuota_pendaftar} peserta</p>
+                  <p className="fw-600 fz-18 mb-2">Peserta</p>
+                  <p className="fz-16">{pelatihan?.kuota_peserta} Peserta</p>
                 </div>
               </div>
             </div>

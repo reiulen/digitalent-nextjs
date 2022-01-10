@@ -61,10 +61,18 @@ const LoginAdmin = () => {
   return (
     <>
       <AuthWrapper image="multiethnic-businesswoman.svg" title="Login">
-        <div className="col-lg-7 d-flex flex-wrap align-content-center " style={{ background: "#1A4367" }} >
+        <div
+          className="col-lg-7 d-flex flex-wrap align-content-center "
+          style={{ background: "#1A4367" }}
+        >
           <div className="container px-0 px-sm-4 scroll-form-login">
             <div className="title-login text-center mt-6">
-              <Image src="/assets/logo/logo-6.svg" width={246} height={96} alt="Logo-5" />
+              <Image
+                src="/assets/logo/logo-6.svg"
+                width={246}
+                height={96}
+                alt="Logo-5"
+              />
 
               <h3
                 className="align-middle mt-8"
@@ -72,7 +80,7 @@ const LoginAdmin = () => {
                   fontSize: "32px",
                   color: "#ffffff",
                   fontWeight: "700",
-                  fontFamily: "Rubik",
+                  fontFamily: "Poppins",
                   lineHeight: "38px",
                 }}
               >
@@ -80,7 +88,10 @@ const LoginAdmin = () => {
               </h3>
             </div>
 
-            <div className="title-form col-lg-6 p-0 mx-auto" style={{ marginTop: "30px" }}>
+            <div
+              className="title-form col-lg-6 p-0 mx-auto"
+              style={{ marginTop: "30px" }}
+            >
               <form onSubmit={handlerSubmit}>
                 <div className="form-group mb-2">
                   <label className="form-auth-label">E-mail</label>
@@ -90,11 +101,18 @@ const LoginAdmin = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Masukan Email"
-                    onBlur={() => simpleValidator.current.showMessageFor("Email")}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("Email")
+                    }
                   />
-                  {simpleValidator.current.message("Email", email, "required|email", {
-                    className: "text-danger",
-                  })}
+                  {simpleValidator.current.message(
+                    "Email",
+                    email,
+                    "required|email",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
                 <div className="form-group mt-6">
                   <label className="form-auth-label">Password</label>
@@ -109,27 +127,56 @@ const LoginAdmin = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Masukan Password"
-                      onBlur={() => simpleValidator.current.showMessageFor("Password")}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("Password")
+                      }
                     />
                     {hidePassword === true ? (
-                      <i className="ri-eye-fill right-center-absolute cursor-pointer" style={{ right: "10px" }} onClick={() => handlerShowPassword(false)} />
+                      <i
+                        className="ri-eye-fill right-center-absolute cursor-pointer"
+                        style={{ right: "10px" }}
+                        onClick={() => handlerShowPassword(false)}
+                      />
                     ) : (
-                      <i className="ri-eye-off-fill right-center-absolute cursor-pointer" style={{ right: "10px" }} onClick={() => handlerShowPassword(true)} />
+                      <i
+                        className="ri-eye-off-fill right-center-absolute cursor-pointer"
+                        style={{ right: "10px" }}
+                        onClick={() => handlerShowPassword(true)}
+                      />
                     )}
                   </div>
-                  {simpleValidator.current.message("Password", password, "required", {
-                    className: "text-danger",
-                  })}
+                  {simpleValidator.current.message(
+                    "Password",
+                    password,
+                    "required",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
 
                 <div className="g-recaptcha">
-                  <ReCAPTCHA sitekey={process.env.CAPTCHA_SITE_KEY} onChange={setCaptcha} onBlur={() => simpleValidator.current.showMessageFor("Captcha")} />
-                  {simpleValidator.current.message("Captcha", captcha, "required", {
-                    className: "text-danger",
-                  })}
+                  <ReCAPTCHA
+                    sitekey={process.env.CAPTCHA_SITE_KEY}
+                    onChange={setCaptcha}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("Captcha")
+                    }
+                  />
+                  {simpleValidator.current.message(
+                    "Captcha",
+                    captcha,
+                    "required",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
 
-                <button type="submit" className="btn btn-primary-rounded-full bg-secondary btn-block mt-5">
+                <button
+                  type="submit"
+                  className="btn btn-primary-rounded-full bg-secondary btn-block mt-5"
+                >
                   Masuk
                 </button>
               </form>

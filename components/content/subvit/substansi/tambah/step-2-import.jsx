@@ -83,6 +83,7 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [question_file, setQuestionFile] = useState(null);
   const [image_file, setImageFile] = useState(null);
   const [typeSave, setTypeSave] = useState("lanjut");
+  const [successType, setSuccessType] = useState(null);
 
   useEffect(() => {
     dispatch(
@@ -102,6 +103,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     //     dispatch(clearErrors())
     // }
     if (successFile) {
+      localStorage.setItem("successFile", question_file.name);
       dispatch(
         getAllSubtanceQuestionDetail(
           id,
@@ -115,6 +117,7 @@ const StepTwo = ({ token, tokenPermission }) => {
           tokenPermission
         )
       );
+      setSuccessType("file");
     }
 
     if (successImages) {
@@ -131,6 +134,7 @@ const StepTwo = ({ token, tokenPermission }) => {
           tokenPermission
         )
       );
+      setSuccessType("images");
     }
 
     if (isDeleted) {
@@ -161,27 +165,30 @@ const StepTwo = ({ token, tokenPermission }) => {
   const saveDraft = () => {
     let valid = true;
 
-    if (!successImages) {
-      valid = false;
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data gambar dengan benar !",
-      });
-    }
-    if (!successFile) {
-      valid = false;
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data soal dengan benar !",
-      });
+    if (localStorage.getItem("successFile") === null) {
+      if (!successImages) {
+        valid = false;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data gambar dengan benar !",
+        });
+      }
+      if (!successFile) {
+        valid = false;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data soal dengan benar !",
+        });
+      }
     }
 
     if (valid) {
       localStorage.removeItem("method");
       localStorage.removeItem("step2");
       localStorage.removeItem("clone");
+      localStorage.removeItem("successFile");
       dispatch({
         type: IMPORT_FILE_SUBTANCE_QUESTION_DETAIL_RESET,
       });
@@ -199,25 +206,28 @@ const StepTwo = ({ token, tokenPermission }) => {
     e.preventDefault();
     let valid = true;
 
-    if (!successImages) {
-      valid = false;
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data gambar dengan benar !",
-      });
-    }
-    if (!successFile) {
-      valid = false;
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data soal dengan benar !",
-      });
+    if (localStorage.getItem("successFile") === null) {
+      if (!successImages) {
+        valid = false;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data gambar dengan benar !",
+        });
+      }
+      if (!successFile) {
+        valid = false;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data soal dengan benar !",
+        });
+      }
     }
 
     if (valid) {
       localStorage.setItem("method", "import" || router.query.metode);
+      localStorage.removeItem("successFile");
       router.push({
         pathname: `/subvit/substansi/tambah-step-3`,
         query: { id },
@@ -293,6 +303,9 @@ const StepTwo = ({ token, tokenPermission }) => {
       },
     };
 
+    // Cookies.set("Authorization", "Bearer " + token);
+    // Cookies.set("Permission", tokenPermission);
+
     await axios
       .get(
         process.env.END_POINT_API_SUBVIT +
@@ -304,6 +317,22 @@ const StepTwo = ({ token, tokenPermission }) => {
         res.data.data.map((row, i) => {
           if (i === 0) {
             window.open(row);
+            //     var req = new XMLHttpRequest();
+            //     req.open("GET", row, true); //true means request will be async
+            //     req.onreadystatechange = function (aEvt) {
+            //       if (req.readyState == 4) {
+            //         if (req.status === 200) {
+            //           console.log(aEvt);
+            //           window.location.href = aEvt.currentTarget;
+            //         } else {
+            //           console.log("tidak berhasil");
+            //         }
+            //       }
+            //     };
+            //     req.setRequestHeader("Authorization", "Bearer " + token);
+            //     req.setRequestHeader("Permission", tokenPermission);
+            //     req.send();
+            //   }
           } else {
             window.location.href = row;
           }
@@ -419,10 +448,19 @@ const StepTwo = ({ token, tokenPermission }) => {
                       className="custom-file-input"
                       accept=".csv,.xlsx,.xls"
                       name="question_image"
-                      onChange={(e) => setQuestionFile(e.target.files[0])}
+                      onChange={(e) => {
+                        localStorage.setItem(
+                          "successFile",
+                          e.target.files[0].name
+                        );
+                        setQuestionFile(e.target.files[0]);
+                      }}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      {question_file ? question_file.name : "Choose file"}
+                      {question_file ||
+                      localStorage.getItem("successFile") !== null
+                        ? localStorage.getItem("successFile")
+                        : "Choose file"}
                     </label>
                   </div>
                   <span className="text-muted">
@@ -515,34 +553,34 @@ const StepTwo = ({ token, tokenPermission }) => {
               </div>
 
               <div className="table-page" style={{ marginTop: "20px" }}>
-                <div className="mb-5">
-                  {!successFile || successImages ? (
-                    <h2 className="text-success">Sukses Import Gambar</h2>
-                  ) : (
+                {successFile && successType === "file" && (
+                  <div className="mb-5">
                     <h2 className="text-success">Sukses Import Soal</h2>
-                  )}
+                    <span className="text-muted">
+                      {subtance_question_file.success +
+                        subtance_question_file.failed}{" "}
+                      Total Import | {subtance_question_file.success} Sukses di
+                      Import | {subtance_question_file.failed} Gagal di import
+                    </span>
+                  </div>
+                )}
+                {successImages && successType === "images" && (
+                  <div className="mb-5">
+                    <h2 className="text-success">Sukses Import Gambar</h2>
+                    <span className="text-muted">
+                      {subtance_question_images.success +
+                        subtance_question_images.failed}{" "}
+                      Total Import | {subtance_question_images.success} Sukses
+                      di Import | {subtance_question_images.failed} Gagal di
+                      import
+                    </span>
+                  </div>
+                )}
 
-                  <span className="text-muted">
-                    {!successFile || successImages
-                      ? subtance_question_images?.success +
-                        subtance_question_images?.failed
-                      : subtance_question_file?.success +
-                        subtance_question_file?.failed}{" "}
-                    Total Import |{" "}
-                    {!successFile || successImages
-                      ? subtance_question_images?.success
-                      : subtance_question_file?.success}{" "}
-                    Sukses di Import |{" "}
-                    {!successFile || successImages
-                      ? subtance_question_images?.failed
-                      : subtance_question_file?.failed}{" "}
-                    Gagal di import
-                  </span>
-                </div>
                 <div className="table-responsive">
                   <LoadingTable loading={loading} />
 
-                  {loading === false ? (
+                  {loading === false && (
                     <table className="table table-separate table-head-custom table-checkable">
                       <thead style={{ background: "#F3F6F9" }}>
                         <tr>
@@ -628,72 +666,68 @@ const StepTwo = ({ token, tokenPermission }) => {
                         )}
                       </tbody>
                     </table>
-                  ) : (
-                    ""
                   )}
                 </div>
 
                 {subtance_question_detail &&
-                subtance_question_detail.list_questions &&
-                subtance_question_detail.list_questions.length > 0 ? (
-                  <div className="row">
-                    <div className="table-pagination">
-                      {subtance_question_detail && (
-                        <Pagination
-                          activePage={page}
-                          itemsCountPerPage={subtance_question_detail.perPage}
-                          totalItemsCount={subtance_question_detail.total}
-                          pageRangeDisplayed={3}
-                          onChange={handlePagination}
-                          nextPageText={">"}
-                          prevPageText={"<"}
-                          firstPageText={"<<"}
-                          lastPageText={">>"}
-                          itemClass="page-item"
-                          linkClass="page-link"
-                        />
-                      )}
-                    </div>
-
-                    <div className="table-total ml-auto">
-                      {subtance_question_detail &&
-                        subtance_question_detail.list_questions && (
-                          <div className="row">
-                            <div className="col-4 mr-0 p-0">
-                              <select
-                                className="form-control"
-                                id="exampleFormControlSelect2"
-                                style={{
-                                  width: "65px",
-                                  background: "#F3F6F9",
-                                  borderColor: "#F3F6F9",
-                                  color: "#9E9E9E",
-                                }}
-                                onChange={(e) => handleLimit(e.target.value)}
-                                onBlur={(e) => handleLimit(e.target.value)}
-                              >
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="15">15</option>
-                                <option value="20">20</option>
-                                <option value="30">30</option>
-                              </select>
-                            </div>
-                            <div className="col-8 my-auto">
-                              <p
-                                className="align-middle mt-3"
-                                style={{ color: "#B5B5C3" }}
-                              >
-                                Total Data {subtance_question_detail.total}
-                              </p>
-                            </div>
-                          </div>
+                  subtance_question_detail.list_questions &&
+                  subtance_question_detail.list_questions.length > 0 && (
+                    <div className="row">
+                      <div className="table-pagination">
+                        {subtance_question_detail && (
+                          <Pagination
+                            activePage={page}
+                            itemsCountPerPage={subtance_question_detail.perPage}
+                            totalItemsCount={subtance_question_detail.total}
+                            pageRangeDisplayed={3}
+                            onChange={handlePagination}
+                            nextPageText={">"}
+                            prevPageText={"<"}
+                            firstPageText={"<<"}
+                            lastPageText={">>"}
+                            itemClass="page-item"
+                            linkClass="page-link"
+                          />
                         )}
+                      </div>
+
+                      <div className="table-total ml-auto">
+                        {subtance_question_detail &&
+                          subtance_question_detail.list_questions && (
+                            <div className="row">
+                              <div className="col-4 mr-0 p-0">
+                                <select
+                                  className="form-control"
+                                  id="exampleFormControlSelect2"
+                                  style={{
+                                    width: "65px",
+                                    background: "#F3F6F9",
+                                    borderColor: "#F3F6F9",
+                                    color: "#9E9E9E",
+                                  }}
+                                  onChange={(e) => handleLimit(e.target.value)}
+                                  onBlur={(e) => handleLimit(e.target.value)}
+                                >
+                                  <option value="5">5</option>
+                                  <option value="10">10</option>
+                                  <option value="15">15</option>
+                                  <option value="20">20</option>
+                                  <option value="30">30</option>
+                                </select>
+                              </div>
+                              <div className="col-8 my-auto">
+                                <p
+                                  className="align-middle mt-3"
+                                  style={{ color: "#B5B5C3" }}
+                                >
+                                  Total Data {subtance_question_detail.total}
+                                </p>
+                              </div>
+                            </div>
+                          )}
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  ""
-                )}
+                  )}
               </div>
 
               <div className="row">
@@ -707,7 +741,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                           `/subvit/substansi/clone/step-3?id=${router.query.id}`
                         );
                       } else {
-                        router.push("/subvit/substansi/tambah-step-1");
+                        router.back();
                       }
                     }}
                   >

@@ -140,7 +140,7 @@ const RegisterUser = () => {
                   fontSize: "32px",
                   color: "#ffffff",
                   fontWeight: "700",
-                  fontFamily: "Rubik",
+                  fontFamily: "Poppins",
                   lineHeight: "38px",
                 }}
               >

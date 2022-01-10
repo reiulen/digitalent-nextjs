@@ -190,12 +190,11 @@ const DetailSurvey = ({ token, tokenPermission }) => {
               Survey {survey?.academy ? survey?.academy.name : ""} -{" "}
               {survey?.theme ? survey?.theme?.name : ""}
             </h2>
-            {dataPermission &&
-            dataPermission.roles.includes("Super Admin") &&
-            dataPermission &&
-            dataPermission.permissions.includes(
-              "subvit.manage" && "subvit.survey.manage"
-            ) ? (
+            {(dataPermission && dataPermission.roles.includes("Super Admin")) ||
+            (dataPermission &&
+              dataPermission.permissions.includes(
+                "subvit.manage" && "subvit.survey.manage"
+              )) ? (
               <div className="card-toolbar">
                 <Link href={`/subvit/survey/edit?id=${id}`}>
                   <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
@@ -269,12 +268,11 @@ const DetailSurvey = ({ token, tokenPermission }) => {
               <h2 className="card-title h2 text-dark">Bank Soal</h2>
               {/* <span>200 Bank Soal | 150 Ingatan | 50 Analitik</span> */}
             </div>
-            {dataPermission &&
-            dataPermission.roles.includes("Super Admin") &&
-            dataPermission &&
-            dataPermission.permissions.includes(
-              "subvit.manage" && "subvit.survey.manage"
-            ) ? (
+            {(dataPermission && dataPermission.roles.includes("Super Admin")) ||
+            (dataPermission &&
+              dataPermission.permissions.includes(
+                "subvit.manage" && "subvit.survey.manage"
+              )) ? (
               <div className="card-toolbar">
                 <a
                   className="btn btn-primary-rounded-full px-y font-weight-bold btn-block "
@@ -330,12 +328,12 @@ const DetailSurvey = ({ token, tokenPermission }) => {
                       <th>ID Soal</th>
                       <th>Soal</th>
                       <th>Status</th>
-                      {dataPermission &&
-                      dataPermission.roles.includes("Super Admin") &&
-                      dataPermission &&
-                      dataPermission.permissions.includes(
-                        "subvit.manage" && "subvit.survey.manage"
-                      ) ? (
+                      {(dataPermission &&
+                        dataPermission.roles.includes("Super Admin")) ||
+                      (dataPermission &&
+                        dataPermission.permissions.includes(
+                          "subvit.manage" && "subvit.survey.manage"
+                        )) ? (
                         <th>Aksi</th>
                       ) : (
                         ""
@@ -388,12 +386,14 @@ const DetailSurvey = ({ token, tokenPermission }) => {
                               </td>
                               {}
                               <td className="align-middle">
-                                {dataPermission &&
-                                dataPermission.roles.includes("Super Admin") &&
-                                dataPermission &&
-                                dataPermission.permissions.includes(
-                                  "subvit.manage" && "subvit.survey.manage"
-                                ) ? (
+                                {(dataPermission &&
+                                  dataPermission.roles.includes(
+                                    "Super Admin"
+                                  )) ||
+                                (dataPermission &&
+                                  dataPermission.permissions.includes(
+                                    "subvit.manage" && "subvit.survey.manage"
+                                  )) ? (
                                   <div className="d-flex">
                                     <Link
                                       href={`edit-soal-survey?id=${question.id}&no=${i}`}

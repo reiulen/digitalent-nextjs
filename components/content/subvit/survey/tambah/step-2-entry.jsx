@@ -29,60 +29,77 @@ const StepTwo = ({ token, tokenPermission }) => {
   );
   const { survey } = useSelector((state) => state.detailSurveyQuestionBanks);
 
-  const [methodAdd, setMethodAdd] = useState("objective");
-  const [question, setSoal] = useState("");
+  const [methodAdd, setMethodAdd] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).type) ||
+      "objective"
+  );
+  const [question, setSoal] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).question) ||
+      ""
+  );
   const [question_image, setSoalImage] = useState("");
   const [imageName, setImageName] = useState("");
-  const [answer, setSoalList] = useState([
-    { key: "A", option: "", image: "" },
-    { key: "B", option: "", image: "" },
-    { key: "C", option: "", image: "" },
-    { key: "D", option: "", image: "" },
-  ]);
-  const [answer_multiple, setSoalMultipleList] = useState([
-    { key: "A", option: "", image: "" },
-    { key: "B", option: "", image: "" },
-    { key: "C", option: "", image: "" },
-    { key: "D", option: "", image: "" },
-  ]);
-  const [answer_triggered, setSoalTriggeredList] = useState([
-    {
-      key: "A",
-      option: "",
-      image: "",
-      type: "choose",
-      is_next: true,
-      sub: [
-        {
-          key: 1,
-          question: "",
-          image: "",
-          is_next: false,
-          answer: [
-            { key: "A", option: "", image: "", type: "choose" },
-            { key: "B", option: "", image: "", type: "choose" },
-            { key: "C", option: "", image: "", type: "choose" },
-          ],
-        },
-      ],
-    },
-    {
-      key: "B",
-      option: "",
-      image: "",
-      type: "choose",
-      is_next: false,
-      sub: [],
-    },
-    {
-      key: "C",
-      option: "",
-      image: "",
-      type: "choose",
-      is_next: false,
-      sub: [],
-    },
-  ]);
+  const [answer, setSoalList] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).answer) || [
+      { key: "A", option: "", image: "" },
+      { key: "B", option: "", image: "" },
+      { key: "C", option: "", image: "" },
+      { key: "D", option: "", image: "" },
+    ]
+  );
+  const [answer_multiple, setSoalMultipleList] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).answer) || [
+      { key: "A", option: "", image: "" },
+      { key: "B", option: "", image: "" },
+      { key: "C", option: "", image: "" },
+      { key: "D", option: "", image: "" },
+    ]
+  );
+  const [answer_triggered, setSoalTriggeredList] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).answer) || [
+      {
+        key: "A",
+        option: "",
+        image: "",
+        type: "choose",
+        is_next: true,
+        sub: [
+          {
+            key: 1,
+            question: "",
+            image: "",
+            is_next: false,
+            answer: [
+              { key: "A", option: "", image: "", type: "choose" },
+              { key: "B", option: "", image: "", type: "choose" },
+              { key: "C", option: "", image: "", type: "choose" },
+            ],
+          },
+        ],
+      },
+      {
+        key: "B",
+        option: "",
+        image: "",
+        type: "choose",
+        is_next: false,
+        sub: [],
+      },
+      {
+        key: "C",
+        option: "",
+        image: "",
+        type: "choose",
+        is_next: false,
+        sub: [],
+      },
+    ]
+  );
   const [typeSave, setTypeSave] = useState("lanjut");
 
   useEffect(() => {
@@ -97,17 +114,20 @@ const StepTwo = ({ token, tokenPermission }) => {
           query: { id },
         });
       } else if (typeSave === "draft") {
+        localStorage.removeItem("step2");
         handleResetForm();
         if (router.query.metode) {
           router.push({
             pathname: `/subvit/survey/tambah/step-2-${metode}`,
             query: { metode, id },
           });
+          window.location.reload();
         } else {
           router.push({
             pathname: `/subvit/survey/tambah/step-2-entry`,
             query: { id },
           });
+          window.location.reload();
         }
       }
     }
@@ -223,7 +243,7 @@ const StepTwo = ({ token, tokenPermission }) => {
         break;
       case "triggered_question":
         answer_triggered.forEach((row, j) => {
-          if (row.option == "" && row.image == "") {
+          if (row.option == "" && row.image == "" && row.type !== "empty") {
             valid = false;
             Swal.fire({
               icon: "error",
@@ -378,7 +398,10 @@ const StepTwo = ({ token, tokenPermission }) => {
     switch (methodAdd) {
       case "objective":
         return (
-          <ObjectiveComponent props_answer={(answer) => setSoalList(answer)} />
+          <ObjectiveComponent
+            answer={answer}
+            props_answer={(answer) => setSoalList(answer)}
+          />
         );
       case "multiple_choice":
         return (
@@ -397,6 +420,7 @@ const StepTwo = ({ token, tokenPermission }) => {
       default:
         return (
           <ObjectiveComponent
+            answer={answer}
             props_answer={(answer) => setSoalList(answer)}
             props_answer_key={(key) => setAnswerKey(key)}
           />
@@ -631,7 +655,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                           `/subvit/survey/clone/step-3?id=${router.query.id}`
                         );
                       } else {
-                        router.push("/subvit/survey/tambah");
+                        router.back();
                       }
                     }}
                   >

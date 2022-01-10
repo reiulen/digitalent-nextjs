@@ -603,7 +603,7 @@ const DataParticipant = ({ token }) => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              Reminder Kelengkapan Berkas
+              Pengingat Kelengkapan Berkas
             </h1>
           </div>
 

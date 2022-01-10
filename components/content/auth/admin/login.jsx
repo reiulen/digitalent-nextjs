@@ -11,6 +11,7 @@ import { SweatAlert } from "../../../../utils/middleware/helper/index";
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const LoginAdmin = () => {
   const router = useRouter();
@@ -74,20 +75,22 @@ const LoginAdmin = () => {
               );
             } else {
               if (data.role === "admin") {
-                // axios
-                //   .get(
-                //     `${process.env.END_POINT_API_SITE_MANAGEMENT}api/user/permissions`,
-                //     {
-                //       headers: {
-                //         Authorization: `Bearer ${res.data.data.token}`,
-                //       },
-                //     }
-                //   )
-                //   .then((response) => {
-                //     router.push(response.data.data.menu[0].href);
-                //   });
-                // console.log(res, "ini res");
-                router.push("/dashboard");
+                axios
+                  .get(
+                    `${process.env.END_POINT_API_SITE_MANAGEMENT}api/user/permissions`,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${res.data.data.token}`,
+                      },
+                    }
+                  )
+                  .then((response) => {
+                    Cookies.set(
+                      "token_permission",
+                      response?.data?.data?.tokenPermission
+                    );
+                    router.push("/dashboard");
+                  });
               } else {
                 router.push("/partnership/user/kerjasama");
               }
@@ -127,7 +130,7 @@ const LoginAdmin = () => {
                   fontSize: "32px",
                   color: "#ffffff",
                   fontWeight: "700",
-                  fontFamily: "Rubik",
+                  fontFamily: "Poppins",
                   lineHeight: "38px",
                 }}
               >
