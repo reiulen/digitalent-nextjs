@@ -85,7 +85,9 @@ module.exports = {
     TOKEN_MAP:
       "pk.eyJ1IjoiZGVuZHlsb3JkcyIsImEiOiJja3U1NHJnYjkxczdyMnZxZ2ptM2hlNXpqIn0.o5v5Ch0AFJIfeZER2vZvwA",
 
-    END_POINT_API_TTEP12: "https://dts-signature-dev.majapahit.id/api/",
+    // END_POINT_API_TTEP12: "https://dts-signature-dev.majapahit.id/api/",
+    END_POINT_API_TTEP12: "https://api-dts-dev.majapahit.id/signature/api/",
+
     ROOT_URL: "https://dts-dev.majapahit.id/",
 
     VERSION_APP: "2.0.0",
