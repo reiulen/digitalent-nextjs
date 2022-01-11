@@ -15,8 +15,7 @@ const DetailAdmin = ({ token }) => {
   let dispatch = useDispatch();
 
   const editAdminSite = useSelector((state) => state.editAdminSite);
-  const detailAdminSite = useSelector(state => state.detailAdminSite)
-  console.log(detailAdminSite)
+  const detailAdminSite = useSelector((state) => state.detailAdminSite);
   const [search, setSearch] = useState(null);
 
   return (
@@ -92,21 +91,23 @@ const DetailAdmin = ({ token }) => {
                 Satuan Kerja
               </p>
               <div className="d-flex ailgn-items-center">
-                {detailAdminSite.adminSite?.data.unit_works.map((item, index) => {
-                  return (
-                    <span
-                      className="label label-lg label-inline"
-                      style={{
-                        width: "max-content",
-                        backgroundColor: "#F2F7FC",
-                        color: "#ADB5BD",
-                      }}
-                      key={index}
-                    >
-                      {item.name}
-                    </span>
-                  );
-                })}
+                {detailAdminSite.adminSite?.data.unit_works.map(
+                  (item, index) => {
+                    return (
+                      <span
+                        className="label label-lg label-inline"
+                        style={{
+                          width: "max-content",
+                          backgroundColor: "#F2F7FC",
+                          color: "#ADB5BD",
+                        }}
+                        key={index}
+                      >
+                        {item.name}
+                      </span>
+                    );
+                  }
+                )}
               </div>
             </div>
 
@@ -139,36 +140,25 @@ const DetailAdmin = ({ token }) => {
                 </div>
               </div>
             ) : (
-
               <div className="table-page mt-5">
-                 <h3 className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5 titles-1">
+                <h3 className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5 titles-1">
                   Hak Akses Pelatihan
                 </h3>
                 <div className="table-responsive">
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead style={{ backgroundColor: "#F2F7FC" }}>
-                    <tr>
-                            <th
-                              className="align-middle fz-16 fw-600"
-                            >
-                              No
-                            </th>
-                            <th
-                              className="align-middle fz-16 fw-600"
-                            >
-                              ID Pelatihan
-                            </th>
-                            <th
-                              className="align-middle fz-16 fw-600"
-                            >
-                              Nama Pelatihan
-                            </th>
-                            <th
-                              className="align-middle text-center fz-16 fw-600"
-                            >
-                              Access
-                            </th>
-                          </tr>
+                      <tr>
+                        <th className="align-middle fz-16 fw-600">No</th>
+                        <th className="align-middle fz-16 fw-600">
+                          ID Pelatihan
+                        </th>
+                        <th className="align-middle fz-16 fw-600">
+                          Nama Pelatihan
+                        </th>
+                        <th className="align-middle text-center fz-16 fw-600">
+                          Access
+                        </th>
+                      </tr>
                     </thead>
 
                     <tbody>

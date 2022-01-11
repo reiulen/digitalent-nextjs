@@ -569,16 +569,6 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
     return currentDate.getTime() < selectedDate.getTime();
   };
 
-  useEffect(() => {
-    console.log(umum, tuna_netra, tuna_rungu, tuna_daksa);
-    console.log(
-      typeof umum,
-      typeof tuna_netra,
-      typeof tuna_rungu,
-      typeof tuna_daksa
-    );
-  }, [umum, tuna_daksa, tuna_netra, tuna_rungu]);
-
   const submitHandler = (e) => {
     e.preventDefault();
     // router.push("/pelatihan/pelatihan/tambah-pelatihan/tambah-registrasi");

@@ -103,6 +103,7 @@ export default function Pengaturan({ session }) {
 
   // POST LANJUT UBAH HANDPHONE
   const handleLanjutUbahHandphone = async (nomor_hp) => {
+    setCount(30);
     const body = {
       old_nomor_hp: dataPribadi.nomor_handphone,
       nomor_hp,
@@ -166,6 +167,7 @@ export default function Pengaturan({ session }) {
     password,
     password_konfirmasi
   ) => {
+    setCount(30);
     simpleValidator.current.fields.Email = true;
     simpleValidator.current.fields["nomor handphone"] = true;
     const body = {
@@ -210,6 +212,7 @@ export default function Pengaturan({ session }) {
 
   //POST EMAIL LANJUT
   const handleLanjutUbahEmail = async (email) => {
+    setCount(30);
     const body = {
       old_email: dataPribadi.email,
       email,
