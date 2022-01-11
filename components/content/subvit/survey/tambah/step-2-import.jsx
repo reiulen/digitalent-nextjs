@@ -498,10 +498,8 @@ const StepTwo = ({ token, tokenPermission }) => {
                 </div>
               </div>
               <div className="table-page" style={{ marginTop: "20px" }}>
-                {console.log(successType)}
                 {successFile && successType === "file" && (
                   <div className="mb-5">
-                    {console.log("masuk disini")}
                     <h2 className="text-success">Sukses Import Soal</h2>
                     <span className="text-muted">
                       {survey_question_file.success +

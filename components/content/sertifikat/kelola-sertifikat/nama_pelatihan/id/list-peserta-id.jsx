@@ -71,7 +71,7 @@ export default function ListPesertaID({ token }) {
     setLoading(true);
     const linkChecker = `${process.env.END_POINT_API_TTEP12}p12/check-pdf?registration_id=${noRegis}`;
     try {
-      const check = await axios.get(linkChecker);
+      const check = await axios.get(linkChecker, config);
       if (!check.data.status) {
         const data = await convertDivToPng(divReference.current);
         if (data) {
@@ -79,7 +79,7 @@ export default function ListPesertaID({ token }) {
             const formData = new FormData();
             formData.append("file", data);
             const link = `${process.env.END_POINT_API_TTEP12}p12/sign-pdf?training_id=${id}&nomor_registrasi=${noRegis}`;
-            const result = await axios.post(link, formData);
+            const result = await axios.post(link, formData, config);
             //post image certificate yang udah di render dari html
             if (!result.data.status) {
               setLoading(false);

@@ -22,25 +22,7 @@ import axios from "axios";
 const IndexForm = ({ token, session }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-
-  const checkPendaftaran = async () => {
-    try {
-      const data = await axios.get(
-        `${process.env.END_POINT_API_PELATIHAN}api/v1/formPendaftaran/cek-pendaftaran?pelatian_id=${dataTraining?.pelatian_id}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      return data;
-    } catch (e) {
-      if (!e.response.data.status) {
-        SweatAlert("Gagal", e.response.data.message || e.message, "error");
-        router.push("/peserta");
-      }
-    }
-  };
-
-  useEffect(() => {
-    checkPendaftaran();
-  }, []);
+  const [pindahan, setPindahan] = useState(false);
 
   const { error: errorFormBuilder, formBuilder: dataForm } = useSelector(
     (state) => state.getFormBuilder
@@ -89,6 +71,7 @@ const IndexForm = ({ token, session }) => {
   useEffect(() => {
     switch (view) {
       case 1:
+        window.scrollTo({ top: 0, behavior: "smooth" });
         return setBreadcrumb("");
       case 2:
         return setBreadcrumb("Form Komitmen");
@@ -98,6 +81,34 @@ const IndexForm = ({ token, session }) => {
         return breadcrumb;
     }
   }, [view]);
+
+  const checkPendaftaran = async (id) => {
+    try {
+      const data = await axios.get(
+        `${process.env.END_POINT_API_PELATIHAN}api/v1/formPendaftaran/cek-pendaftaran?pelatian_id=${id}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      return data;
+    } catch (e) {
+      if (!e.response.data.status) {
+        SweatAlert("Gagal", e.response.data.message || e.message, "error");
+        router.push("/peserta");
+      }
+    }
+  };
+
+  const checkPindahan = async (id) => {
+    if (dataPribadi?.pindahan_pelatihan_id?.includes(id)) {
+      setPindahan(true);
+      return;
+    } else {
+      checkPendaftaran(id);
+    }
+  };
+
+  useEffect(() => {
+    checkPindahan(dataTraining?.id);
+  }, []);
 
   const showViewForm = () => {
     switch (view) {
@@ -206,6 +217,7 @@ const IndexForm = ({ token, session }) => {
               propsDataPelatihan={dataPelatihan}
               token={token}
               funcView={(val) => setView(val)}
+              pindahan={pindahan}
             />
           </Card>
         );
@@ -295,6 +307,7 @@ const IndexForm = ({ token, session }) => {
               <FormPendaftaran
                 propsTitle={title}
                 funcView={(val) => setView(val)}
+                pindahan={pindahan}
               />
             </Card>
           </>
