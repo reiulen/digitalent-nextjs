@@ -63,7 +63,6 @@ const Navigationbar = ({ session }) => {
   useEffect(() => {
     // getFirebaseToken(setTokenFound);
     // console.log(Cookies.get("fcm_token"));
-
     const messaging = getMessaging();
     onMessage(messaging, (payload) => {
       // console.log("Message received. ", payload.notification);
@@ -84,6 +83,7 @@ const Navigationbar = ({ session }) => {
         signOut();
       }
     }
+
     if (session) {
       if (
         dataPribadi &&
@@ -102,6 +102,12 @@ const Navigationbar = ({ session }) => {
         if (dataPribadi.wizard == 4) {
           return router.push("/peserta/wizzard/pekerjaan");
         }
+      }
+
+      if (dataPribadi && dataPribadi?.pindahan_pelatihan_id?.length > 0) {
+        return router.push(
+          `/peserta/form-pendaftaran?id=${dataPribadi?.pindahan_pelatihan_id[0]}`
+        );
       }
     }
   }, []);

@@ -42,12 +42,12 @@ export default function ChatBot() {
                     Live Chat
                   </a>
                 </Link>
-                <Link href="/helpdesk/formulir-pengaduan" passHref>
+                {/* <Link href="/helpdesk/formulir-pengaduan" passHref>
                   <a className={` rounded-full py-2`}>
                     <i className="ri-draft-fill text-primary" />
                     Form Pengaduan
                   </a>
-                </Link>
+                </Link> */}
               </div>
             )}
           </div>

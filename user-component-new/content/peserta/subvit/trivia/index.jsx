@@ -162,7 +162,6 @@ const SubtansiUser = ({ token }) => {
       dispatch(postResultTrivia(setData, token));
       localStorage.clear();
       router.push(`/peserta/done-trivia`);
-      console.log("useEffect Pertama", setData);
     }
   }, [count, router, error, dispatch, token]);
 

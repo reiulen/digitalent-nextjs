@@ -35,7 +35,6 @@ const EditCommitmentStep3 = ({ token }) => {
   const [description, setDescription] = useState(getEditTraining3.deskripsi);
 
   useEffect(() => {
-    console.log(commitment);
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
