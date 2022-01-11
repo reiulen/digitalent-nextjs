@@ -15,6 +15,7 @@ const FormKomitmen = ({
   propsDataPelatihan,
   token,
   funcView,
+  pindahan,
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -43,8 +44,8 @@ const FormKomitmen = ({
   };
 
   useEffect(() => {
-    console.log(menyatakan);
-  }, [menyatakan]);
+    console.log(pindahan, "ini pindahan");
+  }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -55,7 +56,11 @@ const FormKomitmen = ({
           komitmen: menyatakan ? "1" : "0",
           form_pendaftaran: dataForm.form_pendaftaran,
         };
-        dispatch(newPendaftaranPelatihan(data, token));
+        if (pindahan) {
+          dispatch(newPendaftaranPelatihan(data, token, pindahan));
+        } else {
+          dispatch(newPendaftaranPelatihan(data, token));
+        }
       } else {
         Swal.fire({
           icon: "error",
@@ -71,6 +76,7 @@ const FormKomitmen = ({
       dispatch(newPendaftaranPelatihan(data, token));
     }
   };
+
   return (
     <>
       <Card.Body>
