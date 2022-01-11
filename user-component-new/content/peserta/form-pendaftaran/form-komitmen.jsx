@@ -15,6 +15,7 @@ const FormKomitmen = ({
   propsDataPelatihan,
   token,
   funcView,
+  pindahan,
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -42,10 +43,6 @@ const FormKomitmen = ({
     dispatch(storeFormRegister(data));
   };
 
-  useEffect(() => {
-    console.log(menyatakan);
-  }, [menyatakan]);
-
   const onSubmit = (e) => {
     e.preventDefault();
     if (dataPelatihan.komitmen === "1") {
@@ -55,7 +52,14 @@ const FormKomitmen = ({
           komitmen: menyatakan ? "1" : "0",
           form_pendaftaran: dataForm.form_pendaftaran,
         };
-        dispatch(newPendaftaranPelatihan(data, token));
+        console.log(pindahan, "ini pindahannya");
+        if (pindahan) {
+          dispatch(newPendaftaranPelatihan(data, token, pindahan));
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          dispatch(newPendaftaranPelatihan(data, token));
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
       } else {
         Swal.fire({
           icon: "error",
@@ -71,6 +75,11 @@ const FormKomitmen = ({
       dispatch(newPendaftaranPelatihan(data, token));
     }
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   return (
     <>
       <Card.Body>

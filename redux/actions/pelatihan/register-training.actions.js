@@ -87,7 +87,7 @@ export const getPelatihan = (token, id) => async (dispatch) => {
 };
 
 export const newPendaftaranPelatihan =
-  (pendaftaranData, token) => async (dispatch) => {
+  (pendaftaranData, token, pindahan) => async (dispatch) => {
     try {
       dispatch({
         type: PENDAFTARAN_PELATIHAN_REQUEST,
@@ -100,17 +100,30 @@ export const newPendaftaranPelatihan =
         },
       };
 
-      const { data } = await axios.post(
-        process.env.END_POINT_API_PELATIHAN + "api/v1/formPendaftaran/create",
-        pendaftaranData,
-        config
-      );
-
-      dispatch({
-        type: PENDAFTARAN_PELATIHAN_SUCCESS,
-        payload: data,
-      });
-      return data;
+      if (pindahan) {
+        const { data } = await axios.post(
+          process.env.END_POINT_API_PELATIHAN +
+            "api/v1/formPendaftaran/update-master-form",
+          pendaftaranData,
+          config
+        );
+        dispatch({
+          type: PENDAFTARAN_PELATIHAN_SUCCESS,
+          payload: data,
+        });
+        return data;
+      } else {
+        const { data } = await axios.post(
+          process.env.END_POINT_API_PELATIHAN + "api/v1/formPendaftaran/create",
+          pendaftaranData,
+          config
+        );
+        dispatch({
+          type: PENDAFTARAN_PELATIHAN_SUCCESS,
+          payload: data,
+        });
+        return data;
+      }
     } catch (error) {
       dispatch({
         type: PENDAFTARAN_PELATIHAN_FAIL,

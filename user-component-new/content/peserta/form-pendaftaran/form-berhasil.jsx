@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Button, Card, Col, Row, Badge } from "react-bootstrap";
 import style from "./style.module.css";
@@ -46,6 +46,10 @@ const FormBerhasil = ({ token }) => {
       Swal.fire("Gagal", `${error.response.data.message}`, "error");
     }
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   return (
     <>

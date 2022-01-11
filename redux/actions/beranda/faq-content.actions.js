@@ -10,37 +10,37 @@ import {
 } from "../../types/beranda/faq-content.type";
 
 export const getAllFaq =
-  (pinned = 1, category_name = "", keyword = "", token = "") =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: BERANDA_FAQ_REQUEST });
+  (pinned = "", category_name = "", keyword = "", token = "") =>
+    async (dispatch) => {
+      try {
+        dispatch({ type: BERANDA_FAQ_REQUEST });
 
-      let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/faq`;
+        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/faq`;
 
-      if (pinned) link = link.concat(`?pinned=${pinned}`);
-      if (category_name) link = link.concat(`?category_name=${category_name}`);
-      if (keyword) link = link.concat(`?keyword=${keyword}`);
+        if (pinned) link = link.concat(`?pinned=${pinned}`);
+        if (category_name) link = link.concat(`?category_name=${category_name}`);
+        if (keyword) link = link.concat(`?keyword=${keyword}`);
 
-      const config = {
-        headers: {
-          // Authorization: "Bearer " + token,
-          apikey: process.env.API_KEY_PUBLIKASI,
-        },
-      };
-      const { data } = await axios.get(link, config);
+        const config = {
+          headers: {
+            // Authorization: "Bearer " + token,
+            apiKey: process.env.API_KEY_PUBLIKASI,
+          },
+        };
+        const { data } = await axios.get(link, config);
 
-      dispatch({
-        type: BERANDA_FAQ_SUCCESS,
-        payload: data,
-      });
-      return data;
-    } catch (error) {
-      dispatch({
-        type: BERANDA_FAQ_FAIL,
-        payload: error.response.data.message,
-      });
-    }
-  };
+        dispatch({
+          type: BERANDA_FAQ_SUCCESS,
+          payload: data,
+        });
+        return data;
+      } catch (error) {
+        dispatch({
+          type: BERANDA_FAQ_FAIL,
+          payload: error.response.data.message,
+        });
+      }
+    };
 
 export const getKategoriBerandaFaq = () => async (dispatch) => {
   try {

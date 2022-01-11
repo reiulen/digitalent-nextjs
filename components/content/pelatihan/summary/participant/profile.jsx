@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import moment from "moment";
 import { Modal, Button } from "react-bootstrap";
+import { PDFReader } from "react-read-pdf";
 
 const ProfileUser = ({ profile }) => {
   const [show, setShow] = useState(false);
   const [showIjasah, setShowIjasah] = useState(false);
+  const [fileKtp, setFileKtp] = useState("");
+  const [fileIjazah, setFileIjazah] = useState("");
+  useEffect(() => {
+    if (profile.length != 0) {
+      setFileKtp(profile.File_ktp);
+      setFileIjazah(profile.ijasah);
+    }
+  }, [profile]);
+
   return (
     <>
       <div className="card card-custom card-stretch gutter-b">
@@ -303,35 +313,69 @@ const ProfileUser = ({ profile }) => {
                 <div className="row">
                   <div className="col-md-6">
                     <p className="text-neutral-body my-0">Scan KTP</p>
-                    <Image
-                      objectFit="cover"
-                      alt="file-ktp"
-                      width={320}
-                      height={200}
-                      src={
-                        (profile.File_ktp &&
-                          process.env.END_POINT_API_IMAGE_BEASISWA +
-                            profile.File_ktp) ||
-                        "/assets/media/default.jpg"
-                      }
-                      onClick={() => setShow(true)}
-                    />
+                    {fileKtp.includes("pdf") ? (
+                      <div
+                        className="overflow-auto mx-auto px-auto"
+                        style={{
+                          height: 250,
+                        }}
+                        onClick={() => {
+                          setShow(true);
+                        }}
+                      >
+                        <PDFReader
+                          url={`${process.env.END_POINT_API_IMAGE_BEASISWA}${fileKtp}`}
+                          scale={1}
+                        />
+                      </div>
+                    ) : (
+                      <Image
+                        objectFit="cover"
+                        alt="file-ktp"
+                        width={320}
+                        height={200}
+                        src={
+                          (profile.File_ktp &&
+                            process.env.END_POINT_API_IMAGE_BEASISWA +
+                              profile.File_ktp) ||
+                          "/assets/media/default.jpg"
+                        }
+                        onClick={() => setShow(true)}
+                      />
+                    )}
                   </div>
                   <div className="col-md-6">
                     <p className="text-neutral-body my-0">Ijasah</p>
-                    <Image
-                      objectFit="cover"
-                      alt="file-ijasah"
-                      width={320}
-                      height={200}
-                      src={
-                        (profile.ijasah &&
-                          process.env.END_POINT_API_IMAGE_BEASISWA +
-                            profile.ijasah) ||
-                        "/assets/media/default.jpg"
-                      }
-                      onClick={() => setShowIjasah(true)}
-                    />
+                    {fileIjazah.includes("pdf") ? (
+                      <div
+                        className="overflow-auto mx-auto px-auto"
+                        style={{
+                          height: 250,
+                        }}
+                        onClick={() => {
+                          setShowIjasah(true);
+                        }}
+                      >
+                        <PDFReader
+                          url={`${process.env.END_POINT_API_IMAGE_BEASISWA}${fileIjazah}`}
+                          scale={1}
+                        />
+                      </div>
+                    ) : (
+                      <Image
+                        objectFit="cover"
+                        alt="file-ijasah"
+                        width={320}
+                        height={200}
+                        src={
+                          (profile.ijasah &&
+                            process.env.END_POINT_API_IMAGE_BEASISWA +
+                              profile.ijasah) ||
+                          "/assets/media/default.jpg"
+                        }
+                        onClick={() => setShowIjasah(true)}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
@@ -359,15 +403,30 @@ const ProfileUser = ({ profile }) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <img
-            src={
-              (profile.File_ktp &&
-                process.env.END_POINT_API_IMAGE_BEASISWA + profile.File_ktp) ||
-              "/assets/media/default.jpg"
-            }
-            width={400}
-            alt="ktp-modal"
-          />
+          {fileKtp.includes("pdf") ? (
+            <div
+              className="overflow-auto mx-auto px-auto"
+              style={{
+                height: 250,
+              }}
+            >
+              <PDFReader
+                url={`${process.env.END_POINT_API_IMAGE_BEASISWA}${fileKtp}`}
+                scale={1}
+              />
+            </div>
+          ) : (
+            <img
+              src={
+                (profile.File_ktp &&
+                  process.env.END_POINT_API_IMAGE_BEASISWA +
+                    profile.File_ktp) ||
+                "/assets/media/default.jpg"
+              }
+              width={400}
+              alt="ktp-modal"
+            />
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => setShow(false)}>Kembali</Button>
@@ -381,7 +440,7 @@ const ProfileUser = ({ profile }) => {
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter">
-            {profile?.File_ktp}
+            {profile?.ijasah}
             <button
               type="button"
               className="close"
@@ -392,15 +451,29 @@ const ProfileUser = ({ profile }) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <img
-            src={
-              (profile.ijasah &&
-                process.env.END_POINT_API_IMAGE_BEASISWA + profile.ijasah) ||
-              "/assets/media/default.jpg"
-            }
-            width={400}
-            alt="ktp-modal"
-          />
+          {fileKtp.includes("pdf") ? (
+            <div
+              className="overflow-auto mx-auto px-auto"
+              style={{
+                height: 250,
+              }}
+            >
+              <PDFReader
+                url={`${process.env.END_POINT_API_IMAGE_BEASISWA}${fileIjazah}`}
+                scale={1}
+              />
+            </div>
+          ) : (
+            <img
+              src={
+                (profile.ijasah &&
+                  process.env.END_POINT_API_IMAGE_BEASISWA + profile.ijasah) ||
+                "/assets/media/default.jpg"
+              }
+              width={400}
+              alt="ktp-modal"
+            />
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => setShowIjasah(false)}>Kembali</Button>

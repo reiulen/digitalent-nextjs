@@ -355,7 +355,6 @@ export default function NamaPelatihanID({ token }) {
                     <form
                       onSubmit={(e) => {
                         e.preventDefault();
-                        console.log(search, "ini search");
                         dispatch(
                           getDetailSertifikat(
                             router.query.id,

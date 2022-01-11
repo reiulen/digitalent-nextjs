@@ -342,7 +342,7 @@ const ListReport = ({ token }) => {
                           listsReportTraining(
                             token,
                             token_permission,
-                            page,
+                            1,
                             limit,
                             search,
                             penyelenggara.label,
@@ -370,7 +370,7 @@ const ListReport = ({ token }) => {
                             listsReportTraining(
                               token,
                               token_permission,
-                              page,
+                              1,
                               limit,
                               search,
                               penyelenggara.label,

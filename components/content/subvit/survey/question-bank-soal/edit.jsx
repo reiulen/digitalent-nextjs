@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   clearErrors,
   updateSurveyQuestionDetail,
+  detailSurveyQuestionDetail,
 } from "../../../../../redux/actions/subvit/survey-question-detail.action";
 import { UPDATE_SURVEY_QUESTION_DETAIL_RESET } from "../../../../../redux/types/subvit/survey-question-detail.type";
 
@@ -36,27 +37,27 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
   let { id } = router.query;
 
   const [methodAdd, setMethodAdd] = useState(
-    survey_question_detail && survey_question_detail.type
+    survey_question_detail && survey_question_detail?.type
   );
 
   const [question, setQuestion] = useState(
-    survey_question_detail && survey_question_detail.question
+    survey_question_detail && survey_question_detail?.question
   );
   const [question_image, setQuestionImage] = useState(
-    survey_question_detail && survey_question_detail.question_image
+    survey_question_detail && survey_question_detail?.question_image
   );
   const [question_image_preview, setQuestionImagePreview] = useState(
     process.env.END_POINT_API_IMAGE_SUBVIT +
-      (survey_question_detail && survey_question_detail.question_image_preview)
+      (survey_question_detail && survey_question_detail?.question_image_preview)
   );
   const [question_image_name, setQuestionImageName] = useState("Pilih Gambar");
 
   const [answer, setAnswer] = useState(
-    JSON.parse(survey_question_detail && survey_question_detail.answer)
+    JSON.parse(survey_question_detail && survey_question_detail?.answer)
   );
 
   const [status, setStatus] = useState(
-    survey_question_detail && survey_question_detail.status
+    survey_question_detail && survey_question_detail?.status
   );
 
   useEffect(() => {
@@ -111,7 +112,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
       });
     }
 
-    answer.forEach((row, j) => {
+    answer?.forEach((row, j) => {
       if (row.option == "" && row.image == "") {
         valid = false;
         Swal.fire({
@@ -128,7 +129,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
         if (valid) {
           const data = {
             survey_question_bank_id:
-              survey_question_detail.survey_question_bank_id,
+              survey_question_detail?.survey_question_bank_id,
             question,
             question_image,
             answer: answers,
@@ -145,7 +146,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
         if (valid) {
           const data = {
             survey_question_bank_id:
-              survey_question_detail.survey_question_bank_id,
+              survey_question_detail?.survey_question_bank_id,
             question,
             question_image,
             answer: answers,
@@ -162,7 +163,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
         if (valid) {
           const data = {
             survey_question_bank_id:
-              survey_question_detail.survey_question_bank_id,
+              survey_question_detail?.survey_question_bank_id,
             question,
             question_image,
             status,
@@ -178,7 +179,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
         if (valid) {
           const data = {
             survey_question_bank_id:
-              survey_question_detail.survey_question_bank_id,
+              survey_question_detail?.survey_question_bank_id,
             question,
             question_image,
             answer: answers,
@@ -261,7 +262,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
 
   return (
     <PageWrapper>
-      {error ? (
+      {error && (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
           role="alert"
@@ -284,8 +285,6 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
             </button>
           </div>
         </div>
-      ) : (
-        ""
       )}
 
       <div className="col-lg-12 order-1 px-0">

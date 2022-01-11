@@ -17,7 +17,7 @@ import {
 } from "../../../../utils/middleware/helper";
 import FormBuilderComponent from "./component/form-builder.component";
 
-const FormPendaftaran = ({ propsTitle, funcView, token }) => {
+const FormPendaftaran = ({ propsTitle, funcView, token, pindahan }) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -90,7 +90,11 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
         form_pendaftaran: valueForm,
         pelatian_id: +router.query.id,
       };
-      dispatch(newPendaftaranPelatihan(data, token));
+      if (pindahan) {
+        dispatch(newPendaftaranPelatihan(data, token, pindahan));
+      } else {
+        dispatch(newPendaftaranPelatihan(data, token));
+      }
     }
   };
 
