@@ -65,10 +65,11 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
       dispatch({
         type: UPDATE_SURVEY_QUESTION_DETAIL_RESET,
       });
-      router.push({
-        pathname: `/subvit/survey/${localStorage.getItem("id_survey")}`,
-        query: { success: true },
-      });
+      // router.push({
+      //   pathname: `/subvit/survey/${localStorage.getItem("id_survey")}`,
+      //   query: { success: true },
+      // });
+      router.back();
     }
   }, [dispatch, success, router]);
 

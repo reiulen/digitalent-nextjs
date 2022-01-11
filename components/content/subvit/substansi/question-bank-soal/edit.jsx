@@ -86,14 +86,14 @@ const EditSoalSubstansi = ({ token, tokenPermission }) => {
         type: UPDATE_SUBTANCE_QUESTION_DETAIL_RESET,
       });
 
-      if (localStorage.getItem("id_substansi")) {
-        router.push({
-          pathname: `/subvit/substansi/${localStorage.getItem("id_substansi")}`,
-          query: { success: true },
-        });
-      } else {
-        router.back();
-      }
+      // if (localStorage.getItem("id_substansi")) {
+      //   router.push({
+      //     pathname: `/subvit/substansi/${localStorage.getItem("id_substansi")}`,
+      //     query: { success: true },
+      //   });
+      // } else {
+      // }
+      router.back();
     }
   }, [dispatch, success, router]);
 
