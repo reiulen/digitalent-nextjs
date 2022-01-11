@@ -105,9 +105,9 @@ const Navigationbar = ({ session }) => {
       }
 
       if (dataPribadi && dataPribadi?.pindahan_pelatihan_id?.length > 0) {
-        // return router.push(
-        //   `/peserta/form-pendaftaran?id=${dataPribadi?.pindahan_pelatihan_id[0]}`
-        // );
+        return router.push(
+          `/peserta/form-pendaftaran?id=${dataPribadi?.pindahan_pelatihan_id[0]}`
+        );
       }
     }
   }, []);
