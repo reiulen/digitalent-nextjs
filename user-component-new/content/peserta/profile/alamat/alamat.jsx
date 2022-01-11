@@ -7,7 +7,9 @@ import { getProfileAlamat } from "../../../../../redux/actions/pelatihan/profile
 const Alamat = ({ token }) => {
   const dispatch = useDispatch();
 
-  const { error: errorAlamat, alamat } = useSelector(state => state.dataAlamat);
+  const { error: errorAlamat, alamat } = useSelector(
+    (state) => state.dataAlamat
+  );
 
   useEffect(() => {
     // if (errorAlamat) {
@@ -17,7 +19,7 @@ const Alamat = ({ token }) => {
   }, [dispatch]);
   return (
     <>
-      <div className="mt-5 alamat">
+      <div className="alamat">
         <h3 className="font-weight-bolder mb-5">Alamat</h3>
         <Row>
           <Col md={12}>
