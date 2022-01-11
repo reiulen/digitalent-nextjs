@@ -16,6 +16,8 @@ import ListPeserta from "./list-peserta-pelatihan";
 import Tables from "./detail-list-peserta-pelatihan";
 import UbahPelatihan from "./ubah-list-peserta-pelatihan";
 import moment from 'moment'
+import { Modal } from "react-bootstrap";
+import { PDFReader } from "react-read-pdf";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -23,6 +25,8 @@ const Table = ({ token }) => {
 
   const allDetailPeserta = useSelector((state) => state.allDetailPeserta);
   const [sideBar, setSideBar] = useState(true);
+  const [showModalPreview, setShowModalPreview] = useState(false);
+  const [showModalPreviewIjazah, setShowModalPreviewIjazah] = useState(false);
 
   const onNewReset = () => {
     router.replace("/site-management/role", undefined, {
@@ -61,7 +65,7 @@ const Table = ({ token }) => {
                         src={
                           allDetailPeserta.data.data?.foto
                             ? allDetailPeserta.data.data.file_path +
-                              allDetailPeserta.data.data.foto
+                            allDetailPeserta.data.data.foto
                             : "/assets/media/logos/default.png"
                         }
                         width="1000"
@@ -211,7 +215,7 @@ const Table = ({ token }) => {
                         Nomor Kontak Darurat
                       </p>
                       <p className="fz-16">
-                        {allDetailPeserta.data.data?.nomor_handphone_darurat}
+                        {allDetailPeserta.data.data?.nomor_handphone_darurat !== "" ? allDetailPeserta.data.data?.nomor_handphone_darurat : "-"}
                       </p>
                       <p className="mb-2 mt-4" style={colorText}>
                         Tanggal Lahir
@@ -309,7 +313,7 @@ const Table = ({ token }) => {
                       <p className="mb-2" style={colorText}>
                         KTP
                       </p>
-                      <p className="fz-16">
+                      <p className="fz-16" style={{ cursor: "pointer", textDecoration: "underline" }} onClick={() => setShowModalPreview(true)}>
                         {allDetailPeserta.data.data?.File_ktp}
                       </p>
                     </div>
@@ -319,8 +323,8 @@ const Table = ({ token }) => {
                       <p className="mb-2" style={colorText}>
                         Ijazah
                       </p>
-                      <p className="fz-16">
-                        {allDetailPeserta.data.data?.ijazah}
+                      <p className="fz-16" style={{ cursor: "pointer", textDecoration: "underline" }} onClick={() => setShowModalPreviewIjazah(true)}>
+                        {allDetailPeserta.data.data?.ijasah}
                       </p>
                     </div>
                   </div>
@@ -330,9 +334,57 @@ const Table = ({ token }) => {
           </div>
         )}
 
+        <Modal
+          show={showModalPreview}
+          onHide={() => setShowModalPreview(false)}
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          size="xl"
+        >
+          <Modal.Header>
+            <Modal.Title>Preview KTP</Modal.Title>
+            <button
+              type="button"
+              className="close"
+              onClick={() => setShowModalPreview(false)}
+            >
+              <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+            </button>
+          </Modal.Header>
+          <Modal.Body>
+            <div style={{ overflow: "scroll", height: 600 }}>
+              <PDFReader url={allDetailPeserta.data.data?.file_path + allDetailPeserta.data.data?.ijasah} />
+            </div>
+          </Modal.Body>
+        </Modal>
+
+        <Modal
+          show={showModalPreviewIjazah}
+          onHide={() => setShowModalPreviewIjazah(false)}
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          size="xl"
+        >
+          <Modal.Header>
+            <Modal.Title>Preview Ijazah</Modal.Title>
+            <button
+              type="button"
+              className="close"
+              onClick={() => setShowModalPreviewIjazah(false)}
+            >
+              <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+            </button>
+          </Modal.Header>
+          <Modal.Body>
+            <div style={{ overflow: "scroll", height: 600 }}>
+              <PDFReader url={allDetailPeserta.data.data?.file_path + allDetailPeserta.data.data?.File_ktp} />
+            </div>
+          </Modal.Body>
+        </Modal>
+
         {!sideBar &&
-        !router.query.pelatihan_id &&
-        !router.query.ubah_pelatihan_id ? (
+          !router.query.pelatihan_id &&
+          !router.query.ubah_pelatihan_id ? (
           <ListPeserta token={token} />
         ) : null}
         {!sideBar && router.query.pelatihan_id ? (

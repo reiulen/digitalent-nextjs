@@ -23,7 +23,7 @@ import IconCalender from "../../../../assets/icon/Calender";
 import { RESET_VALUE_SORTIR } from "../../../../../redux/types/site-management/settings/api.type";
 import styles from "../../../../../styles/sitemanagement/logApi.module.css";
 import Cookies from 'js-cookie'
-import {Modal} from "react-bootstrap"
+import { Modal } from "react-bootstrap"
 
 import styles2 from "../../../../../styles/previewGaleri.module.css";
 import stylesPag from "../../../../../styles/pagination.module.css";
@@ -66,10 +66,11 @@ const Table = ({ token }) => {
       Swal.fire('Oops !', 'To tidak boleh kosong', 'error')
     } else {
       dispatch(changeDates(froms, tos));
+      dispatch(getDetailLog(router.query.id, token, Cookies.get("token_permission")));
       setShowModal(false)
     }
   };
-  
+
   const resetValueSort = () => {
     setFroms("");
     setTos("");
@@ -205,7 +206,6 @@ const Table = ({ token }) => {
                             <Modal.Body>
                               <div
                                 className="modal-body text-left"
-                                style={{ height: "400px" }}
                               >
                                 <div className="fv-row mb-10">
                                   <label>From</label>
