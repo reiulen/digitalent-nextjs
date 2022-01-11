@@ -12,20 +12,19 @@ export default function LoginSso() {
     handlerLoginCallback();
   }, []);
 
-  const handlerLoginCallback = useCallback(() => {
+  const handlerLoginCallback = () => {
     const data = {
       token_nik,
       token_id,
       role: "peserta_sso",
     };
     const result = handlerLoginSso(data);
-
     if (result.error) {
       router.push("/");
     } else {
       router.push("/peserta");
     }
-  }, [router]);
+  };
 
   const handlerLoginSso = async (data) => {
     const result = await signIn("credentials", data);

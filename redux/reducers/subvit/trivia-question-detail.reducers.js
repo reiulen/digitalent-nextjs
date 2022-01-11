@@ -213,7 +213,7 @@ export const deleteTriviaQuestionDetailReducer = (state = {}, action) => {
 };
 
 export const detailTriviaQuestionDetailReducer = (
-  state = { trivia_question_detail: {} },
+  state = { trivia_question_detail: null },
   action
 ) => {
   switch (action.type) {
@@ -225,7 +225,7 @@ export const detailTriviaQuestionDetailReducer = (
     case DETAIL_TRIVIA_QUESTION_DETAIL_SUCCESS:
       return {
         loading: false,
-        trivia_question_detail: action.payload.data,
+        trivia_question_detail: action.payload,
       };
 
     case DETAIL_TRIVIA_QUESTION_DETAIL_FAIL:

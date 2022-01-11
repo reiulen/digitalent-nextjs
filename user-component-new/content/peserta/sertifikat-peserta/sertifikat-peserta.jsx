@@ -58,18 +58,17 @@ export default function RiwayatPelatihanDetail({ session }) {
 
   const handleDownload = async (id, noRegis, nama) => {
     setLoading(true);
-
-    const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${noRegis}`;
+    const linkChecker = `${process.env.END_POINT_API_TTEP12}p12/check-pdf?registration_id=${noRegis}`;
     try {
-      const check = await axios.get(linkChecker, config);
+      const check = await axios.get(linkChecker);
       if (!check.data.status) {
         const data = await convertDivToPng(divReference.current);
         if (data) {
           try {
             const formData = new FormData();
-            formData.append("certificate", data);
-            const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf?training_id=${id}&nomor_registrasi=${noRegis}`;
-            const result = await axios.post(link, formData, config);
+            formData.append("file", data);
+            const link = `${process.env.END_POINT_API_TTEP12}p12/sign-pdf?training_id=${id}&nomor_registrasi=${noRegis}`;
+            const result = await axios.post(link, formData);
             //post image certificate yang udah di render dari html
             if (!result.data.status) {
               setLoading(false);
@@ -95,7 +94,7 @@ export default function RiwayatPelatihanDetail({ session }) {
         const a = document.createElement("a");
         a.download = `Sertifikat - ${nama} ${noRegis}.png`;
         a.target = "_blank";
-        a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${check.data.file_pdf}`;
+        a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${check.data.fileName}`;
         a.click();
         setLoading(false);
       }

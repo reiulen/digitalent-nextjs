@@ -173,7 +173,7 @@ const DetailPelatihan = ({ session }) => {
                         Pendaftar
                       </p>
                       <p className="fz-16 fw-400">
-                        {pelatihan?.kuota_peserta} Peserta
+                        {pelatihan?.kuota_pendaftar} Pendaftar
                       </p>
                     </div>
                   </div>
@@ -336,8 +336,8 @@ const DetailPelatihan = ({ session }) => {
                 />
 
                 <div className="ml-4">
-                  <p className="fw-600 fz-18 mb-2">Kuota</p>
-                  <p className="fz-16">{pelatihan?.kuota_pendaftar} peserta</p>
+                  <p className="fw-600 fz-18 mb-2">Peserta</p>
+                  <p className="fz-16">{pelatihan?.kuota_peserta} Peserta</p>
                 </div>
               </div>
             </div>
