@@ -475,6 +475,7 @@ const UbahRole = ({ token, name }) => {
                             }}
                             onChange={(e) => {
                               setLimit(e.target.value);
+                              setPage(1);
                               const data = {
                                 button_type: 0,
                                 tahun: "",
@@ -494,7 +495,7 @@ const UbahRole = ({ token, name }) => {
                                 postFilterExportData(
                                   token,
                                   data,
-                                  page,
+                                  1,
                                   e.target.value,
                                   Cookies.get("token_permission")
                                 )
