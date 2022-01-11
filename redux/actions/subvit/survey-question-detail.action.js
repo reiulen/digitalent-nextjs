@@ -206,7 +206,7 @@ export const detailSurveyQuestionDetail =
     } catch (error) {
       dispatch({
         type: DETAIL_SURVEY_QUESTION_DETAIL_FAIL,
-        payload: error.response.data,
+        payload: error,
       });
     }
   };

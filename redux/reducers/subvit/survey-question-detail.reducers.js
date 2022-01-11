@@ -221,7 +221,7 @@ export const detailSurveyQuestionDetailReducer = (
     case DETAIL_SURVEY_QUESTION_DETAIL_SUCCESS:
       return {
         loading: false,
-        survey_question_detail: action.payload.data,
+        survey_question_detail: action.payload,
       };
 
     case DETAIL_SURVEY_QUESTION_DETAIL_FAIL:

@@ -52,7 +52,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
   const [question_image_name, setQuestionImageName] = useState("Pilih Gambar");
 
   const [answer, setAnswer] = useState(
-    JSON.parse(trivia_question_detail?.answer)
+    trivia_question_detail ? JSON.parse(trivia_question_detail?.answer) : []
   );
 
   const [duration, setDuration] = useState(trivia_question_detail?.duration);
@@ -138,7 +138,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
         if (valid) {
           const data = {
             trivia_question_bank_id:
-              trivia_question_detail.trivia_question_bank_id,
+              trivia_question_detail?.trivia_question_bank_id,
             question,
             question_image,
             answer: answers,
@@ -155,7 +155,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
         if (valid) {
           const data = {
             trivia_question_bank_id:
-              trivia_question_detail.trivia_question_bank_id,
+              trivia_question_detail?.trivia_question_bank_id,
             question,
             question_image,
             answer: answers,
@@ -173,7 +173,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
         if (valid) {
           const data = {
             trivia_question_bank_id:
-              trivia_question_detail.trivia_question_bank_id,
+              trivia_question_detail?.trivia_question_bank_id,
             question,
             question_image,
             answer: answers,
@@ -243,7 +243,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
 
   return (
     <PageWrapper>
-      {error ? (
+      {error && (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
           role="alert"
@@ -265,9 +265,9 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
             </button>
           </div>
         </div>
-      ) : (
-        ""
       )}
+
+      <h1>Hello Words</h1>
 
       <div className="col-lg-12 order-1 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
@@ -311,7 +311,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
                       accept="image/png, image/gif, image/jpeg , image/jpg"
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      {trivia_question_detail.question_image_preview.substr(
+                      {trivia_question_detail?.question_image_preview.substr(
                         14
                       ) || question_image_name}
                     </label>
@@ -320,20 +320,6 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
                     (Maksimal ukuran file 5 MB)
                   </span>
                 </div>
-                {/* <div className="col-md-2 d-flex my-auto">
-                  <button
-                    className="btn pt-0 mr-3"
-                    style={{ marginTop: "45px" }}
-                    type="button"
-                  >
-                    <Image
-                      alt="button-action"
-                      src="/assets/icon/trash-red.svg"
-                      width={20}
-                      height={30}
-                    />
-                  </button>
-                </div> */}
               </div>
 
               <div>Jenis Pertanyaan</div>
@@ -384,7 +370,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
                 </div>
               </div>
 
-              {handleMethodeInput()}
+              {!detailError && handleMethodeInput()}
 
               <div className="button-back float-right p-5">
                 <button
