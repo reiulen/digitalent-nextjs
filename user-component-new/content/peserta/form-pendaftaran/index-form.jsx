@@ -71,6 +71,7 @@ const IndexForm = ({ token, session }) => {
   useEffect(() => {
     switch (view) {
       case 1:
+        window.scrollTo({ top: 0, behavior: "smooth" });
         return setBreadcrumb("");
       case 2:
         return setBreadcrumb("Form Komitmen");
@@ -308,6 +309,7 @@ const IndexForm = ({ token, session }) => {
               <FormPendaftaran
                 propsTitle={title}
                 funcView={(val) => setView(val)}
+                pindahan={pindahan}
               />
             </Card>
           </>
