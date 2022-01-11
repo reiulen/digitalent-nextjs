@@ -104,7 +104,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           );
           success = true;
         } else {
-          console.log("masuk sini");
           //jika gak ada gw cek di riwayat pelatihan ada gak datanya
 
           const { data } = await store.dispatch(
@@ -113,7 +112,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
               100
             )
           );
-          console.log(data, "ini data");
           success = false;
           const list = data.list.filter((item) => {
             return item.trivia;

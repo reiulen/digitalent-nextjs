@@ -107,9 +107,7 @@ const IndexForm = ({ token, session }) => {
   };
 
   useEffect(() => {
-    // checkPendaftaran();
     checkPindahan(dataTraining?.id);
-    // console.log(dataTraining);
   }, []);
 
   const showViewForm = () => {
