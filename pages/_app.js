@@ -26,9 +26,10 @@ import moment from "moment";
 import "moment/locale/id";
 import { useDispatch, useSelector } from "react-redux";
 import { getSidebar } from "../redux/actions/site-management/role.actions";
-
+import { useRouter } from "next/router";
 import Layout from "../components/templates/layout.component";
 import { getFirebaseToken } from "../messaging_get_token";
+import { divide } from "lodash";
 
 function MyApp({ Component, pageProps }) {
   SimpleReactValidator.addLocale("id", {
@@ -73,7 +74,8 @@ function MyApp({ Component, pageProps }) {
   });
 
   const dispatch = useDispatch();
-
+  const router = useRouter();
+  const [disabledRightClick, setDisabledRightClick] = useState(false);
   useEffect(() => {
     getFirebaseToken();
     if (pageProps?.session?.user?.user?.data?.token) {
@@ -82,6 +84,40 @@ function MyApp({ Component, pageProps }) {
       }
     }
   }, [dispatch, pageProps?.session?.user?.user?.data?.token]);
+
+  useEffect(() => {
+    // if (
+    //   router.pathname.includes(
+    //     "/peserta/riwayat-pelatihan/[nama_pelatihan]/sertifikat/[id]"
+    //   )
+    // ) {
+    //   setDisabledRightClick(true);
+    // } else {
+    //   setDisabledRightClick(false);
+    // }
+    // if (disabledRightClick) {
+    if (process.env.NODE_ENV != "development") {
+      setDisabledRightClick(true);
+      document.onkeydown = function (e) {
+        if (e.keyCode == 123 || e.code == "F12" || e.key == "F12") {
+          return false;
+        }
+        if (e.ctrlKey && e.shiftKey && e.keyCode == "I".charCodeAt(0)) {
+          return false;
+        }
+        if (e.ctrlKey && e.shiftKey && e.keyCode == "C".charCodeAt(0)) {
+          return false;
+        }
+        if (e.ctrlKey && e.shiftKey && e.keyCode == "J".charCodeAt(0)) {
+          return false;
+        }
+        if (e.ctrlKey && e.keyCode == "U".charCodeAt(0)) {
+          return false;
+        }
+      };
+    }
+  }, []);
+
   moment.locale("id");
 
   return (
@@ -91,7 +127,15 @@ function MyApp({ Component, pageProps }) {
           <Component {...pageProps} />
         </Layout>
       ) : (
-        <Component {...pageProps} />
+        <div
+          onContextMenu={(e) => {
+            if (disabledRightClick) {
+              e.preventDefault();
+            }
+          }}
+        >
+          <Component {...pageProps} />
+        </div>
       )}
     </>
   );
