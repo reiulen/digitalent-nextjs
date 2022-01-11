@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Button, Row, Col, Form } from "react-bootstrap";
 import Swal from "sweetalert2";
 import moment from "moment";
@@ -26,16 +26,25 @@ const FormKomitmen = ({
 
   const [dataPeserta] = useState(propsDataPribadi);
   const [dataPelatihan] = useState(propsDataPelatihan);
-  const [menyatakan, setMenyatakan] = useState(dataForm.komitmen);
+  const [menyatakan, setMenyatakan] = useState(dataForm.komitmen || false);
+  const [commit, setCommit] = useState(false);
 
   const handleCommitment = () => {
-    setMenyatakan(!menyatakan);
+    if (menyatakan == "1") {
+      setMenyatakan("0");
+    } else {
+      setMenyatakan("1");
+    }
     const data = {
       komitmen: !menyatakan,
       form_pendaftaran: dataForm.form_pendaftaran,
     };
     dispatch(storeFormRegister(data));
   };
+
+  useEffect(() => {
+    console.log(menyatakan);
+  }, [menyatakan]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -154,13 +163,7 @@ const FormKomitmen = ({
                           <input
                             type="checkbox"
                             className="form-check-input"
-                            checked={
-                              menyatakan === "1"
-                                ? true
-                                : menyatakan === true
-                                ? true
-                                : false
-                            }
+                            checked={menyatakan == "1"}
                             value={menyatakan}
                             onClick={() => handleCommitment()}
                           />
@@ -195,6 +198,7 @@ const FormKomitmen = ({
                 <Button
                   className={`${style.button_profile_simpan} rounded-xl`}
                   type="submit"
+                  disabled={menyatakan == "0" ? true : false}
                 >
                   Daftar
                 </Button>
