@@ -165,6 +165,14 @@ export default function FormPengaduan() {
               style={{ height: "120px" }}
               onChange={(e) => setDeskripsi(e.target.value)}
             />
+            {simpleValidator.current.message(
+              "deskripsi",
+              deskripsi,
+              "required",
+              {
+                className: "text-danger",
+              }
+            )}
           </Form.Group>
           <div className="g-recaptcha mb-8">
             <ReCAPTCHA
