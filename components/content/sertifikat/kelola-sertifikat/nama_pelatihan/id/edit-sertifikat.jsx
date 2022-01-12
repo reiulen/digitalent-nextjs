@@ -2110,6 +2110,7 @@ export default function EditSertifikat({ token }) {
                               onChange={(e) => handleChange(e, index)}
                               className="form-control"
                               value={syllabus}
+                              maxLength={205}
                             />
                           </div>
                           {index === 0 ? (
