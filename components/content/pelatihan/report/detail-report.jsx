@@ -451,7 +451,142 @@ const DetailReport = ({ token }) => {
                       <th>Aksi</th>
                     </tr>
                   </thead>
-                  <tbody>{listPeserta}</tbody>
+                  <tbody>
+                    {detailReportTraining.list.length > 0 ? (
+                      detailReportTraining?.list?.map((item, index) => {
+                        return (
+                          <tr key={index}>
+                            <td className="text-center">{index + 1}</td>
+                            <td className="align-middle">
+                              <p className="font-weight-bolder my-0">
+                                {item.name}
+                              </p>
+                              <p className="my-0">{item.nomor_registrasi}</p>
+                              <p className="my-0">{item.nik}</p>
+                            </td>
+                            <td
+                              className="align-middle"
+                              style={{
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                                maxWidth: "12rem",
+                              }}
+                            >
+                              {item.alamat}
+                            </td>
+                            <td className="align-middle">
+                              <p
+                                className={`my-0 text-${
+                                  item.subtansi_status.toLowerCase() !==
+                                  "lulus tes"
+                                    ? "danger"
+                                    : "success"
+                                }`}
+                              >
+                                {item.subtansi_status}
+                              </p>
+                              <p className="my-0">{Math.round(item.nilai)}</p>
+                              <p className="my-0">
+                                {handleSecondsToTime(item.waktu)}
+                              </p>
+                            </td>
+                            <td className="align-middle">
+                              <span
+                                className={
+                                  (item.administrasi === "unverified" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (item.administrasi === "verified" &&
+                                    "label label-inline statusPeserta-success font-weight-bold text-capitalize") ||
+                                  (item.administrasi === "incomplete" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize")
+                                }
+                              >
+                                {item.administrasi}
+                              </span>
+                            </td>
+                            <td className="align-middle">
+                              <span
+                                className={
+                                  (item.status === "tidak lulus administrasi" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                                  (item.status ===
+                                    "tidak lulus tes substansi" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                                  (item.status === "tidak lulus pelatihan" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                                  (item.status === "ditolak" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                                  (item.status === "seleksi administrasi" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (item.status === "tes substansi" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (item.status === "seleksi akhir" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (item.status === "administrasi akhir" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (item.status === "diterima" &&
+                                    "label label-inline statusPeserta-success font-weight-bold text-capitalize") ||
+                                  (item.status === "lulus pelatihan" &&
+                                    "label label-inline statusPeserta-success font-weight-bold text-capitalize")
+                                }
+                              >
+                                {item.status}
+                              </span>
+                            </td>
+                            <td className="align-middle">
+                              <div className="d-flex align-items-center">
+                                {item.sertifikat === "" ? "Tidak Ada" : "Ada"}
+                              </div>
+                            </td>
+                            {item.sertifikat === "" ? (
+                              <td className="align-middle">
+                                <button
+                                  className="btn btn-link-action bg-blue-primary text-white"
+                                  data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  title="Tambah Sertifikasi"
+                                  onClick={() => {
+                                    setShowModalSertifikasi(true);
+                                    setId(item.id);
+                                  }}
+                                  type="button"
+                                >
+                                  <i className="ri-add-fill text-white p-0"></i>
+                                </button>
+                              </td>
+                            ) : (
+                              <td className="align-middle">
+                                <button
+                                  className="btn btn-link-action bg-blue-primary text-white"
+                                  data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  title="Preview Sertifikasi"
+                                  onClick={() => {
+                                    setFilePreviewPdf(
+                                      item.file_sertifikat !== ""
+                                        ? item.file_path + item.file_sertifikat
+                                        : ""
+                                    );
+                                    setShowModalPreview(true);
+                                    setId(item.id);
+                                  }}
+                                  type="button"
+                                >
+                                  <i className="ri-eye-line text-white p-0"></i>
+                                </button>
+                              </td>
+                            )}
+                          </tr>
+                        );
+                      })
+                    ) : (
+                      <td className="align-middle text-center" colSpan={8}>
+                        Data Kosong
+                      </td>
+                    )}
+                    {/* {listPeserta} */}
+                  </tbody>
                 </table>
               </div>
               <div className="row">

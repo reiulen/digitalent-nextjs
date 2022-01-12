@@ -343,6 +343,12 @@ export default function EditSertifikat({ token }) {
         simpleValidator.current.fields["Tanda tangan"] = true;
       }
 
+      if (number_of_signature_syllabus == 0) {
+        simpleValidator.current.fields.Jabatan = true;
+        simpleValidator.current.fields.Nama = true;
+        simpleValidator.current.fields["Tanda tangan"] = true;
+      }
+
       const id = query.id;
 
       if (simpleValidator.current.allValid()) {
@@ -2110,6 +2116,7 @@ export default function EditSertifikat({ token }) {
                               onChange={(e) => handleChange(e, index)}
                               className="form-control"
                               value={syllabus}
+                              maxLength={205}
                             />
                           </div>
                           {index === 0 ? (
