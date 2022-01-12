@@ -679,7 +679,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                           `/subvit/trivia/clone/step-3?id=${router.query.id}`
                         );
                       } else {
-                        router.back();
+                        router.push("/subvit/trivia/tambah");
                       }
                     }}
                   >
