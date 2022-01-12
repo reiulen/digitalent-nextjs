@@ -23,7 +23,10 @@ export default function Index({ children }) {
       <Row style={{ marginBottom: "184px" }}>
         <Col lg={3} md={4}>
           <h1 style={{ fontSize: "40px", fontWeight: 700 }}>BANTUAN</h1>
-          <p className="fz-18 mb-18" style={{ color: "#6C6C6C" }}>
+          <p
+            className="fz-18 mb-18 text-break"
+            style={{ color: "#6C6C6C", maxWidth: "200px" }}
+          >
             Ada yang bisa kami bantu?
           </p>
           {sidebar &&

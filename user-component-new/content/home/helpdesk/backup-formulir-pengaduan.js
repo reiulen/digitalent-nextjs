@@ -31,11 +31,11 @@ export default function BerandaKontak(props) {
 
   return (
     <>
-      {/* <div style={{ backgroundColor: "white" }}>
+      <div style={{ backgroundColor: "white" }}>
         <Layout title="Bantuan" session={session}>
           <FormPengaduan session={session}></FormPengaduan>
         </Layout>
-      </div> */}
+      </div>
     </>
   );
 }

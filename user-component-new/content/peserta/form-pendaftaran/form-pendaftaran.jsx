@@ -17,9 +17,13 @@ import {
 } from "../../../../utils/middleware/helper";
 import FormBuilderComponent from "./component/form-builder.component";
 
-const FormPendaftaran = ({ propsTitle, funcView, token, pindahan }) => {
+const FormPendaftaran = ({ propsTitle, funcView, token }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [pindahan, setPindahan] = useState(false);
+  const { error: errorDataPribadi, dataPribadi } = useSelector(
+    (state) => state.getDataPribadi
+  );
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -98,6 +102,17 @@ const FormPendaftaran = ({ propsTitle, funcView, token, pindahan }) => {
     }
   };
 
+  useEffect(() => {
+    if (dataPribadi?.pindahan_pelatihan_id?.includes(dataTraining?.id)) {
+      setPindahan(true);
+      return;
+    } else {
+      setPindahan(false);
+    }
+  }, []);
+  useEffect(() => {
+    console.log(pindahan, "ni pindahan");
+  }, [pindahan]);
   return (
     <>
       <Card.Body>
