@@ -66,10 +66,11 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
       dispatch({
         type: UPDATE_TRIVIA_QUESTION_DETAIL_RESET,
       });
-      router.push({
-        pathname: `/subvit/trivia/${localStorage.getItem("id_trivia")}`,
-        query: { success: true },
-      });
+      // router.push({
+      //   pathname: `/subvit/trivia/${localStorage.getItem("id_trivia")}`,
+      //   query: { success: true },
+      // });
+      router.back();
     }
   }, [dispatch, success, router]);
 
@@ -266,8 +267,6 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
           </div>
         </div>
       )}
-
-      <h1>Hello Words</h1>
 
       <div className="col-lg-12 order-1 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}

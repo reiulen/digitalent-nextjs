@@ -133,16 +133,20 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
   };
 
   const handleRemoveClick = (index, parent, children) => {
-    if (index == null && parent == null && children != null) {
+    if (index != null && parent != null && children != null) {
       const list = [...answer];
-      // delete list[children]
-      list.splice(children, 1);
-      list.forEach((row, i) => {
-        let key = String.fromCharCode(65 + i);
-        list[i]["key"] = key;
+      list.forEach((row1, i) => {
+        if (i === index) {
+          let listArr = row1.sub[parent];
+          listArr.answer.splice(children, 1);
+          listArr.answer.forEach((row3, i) => {
+            let key = String.fromCharCode(65 + i);
+            listArr.answer[i]["key"] = key;
+          });
+          setSoalList(list);
+          props_answer(list);
+        }
       });
-      setSoalList(list);
-      props_answer(list);
     }
 
     if (index == null && parent != null && children != null) {
@@ -157,20 +161,16 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
       props_answer(list);
     }
 
-    if (index != null && parent != null && children != null) {
+    if (index == null && parent == null && children != null) {
       const list = [...answer];
-      list.forEach((row1, i) => {
-        row1.sub.forEach((row2, j) => {
-          // delete row2.answer[children]
-          row2.answer.splice(children, 1);
-          row2.answer.forEach((row3, i) => {
-            let key = String.fromCharCode(65 + i);
-            row2.answer[i]["key"] = key;
-          });
-          setSoalList(list);
-          props_answer(list);
-        });
+      // delete list[children]
+      list.splice(children, 1);
+      list.forEach((row, i) => {
+        let key = String.fromCharCode(65 + i);
+        list[i]["key"] = key;
       });
+      setSoalList(list);
+      props_answer(list);
     }
   };
 

@@ -226,8 +226,6 @@ const StepTwo = ({ token, tokenPermission }) => {
 
     if (valid) {
       localStorage.setItem("method", "import" || router.query.metode);
-      localStorage.removeItem("successFile");
-      localStorage.removeItem("successImage");
       router.push({
         pathname: `/subvit/substansi/tambah-step-3`,
         query: { id },

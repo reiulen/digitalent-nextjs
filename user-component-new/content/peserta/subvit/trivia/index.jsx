@@ -71,6 +71,7 @@ const SubtansiUser = ({ token }) => {
 
   const [data, setData] = useState();
   const [answer, setAnswer] = useState("");
+  const [getLoader, setGetLoader] = useState(true);
   const [listAnswer, setListAnswer] = useState([]);
 
   const [modalSoal, setModalSoal] = useState(false);
@@ -84,19 +85,27 @@ const SubtansiUser = ({ token }) => {
   //   tt.push(it.duration / 1000);
   // });
 
-  const [times, setTimes] = useState(null);
+  // const [times, setTimes] = useState(null);
+  const [times, setTimes] = useState(
+    random_trivia &&
+      random_trivia.list_questions[router.query.id - 1].duration / 1000 <= 0
+      ? 3000
+      : random_trivia.list_questions[router.query.id - 1].duration / 1000
+  );
 
-  useEffect(() => {
-    const time =
-      random_trivia?.list_questions[parseInt(router.query.id) - 1].duration /
-      1000;
+  // useEffect(() => {
+  //   setGetLoader(true);
+  //   const time =
+  //     random_trivia?.list_questions[parseInt(router.query.id) - 1].duration /
+  //     1000;
 
-    if (time <= 0) {
-      setTimes(3000);
-    } else {
-      setTimes(time);
-    }
-  }, [random_trivia]);
+  //   if (time <= 0) {
+  //     setTimes(3000);
+  //   } else {
+  //     setTimes(time);
+  //   }
+  //   setGetLoader(false);
+  // }, [random_trivia]);
   // MASIH DIPAKE
   // $(window).on("popstate", function () {
   //   router.push("/peserta/done-trivia");
@@ -166,6 +175,7 @@ const SubtansiUser = ({ token }) => {
   }, [count, router, error, dispatch, token]);
 
   useEffect(() => {
+    setGetLoader(true);
     const config = {
       headers: {
         Authorization: "Bearer " + token,
@@ -180,6 +190,7 @@ const SubtansiUser = ({ token }) => {
       .then((res) => {
         setQuestion(res.data.total_questions);
         setTime(res.data.duration);
+        setGetLoader(false);
       });
   }, [routerTraining, routerTema, token]);
 
@@ -351,14 +362,15 @@ const SubtansiUser = ({ token }) => {
         type: "trivia",
       };
       dispatch(postResultTrivia(setData, token));
-      localStorage.clear();
+      sessionStorage.clear();
       router.push("/peserta/done-trivia");
     } else {
-      router.push(
-        `${router.pathname.slice(0, 23)}/${page}?theme_id=${
-          router.query.theme_id
-        }&training_id=${router.query.training_id}`
-      );
+      window.location.href = `${router.pathname.slice(
+        0,
+        23
+      )}/${page}?theme_id=${router.query.theme_id}&training_id=${
+        router.query.training_id
+      }`;
     }
 
     setModalNext(false);
@@ -388,22 +400,24 @@ const SubtansiUser = ({ token }) => {
 
   useEffect(() => {
     // Hitung Waktu Mundur
-    if (times >= 0) {
-      const secondsLeft = setInterval(() => {
-        setTimes((c) => c - 1);
-        // console.log(data.list_questions[0].duration);
-        let timeLeftVar = ToTime(times);
-        setHour2(timeLeftVar.h);
-        setMinute2(timeLeftVar.m);
-        setSecond2(timeLeftVar.s);
-      }, 1000);
-      return () => clearInterval(secondsLeft);
-    } else {
-      // localStorage.clear();
-      // setOpen(true);
-      // handleNext();
-      window.location.reload();
-      console.log("useEffect kelima", times);
+    if (random_trivia.list_questions[router.query.id - 1].duration) {
+      if (
+        random_trivia.list_questions[router.query.id - 1].duration >= 0 &&
+        times >= 0
+      ) {
+        const secondsLeft = setInterval(() => {
+          setTimes((c) => c - 1);
+          let timeLeftVar = ToTime(times);
+          setHour2(timeLeftVar.h);
+          setMinute2(timeLeftVar.m);
+          setSecond2(timeLeftVar.s);
+        }, 1000);
+        return () => clearInterval(secondsLeft);
+      } else {
+        localStorage.clear();
+        setOpen(true);
+        handleNext();
+      }
     }
   }, [times, data, router]);
 
