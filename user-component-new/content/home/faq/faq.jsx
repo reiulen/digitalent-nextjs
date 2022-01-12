@@ -23,7 +23,7 @@ const FaqPage = () => {
   const [title, setTitle] = useState("Pertanyaan Populer");
   const [keyword, setKeyword] = useState("");
   const [showCategoryMobile, setShowCategoryMobile] = useState(false);
-  const [ kategoriToShow, setKategoriToShow ] = useState ([])
+  const [kategoriToShow, setKategoriToShow] = useState([])
 
   const [content, setContent] = useState(
     faq?.faq.map((row, i) => {
@@ -35,29 +35,29 @@ const FaqPage = () => {
   );
 
   useEffect(() => {
-    handleKategoriToShow()
+    handleKategoriToShow();
   }, [])
-  
+
   // Handle Empty Kategori not show
   const handleKategoriToShow = () => {
-    if (faq){
+    if (faq) {
       let obj = faq?.faq
       let arr = []
       let result = []
 
-      for (let i = 0; i < obj.length; i++){
-        arr.push (obj[i]?.nama_kategori)
+      for (let i = 0; i < obj.length; i++) {
+        arr.push(obj[i]?.nama_kategori)
       }
 
-      for (let j = 0; j < arr.length; j++){
+      for (let j = 0; j < arr.length; j++) {
 
-        if (j === 0){
-            result.push (arr[j])
-  
+        if (j === 0) {
+          result.push(arr[j])
+
         } else {
-            if (result.includes (arr[j]) === false){
-                result.push (arr[j])
-            }
+          if (result.includes(arr[j]) === false) {
+            result.push(arr[j])
+          }
         }
       }
       setKategoriToShow(result.sort())
@@ -72,7 +72,7 @@ const FaqPage = () => {
     if (keyword === "") {
       handlePinnedFaq();
     }
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
   };
 
   const handleLinkContent = (string) => {
@@ -92,7 +92,7 @@ const FaqPage = () => {
     setTitle("Pertanyaan Populer");
 
     setKeyword("")
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
   };
 
   const handleCategoryFaq = (str) => {
@@ -100,7 +100,7 @@ const FaqPage = () => {
     setTitle(str);
 
     setKeyword("")
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
   };
 
   return (
@@ -208,38 +208,39 @@ const FaqPage = () => {
                 </div>
               </div>
             </div>
-              {
-                kategoriToShow && kategoriToShow.length !== 0 ?
-                  kategoriToShow.map ((el, i) => {
-                    return (
-                      <div key={i}>
-                        <div className={`d-flex flex-row ${styles.menuItem}`}>
+            
+            {
+              kategoriToShow && kategoriToShow.length !== 0 ?
+                kategoriToShow.map((el, i) => {
+                  return (
+                    <div key={i}>
+                      <div className={`d-flex flex-row ${styles.menuItem}`}>
+                        <div
+                          className="d-flex align-items-center my-5 font-weight-bolder"
+                          style={
+                            title === el
+                              ? { cursor: "pointer", color: "#007CFF" }
+                              : { cursor: "pointer", color: "#6C6C6C" }
+                          }
+                          onClick={() => handleCategoryFaq(el)}
+                        >
                           <div
-                            className="d-flex align-items-center my-5 font-weight-bolder"
+                            className="fas fa-arrow-right mr-3"
                             style={
                               title === el
                                 ? { cursor: "pointer", color: "#007CFF" }
                                 : { cursor: "pointer", color: "#6C6C6C" }
                             }
-                            onClick={() => handleCategoryFaq(el)}
-                          >
-                            <div
-                              className="fas fa-arrow-right mr-3"
-                              style={
-                                title === el
-                                  ? { cursor: "pointer", color: "#007CFF" }
-                                  : { cursor: "pointer", color: "#6C6C6C" }
-                              }
-                            />
-                            <td>{el}</td>
-                          </div>
+                          />
+                          <td>{el}</td>
                         </div>
                       </div>
-                    );
-                  })
+                    </div>
+                  );
+                })
                 :
-                  null
-              }
+                null
+            }
           </div>
 
           {/* Filter on Mobile */}
@@ -304,34 +305,34 @@ const FaqPage = () => {
 
                   {kategori && kategori.length !== 0
                     ? kategori.map((el, i) => {
-                        return (
-                          <div key={i}>
-                            <div className="d-flex flex-row">
-                              <div
-                                className="d-flex align-items-center my-5 font-weight-bolder"
+                      return (
+                        <div key={i}>
+                          <div className="d-flex flex-row">
+                            <div
+                              className="d-flex align-items-center my-5 font-weight-bolder"
+                              style={
+                                title === el.nama_kategori
+                                  ? { cursor: "pointer", color: "#007CFF" }
+                                  : { cursor: "pointer", color: "#6C6C6C" }
+                              }
+                              onClick={() =>
+                                handleCategoryFaq(el.nama_kategori)
+                              }
+                            >
+                              <i
+                                className="fas fa-arrow-right mr-3"
                                 style={
                                   title === el.nama_kategori
                                     ? { cursor: "pointer", color: "#007CFF" }
                                     : { cursor: "pointer", color: "#6C6C6C" }
                                 }
-                                onClick={() =>
-                                  handleCategoryFaq(el.nama_kategori)
-                                }
-                              >
-                                <i
-                                  className="fas fa-arrow-right mr-3"
-                                  style={
-                                    title === el.nama_kategori
-                                      ? { cursor: "pointer", color: "#007CFF" }
-                                      : { cursor: "pointer", color: "#6C6C6C" }
-                                  }
-                                />
-                                <td>{el.nama_kategori}</td>
-                              </div>
+                              />
+                              <td>{el.nama_kategori}</td>
                             </div>
                           </div>
-                        );
-                      })
+                        </div>
+                      );
+                    })
                     : null}
                 </div>
               </div>
@@ -366,7 +367,7 @@ const FaqPage = () => {
                     return (
                       <Accordion
                         key={i}
-                        // className="col-12"
+                      // className="col-12"
                       >
                         <Accordion.Item
                           // className="border border-dark"
@@ -400,12 +401,12 @@ const FaqPage = () => {
                               }
                             >
                               <h4
-                                className="my-auto text-left" 
+                                className="my-auto text-left"
                                 style={{ fontWeight: "600", fontSize: "20px" }}
                               >
                                 {row.judul}
                               </h4>
-                  
+
                               <button
                                 className="btn my-auto"
                                 type="button"
@@ -420,7 +421,7 @@ const FaqPage = () => {
                                 ></i>
                               </button>
                             </div>
-                            
+
                           </Accordion.Header>
                           <Accordion.Body>
                             <div
@@ -439,7 +440,7 @@ const FaqPage = () => {
                         </Accordion.Item>
                       </Accordion>
 
-                      
+
                     );
                   })
                 ) : (

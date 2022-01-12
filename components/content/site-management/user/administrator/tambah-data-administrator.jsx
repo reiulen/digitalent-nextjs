@@ -501,7 +501,7 @@ const TambahApi = ({ token }) => {
                   aria-controls="home"
                   aria-selected="true"
                 >
-                  Pilih Akademi
+                  By Akademi
                 </a>
               </li>
               <li
@@ -518,7 +518,7 @@ const TambahApi = ({ token }) => {
                   aria-controls="profile"
                   aria-selected="false"
                 >
-                  Pilih Pelatihan
+                  By Pelatihan
                 </a>
               </li>
             </ul>
@@ -535,7 +535,7 @@ const TambahApi = ({ token }) => {
                     value={statusAcademy}
                     className="basic-single"
                     classNamePrefix="select"
-                    placeholder="Pilih status"
+                    placeholder="Pilih Akademi"
                     isMulti
                     isDisabled={false}
                     isLoading={false}

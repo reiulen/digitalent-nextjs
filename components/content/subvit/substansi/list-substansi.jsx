@@ -206,7 +206,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
 
   return (
     <PageWrapper>
-      {error ? (
+      {error && (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
           role="alert"
@@ -229,11 +229,9 @@ const ListSubstansi = ({ token, tokenPermission }) => {
             </button>
           </div>
         </div>
-      ) : (
-        ""
       )}
 
-      {success ? (
+      {success && (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
           role="alert"
@@ -256,8 +254,6 @@ const ListSubstansi = ({ token, tokenPermission }) => {
             </button>
           </div>
         </div>
-      ) : (
-        ""
       )}
 
       <div className="col-lg-12 order-1 px-0">
@@ -394,7 +390,6 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                           return (
                             <tr key={subtance.id}>
                               <td className="align-middle text-center">
-                                {/* <span className="">{paginate - dividers}</span> */}
                                 {limit === null ? (
                                   <span>{i + 1 * (page * 5) - (5 - 1)}</span>
                                 ) : (
@@ -551,9 +546,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
 
               <div className={`${styles.rowPagination} row`}>
                 {subtance && subtance.perPage < subtance.total && (
-                  // <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
                   <>
-                    {/* KONDISI KETIKA FOLD */}
                     <div
                       className={`${stylesPag.paginationFold} table-pagination pagination-custom col-12 col-md-6`}
                     >
