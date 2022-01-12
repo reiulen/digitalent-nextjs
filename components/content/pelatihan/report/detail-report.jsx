@@ -197,26 +197,7 @@ const DetailReport = ({ token }) => {
     let seconds = Math.ceil(divisor_for_seconds);
     return hours + ":" + minutes + ":" + seconds;
   };
-  useEffect(() => {
-    console.log(
-      search,
-      statusAdmin?.label,
-      statusSubstansi?.label,
-      sertifikasi?.value,
-      statusPeserta?.label
-    );
-  }, [
-    token,
-    pelatian_id,
-    page,
-    limit,
-    search,
-    statusAdmin?.label,
-    statusSubstansi?.label,
-    sertifikasi?.value,
-    statusPeserta?.label,
-    token_permission,
-  ]);
+
   const listPeserta =
     detailReportTraining.list.length > 0 ? (
       detailReportTraining.list.map((item, index) => {

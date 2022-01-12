@@ -17,7 +17,6 @@ const DashboardHeader = ({ funcFilterYear, path = "" }) => {
 
   useEffect(() => {
     const current = +moment().utc().format("YYYY");
-    console.log(typeof current);
     const arr = [];
     for (let i = 2017; i <= current; i++) {
       arr.push(i);
