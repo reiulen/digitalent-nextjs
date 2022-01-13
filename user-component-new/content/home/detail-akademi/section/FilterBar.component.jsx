@@ -175,16 +175,20 @@ const FilterBar = ({ session, funcSetPage }) => {
     return (
       <components.ValueContainer {...props}>
         {!props.selectProps.inputValue && displayChips}
-        <div
-          style={{
-            color: "#0063CC",
-            backgroundColor: "#E6F2FF",
-            padding: "1px 10px",
-            borderRadius: "30px",
-          }}
-        >
-          {shouldBadgeShow && `+ ${displayLength} ${length != 1 ? "" : ""} `}
-        </div>
+        {shouldBadgeShow ? (
+          <div
+            style={{
+              color: "#0063CC",
+              backgroundColor: "#E6F2FF",
+              padding: "1px 10px",
+              borderRadius: "30px",
+            }}
+          >
+            {`+ ${displayLength} ${length != 1 ? "" : ""} `}
+          </div>
+        ) : (
+          ""
+        )}
       </components.ValueContainer>
     );
   };
