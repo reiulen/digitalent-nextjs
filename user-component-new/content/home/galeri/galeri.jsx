@@ -826,6 +826,7 @@ const Galeri = () => {
                           : "text-dark text-wrap text-break font-weight-bolder mt-3"
                       }
                       style={
+                        windowDimensions.width >= 770 &&
                         detail.judul.length >= 100
                           ? { fontSize: "20px", width: "95%" }
                           : { fontSize: "24px", width: "95%" }
@@ -906,10 +907,11 @@ const Galeri = () => {
                           className={`${styles.isiGaleriHome} text-justify`}
                           style={
                             windowDimensions &&
-                            windowDimensions.width >= 768 &&
+                            windowDimensions.width > 768 &&
                             detail?.judul.length >= 180
                               ? { maxHeight: "120px" }
-                              : detail?.judul.length >= 130
+                              : windowDimensions.width > 768 &&
+                                detail?.judul.length >= 130
                               ? { maxHeight: "160px" }
                               : {}
                           }
