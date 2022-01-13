@@ -136,8 +136,8 @@ const DashbardSubvit = ({ token }) => {
                         </div>
                         <div className="col-md-12">
                           <p className="font-weight-bold text-muted">
-                            Sudah Makan Hari ini? <br /> Kalau sudah yuk dicheck
-                            verifikasi Test untuk hari ini :)
+                            Selamat Datang di Dashboard Subvit, yuk buat soal
+                            Test Substansi, Survey dan TRIVIA.
                           </p>
                         </div>
                       </div>

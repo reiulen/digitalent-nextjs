@@ -74,7 +74,7 @@ export const getDetailReportTraining =
 
       const config = {
         params: {
-          search,
+          cari: search,
           pelatian_id,
           administrasi,
           peserta,
@@ -90,6 +90,7 @@ export const getDetailReportTraining =
       };
 
       const { data } = await axios.get(link, config);
+
       dispatch({
         type: GET_DETAIL_REPORT_TRAINING,
         payload: data,

@@ -1287,7 +1287,6 @@ const SubtansiUser = ({ token }) => {
                     </h1>
                     <hr />
                     <Form>
-                      {console.log()}
                       <Form.Control
                         as="textarea"
                         rows={5}
