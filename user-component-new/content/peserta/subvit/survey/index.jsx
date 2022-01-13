@@ -391,7 +391,7 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handleAnswerTriggered = (e, i) => {
-    setAnswerTriggered(e);
+    sessionStorage.setItem("answerTriggered", JSON.stringify(e));
 
     let sub = JSON.parse(
       data.list_questions[parseInt(router.query.id) - 1]?.answer
@@ -728,10 +728,20 @@ const SubtansiUser = ({ token }) => {
                       <table>
                         <tr>
                           <td style={{ width: "5px" }}>
-                            {answerTriggered.key}
+                            {sessionStorage.getItem("answerTriggered") !==
+                              null &&
+                              JSON.parse(
+                                sessionStorage.getItem("answerTriggered")
+                              ).key}
                           </td>
                           <td style={{ width: "15px" }}>.</td>
-                          <td>{answerTriggered.option} </td>
+                          <td>
+                            {sessionStorage.getItem("answerTriggered") !==
+                              null &&
+                              JSON.parse(
+                                sessionStorage.getItem("answerTriggered")
+                              ).option}
+                          </td>
                         </tr>
                       </table>
                     </Card>
@@ -749,89 +759,158 @@ const SubtansiUser = ({ token }) => {
                       {sub?.sub?.map((a, parent) => {
                         return (
                           <>
-                            {a.image !== null && a.image !== "" ? (
+                            {parent !== 0 &&
+                            sessionStorage.getItem(
+                              `${router.query.id + parent - 1}td`
+                            ) !== null ? (
                               <>
-                                <h1 className={styles.soal}>
-                                  <div className="d-flex flex-row">
-                                    <div className="p-2">
-                                      {" "}
-                                      <Image
-                                        src={
-                                          process.env
-                                            .END_POINT_API_IMAGE_SUBVIT +
-                                            a.image || defaultImage
-                                        }
-                                        alt=""
-                                        width={150}
-                                        onClick={() => {
-                                          setZoomTr(true);
-                                          setImageClickTr(a.image);
-                                        }}
-                                        height={150}
-                                      />
-                                    </div>
-                                    <Modal
-                                      show={zoomTr}
-                                      onHide={() => setZoomTr(false)}
-                                    >
-                                      <Image
-                                        src={
-                                          process.env
-                                            .END_POINT_API_IMAGE_SUBVIT +
-                                            imageClickTr || defaultImage
-                                        }
-                                        alt=""
-                                        width={500}
-                                        height={800}
-                                      />
-                                    </Modal>
-                                    <div className="p-5">{a.question}</div>
-                                  </div>
-                                </h1>
-                                <hr />
-                                {a.answer.map((ans, index) => {
-                                  return (
-                                    <>
+                                {a.image !== null && a.image !== "" ? (
+                                  <>
+                                    <h1 className={styles.soal}>
                                       <div className="d-flex flex-row">
                                         <div className="p-2">
+                                          {" "}
                                           <Image
                                             src={
                                               process.env
                                                 .END_POINT_API_IMAGE_SUBVIT +
-                                                ans.image || defaultImage
+                                                a.image || defaultImage
                                             }
                                             alt=""
-                                            width={70}
+                                            width={150}
                                             onClick={() => {
-                                              setZoomTrJawab(true);
-                                              setImageClickTrJawab(ans.image);
+                                              setZoomTr(true);
+                                              setImageClickTr(a.image);
                                             }}
-                                            height={70}
+                                            height={150}
                                           />
                                         </div>
                                         <Modal
-                                          show={zoomTrJawab}
-                                          onHide={() => setZoomTrJawab(false)}
+                                          show={zoomTr}
+                                          onHide={() => setZoomTr(false)}
                                         >
                                           <Image
                                             src={
                                               process.env
                                                 .END_POINT_API_IMAGE_SUBVIT +
-                                                imageClickTrJawab ||
-                                              defaultImage
+                                                imageClickTr || defaultImage
                                             }
                                             alt=""
                                             width={500}
                                             height={800}
                                           />
                                         </Modal>
-                                        <div
-                                          className="p-4"
-                                          style={{
-                                            width: "100%",
-                                            height: "100%",
-                                          }}
-                                        >
+                                        <div className="p-5">{a.question}</div>
+                                      </div>
+                                    </h1>
+                                    <hr />
+                                    {a.answer.map((ans, index) => {
+                                      return (
+                                        <>
+                                          <div className="d-flex flex-row">
+                                            <div className="p-2">
+                                              <Image
+                                                src={
+                                                  process.env
+                                                    .END_POINT_API_IMAGE_SUBVIT +
+                                                    ans.image || defaultImage
+                                                }
+                                                alt=""
+                                                width={70}
+                                                onClick={() => {
+                                                  setZoomTrJawab(true);
+                                                  setImageClickTrJawab(
+                                                    ans.image
+                                                  );
+                                                }}
+                                                height={70}
+                                              />
+                                            </div>
+                                            <Modal
+                                              show={zoomTrJawab}
+                                              onHide={() =>
+                                                setZoomTrJawab(false)
+                                              }
+                                            >
+                                              <Image
+                                                src={
+                                                  process.env
+                                                    .END_POINT_API_IMAGE_SUBVIT +
+                                                    imageClickTrJawab ||
+                                                  defaultImage
+                                                }
+                                                alt=""
+                                                width={500}
+                                                height={800}
+                                              />
+                                            </Modal>
+                                            <div
+                                              className="p-4"
+                                              style={{
+                                                width: "100%",
+                                                height: "100%",
+                                              }}
+                                            >
+                                              <Card
+                                                className={
+                                                  sessionStorage.getItem(
+                                                    router.query.id +
+                                                      parent +
+                                                      "td"
+                                                  ) === ans.key
+                                                    ? styles.answer
+                                                    : styles.boxAnswer
+                                                }
+                                                key={index}
+                                                onClick={() => {
+                                                  handleTriggered2(
+                                                    ans,
+                                                    parent,
+                                                    index
+                                                  );
+                                                }}
+                                              >
+                                                <table>
+                                                  <tr>
+                                                    <td
+                                                      style={{ width: "5px" }}
+                                                    >
+                                                      {ans.key}
+                                                    </td>
+                                                    <td
+                                                      style={{
+                                                        width: "15px",
+                                                      }}
+                                                    >
+                                                      .
+                                                    </td>
+                                                    <td>{ans.option}</td>
+                                                  </tr>
+                                                </table>
+                                              </Card>
+                                            </div>
+                                          </div>
+                                        </>
+                                      );
+                                    })}
+                                  </>
+                                ) : (
+                                  <>
+                                    <h1 className={styles.soal}>
+                                      <div className="p-2">{a.question}</div>{" "}
+                                    </h1>
+                                    <hr />
+                                    {a.answer.map((ans, index) => {
+                                      return (
+                                        <>
+                                          {/* {console.log(
+                                        sessionStorage.getItem(
+                                          router.query.id +
+                                            parent +
+                                            index +
+                                            "td"
+                                        )
+                                      )} */}
                                           <Card
                                             className={
                                               sessionStorage.getItem(
@@ -842,7 +921,7 @@ const SubtansiUser = ({ token }) => {
                                             }
                                             key={index}
                                             onClick={() => {
-                                              handleTriggered(
+                                              handleTriggered2(
                                                 ans,
                                                 parent,
                                                 index
@@ -857,26 +936,161 @@ const SubtansiUser = ({ token }) => {
                                                 <td style={{ width: "15px" }}>
                                                   .
                                                 </td>
-                                                <td>{ans.option}</td>
+                                                <td>{ans.option} </td>
                                               </tr>
                                             </table>
                                           </Card>
-                                        </div>
-                                      </div>
-                                    </>
-                                  );
-                                })}
+                                        </>
+                                      );
+                                    })}
+                                  </>
+                                )}
                               </>
                             ) : (
-                              <>
-                                <h1 className={styles.soal}>
-                                  <div className="p-2">{a.question}</div>{" "}
-                                </h1>
-                                <hr />
-                                {a.answer.map((ans, index) => {
-                                  return (
+                              parent === 0 && (
+                                <>
+                                  {a.image !== null && a.image !== "" ? (
                                     <>
-                                      {/* {console.log(
+                                      <h1 className={styles.soal}>
+                                        <div className="d-flex flex-row">
+                                          <div className="p-2">
+                                            {" "}
+                                            <Image
+                                              src={
+                                                process.env
+                                                  .END_POINT_API_IMAGE_SUBVIT +
+                                                  a.image || defaultImage
+                                              }
+                                              alt=""
+                                              width={150}
+                                              onClick={() => {
+                                                setZoomTr(true);
+                                                setImageClickTr(a.image);
+                                              }}
+                                              height={150}
+                                            />
+                                          </div>
+                                          <Modal
+                                            show={zoomTr}
+                                            onHide={() => setZoomTr(false)}
+                                          >
+                                            <Image
+                                              src={
+                                                process.env
+                                                  .END_POINT_API_IMAGE_SUBVIT +
+                                                  imageClickTr || defaultImage
+                                              }
+                                              alt=""
+                                              width={500}
+                                              height={800}
+                                            />
+                                          </Modal>
+                                          <div className="p-5">
+                                            {a.question}
+                                          </div>
+                                        </div>
+                                      </h1>
+                                      <hr />
+                                      {a.answer.map((ans, index) => {
+                                        return (
+                                          <>
+                                            <div className="d-flex flex-row">
+                                              <div className="p-2">
+                                                <Image
+                                                  src={
+                                                    process.env
+                                                      .END_POINT_API_IMAGE_SUBVIT +
+                                                      ans.image || defaultImage
+                                                  }
+                                                  alt=""
+                                                  width={70}
+                                                  onClick={() => {
+                                                    setZoomTrJawab(true);
+                                                    setImageClickTrJawab(
+                                                      ans.image
+                                                    );
+                                                  }}
+                                                  height={70}
+                                                />
+                                              </div>
+                                              <Modal
+                                                show={zoomTrJawab}
+                                                onHide={() =>
+                                                  setZoomTrJawab(false)
+                                                }
+                                              >
+                                                <Image
+                                                  src={
+                                                    process.env
+                                                      .END_POINT_API_IMAGE_SUBVIT +
+                                                      imageClickTrJawab ||
+                                                    defaultImage
+                                                  }
+                                                  alt=""
+                                                  width={500}
+                                                  height={800}
+                                                />
+                                              </Modal>
+                                              <div
+                                                className="p-4"
+                                                style={{
+                                                  width: "100%",
+                                                  height: "100%",
+                                                }}
+                                              >
+                                                <Card
+                                                  className={
+                                                    sessionStorage.getItem(
+                                                      router.query.id +
+                                                        parent +
+                                                        "td"
+                                                    ) === ans.key
+                                                      ? styles.answer
+                                                      : styles.boxAnswer
+                                                  }
+                                                  key={index}
+                                                  onClick={() => {
+                                                    handleTriggered2(
+                                                      ans,
+                                                      parent,
+                                                      index
+                                                    );
+                                                  }}
+                                                >
+                                                  <table>
+                                                    <tr>
+                                                      <td
+                                                        style={{ width: "5px" }}
+                                                      >
+                                                        {ans.key}
+                                                      </td>
+                                                      <td
+                                                        style={{
+                                                          width: "15px",
+                                                        }}
+                                                      >
+                                                        .
+                                                      </td>
+                                                      <td>{ans.option}</td>
+                                                    </tr>
+                                                  </table>
+                                                </Card>
+                                              </div>
+                                            </div>
+                                          </>
+                                        );
+                                      })}
+                                    </>
+                                  ) : (
+                                    <>
+                                      <h1 className={styles.soal}>
+                                        <div className="p-2">{a.question}</div>{" "}
+                                      </h1>
+                                      <hr />
+                                      {a.answer.map((ans, index) => {
+                                        return (
+                                          <>
+                                            {/* {console.log(
                                         sessionStorage.getItem(
                                           router.query.id +
                                             parent +
@@ -884,33 +1098,44 @@ const SubtansiUser = ({ token }) => {
                                             "td"
                                         )
                                       )} */}
-                                      <Card
-                                        className={
-                                          sessionStorage.getItem(
-                                            router.query.id + parent + "td"
-                                          ) === ans.key
-                                            ? styles.answer
-                                            : styles.boxAnswer
-                                        }
-                                        key={index}
-                                        onClick={() => {
-                                          handleTriggered2(ans, parent, index);
-                                        }}
-                                      >
-                                        <table>
-                                          <tr>
-                                            <td style={{ width: "5px" }}>
-                                              {ans.key}
-                                            </td>
-                                            <td style={{ width: "15px" }}>.</td>
-                                            <td>{ans.option} </td>
-                                          </tr>
-                                        </table>
-                                      </Card>
+                                            <Card
+                                              className={
+                                                sessionStorage.getItem(
+                                                  router.query.id +
+                                                    parent +
+                                                    "td"
+                                                ) === ans.key
+                                                  ? styles.answer
+                                                  : styles.boxAnswer
+                                              }
+                                              key={index}
+                                              onClick={() => {
+                                                handleTriggered2(
+                                                  ans,
+                                                  parent,
+                                                  index
+                                                );
+                                              }}
+                                            >
+                                              <table>
+                                                <tr>
+                                                  <td style={{ width: "5px" }}>
+                                                    {ans.key}
+                                                  </td>
+                                                  <td style={{ width: "15px" }}>
+                                                    .
+                                                  </td>
+                                                  <td>{ans.option} </td>
+                                                </tr>
+                                              </table>
+                                            </Card>
+                                          </>
+                                        );
+                                      })}
                                     </>
-                                  );
-                                })}
-                              </>
+                                  )}
+                                </>
+                              )
                             )}
                           </>
                         );
@@ -1046,7 +1271,8 @@ const SubtansiUser = ({ token }) => {
                             ) : (
                               <Card
                                 className={
-                                  listAnswer === item.key
+                                  sessionStorage.getItem(router.query.id) ===
+                                  item.key
                                     ? styles.answer
                                     : styles.boxAnswer
                                 }
@@ -1287,7 +1513,6 @@ const SubtansiUser = ({ token }) => {
                     </h1>
                     <hr />
                     <Form>
-                      {console.log()}
                       <Form.Control
                         as="textarea"
                         rows={5}

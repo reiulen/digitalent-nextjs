@@ -94,12 +94,15 @@ const StepTwo = ({ token, tokenPermission }) => {
     //   dispatch(clearErrors());
     // }
     if (successFile) {
-      localStorage.setItem("successFile", question_file.name);
       getAllSurveyQuestionDetail(id, 1, null, "", token, tokenPermission);
+      setQuestionFile(null);
+      document.getElementById("question_soal").value = null;
     }
 
     if (successImages) {
       getAllSurveyQuestionDetail(id, 1, null, "", token, tokenPermission);
+      setImageFile(null);
+      document.getElementById("question_image").value = null;
     }
 
     if (isDeleted) {
@@ -118,27 +121,31 @@ const StepTwo = ({ token, tokenPermission }) => {
   const saveDraft = () => {
     let valid = true;
 
-    if (!successImages) {
-      valid = false;
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data gambar dengan benar !",
-      });
-    }
-    if (!successFile) {
-      valid = false;
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data soal dengan benar !",
-      });
+    if (localStorage.getItem("successFile") === null) {
+      if (!successImages) {
+        valid = false;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data gambar dengan benar !",
+        });
+      }
+      if (!successFile) {
+        valid = false;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data soal dengan benar !",
+        });
+      }
     }
 
     if (valid) {
       localStorage.removeItem("successFile");
       localStorage.removeItem("step-1");
       localStorage.removeItem("method");
+      localStorage.removeItem("successFile");
+      localStorage.removeItem("successImage");
       dispatch({
         type: IMPORT_FILE_SURVEY_QUESTION_DETAIL_RESET,
       });
@@ -177,6 +184,8 @@ const StepTwo = ({ token, tokenPermission }) => {
 
     if (valid) {
       localStorage.setItem("method", "import" || router.query.metode);
+      localStorage.removeItem("successFile");
+      localStorage.removeItem("successImage");
       router.push({
         pathname: `/subvit/survey/tambah/step-3`,
         query: { id },
@@ -380,8 +389,21 @@ const StepTwo = ({ token, tokenPermission }) => {
                       type="file"
                       className="custom-file-input"
                       accept=".csv,.xlsx,.xls"
-                      name="question_image"
-                      onChange={(e) => setQuestionFile(e.target.files[0])}
+                      name="question_soal"
+                      id="question_soal"
+                      onChange={(e) => {
+                        setQuestionFile(null);
+                        dispatch({
+                          type: IMPORT_FILE_SURVEY_QUESTION_DETAIL_RESET,
+                        });
+                        if (e.target.files[0]) {
+                          localStorage.setItem(
+                            "successFile",
+                            e.target.files[0].name
+                          );
+                          setQuestionFile(e.target.files[0]);
+                        }
+                      }}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
                       {question_file ||
@@ -395,17 +417,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                   </span>
                 </div>
                 <div className="col-md-2 col-sm-2 d-flex align-items-center">
-                  {successFile ? (
-                    <button
-                      type="button"
-                      className="btn btn-rounded-full btn-light-success btn-sm py-3"
-                      onClick={handleImportFile}
-                      disabled={true || !question_file}
-                      style={{ cursor: "not-allowed" }}
-                    >
-                      Import File
-                    </button>
-                  ) : question_file ? (
+                  {question_file ? (
                     <button
                       type="button"
                       className="btn btn-rounded-full btn-light-success btn-sm py-3"
@@ -436,10 +448,27 @@ const StepTwo = ({ token, tokenPermission }) => {
                       className="custom-file-input"
                       accept=".zip"
                       name="question_image"
-                      onChange={(e) => setImageFile(e.target.files[0])}
+                      id="question_image"
+                      onChange={(e) => {
+                        setImageFile(null);
+                        dispatch({
+                          type: IMPORT_FILE_SURVEY_QUESTION_DETAIL_RESET,
+                        });
+                        if (e.target.files[0]) {
+                          localStorage.setItem(
+                            "successImage",
+                            e.target.files[0].name
+                          );
+                          setImageFile(e.target.files[0]);
+                          setSuccessType("images");
+                        }
+                      }}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      {image_file ? image_file.name : "Choose File"}
+                      {image_file ||
+                      localStorage.getItem("successImage") !== null
+                        ? localStorage.getItem("successImage")
+                        : "Choose file"}
                     </label>
                   </div>
                   <span className="text-muted">
@@ -447,17 +476,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                   </span>
                 </div>
                 <div className="col-md-2 col-sm-2 d-flex align-items-center">
-                  {successImages ? (
-                    <button
-                      type="button"
-                      className="btn btn-rounded-full btn-light-success btn-sm py-3"
-                      onClick={handleImportImage}
-                      disabled={true || !image_file}
-                      style={{ cursor: "not-allowed" }}
-                    >
-                      Import File
-                    </button>
-                  ) : image_file ? (
+                  {image_file ? (
                     <button
                       type="button"
                       className="btn btn-rounded-full btn-light-success btn-sm py-3"
@@ -669,7 +688,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                           `/subvit/survey/clone/step-3?id=${router.query.id}`
                         );
                       } else {
-                        router.back();
+                        router.push("/subvit/survey/tambah");
                       }
                     }}
                   >

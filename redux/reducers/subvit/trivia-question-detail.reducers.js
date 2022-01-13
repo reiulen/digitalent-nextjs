@@ -225,7 +225,7 @@ export const detailTriviaQuestionDetailReducer = (
     case DETAIL_TRIVIA_QUESTION_DETAIL_SUCCESS:
       return {
         loading: false,
-        trivia_question_detail: action.payload,
+        trivia_question_detail: action.payload.data,
       };
 
     case DETAIL_TRIVIA_QUESTION_DETAIL_FAIL:

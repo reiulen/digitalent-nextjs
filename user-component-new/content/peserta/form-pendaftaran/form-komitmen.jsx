@@ -52,7 +52,6 @@ const FormKomitmen = ({
           komitmen: menyatakan ? "1" : "0",
           form_pendaftaran: dataForm.form_pendaftaran,
         };
-        console.log(pindahan, "ini pindahannya");
         if (pindahan) {
           dispatch(newPendaftaranPelatihan(data, token, pindahan));
           window.scrollTo({ top: 0, behavior: "smooth" });

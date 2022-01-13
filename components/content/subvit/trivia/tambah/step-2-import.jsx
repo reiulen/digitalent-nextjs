@@ -95,16 +95,19 @@ const StepTwo = ({ token, tokenPermission }) => {
     //     dispatch(clearErrors())
     // }
     if (successFile) {
-      localStorage.setItem("successFile", question_file.name);
       dispatch(
         getAllTriviaQuestionDetail(id, 1, "", null, token, tokenPermission)
       );
+      setQuestionFile(null);
+      document.getElementById("question_soal").value = null;
     }
 
     if (successImages) {
       dispatch(
         getAllTriviaQuestionDetail(id, 1, "", null, token, tokenPermission)
       );
+      setImageFile(null);
+      document.getElementById("question_image").value = null;
     }
 
     if (isDeleted) {
@@ -148,6 +151,7 @@ const StepTwo = ({ token, tokenPermission }) => {
       localStorage.removeItem("method");
       localStorage.removeItem("step1");
       localStorage.removeItem("successFile");
+      localStorage.removeItem("successImage");
       dispatch(
         {
           type: IMPORT_FILE_TRIVIA_QUESTION_DETAIL_RESET,
@@ -283,18 +287,31 @@ const StepTwo = ({ token, tokenPermission }) => {
   };
 
   const handleQuestionFile = (e) => {
-    setQuestionFile(e.target.files[0]);
-    setFileSoalName(e.target.files[0].name);
+    setQuestionFile(null);
+    dispatch({
+      type: IMPORT_FILE_TRIVIA_QUESTION_DETAIL_RESET,
+    });
+    if (e.target.files[0]) {
+      localStorage.setItem("successFile", e.target.files[0].name);
+      setQuestionFile(e.target.files[0]);
+    }
   };
 
   const handleImageFile = (e) => {
-    setImageFile(e.target.files[0]);
-    setImageFileName(e.target.files[0].name);
+    setImageFile(null);
+    dispatch({
+      type: IMPORT_FILE_TRIVIA_QUESTION_DETAIL_RESET,
+    });
+    if (e.target.files[0]) {
+      localStorage.setItem("successImage", e.target.files[0].name);
+      setImageFile(e.target.files[0]);
+      setSuccessType("images");
+    }
   };
 
   return (
     <PageWrapper>
-      {error ? (
+      {error && (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
           role="alert"
@@ -316,10 +333,8 @@ const StepTwo = ({ token, tokenPermission }) => {
             </button>
           </div>
         </div>
-      ) : (
-        ""
       )}
-      {isDeleted ? (
+      {isDeleted && (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
           role="alert"
@@ -342,8 +357,6 @@ const StepTwo = ({ token, tokenPermission }) => {
             </button>
           </div>
         </div>
-      ) : (
-        ""
       )}
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
@@ -385,7 +398,8 @@ const StepTwo = ({ token, tokenPermission }) => {
                       type="file"
                       className="custom-file-input"
                       accept=".csv,.xlsx,.xls"
-                      name="question_image"
+                      name="question_soal"
+                      id="question_soal"
                       onChange={(event) => handleQuestionFile(event)}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
@@ -400,17 +414,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                   </span>
                 </div>
                 <div className="col-md-2 col-sm-2 d-flex align-items-center">
-                  {successFile ? (
-                    <button
-                      type="button"
-                      className="btn btn-rounded-full btn-light-success btn-sm py-3"
-                      onClick={handleImportFile}
-                      disabled={true || !question_file}
-                      style={{ cursor: "not-allowed" }}
-                    >
-                      Import File
-                    </button>
-                  ) : question_file ? (
+                  {question_file ? (
                     <button
                       type="button"
                       className="btn btn-rounded-full btn-light-success btn-sm py-3"
@@ -441,10 +445,14 @@ const StepTwo = ({ token, tokenPermission }) => {
                       className="custom-file-input"
                       accept=".zip"
                       name="question_image"
+                      id="question_image"
                       onChange={(event) => handleImageFile(event)}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      {image_file ? imageFileName : "Choose File"}
+                      {image_file ||
+                      localStorage.getItem("successImage") !== null
+                        ? localStorage.getItem("successImage")
+                        : "Choose file"}
                     </label>
                   </div>
                   <span className="text-muted">
@@ -452,17 +460,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                   </span>
                 </div>
                 <div className="col-md-2 col-sm-2 d-flex align-items-center">
-                  {successImages ? (
-                    <button
-                      type="button"
-                      className="btn btn-rounded-full btn-light-success btn-sm py-3"
-                      onClick={handleImportImage}
-                      disabled={true || !image_file}
-                      style={{ cursor: "not-allowed" }}
-                    >
-                      Import File
-                    </button>
-                  ) : image_file ? (
+                  {image_file ? (
                     <button
                       type="button"
                       className="btn btn-rounded-full btn-light-success btn-sm py-3"
@@ -681,7 +679,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                           `/subvit/trivia/clone/step-3?id=${router.query.id}`
                         );
                       } else {
-                        router.back();
+                        router.push("/subvit/trivia/tambah");
                       }
                     }}
                   >

@@ -929,11 +929,6 @@ export default function TambahMasterSertifikat({ token }) {
                                       newArr[i] = data;
                                       setSignature_certificate_name(newArr);
                                     }}
-                                    onBlur={() =>
-                                      simpleValidator.current.showMessageFor(
-                                        "nama"
-                                      )
-                                    }
                                   />
                                   {simpleValidator.current.message(
                                     "nama",
@@ -991,11 +986,6 @@ export default function TambahMasterSertifikat({ token }) {
                                         onChange={(e) =>
                                           handleImageTandaTangan(e, i)
                                         }
-                                        onBlur={() =>
-                                          simpleValidator.current.showMessageFor(
-                                            "tanda tangan"
-                                          )
-                                        }
                                         accept="image/png, image/jpeg , image/jpg"
                                       />
                                       <label
@@ -1024,11 +1014,6 @@ export default function TambahMasterSertifikat({ token }) {
                                             maxWidth: 3,
                                             penColor: "black",
                                           }}
-                                          onBlur={() =>
-                                            simpleValidator.current.showMessageFor(
-                                              "tanda tangan"
-                                            )
-                                          }
                                         />
                                       </div>
                                       <small>
@@ -1079,11 +1064,6 @@ export default function TambahMasterSertifikat({ token }) {
                                       setSignature_certificate_position(newArr);
                                     }}
                                     className="h-25"
-                                    onBlur={() =>
-                                      simpleValidator.current.showMessageFor(
-                                        "jabatan"
-                                      )
-                                    }
                                   />
                                   {simpleValidator.current.message(
                                     "jabatan",
@@ -1622,13 +1602,6 @@ export default function TambahMasterSertifikat({ token }) {
                                         );
                                       }}
                                       className="h-25"
-                                      onBlur={() => {
-                                        if (certificate_type == "2 lembar") {
-                                          simpleValidator.current.showMessageFor(
-                                            "Nama"
-                                          );
-                                        }
-                                      }}
                                     />
                                     {certificate_type == "2 lembar"
                                       ? simpleValidator.current.message(
@@ -1699,15 +1672,6 @@ export default function TambahMasterSertifikat({ token }) {
                                             handleImageTandaTanganSyllabus(e, i)
                                           }
                                           accept="image/png, image/jpeg , image/jpg"
-                                          onBlur={() => {
-                                            if (
-                                              certificate_type == "2 lembar"
-                                            ) {
-                                              simpleValidator.current.showMessageFor(
-                                                "Tanda tangan"
-                                              );
-                                            }
-                                          }}
                                         />
                                         <label
                                           className="custom-file-label"
@@ -1734,15 +1698,6 @@ export default function TambahMasterSertifikat({ token }) {
                                               minWidth: 1,
                                               maxWidth: 3,
                                               penColor: "black",
-                                            }}
-                                            onBlur={() => {
-                                              if (
-                                                certificate_type == "2 lembar"
-                                              ) {
-                                                simpleValidator.current.showMessageFor(
-                                                  "Tanda tangan"
-                                                );
-                                              }
                                             }}
                                           />
                                         </div>
@@ -1808,13 +1763,6 @@ export default function TambahMasterSertifikat({ token }) {
                                         );
                                       }}
                                       className="h-25"
-                                      onBlur={() => {
-                                        if (certificate_type == "2 lembar") {
-                                          simpleValidator.current.showMessageFor(
-                                            "Jabatan"
-                                          );
-                                        }
-                                      }}
                                     />
                                     {certificate_type == "2 lembar"
                                       ? simpleValidator.current.message(
@@ -2057,6 +2005,7 @@ export default function TambahMasterSertifikat({ token }) {
                             onChange={(e) => handleChange(e, index)}
                             className="form-control"
                             value={syllabus}
+                            maxLength={205}
                           />
                         </div>
                         {index === 0 ? (

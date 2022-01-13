@@ -655,7 +655,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                           `/subvit/survey/clone/step-3?id=${router.query.id}`
                         );
                       } else {
-                        router.back();
+                        router.push("/subvit/survey/tambah");
                       }
                     }}
                   >

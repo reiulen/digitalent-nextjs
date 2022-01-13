@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import { signIn } from "next-auth/client";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -9,29 +9,28 @@ export default function LoginSso() {
   const { token_nik, token_id } = router.query;
 
   useEffect(() => {
-    handlerLoginCallback();
-  }, []);
-
-  const handlerLoginCallback = () => {
-    const data = {
-      token_nik,
-      token_id,
-      role: "peserta_sso",
-    };
-    const result = handlerLoginSso(data);
-    if (result.error) {
-      router.push("/");
-    } else {
-      router.push("/peserta");
+    if (token_nik && token_id) {
+      const data = {
+        token_nik,
+        token_id,
+        role: "peserta_sso",
+      };
+      (async () => {
+        const result = await signIn("credentials", data);
+        if (result.error) {
+          router.push("/login");
+        } else {
+          router.push("/peserta");
+        }
+      })();
     }
-  };
+  }, [token_nik, token_id, router]);
 
-  const handlerLoginSso = async (data) => {
-    const result = await signIn("credentials", data);
-    return result;
-  };
-
-  return <></>;
+  return (
+    <>
+      <p>Tunggu Sebentar...</p>
+    </>
+  );
 }
 
 export async function getServerSideProps(context) {

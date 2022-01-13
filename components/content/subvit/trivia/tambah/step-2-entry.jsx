@@ -105,9 +105,8 @@ const StepTwo = ({ token, tokenPermission }) => {
             setSoalImage(reader.result);
           }
         };
+        reader.readAsDataURL(e.target.files[0]);
       }
-      const reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
     }
   };
 
@@ -565,7 +564,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                               `/subvit/trivia/clone/step-3?id=${router.query.id}`
                             );
                           } else {
-                            router.back();
+                            router.push("/subvit/trivia/tambah");
                           }
                         }}
                       >

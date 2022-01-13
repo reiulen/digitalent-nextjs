@@ -343,6 +343,12 @@ export default function EditSertifikat({ token }) {
         simpleValidator.current.fields["Tanda tangan"] = true;
       }
 
+      if (number_of_signature_syllabus == 0) {
+        simpleValidator.current.fields.Jabatan = true;
+        simpleValidator.current.fields.Nama = true;
+        simpleValidator.current.fields["Tanda tangan"] = true;
+      }
+
       const id = query.id;
 
       if (simpleValidator.current.allValid()) {
@@ -570,9 +576,6 @@ export default function EditSertifikat({ token }) {
                     placeholder="Masukan Nama Sertifikat"
                     value={certificate_name || ""}
                     onChange={(e) => setCertificate_name(e.target.value)}
-                    onBlur={() => {
-                      simpleValidator.current.showMessageFor("nama sertifikat");
-                    }}
                   />
                   {simpleValidator.current.message(
                     "nama sertifikat",
@@ -966,11 +969,6 @@ export default function EditSertifikat({ token }) {
                                             });
                                         setSignature(newArr);
                                       }}
-                                      onBlur={() =>
-                                        simpleValidator.current.showMessageFor(
-                                          "nama"
-                                        )
-                                      }
                                     />
                                     {simpleValidator.current.message(
                                       "nama",
@@ -1028,11 +1026,6 @@ export default function EditSertifikat({ token }) {
                                           onChange={(e) =>
                                             handleImageTandaTangan(e, i)
                                           }
-                                          onBlur={() =>
-                                            simpleValidator.current.showMessageFor(
-                                              "tanda tangan"
-                                            )
-                                          }
                                           accept="image/png, image/jpeg , image/jpg"
                                         />
                                         <label
@@ -1061,11 +1054,6 @@ export default function EditSertifikat({ token }) {
                                               maxWidth: 3,
                                               penColor: "black",
                                             }}
-                                            onBlur={() =>
-                                              simpleValidator.current.showMessageFor(
-                                                "tanda tangan"
-                                              )
-                                            }
                                           />
                                         </div>
                                         <small>
@@ -1127,11 +1115,6 @@ export default function EditSertifikat({ token }) {
                                         setSignature(newArr);
                                       }}
                                       className="h-25"
-                                      onBlur={() =>
-                                        simpleValidator.current.showMessageFor(
-                                          "jabatan"
-                                        )
-                                      }
                                     />
                                     {simpleValidator.current.message(
                                       "jabatan",
@@ -1672,13 +1655,6 @@ export default function EditSertifikat({ token }) {
                                           setSignatureSyllabus(newArr);
                                         }}
                                         className="h-25"
-                                        onBlur={() => {
-                                          if (certificate_type == "2 lembar") {
-                                            simpleValidator.current.showMessageFor(
-                                              "Nama"
-                                            );
-                                          }
-                                        }}
                                       />
                                       {certificate_type == "2 lembar"
                                         ? simpleValidator.current.message(
@@ -1754,15 +1730,6 @@ export default function EditSertifikat({ token }) {
                                               )
                                             }
                                             accept="image/png, image/jpeg , image/jpg"
-                                            onBlur={() => {
-                                              if (
-                                                certificate_type == "2 lembar"
-                                              ) {
-                                                simpleValidator.current.showMessageFor(
-                                                  "Tanda tangan"
-                                                );
-                                              }
-                                            }}
                                           />
                                           <label
                                             className="custom-file-label"
@@ -1789,15 +1756,6 @@ export default function EditSertifikat({ token }) {
                                                 minWidth: 1,
                                                 maxWidth: 3,
                                                 penColor: "black",
-                                              }}
-                                              onBlur={() => {
-                                                if (
-                                                  certificate_type == "2 lembar"
-                                                ) {
-                                                  simpleValidator.current.showMessageFor(
-                                                    "Tanda tangan"
-                                                  );
-                                                }
                                               }}
                                             />
                                           </div>
@@ -1860,13 +1818,6 @@ export default function EditSertifikat({ token }) {
                                           setSignatureSyllabus(newArr);
                                         }}
                                         className="h-25"
-                                        onBlur={() => {
-                                          if (certificate_type == "2 lembar") {
-                                            simpleValidator.current.showMessageFor(
-                                              "Jabatan"
-                                            );
-                                          }
-                                        }}
                                       />
                                       {certificate_type == "2 lembar"
                                         ? simpleValidator.current.message(
@@ -2110,6 +2061,7 @@ export default function EditSertifikat({ token }) {
                               onChange={(e) => handleChange(e, index)}
                               className="form-control"
                               value={syllabus}
+                              maxLength={205}
                             />
                           </div>
                           {index === 0 ? (
