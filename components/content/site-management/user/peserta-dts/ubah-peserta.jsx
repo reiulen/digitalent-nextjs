@@ -46,6 +46,8 @@ const TambahPage = ({ token }) => {
     (state) => state.drowpdownProvinsi
   );
 
+  const { pendidikanReference } = useSelector((state) => state.allPendidikan);
+
   const { error: dropdownErrorKabupaten, data: dataKabupaten } = useSelector(
     (state) => state.drowpdownKabupaten
   );
@@ -58,49 +60,52 @@ const TambahPage = ({ token }) => {
     (state) => state.drowpdownKecamatanToDesa.data
   );
 
-  const [name, setName] = useState(allDetailPeserta.data.data.name);
-  const [email, setEmail] = useState(allDetailPeserta.data.data.email);
-  const [nik, setNik] = useState(allDetailPeserta.data.data.nik);
+  const [name, setName] = useState(allDetailPeserta.data?.data.name);
+  const [email, setEmail] = useState(allDetailPeserta.data?.data.email);
+  const [nik, setNik] = useState(allDetailPeserta.data?.data.nik);
+  const [pendidikan, setPendidikan] = useState(allDetailPeserta.data?.data.jenjang)
+  const [namaDarurat, setNamaDarurat] = useState(allDetailPeserta.data?.data.Nama_kontak_darurat)
+  const [nomorDarurat, setNomorDarurat] = useState(allDetailPeserta.data?.data.nomor_handphone_darurat)
   const [tempatLahir, setTempatLahir] = useState(
-    allDetailPeserta.data.data.tempat_lahir
+    allDetailPeserta.data?.data.tempat_lahir
   );
   const [jenisKelamin, setJenisKelamin] = useState(
-    allDetailPeserta.data.data.jenis_kelamin
+    allDetailPeserta.data?.data.jenis_kelamin
   );
   const [nomorHandphone, setNomorHandphone] = useState(
-    allDetailPeserta.data.data.nomor_handphone
+    allDetailPeserta.data?.data.nomor_handphone
   );
   const [tanggalLahir, setTanggalLahir] = useState(
-    moment(allDetailPeserta.data.data.tanggal_lahir).format("YYYY-MM-DD")
+    moment(allDetailPeserta.data?.data.tanggal_lahir).format("YYYY-MM-DD")
   );
   const [alamatKtp, setAlamatKtp] = useState(
-    allDetailPeserta.data.data.address_ktp
+    allDetailPeserta.data?.data.address_ktp
   );
   const [provinsiKtp, setProvinsiKtp] = useState(
-    allDetailPeserta.data.data.provinsi_ktp
+    allDetailPeserta.data?.data.provinsi_ktp
   );
-  const [kotaKtp, setKotaKtp] = useState(allDetailPeserta.data.data.kota_ktp);
+  const [kotaKtp, setKotaKtp] = useState(allDetailPeserta.data?.data.kota_ktp);
   const [kodePostKtp, setKodePostKtp] = useState(
-    allDetailPeserta.data.data.kode_pos_ktp
+    allDetailPeserta.data?.data.kode_pos_ktp
   );
 
   const [fotoProfil, setFotoProfil] = useState(
-    allDetailPeserta.data.data.file_path + allDetailPeserta.data.data.foto
+    allDetailPeserta.data?.data.file_path + allDetailPeserta.data?.data.foto
   );
   const [, forceUpdate] = useState();
-  const [alamat, setAlamat] = useState(allDetailPeserta.data.data.address);
-  const [provinsi, setProvinsi] = useState(allDetailPeserta.data.data.provinsi);
-  const [kota, setKota] = useState(allDetailPeserta.data.data.kota);
-  const [kodePost, setKodePost] = useState(allDetailPeserta.data.data.kode_pos);
-  const [ktpName, setKtpName] = useState(allDetailPeserta.data.data.File_ktp);
-  const [ktpBase, setKtpBase] = useState(allDetailPeserta.data.data.File_ktp);
+  const [alamat, setAlamat] = useState(allDetailPeserta.data?.data.address);
+  const [provinsi, setProvinsi] = useState(allDetailPeserta.data?.data.provinsi);
+  const [kota, setKota] = useState(allDetailPeserta.data?.data.kota);
+  const [kodePost, setKodePost] = useState(allDetailPeserta.data?.data.kode_pos);
+  const [ktpName, setKtpName] = useState(allDetailPeserta.data?.data.File_ktp);
+  const [ktpBase, setKtpBase] = useState(allDetailPeserta.data?.data.File_ktp);
   const [ijazahName, setIjazahName] = useState(
-    allDetailPeserta.data.data.ijasah === ""
+    allDetailPeserta.data?.data.ijasah === ""
       ? null
-      : allDetailPeserta.data.data.ijasah
+      : allDetailPeserta.data?.data.ijasah
   );
   const [ijazahBase, setIjazahBase] = useState(
-    allDetailPeserta.data.data.ijasah
+    allDetailPeserta.data?.data.ijasah
   );
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -109,17 +114,17 @@ const TambahPage = ({ token }) => {
   const [hidePasswordConfirm, setHidePasswordConfirmConfirm] = useState(true);
   const [sideBar, setSideBar] = useState(true);
   const [kecamatan, setKecamatan] = useState(
-    allDetailPeserta.data.data.kecamatan
+    allDetailPeserta.data?.data.kecamatan
   );
   const [kelurahan, setKelurahan] = useState(
-    allDetailPeserta.data.data.kelurahan || allDetailPeserta.data.data.kecamatan
+    allDetailPeserta.data?.data.kelurahan || allDetailPeserta.data?.data.kecamatan
   );
   const [kelurahanKtp, setKelurahanKtp] = useState(
-    allDetailPeserta.data.data.kelurahan_ktp ||
-      allDetailPeserta.data.data.kecamatan
+    allDetailPeserta.data?.data.kelurahan_ktp ||
+    allDetailPeserta.data?.data.kecamatan
   );
   const [kecamatanKtp, setKecamatanKtp] = useState(
-    allDetailPeserta.data.data.kecamatan_ktp
+    allDetailPeserta.data?.data.kecamatan_ktp
   );
 
   const optionProvinsi = dataProvinsi.data.map((item) => {
@@ -128,6 +133,8 @@ const TambahPage = ({ token }) => {
       value: item.id,
     };
   });
+
+  const optionPendidikan = pendidikanReference
 
   const handleDate = () => {
     let today = new Date();
@@ -230,7 +237,7 @@ const TambahPage = ({ token }) => {
               setFotoProfil(reader.result);
               const datas = {
                 foto: reader.result,
-                user_id: allDetailPeserta.data.data.user_id,
+                user_id: allDetailPeserta.data?.data.user_id,
               };
 
               const config = {
@@ -241,7 +248,7 @@ const TambahPage = ({ token }) => {
               axios
                 .post(
                   process.env.END_POINT_API_PELATIHAN +
-                    "api/v1/auth/update-foto",
+                  "api/v1/auth/update-foto",
                   datas,
                   config
                 )
@@ -300,11 +307,11 @@ const TambahPage = ({ token }) => {
 
   const onSubmit = () => {
     const data = {
-      user_id: allDetailPeserta.data.data.user_id,
+      user_id: allDetailPeserta.data?.data.user_id,
       nik: nik,
       name: name,
       jenis_kelamin: jenisKelamin,
-      agama: allDetailPeserta.data.data.agama,
+      agama: allDetailPeserta.data?.data.agama,
       tempat_lahir: tempatLahir,
       tanggal_lahir: moment(tanggalLahir).format("YYYY-MM-DD"),
       email: email,
@@ -319,7 +326,7 @@ const TambahPage = ({ token }) => {
       provinsi_ktp: provinsiKtp?.label ? provinsiKtp?.label : provinsiKtp,
       kota_ktp: kota?.label ? kota?.label : kota,
       kode_pos_ktp: kodePostKtp,
-      user_id: allDetailPeserta.data.data.user_id,
+      user_id: allDetailPeserta.data?.data.user_id,
       kecamatan_ktp:
         typeof kecamatanKtp === "object" ? kecamatanKtp.label : kecamatanKtp,
       kelurahan_ktp:
@@ -328,6 +335,9 @@ const TambahPage = ({ token }) => {
       konfirmasi_password: passwordConfirm,
       kecamatan: typeof kecamatan === "object" ? kecamatan.label : kecamatan,
       kelurahan: typeof kelurahan === "object" ? kelurahan.label : kelurahan,
+      jenjang: pendidikan,
+      Nama_kontak_darurat: namaDarurat,
+      nomor_handphone_darurat: nomorDarurat,
     };
     if (simpleValidator.current.allValid()) {
       dispatch(updatePesertaDts(token, data, Cookies.get("token_permission")));
@@ -499,45 +509,27 @@ const TambahPage = ({ token }) => {
 
                 <div className="card-body pt-0 px-4 px-sm-8 py-4">
                   <div className="form-group">
-                    <label>Nama Lengkap</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Masukkan Nama Lengkap"
-                      value={name}
-                      onChange={(e) => {
-                        setName(e.target.value);
-                      }}
-                      onBlur={(e) => {
-                        simpleValidator.current.showMessageFor("name");
-                      }}
-                    />
-                    {simpleValidator.current.message("name", name, "required", {
-                      className: "text-danger",
-                    })}
+
                   </div>
                   <div className="form-group row">
                     <div className="col-lg-6">
                       <div className="form-group">
-                        <label>Email</label>
+                        <label>Nama Lengkap</label>
                         <input
-                          type="email"
+                          type="text"
                           className="form-control"
-                          placeholder="Masukkan Email"
-                          value={email}
+                          placeholder="Masukkan Nama Lengkap"
+                          value={name}
                           onChange={(e) => {
-                            setEmail(e.target.value);
+                            setName(e.target.value);
                           }}
                           onBlur={(e) => {
-                            simpleValidator.current.showMessageFor("email");
+                            simpleValidator.current.showMessageFor("name");
                           }}
                         />
-                        {simpleValidator.current.message(
-                          "email",
-                          email,
-                          "required",
-                          { className: "text-danger" }
-                        )}
+                        {simpleValidator.current.message("name", name, "required", {
+                          className: "text-danger",
+                        })}
                       </div>
                       <div className="form-group">
                         <label>NIK</label>
@@ -565,61 +557,6 @@ const TambahPage = ({ token }) => {
                           {
                             className: "text-danger",
                           }
-                        )}
-                      </div>
-                      <div className="form-group">
-                        <label>Tempat Lahir</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Masukkan Tempat Lahir"
-                          value={tempatLahir}
-                          onChange={(e) => {
-                            setTempatLahir(e.target.value);
-                          }}
-                          onBlur={(e) => {
-                            simpleValidator.current.showMessageFor(
-                              "tempatLahir"
-                            );
-                          }}
-                        />
-                        {simpleValidator.current.message(
-                          "tempatLahir",
-                          tempatLahir,
-                          "required",
-                          { className: "text-danger" }
-                        )}
-                      </div>
-                    </div>
-                    <div className="col-lg-6">
-                      <div className="form-group">
-                        <label htmlFor="exampleSelect1">Jenis Kelamin</label>
-                        <select
-                          className="form-control"
-                          placeholder="Pilih Jenis Kelamin"
-                          id="exampleSelect1"
-                          value={jenisKelamin}
-                          onChange={(e) => {
-                            setJenisKelamin(e.target.value);
-                          }}
-                          onBlur={(e) => {
-                            simpleValidator.current.showMessageFor(
-                              "jenisKelamin"
-                            );
-                          }}
-                        >
-                          <option value="" disabled hidden>
-                            Pilih Jenis Kelamin
-                          </option>
-                          <option value="Perempuan">Perempuan</option>
-                          <option value="Laki - Laki">Laki-Laki</option>
-                        </select>
-
-                        {simpleValidator.current.message(
-                          "jenisKelamin",
-                          jenisKelamin,
-                          "required",
-                          { className: "text-danger" }
                         )}
                       </div>
                       <div className="form-group">
@@ -652,6 +589,135 @@ const TambahPage = ({ token }) => {
                             className: "text-danger",
                           }
                         )}
+                      </div>
+                      <div className="form-group">
+                        <label>Tempat Lahir</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Masukkan Tempat Lahir"
+                          value={tempatLahir}
+                          onChange={(e) => {
+                            setTempatLahir(e.target.value);
+                          }}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor(
+                              "tempatLahir"
+                            );
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "tempatLahir",
+                          tempatLahir,
+                          "required",
+                          { className: "text-danger" }
+                        )}
+                      </div>
+                      <div className="form-group">
+                        <label>Nama Kontak Darurat</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Masukkan Nama Kontak Darurat"
+                          value={namaDarurat}
+                          onChange={(e) => {
+                            setNamaDarurat(e.target.value);
+                          }}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor("nama kontak darurat");
+                          }}
+                        />
+                        {simpleValidator.current.message("nama kontak darurat", namaDarurat, "required", {
+                          className: "text-danger",
+                        })}
+                      </div>
+                    </div>
+                    <div className="col-lg-6">
+                      <div className="form-group">
+                        <label>Email</label>
+                        <input
+                          type="email"
+                          className="form-control"
+                          placeholder="Masukkan Email"
+                          value={email}
+                          onChange={(e) => {
+                            setEmail(e.target.value);
+                          }}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor("email");
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "email",
+                          email,
+                          "required",
+                          { className: "text-danger" }
+                        )}
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="exampleSelect1">Jenis Kelamin</label>
+                        <select
+                          className="form-control"
+                          placeholder="Pilih Jenis Kelamin"
+                          id="exampleSelect1"
+                          value={jenisKelamin}
+                          onChange={(e) => {
+                            setJenisKelamin(e.target.value);
+                          }}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor(
+                              "jenisKelamin"
+                            );
+                          }}
+                        >
+                          <option value="" disabled hidden>
+                            Pilih Jenis Kelamin
+                          </option>
+                          <option value="Perempuan">Perempuan</option>
+                          <option value="Laki - Laki">Laki-Laki</option>
+                        </select>
+
+                        {simpleValidator.current.message(
+                          "jenisKelamin",
+                          jenisKelamin,
+                          "required",
+                          { className: "text-danger" }
+                        )}
+                      </div>
+                      <div className="form-group">
+                        <label>Pendidikan</label>
+                        <select
+                          className="form-control"
+                          placeholder="Pilih Pendidikan"
+                          id="exampleSelect1"
+                          value={pendidikan}
+                          onChange={(e) => setPendidikan(e.target.value)}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor(
+                              "pendidikan"
+                            );
+                          }}
+                        >
+                          <option value="" disabled hidden>
+                            Pilih Pendidikan
+                          </option>
+                          {
+                            optionPendidikan.map((row, i) => {
+                              return (
+                                <option
+                                  key={row.id}
+                                  value={row.label}
+                                  selected={pendidikan === row.label ? true : false}
+                                >
+                                  {row.label}
+                                </option>
+                              )
+                            })
+                          }
+                        </select>
+                        {simpleValidator.current.message("pendidikan", pendidikan, "required", {
+                          className: "text-danger",
+                        })}
                       </div>
                       <div className="form-group">
                         <label>Tanggal Lahir</label>
@@ -687,6 +753,24 @@ const TambahPage = ({ token }) => {
                             className: "text-danger",
                           }
                         )}
+                      </div>
+                      <div className="form-group">
+                        <label>Nomor Kontak Darurat</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Masukkan Nomor Kontak Darurat"
+                          value={nomorDarurat}
+                          onChange={(e) => {
+                            setNomorDarurat(e.target.value);
+                          }}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor("nomor kontak darurat");
+                          }}
+                        />
+                        {simpleValidator.current.message("nomor kontak darurat", nomorDarurat, "required", {
+                          className: "text-danger",
+                        })}
                       </div>
                     </div>
                   </div>
@@ -1182,8 +1266,8 @@ const TambahPage = ({ token }) => {
         )}
 
         {!sideBar &&
-        !router.query.pelatihan_id &&
-        !router.query.ubah_pelatihan_id ? (
+          !router.query.pelatihan_id &&
+          !router.query.ubah_pelatihan_id ? (
           <ListPelatihan token={token} />
         ) : null}
         {!sideBar && router.query.pelatihan_id ? (
