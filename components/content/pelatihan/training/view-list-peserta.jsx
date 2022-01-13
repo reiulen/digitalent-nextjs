@@ -33,7 +33,6 @@ const DetailSummary = ({ token }) => {
     error: errorPendaftarPeserta,
     peserta,
   } = useSelector((state) => state.getPendaftaranPeserta);
-
   let { id } = router.query;
 
   const [page, setPage] = useState(1);
@@ -440,6 +439,7 @@ const DetailSummary = ({ token }) => {
                                 {row.name}
                               </p>
                               <p className="my-0">{row.nik}</p>
+                              <p className="my-0">{row.nomor_registrasi}</p>
                             </td>
                             <td>{row.jumlah_pelatihan || "-"}</td>
                             <td>

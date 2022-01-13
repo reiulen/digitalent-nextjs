@@ -32,7 +32,7 @@ const Table = ({ token }) => {
   const [valueSearch, setValueSearch] = useState("");
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(5)
-  
+
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
   };
@@ -104,7 +104,7 @@ const Table = ({ token }) => {
                     </thead>
                     <tbody>
                       {detailExportData.data?.rows === null ||
-                      detailExportData.data === undefined ? (
+                        detailExportData.data === undefined ? (
                         <tr>
                           <td colSpan="4" className="text-center">
                             Data kosong
@@ -149,62 +149,73 @@ const Table = ({ token }) => {
                 )}
               </div>
 
-              <div className="row px-4">
-                <div className="table-pagination">
-                  <Pagination
-                    activePage={page}
-                    itemsCountPerPage={detailExportData.data.limit}
-                    totalItemsCount={detailExportData.data.total_rows}
-                    pageRangeDisplayed={2}
-                    onChange={(e) => {
-                      setPage(e)
-                      dispatch(getDetailsExportData(router.query.id, token, e, valueSearch, limit, Cookies.get("token_permission")));
-                    }}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
+              <div className="row">
+                {
+                  detailExportData?.data?.limit < detailExportData.data.total_rows && (
 
-                <div className="table-total ml-auto mr-4">
-                  <div className="row mt-4">
-                    <div className="col-4 mr-0 p-0">
-                      <select
-                        className="form-control cursor-pointer pr-2"
-                        id="exampleFormControlSelect2"
-                        defaultValue=""
-                        style={{
-                          width: "63px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                        onChange={(e) => {
-                          setLimit(e.target.value)
-                          dispatch(getDetailsExportData(router.query.id, token, page, valueSearch, e.target.value, Cookies.get("token_permission")));
+                    <div className="row px-4">
+                      <div className="table-pagination">
+                        <Pagination
+                          activePage={page}
+                          itemsCountPerPage={detailExportData?.data?.limit}
+                          totalItemsCount={detailExportData?.data?.total_rows}
+                          pageRangeDisplayed={2}
+                          onChange={(e) => {
+                            setPage(e)
+                            dispatch(getDetailsExportData(router.query.id, token, e, valueSearch, limit, Cookies.get("token_permission")));
+                          }}
+                          nextPageText={">"}
+                          prevPageText={"<"}
+                          firstPageText={"<<"}
+                          lastPageText={">>"}
+                          itemClass="page-item"
+                          linkClass="page-link"
+                        />
+                      </div>
+                    </div>
+                  )}
+                {
+                  detailExportData ? (
+                    <div className="table-total ml-auto mr-4">
+                      <div className="row mt-4">
+                        <div className="col-4">
+                          <select
+                            className="form-control cursor-pointer pr-2"
+                            id="exampleFormControlSelect2"
+                            defaultValue=""
+                            style={{
+                              width: "70px",
+                              background: "#F3F6F9",
+                              borderColor: "#F3F6F9",
+                              color: "#9E9E9E",
+                            }}
+                            onChange={(e) => {
+                              setLimit(e.target.value)
+                              setPage(1)
+                              dispatch(getDetailsExportData(router.query.id, token, 1, valueSearch, e.target.value, Cookies.get("token_permission")));
 
-                        }}
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                      </select>
+                            }}
+                          >
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                          </select>
+                        </div>
+                        <div className="col-8 my-auto">
+                          <p
+                            className="align-middle mt-3"
+                            style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                          >
+                            Total Data {detailExportData?.data?.total_rows} List Data
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="col-8 my-auto">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
-                      >
-                        Total Data {detailExportData.data.total_rows} List Data
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                  ) : (
+                    ""
+                  )}
               </div>
 
               {/* start footer btn */}

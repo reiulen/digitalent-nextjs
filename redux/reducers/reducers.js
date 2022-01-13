@@ -283,7 +283,7 @@ import {
 // ============== provinces site ===============
 import { allProvincesSiteReducer } from "./site-management/option/option-provinces.reducers";
 // ============== option reference site ===============
-import { allOptionReferenceSiteReducer } from "./site-management/option/option-reference.reducers";
+import { allOptionReferenceSiteReducer, allPendidikanReference } from "./site-management/option/option-reference.reducers";
 // ============== api ===============
 import {
   allApiReducer,
@@ -872,6 +872,7 @@ const reducer = combineReducers({
   // ============ PAGE =======
   allProvincesSite: allProvincesSiteReducer,
   allOptionReferenceSite: allOptionReferenceSiteReducer,
+  allPendidikan: allPendidikanReference,
   // ============ API =======
   allApi: allApiReducer,
   deleteApi: deleteApiReducer,

@@ -21,7 +21,7 @@ import {
   limitCooporation,
   updateStatusAdminSite,
 } from "../../../../../redux/actions/site-management/user/admin-site.action";
-import {} from "../../../../../redux/actions/site-management/role.actions";
+import { } from "../../../../../redux/actions/site-management/role.actions";
 import Cookies from 'js-cookie'
 
 import {
@@ -137,18 +137,18 @@ const Table = ({ token }) => {
             {localStorage
               .getItem("permissions")
               .includes("site_management.user.administrator.manage") && (
-              <div className="card-toolbar">
-                <Link
-                  href="/site-management/user/administrator/tambah-data-administrator"
-                  passHref
-                >
-                  <a className="btn btn-rounded-full bg-blue-primary text-white">
-                    <IconAdd className="mr-3" width="14" height="14" />
-                    Tambah Administrator
-                  </a>
-                </Link>
-              </div>
-            )}
+                <div className="card-toolbar">
+                  <Link
+                    href="/site-management/user/administrator/tambah-data-administrator"
+                    passHref
+                  >
+                    <a className="btn btn-rounded-full bg-blue-primary text-white">
+                      <IconAdd className="mr-3" width="14" height="14" />
+                      Tambah Administrator
+                    </a>
+                  </Link>
+                </div>
+              )}
           </div>
           <div className="card-body pt-0 px-4 px-sm-8">
             <div className="table-filter">
@@ -218,8 +218,8 @@ const Table = ({ token }) => {
                                 {allAdminSite.page === 1
                                   ? index + 1
                                   : (allAdminSite.page - 1) *
-                                      allAdminSite.limit +
-                                    (index + 1)}
+                                  allAdminSite.limit +
+                                  (index + 1)}
                               </td>
                               <td className="align-middle text-left">
                                 {items.name}
@@ -229,9 +229,8 @@ const Table = ({ token }) => {
                               </td>
                               <td className="align-middle text-left">
                                 {items.roles?.length > 1
-                                  ? `${items.roles[0]?.name}, ${
-                                      items?.roles?.length - 1
-                                    } More Role`
+                                  ? `${items.roles[0]?.name}, ${items?.roles?.length - 1
+                                  } More Role`
                                   : `${items.roles[0]?.name}`}
                               </td>
                               <td className="align-middle text-left">
@@ -239,11 +238,10 @@ const Table = ({ token }) => {
                                   <select
                                     name=""
                                     id=""
-                                    className={`form-control remove-icon-default dropdown-arrows-${
-                                      items.status === 1
-                                        ? "green"
-                                        : "red-primary"
-                                    }`}
+                                    className={`form-control remove-icon-default dropdown-arrows-${items.status === 1
+                                      ? "green"
+                                      : "red-primary"
+                                      }`}
                                     key={index}
                                     onChange={(e) => {
                                       dispatch(
@@ -285,55 +283,55 @@ const Table = ({ token }) => {
                                     .includes(
                                       "site_management.user.administrator.manage"
                                     ) && (
-                                    <Link
-                                      href={{
-                                        pathname:
-                                          "/site-management/user/administrator/edit-data-administrator",
-                                        query: { id: items.id },
-                                      }}
-                                      passHref
-                                    >
-                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                                        <IconPencil width="16" height="16" />
-                                        <div className="text-hover-show-hapus">
-                                          Ubah
-                                        </div>
-                                      </a>
-                                    </Link>
-                                  )}
+                                      <Link
+                                        href={{
+                                          pathname:
+                                            "/site-management/user/administrator/edit-data-administrator",
+                                          query: { id: items.id },
+                                        }}
+                                        passHref
+                                      >
+                                        <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                          <IconPencil width="16" height="16" />
+                                          <div className="text-hover-show-hapus">
+                                            Ubah
+                                          </div>
+                                        </a>
+                                      </Link>
+                                    )}
 
                                   {localStorage
                                     .getItem("permissions")
                                     .includes(
                                       "site_management.user.administrator.view"
                                     ) && (
-                                    <Link
-                                      href={`/site-management/user/administrator/detail-administrator/${items.id}`}
-                                    >
-                                      <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
-                                        <IconEye width="16" height="16" />
-                                        <div className="text-hover-show-hapus">
-                                          Detail
-                                        </div>
-                                      </a>
-                                    </Link>
-                                  )}
+                                      <Link
+                                        href={`/site-management/user/administrator/detail-administrator/${items.id}`}
+                                      >
+                                        <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
+                                          <IconEye width="16" height="16" />
+                                          <div className="text-hover-show-hapus">
+                                            Detail
+                                          </div>
+                                        </a>
+                                      </Link>
+                                    )}
 
                                   {localStorage
                                     .getItem("permissions")
                                     .includes(
                                       "site_management.user.administrator.manage"
                                     ) && (
-                                    <button
-                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                      onClick={() => handleDelete(items.id)}
-                                    >
-                                      <IconDelete width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Hapus
-                                      </div>
-                                    </button>
-                                  )}
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        onClick={() => handleDelete(items.id)}
+                                      >
+                                        <IconDelete width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Hapus
+                                        </div>
+                                      </button>
+                                    )}
                                 </div>
                               </td>
                             </tr>
@@ -344,62 +342,69 @@ const Table = ({ token }) => {
                   </table>
                 )}
               </div>
-              {allAdminSite?.data?.total > 5 && (
-                <div className="row px-4">
-                  <div className="table-pagination">
-                    <Pagination
-                      activePage={allAdminSite.page}
-                      itemsCountPerPage={allAdminSite.data.perPage}
-                      totalItemsCount={allAdminSite.data.total}
-                      pageRangeDisplayed={3}
-                      onChange={(page) => dispatch(setPage(page))}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    />
-                  </div>
 
-                  <div className="table-total ml-auto mr-4">
-                    <div className="row mt-4">
-                      <div className="col-4 mr-0 p-0">
-                        <select
-                          className="form-control pr-2 cursor-pointer"
-                          id="exampleFormControlSelect2"
-                          defaultValue=""
-                          style={{
-                            width: "63px",
-                            background: "#F3F6F9",
-                            borderColor: "#F3F6F9",
-                            color: "#9E9E9E",
-                          }}
-                          onChange={(e) =>
-                            dispatch(limitCooporation(e.target.value, token))
-                          }
-                        >
-                          <option value="5">5</option>
-                          <option value="10">10</option>
-                          <option value="30">30</option>
-                          <option value="40">40</option>
-                          <option value="50">50</option>
-                        </select>
-                      </div>
-                      <div className="col-8 my-auto">
-                        <p
-                          className="align-middle mt-3"
-                          style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
-                        >
-                          Total Data{" "}
-                          {allAdminSite.data && allAdminSite.data.total} List
-                          Data
-                        </p>
-                      </div>
+              <div className="row">
+                {allAdminSite?.data?.perPage < allAdminSite?.data?.total && (
+                  <div className="row px-4">
+                    <div className="table-pagination">
+                      <Pagination
+                        activePage={allAdminSite.page}
+                        itemsCountPerPage={allAdminSite.data.perPage}
+                        totalItemsCount={allAdminSite.data.total}
+                        pageRangeDisplayed={3}
+                        onChange={(page) => dispatch(setPage(page))}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
                     </div>
                   </div>
-                </div>
-              )}
+                )}
+                {
+                  allAdminSite ? (
+                    <div className="table-total ml-auto mr-4">
+                      <div className="row mt-4">
+                        <div className="col-4 ">
+                          <select
+                            className="form-control pr-2 cursor-pointer"
+                            id="exampleFormControlSelect2"
+                            defaultValue=""
+                            style={{
+                              width: "70px",
+                              background: "#F3F6F9",
+                              borderColor: "#F3F6F9",
+                              color: "#9E9E9E",
+                            }}
+                            onChange={(e) =>
+                              dispatch(limitCooporation(e.target.value, token))
+                            }
+                          >
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                          </select>
+                        </div>
+                        <div className="col-8 my-auto">
+                          <p
+                            className="align-middle mt-3"
+                            style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                          >
+                            Total Data{" "}
+                            {allAdminSite.data && allAdminSite.data.total} List
+                            Data
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+              </div>
             </div>
           </div>
         </div>
