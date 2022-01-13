@@ -1133,11 +1133,10 @@ const Galeri = ({ token }) => {
                                                         </span>
                                                     </div>
                                                     <h3
-                                                        className="col-10"
                                                         style={{
                                                             fontWeight: "bold",
                                                             textAlign: "left",
-                                                            marginLeft: "-12px",
+                                                            wordWrap:'break-word',
                                                         }}
                                                     >
                                                         {galeri.gallery[index_galleri].judul}

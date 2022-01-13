@@ -42,7 +42,7 @@ const TambahApi = ({ token }) => {
   const [, forceUpdate] = useState();
 
   const allListPelatihan = useSelector((state) => state.allListPelatihan);
-  const sortListPelatihan = allListPelatihan.data.map((items) => {
+  const sortListPelatihan =  allListPelatihan.data.map((items) => {
     return {
       ...items,
       manage: false,
@@ -50,6 +50,8 @@ const TambahApi = ({ token }) => {
       allSelect: false,
     };
   })
+  
+  const [sortPelatihan, setSortPelatihan] = useState(sortListPelatihan)
 
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePasswordConfirm, setHidePasswordConfirm] = useState(true);
@@ -80,7 +82,7 @@ const TambahApi = ({ token }) => {
   };
 
   const handleChangePelatihan = (e, index) => {
-    let _temp = [...sortListPelatihan];
+    let _temp = [...sortPelatihan];
     if (e.target.name === "select-all") {
       if (_temp[index].allSelect) {
         _temp[index] = {
@@ -110,11 +112,11 @@ const TambahApi = ({ token }) => {
         _temp[index] = { ..._temp[index], view: true };
       }
     }
-    setSortListPelatihan(_temp);
+    setSortPelatihan(_temp);
   };
 
   const handleSubmit = async () => {
-    let newData = sortListPelatihan?.map((items) => {
+    let newData = sortPelatihan?.map((items) => {
       return { ...items, training_id: items.value };
     });
 
@@ -639,7 +641,7 @@ const TambahApi = ({ token }) => {
                           <tr>
                             <td className='align-middle text-center' colSpan={4}>Data Kosong</td>
                           </tr>
-                          : sortListPelatihan.map((items, index) => {
+                          : sortPelatihan.map((items, index) => {
                             return (
                               <tr key={index}>
                                 <td className="py-8 border-bottom">

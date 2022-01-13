@@ -68,11 +68,11 @@ const DetailAdmin = ({ token }) => {
             </div>
             <div className="form-group d-flex flex-column mt-4">
               <p style={{ color: "#6C6C6C" }}>Role</p>
-              <div className="d-flex ailgn-items-center">
+              <div className="d-flex align-items-center">
                 {detailAdminSite.adminSite?.data.roles.map((items, index) => {
                   return (
                     <span
-                      className="label label-lg label-inline"
+                      className="label label-lg label-inline mr-2"
                       style={{
                         width: "max-content",
                         backgroundColor: "#F2F7FC",
@@ -90,14 +90,15 @@ const DetailAdmin = ({ token }) => {
               <p htmlFor="exampleSelect1" style={{ color: "#6C6C6C" }}>
                 Satuan Kerja
               </p>
-              <div className="d-flex ailgn-items-center">
+              <div className="d-flex align-items-center flex-wrap">
                 {detailAdminSite.adminSite?.data.unit_works.map(
                   (item, index) => {
                     return (
                       <span
-                        className="label label-lg label-inline"
+                        className="label label-lg label-inline mr-2 mb-2"
                         style={{
                           width: "max-content",
+                          height:'max-content',
                           backgroundColor: "#F2F7FC",
                           color: "#ADB5BD",
                         }}
@@ -118,14 +119,15 @@ const DetailAdmin = ({ token }) => {
                 </h3>
 
                 <div className="form-group d-flex flex-column mt-4 pb-6">
-                  <div className="d-flex ailgn-items-center">
+                  <div className="d-flex align-items-center flex-wrap">
                     {detailAdminSite.adminSite?.data.training_access.map(
                       (item, index) => {
                         return (
                           <span
-                            className="label label-lg label-inline mr-2"
+                            className="label label-lg label-inline mr-2 mb-2"
                             style={{
                               width: "max-content",
+                              height:'max-content',
                               backgroundColor: "#F2F7FC",
                               color: "#ADB5BD",
                             }}

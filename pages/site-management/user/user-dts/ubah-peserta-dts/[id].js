@@ -7,6 +7,7 @@ import {
   getPelatihanByPeserta,
   getPelatihanWithPagination,
 } from "../../../../../redux/actions/site-management/user/peserta-dts";
+import { getDataPendidikanReference } from "../../../../../redux/actions/site-management/option/option-reference.actions";
 import { dropdownProvinsi } from "../../../../../redux/actions/pelatihan/function.actions";
 import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
 
@@ -34,6 +35,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ req, query }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthAdminSession(session);
+      console.log("Session : ",session.user.user.data.token)
       if (!middleware.status) {
         return {
           redirect: {
@@ -71,6 +73,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       await store.dispatch(dropdownProvinsi(session.user.user.data.token));
+      await store.dispatch(getDataPendidikanReference(session.user.user.data.token));
 
       return {
         props: {

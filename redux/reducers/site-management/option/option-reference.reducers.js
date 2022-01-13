@@ -2,6 +2,8 @@ import {
   OPTION_REFERENCE_REQUEST,
   OPTION_REFERENCE_SUCCESS,
   OPTION_REFERENCE_FAIL,
+  GET_PENDIDIKAN_REFERENCE_SUCCESS,
+  GET_PENDIDIKAN_REFERENCE_FAIL
 } from "../../../types/site-management/option/option-reference.type";
 
 const statuslist = {
@@ -36,6 +38,23 @@ export const allOptionReferenceSiteReducer = (state = initialState, action) => {
         ...state,
         status: statuslist.error,
         error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const allPendidikanReference = (state = { pendidikanReference: {} }, action) => {
+  switch (action.type) {
+    case GET_PENDIDIKAN_REFERENCE_SUCCESS:
+      return {
+        pendidikanReference: action.payload.data,
+      };
+
+    case GET_PENDIDIKAN_REFERENCE_FAIL:
+      return {
+        error: action.payload,
       };
 
     default:

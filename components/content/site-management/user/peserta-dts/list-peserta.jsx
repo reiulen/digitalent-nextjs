@@ -24,7 +24,7 @@ const Table = ({ token }) => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
   const [search, setSearch] = useState(null);
-  
+
   const getWindowDimensions = () => {
     // if (typeof window === 'undefined') {
     //     global.window = {}
@@ -216,7 +216,7 @@ const Table = ({ token }) => {
                             onClick={() => {
                               setPage(1);
                               setLimit(5);
-                              dispatch(getAllListsPeserta(token, 5, 1, search,Cookies.get("token_permission")));
+                              dispatch(getAllListsPeserta(token, 5, 1, search, Cookies.get("token_permission")));
                             }}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
@@ -260,7 +260,7 @@ const Table = ({ token }) => {
               </div>
 
               <div className="row">
-                {allListPeserta?.data?.data?.total >= 5 ? (
+                {allListPeserta?.data?.data?.perPage < allListPeserta?.data?.data?.total && (
                   <>
                     <div
                       // className={`${stylesPag.pagination} table-pagination`}
@@ -284,51 +284,56 @@ const Table = ({ token }) => {
                         linkClass="page-link"
                       />
                     </div>
+                  </>
+                )}
 
-                    <div className="table-total ml-auto mr-4">
-                      <div className="row mt-4">
-                        <div className="col-4 mr-0 p-0">
-                          <select
-                            className="form-control pr-2 cursor-pointer"
-                            id="exampleFormControlSelect2"
-                            value={limit}
-                            onChange={(e) => {
-                              setLimit(e.target.value);
-                              dispatch(
-                                getAllListsPeserta(
-                                  token,
-                                  e.target.value,
-                                  page,
-                                  search
-                                )
-                              );
-                            }}
-                            style={{
-                              width: "63px",
-                              background: "#F3F6F9",
-                              borderColor: "#F3F6F9",
-                              color: "#9E9E9E",
-                            }}
-                          >
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="30">30</option>
-                            <option value="40">40</option>
-                            <option value="50">50</option>
-                          </select>
-                        </div>
-                        <div className="col-8 my-auto">
-                          <p
-                            className="align-middle mt-3"
-                            style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
-                          >
-                            Total Data {allListPeserta?.data?.data?.total}
-                          </p>
-                        </div>
+                {allListPeserta ? (
+                  <div className="table-total ml-auto mr-4">
+                    <div className="row mt-4">
+                      <div className="col-4 p-0">
+                        <select
+                          className="form-control pr-2 cursor-pointer"
+                          id="exampleFormControlSelect2"
+                          value={limit}
+                          onChange={(e) => {
+                            setLimit(e.target.value);
+                            setPage(1)
+                            dispatch(
+                              getAllListsPeserta(
+                                token,
+                                e.target.value,
+                                1,
+                                search
+                              )
+                            );
+                          }}
+                          style={{
+                            width: "70px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                        >
+                          Total Data {allListPeserta?.data?.data?.total}
+                        </p>
                       </div>
                     </div>
-                  </>
-                ) : null}
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>

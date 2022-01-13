@@ -413,115 +413,123 @@ const UbahRole = ({ token, name }) => {
                     <tbody>{listFilter}</tbody>
                   </table>
                 </div>
-                {filterExportData?.data?.data?.total_rows > 5 && (
-                  <div className="row px-4">
-                    <div className="table-pagination">
-                      <Pagination
-                        activePage={page}
-                        itemsCountPerPage={filterExportData?.data?.data?.limit}
-                        totalItemsCount={
-                          filterExportData?.data?.data?.total_rows
-                        }
-                        pageRangeDisplayed={2}
-                        onChange={(e) => {
-                          setPage(e);
-                          const data = {
-                            button_type: 0,
-                            tahun: "",
-                            dari: datePelaksanaanStart ? moment(datePelaksanaanStart).format("YYYY-MM-DD") : "",
-                            sampai: datePelaksanaanEnd ?
-                              moment(datePelaksanaanEnd).format("YYYY-MM-DD") : "",
-                            akademi: akademi ? akademi.label : "",
-                            tema: tema ? tema.label : "",
-                            penyelenggara: penyelenggara
-                              ? penyelenggara.label
-                              : "",
-                            pelatihan: pelatihan ? pelatihan.label : "",
-                            provinsi: provinsi ? provinsi.label : "",
-                            kota: kota ? kota.label : "",
-                          };
 
-                          dispatch(
-                            postFilterExportData(
-                              token,
-                              data,
-                              e,
-                              limit,
-                              Cookies.get("token_permission")
-                            )
-                          );
-                        }}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    </div>
+                <div className="row">
+                  {filterExportData?.data?.data?.limit < filterExportData?.data?.data?.total_rows && (
+                    <div className="row px-4">
+                      <div className="table-pagination">
+                        <Pagination
+                          activePage={page}
+                          itemsCountPerPage={filterExportData?.data?.data?.limit}
+                          totalItemsCount={
+                            filterExportData?.data?.data?.total_rows
+                          }
+                          pageRangeDisplayed={2}
+                          onChange={(e) => {
+                            setPage(e);
+                            const data = {
+                              button_type: 0,
+                              tahun: "",
+                              dari: datePelaksanaanStart ? moment(datePelaksanaanStart).format("YYYY-MM-DD") : "",
+                              sampai: datePelaksanaanEnd ?
+                                moment(datePelaksanaanEnd).format("YYYY-MM-DD") : "",
+                              akademi: akademi ? akademi.label : "",
+                              tema: tema ? tema.label : "",
+                              penyelenggara: penyelenggara
+                                ? penyelenggara.label
+                                : "",
+                              pelatihan: pelatihan ? pelatihan.label : "",
+                              provinsi: provinsi ? provinsi.label : "",
+                              kota: kota ? kota.label : "",
+                            };
 
-                    <div className="table-total ml-auto mr-4">
-                      <div className="row mt-4">
-                        <div className="col-4 mr-0 p-0">
-                          <select
-                            className="form-control cursor-pointer pr-2"
-                            value={limit}
-                            id="exampleFormControlSelect2"
-                            style={{
-                              width: "63px",
-                              background: "#F3F6F9",
-                              borderColor: "#F3F6F9",
-                              color: "#9E9E9E",
-                            }}
-                            onChange={(e) => {
-                              setLimit(e.target.value);
-                              setPage(1);
-                              const data = {
-                                button_type: 0,
-                                tahun: "",
-                                dari: datePelaksanaanStart ? moment(datePelaksanaanStart).format("YYYY-MM-DD") : "",
-                                sampai: datePelaksanaanEnd ? moment(datePelaksanaanEnd).format("YYYY-MM-DD") : "",
-                                akademi: akademi ? akademi.label : "",
-                                tema: tema ? tema.label : "",
-                                penyelenggara: penyelenggara
-                                  ? penyelenggara.label
-                                  : "",
-                                pelatihan: pelatihan ? pelatihan.label : "",
-                                provinsi: provinsi ? provinsi.label : "",
-                                kota: kota ? kota.label : "",
-                              };
-
-                              dispatch(
-                                postFilterExportData(
-                                  token,
-                                  data,
-                                  1,
-                                  e.target.value,
-                                  Cookies.get("token_permission")
-                                )
-                              );
-                            }}
-                          >
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="30">30</option>
-                            <option value="40">40</option>
-                            <option value="50">50</option>
-                          </select>
-                        </div>
-                        <div className="col-8 my-auto">
-                          <p
-                            className="align-middle mt-3"
-                            style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
-                          >
-                            Total Data{" "}
-                            {filterExportData?.data?.data?.total_rows} List Data
-                          </p>
-                        </div>
+                            dispatch(
+                              postFilterExportData(
+                                token,
+                                data,
+                                e,
+                                limit,
+                                Cookies.get("token_permission")
+                              )
+                            );
+                          }}
+                          nextPageText={">"}
+                          prevPageText={"<"}
+                          firstPageText={"<<"}
+                          lastPageText={">>"}
+                          itemClass="page-item"
+                          linkClass="page-link"
+                        />
                       </div>
                     </div>
-                  </div>
-                )}
+                  )}
+                  {
+                    filterExportData ? (
+
+                      <div className="table-total ml-auto mr-4">
+                        <div className="row mt-4">
+                          <div className="col-4 p-0">
+                            <select
+                              className="form-control cursor-pointer pr-2"
+                              value={limit}
+                              id="exampleFormControlSelect2"
+                              style={{
+                                width: "70px",
+                                background: "#F3F6F9",
+                                borderColor: "#F3F6F9",
+                                color: "#9E9E9E",
+                              }}
+                              onChange={(e) => {
+                                setLimit(e.target.value);
+                                setPage(1);
+                                const data = {
+                                  button_type: 0,
+                                  tahun: "",
+                                  dari: datePelaksanaanStart ? moment(datePelaksanaanStart).format("YYYY-MM-DD") : "",
+                                  sampai: datePelaksanaanEnd ? moment(datePelaksanaanEnd).format("YYYY-MM-DD") : "",
+                                  akademi: akademi ? akademi.label : "",
+                                  tema: tema ? tema.label : "",
+                                  penyelenggara: penyelenggara
+                                    ? penyelenggara.label
+                                    : "",
+                                  pelatihan: pelatihan ? pelatihan.label : "",
+                                  provinsi: provinsi ? provinsi.label : "",
+                                  kota: kota ? kota.label : "",
+                                };
+
+                                dispatch(
+                                  postFilterExportData(
+                                    token,
+                                    data,
+                                    1,
+                                    e.target.value,
+                                    Cookies.get("token_permission")
+                                  )
+                                );
+                              }}
+                            >
+                              <option value="5">5</option>
+                              <option value="10">10</option>
+                              <option value="30">30</option>
+                              <option value="40">40</option>
+                              <option value="50">50</option>
+                            </select>
+                          </div>
+                          <div className="col-8 my-auto">
+                            <p
+                              className="align-middle mt-3"
+                              style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                            >
+                              Total Data{" "}
+                              {filterExportData?.data?.data?.total_rows} List Data
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                </div>
 
                 {filterExportData?.data?.data?.rows?.length > 0 && (
                   <div className="form-group row mt-10">
