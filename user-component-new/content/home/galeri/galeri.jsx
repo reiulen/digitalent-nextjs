@@ -87,7 +87,6 @@ const Galeri = () => {
 
     const handleMouseEnter = (index) => {
         let arr = [...show]
-
         for (let i = 0; i < arr.length; i++) {
             arr[i] = false
 
@@ -107,7 +106,6 @@ const Galeri = () => {
                 arr[i] = false
             }
         }
-
         setShow(arr)
     }
 
@@ -669,15 +667,17 @@ const Galeri = () => {
                                                 <div
                                                     className="col-12 col-sm-6 col-md-4 position-relative my-5"
                                                     key={i}
-                                                    onMouseOver={() => handleMouseEnter(i)}
-                                                    onMouseOut={() => handleMouseLeave(i)}
+                                                    onMouseEnter={() =>handleMouseEnter(i)}
+                                                    onMouseLeave={() =>handleMouseLeave(i)}
+                                                    // onMouseOver={() => handleMouseEnter(i)}
+                                                    // onMouseOut={() => handleMouseLeave(i)}
                                                 >
                                                     {
 
                                                         show && show[i] === false ?
                                                             <div
-                                                                classname="card position-relative"
-                                                                style={{ objectFit: "cover" }}
+                                                                className="card position-relative"
+                                                                style={{ objectFit: "cover",  borderRadius:'10px' }}
                                                             >
                                                                 <Image
                                                                     src={
@@ -699,7 +699,7 @@ const Galeri = () => {
                                                                 data-toggle="modal"
                                                             >
                                                                 <div
-                                                                    classname="card position-relative"
+                                                                    className="card position-relative"
                                                                 >
                                                                     <Image
                                                                         src={
@@ -781,7 +781,7 @@ const Galeri = () => {
                             aria-labelledby="example-custom-modal-styling-title"
                         >
                             {/* <div className={`${styles.padModalGaleri} p-0 m-0`}> */}
-                            <Modal.Body className={` p-0 m-0`}>
+                            <Modal.Body className={` p-0 m-0 ${windowDimensions && windowDimensions.width <= 768 ? 'overflow-auto' : ''}`} style={windowDimensions && windowDimensions.width >= 768 ? {height:'479px'} : {}}>
                                 <div className="row">
                                     <div
                                         className="col-12 col-md-12 col-lg-7 position-relative"
@@ -876,7 +876,7 @@ const Galeri = () => {
                                                 "row d-flex text-muted"
                                             }
                                         >
-                                            <div className="d-flex align-items-center" style={{ fontSize: '12x' }}>
+                                            <div className="d-flex align-items-center" style={{ fontSize: '12px' }}>
                                                 <i className="ri-calendar-2-line mr-2 ml-5"></i>
                                                 <span>{`Terbit : 
                                                 ${moment(detail.tanggal_publish).format("DD MMMM YYYY")}`}
@@ -936,7 +936,7 @@ const Galeri = () => {
                                         >
                                             {
                                                 windowDimensions && windowDimensions.width && windowDimensions.width >= 992 ?
-                                                    <p className={`${styles.isiGaleriHome} text-justify`}>
+                                                    <p className={`${styles.isiGaleriHome} text-justify`}  style={windowDimensions && windowDimensions.width >= 768 && detail?.judul.length >= 130 ? {maxHeight:'160px'} :{}} >
                                                         {detail.isi_galeri}
                                                         <div
                                                             className={
