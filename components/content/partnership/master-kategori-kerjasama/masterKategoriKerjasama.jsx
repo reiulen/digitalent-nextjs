@@ -19,7 +19,7 @@ import IconAdd from "../../../assets/icon/Add";
 import AlertBar from "../components/BarAlert";
 
 import IconSearch from "../../../assets/icon/Search";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -27,7 +27,7 @@ const Table = ({ token }) => {
   let { success, update } = router.query;
   const [valueSearch, setValueSearch] = useState("");
   const allMKCooporation = useSelector((state) => state.allMKCooporation);
-  const { permission } = useSelector ((state) => state.partnershipPermissions)
+  const { permission } = useSelector((state) => state.partnershipPermissions);
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
   };
@@ -38,7 +38,7 @@ const Table = ({ token }) => {
 
   const [successDelete, setSuccessDelete] = useState(false);
 
-  const cookiePermission = Cookies.get("token_permission")
+  const cookiePermission = Cookies.get("token_permission");
 
   const cooperationDelete = (id) => {
     Swal.fire({
@@ -69,9 +69,8 @@ const Table = ({ token }) => {
     allMKCooporation?.page,
     allMKCooporation?.status_delete,
     allMKCooporation?.status_list,
-    token
+    token,
   ]);
-
 
   const onNewReset = () => {
     setSuccessDelete(false);
@@ -82,18 +81,30 @@ const Table = ({ token }) => {
 
   return (
     <PageWrapper>
-     {success ? (
-        <AlertBar text="Berhasil menyimpan data" className="alert-light-success" onClick={() => onNewReset()}/>
+      {success ? (
+        <AlertBar
+          text="Berhasil menyimpan data"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
       ) : (
         ""
       )}
       {successDelete ? (
-        <AlertBar text="Berhasil menghapus data" className="alert-light-success" onClick={() => onNewReset()}/>
+        <AlertBar
+          text="Berhasil menghapus data"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
       ) : (
         ""
       )}
       {update ? (
-        <AlertBar text="Berhasil mengubah data" className="alert-light-success" onClick={() => onNewReset()}/>
+        <AlertBar
+          text="Berhasil mengubah data"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
       ) : (
         ""
       )}
@@ -102,48 +113,40 @@ const Table = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0 mt-7 ml-sm-n5 ml-n5">
             <div className="col-12 col-xl-6 mt-2">
-              <h3
-                className="card-title font-weight-bolder text-dark titles-1"
-              >
+              <h3 className="card-title font-weight-bolder text-dark titles-1">
                 Master Kategori Kerjasama
               </h3>
             </div>
 
-            {
-              permission ? 
-                permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.master_kategori_kerjasama.manage") ?
-                  <div className="col-12 col-xl-6 d-flex justify-content-xl-end  mb-5">
-                    <div className="card-toolbar mb-5">
-                      <Link href="/partnership/master-kategori-kerjasama/tambah-kategori-kerjasama">
-                        <a className="btn btn-rounded-full bg-blue-primary text-white w-75 w-md-100">
-                          <IconAdd className="mr-3" width="14" height="14" />
-                          <div className="d-inline-block text-truncate mr-n8 mr-sm-0">
-                            Tambah Kategori Kerjasama
-                          </div>
-                        </a>
-                      </Link>
-                    </div>
+            {permission ? (
+              permission?.roles?.includes("Super Admin") ||
+              permission?.permissions?.includes(
+                "partnership.master_kategori_kerjasama.manage"
+              ) ? (
+                <div className="col-12 col-xl-6 d-flex justify-content-xl-end  mb-5">
+                  <div className="card-toolbar mb-5">
+                    <Link href="/partnership/master-kategori-kerjasama/tambah-kategori-kerjasama">
+                      <a className="btn btn-rounded-full bg-blue-primary text-white w-75 w-md-100">
+                        <IconAdd className="mr-3" width="14" height="14" />
+                        <div className="d-inline-block text-truncate mr-n8 mr-sm-0">
+                          Tambah Kategori Kerjasama
+                        </div>
+                      </a>
+                    </Link>
                   </div>
-                :
-                  null
-              :
-                null
-            }
-            
+                </div>
+              ) : null
+            ) : null}
           </div>
 
           <div className="card-body pt-0 px-sm-6 mb-10">
             <div className="table-filter">
               <div className="row d-flex align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <div
-                    className="row d-flex align-items-center"
-                  >
+                  <div className="row d-flex align-items-center">
                     <div className="col-12 col-xl-4 ">
                       <div className="position-relative overflow-hidden">
-                        <form 
-                          onSubmit={(e) => handleSubmit(e)}
-                        >
+                        <form onSubmit={(e) => handleSubmit(e)}>
                           <IconSearch
                             style={{ left: "10" }}
                             className="left-center-absolute"
@@ -159,7 +162,7 @@ const Table = ({ token }) => {
                           />
                           <button
                             type="button"
-                            onClick={(e)=>handleSubmit(e)}
+                            onClick={(e) => handleSubmit(e)}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -169,7 +172,6 @@ const Table = ({ token }) => {
                             Cari
                           </button>
                         </form>
-                        
                       </div>
                     </div>
                   </div>
@@ -189,16 +191,15 @@ const Table = ({ token }) => {
                           Kategori Kerjasama
                         </th>
                         <th className="text-left align-middle">Status</th>
-                        
-                        {
-                          permission ? 
-                            permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.master_kategori_kerjasama.manage") ?
-                              <th className="text-left align-middle">Aksi</th>
-                            :
-                              null
-                          :
-                            null
-                        }
+
+                        {permission ? (
+                          permission?.roles?.includes("Super Admin") ||
+                          permission?.permissions?.includes(
+                            "partnership.master_kategori_kerjasama.manage"
+                          ) ? (
+                            <th className="text-left align-middle">Aksi</th>
+                          ) : null
+                        ) : null}
                       </tr>
                     </thead>
                     <tbody>
@@ -225,7 +226,9 @@ const Table = ({ token }) => {
                                       (index + 1)}
                                 </td>
                                 <td className="align-middle text-left text-overflow-ens">
-                                  {cooperation_categorie?.cooperation_categories}
+                                  {
+                                    cooperation_categorie?.cooperation_categories
+                                  }
                                 </td>
                                 <td className="align-middle text-left">
                                   {allMKCooporation?.mk_cooporation?.length ===
@@ -257,46 +260,44 @@ const Table = ({ token }) => {
                                   )}
                                 </td>
 
-                                {
-                                  permission ? 
-                                    permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.master_kategori_kerjasama.manage") ?
-                                      <td className="text-left align-middle">
-                                        <div className="d-flex align-items-center">
-                                          <button
-                                            className="btn btn-link-action bg-blue-secondary mr-3 position-relative btn-delete"
-                                            onClick={() =>
-                                              router.push(
-                                                `/partnership/master-kategori-kerjasama/${cooperation_categorie?.id}`
-                                              )
-                                            }
-                                          >
-                                            <IconPencil width="16" height="16" />
-                                            <div className="text-hover-show-hapus">
-                                              Ubah
-                                            </div>
-                                          </button>
-      
-                                          <button
-                                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                            onClick={() =>
-                                              cooperationDelete(
-                                                cooperation_categorie.id
-                                              )
-                                            }
-                                          >
-                                            <IconDelete width="16" height="16" />
-                                            <div className="text-hover-show-hapus">
-                                              Hapus
-                                            </div>
-                                          </button>
-                                        </div>
-                                      </td>
-                                    :
-                                      null
-                                  :
-                                    null
-                                }
-                                
+                                {permission ? (
+                                  permission?.roles?.includes("Super Admin") ||
+                                  permission?.permissions?.includes(
+                                    "partnership.master_kategori_kerjasama.manage"
+                                  ) ? (
+                                    <td className="text-left align-middle">
+                                      <div className="d-flex align-items-center">
+                                        <button
+                                          className="btn btn-link-action bg-blue-secondary mr-3 position-relative btn-delete"
+                                          onClick={() =>
+                                            router.push(
+                                              `/partnership/master-kategori-kerjasama/${cooperation_categorie?.id}`
+                                            )
+                                          }
+                                        >
+                                          <IconPencil width="16" height="16" />
+                                          <div className="text-hover-show-hapus">
+                                            Ubah
+                                          </div>
+                                        </button>
+
+                                        <button
+                                          className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                          onClick={() =>
+                                            cooperationDelete(
+                                              cooperation_categorie.id
+                                            )
+                                          }
+                                        >
+                                          <IconDelete width="16" height="16" />
+                                          <div className="text-hover-show-hapus">
+                                            Hapus
+                                          </div>
+                                        </button>
+                                      </div>
+                                    </td>
+                                  ) : null
+                                ) : null}
                               </tr>
                             );
                           }
@@ -306,70 +307,66 @@ const Table = ({ token }) => {
                   </table>
                 )}
               </div>
-              <div className="row">
-                <div className="table-pagination paginate-cs col-12 col-md-8 overflow-auto">
-                  {
-                    allMKCooporation?.mk_cooporation?.data?.total > 5 ?
-                      <Pagination
-                        activePage={allMKCooporation?.page}
-                        itemsCountPerPage={
-                          allMKCooporation?.mk_cooporation?.data?.perPage
-                        }
-                        totalItemsCount={
-                          allMKCooporation?.mk_cooporation?.data?.total
-                        }
-                        pageRangeDisplayed={3}
-                        onChange={(page) => dispatch(setPage(page))}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    :
-                      null
-                  }
-                  
-                </div>
-                <div className="table-total ml-auto col-12 col-md-4 d-flex justify-content-md-end">
-                  <div className="row">
-                    <div className="col-4 mr-0">
-                      <select
-                        className="form-control mr-5 cursor-pointer pl-2"
-                        id="exampleFormControlSelect2"
-                        defaultValue=""
-                        style={{
-                          width: "63px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                        onChange={(e) =>
-                          dispatch(limitCooporation(e.target.value))
-                        }
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                      </select>
-                    </div>
-                    <div className="col-8 my-auto">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
-                      >
-                        Total Data{" "}
-                        {allMKCooporation?.mk_cooporation?.data?.total} List
-                        Data
-                      </p>
+              {allMKCooporation?.mk_cooporation?.data?.total > 5 ? (
+                <div className="row">
+                  <div className="table-pagination paginate-cs col-12 col-md-8 overflow-auto">
+                    <Pagination
+                      activePage={allMKCooporation?.page}
+                      itemsCountPerPage={
+                        allMKCooporation?.mk_cooporation?.data?.perPage
+                      }
+                      totalItemsCount={
+                        allMKCooporation?.mk_cooporation?.data?.total
+                      }
+                      pageRangeDisplayed={3}
+                      onChange={(page) => dispatch(setPage(page))}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                  <div className="table-total ml-auto col-12 col-md-4 d-flex justify-content-md-end">
+                    <div className="row">
+                      <div className="col-4 mr-0">
+                        <select
+                          className="form-control mr-5 cursor-pointer pl-2"
+                          id="exampleFormControlSelect2"
+                          defaultValue=""
+                          style={{
+                            width: "63px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          onChange={(e) =>
+                            dispatch(limitCooporation(e.target.value))
+                          }
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="20">20</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                        >
+                          Total Data{" "}
+                          {allMKCooporation?.mk_cooporation?.data?.total} List
+                          Data
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              ) : null}
             </div>
           </div>
         </div>
