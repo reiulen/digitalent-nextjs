@@ -226,10 +226,15 @@ const StepTwo = ({ token, tokenPermission }) => {
 
     if (valid) {
       localStorage.setItem("method", "import" || router.query.metode);
-      router.push({
-        pathname: `/subvit/substansi/tambah-step-3`,
-        query: { id },
-      });
+      if (localStorage.getItem("detail-import") !== null) {
+        router.push(localStorage.getItem("detail-import"));
+        localStorage.removeItem("detail-import");
+      } else {
+        router.push({
+          pathname: `/subvit/substansi/tambah-step-3`,
+          query: { id },
+        });
+      }
     }
   };
 
@@ -744,7 +749,12 @@ const StepTwo = ({ token, tokenPermission }) => {
                           `/subvit/substansi/clone/step-3?id=${router.query.id}`
                         );
                       } else {
-                        router.push(`/subvit/substansi/tambah-step-1`);
+                        if (localStorage.getItem("detail-import") !== null) {
+                          router.push(localStorage.getItem("detail-import"));
+                          localStorage.removeItem("detail-import");
+                        } else {
+                          router.push(`/subvit/substansi/tambah-step-1`);
+                        }
                       }
                     }}
                   >
