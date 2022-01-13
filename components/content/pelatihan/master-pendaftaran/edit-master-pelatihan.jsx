@@ -19,6 +19,7 @@ import {
   helperChangeInputFormBuilder,
   helperAddFieldTriggered,
   helperRemoveField,
+  helperUnformatCheckbox,
 } from "../../../../utils/middleware/helper";
 
 import RenderFormElement from "../training/components/render-form-element.component";
@@ -178,11 +179,12 @@ const EditRegistrationStep2 = ({ token }) => {
     e.preventDefault();
 
     if (simpleValidator.current.allValid()) {
+      const valueForm = helperUnformatCheckbox(formBuilder, "admin");
       const data = {
         judul_form: title,
         id: +router.query.id,
         status: "0",
-        formBuilder,
+        formBuilder: valueForm,
       };
       dispatch(updateMasterPelatihanAction(data, token, token_permission));
     } else {

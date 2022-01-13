@@ -842,7 +842,7 @@ const SubtansiUser = ({ token }) => {
                                             }
                                             key={index}
                                             onClick={() => {
-                                              handleTriggered(
+                                              handleTriggered2(
                                                 ans,
                                                 parent,
                                                 index

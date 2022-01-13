@@ -103,7 +103,7 @@ const CheckboxComponent = ({
       ...answer,
       {
         key: newKey,
-        question: "",
+        option: "",
         image: "",
         imageName: "Pilih Gambar",
         is_right: false,
@@ -113,7 +113,7 @@ const CheckboxComponent = ({
       ...answer,
       {
         key: newKey,
-        question: "",
+        option: "",
         image: "",
         imageName: "Pilih Gambar",
         is_right: false,
