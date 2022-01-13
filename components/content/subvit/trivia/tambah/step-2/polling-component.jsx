@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import styles from "../step-2/step2-trivia.module.css";
 
-import Image from "next/image";
-
 const PollingComponent = ({ props_answer }) => {
   const [answer, setSoalList] = useState([
     { key: "A", option: "", image: "", imageName: "Pilih Gambar" },
@@ -48,7 +46,7 @@ const PollingComponent = ({ props_answer }) => {
       ...answer,
       {
         key: newKey,
-        question: "",
+        option: "",
         image: "",
         imageName: "Pilih Gambar",
         is_right: false,
@@ -58,7 +56,7 @@ const PollingComponent = ({ props_answer }) => {
       ...answer,
       {
         key: newKey,
-        question: "",
+        option: "",
         image: "",
         imageName: "Pilih Gambar",
         is_right: false,

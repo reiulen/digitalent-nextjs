@@ -65,11 +65,11 @@ const BlankComponent = ({ props_answer, props_duration }) => {
     const newKey = String.fromCharCode(keyindex + 1);
     setSoalList([
       ...answer,
-      { key: newKey, question: "", image: "", is_right: false },
+      { key: newKey, option: "", image: "", is_right: false },
     ]);
     props_answer([
       ...answer,
-      { key: newKey, question: "", image: "", is_right: false },
+      { key: newKey, option: "", image: "", is_right: false },
     ]);
   };
 
@@ -119,6 +119,7 @@ const BlankComponent = ({ props_answer, props_duration }) => {
                     value={x.type}
                     placeholder={x.key}
                     onChange={(e) => handleInputChange(e, i)}
+                    required
                   >
                     <option value="" disabled selected>
                       -- PILIHAN TIPE --
@@ -143,6 +144,7 @@ const BlankComponent = ({ props_answer, props_duration }) => {
                     placeholder={`Pilihan ${x.key}`}
                     onChange={(e) => handleInputChange(e, i)}
                     autoComplete="off"
+                    required
                   />
                 </div>
 
@@ -156,6 +158,7 @@ const BlankComponent = ({ props_answer, props_duration }) => {
                   <div className="row justify-content-center align-items-center">
                     <div className="form-group col-12 col-md-5 mb-3">
                       <input
+                        required
                         type="text"
                         className={`${styles.inputNilai} form-control`}
                         name="value"
@@ -197,7 +200,7 @@ const BlankComponent = ({ props_answer, props_duration }) => {
       <div className="form-group ">
         {/* <div className="row"> */}
         <div>
-          {answer.length < 6 ? (
+          {answer.length < 6 && (
             <button
               type="button"
               className={`${styles.btnAddAnswer} btn btn-secondary-rounded-full bg-blue-secondary text-white`}
@@ -206,8 +209,6 @@ const BlankComponent = ({ props_answer, props_duration }) => {
               <i className={`${styles.iconTambah} ri-add-fill text-white`}></i>{" "}
               <span>Tambah Jawaban</span>
             </button>
-          ) : (
-            ""
           )}
           {/* </div> */}
         </div>
