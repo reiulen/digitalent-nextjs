@@ -179,7 +179,7 @@ const Navigationbar = ({ session }) => {
 
   useEffect(() => {
     if (!localStorage.getItem("navbar")) {
-      getDataGeneral();
+      getDataGeneral(session?.token);
     }
     if (localStorage.getItem("navbar") === "1") {
       setWarna("primary");
@@ -202,7 +202,7 @@ const Navigationbar = ({ session }) => {
 
   useEffect(() => {
     getAkademi();
-    getMenu();
+    getMenu(session?.token);
   }, []);
 
   const handlerLogout = async () => {
@@ -1092,6 +1092,7 @@ const Navigationbar = ({ session }) => {
                   screenClass={"d-block d-lg-none"}
                   accountFalse={`d-none d-lg-block`}
                   titleAkun={"Lainnya"}
+                  session={session}
                 />
               )}
             {/* End side bar */}

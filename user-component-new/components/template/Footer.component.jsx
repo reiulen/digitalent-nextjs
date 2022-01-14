@@ -8,7 +8,7 @@ import { Row, Col, Container } from "react-bootstrap";
 import Link from "next/link";
 import ImageWhiteLogo from "../../../components/assets/icon-dashboard-peserta/whitelogo.png";
 
-export default function Footer() {
+export default function Footer({ session }) {
   const dispatch = useDispatch();
   const { footer, loading } = useSelector((state) => state.berandaFooter);
   const [secondary, setSecondary] = useState("1");
@@ -29,17 +29,21 @@ export default function Footer() {
     }
   }, [footer]);
 
-  const getDataGeneral = async () => {
+  const getDataGeneral = async (token) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (data) {
         localStorage.setItem("footer", data.data.color[1].color);
         localStorage.setItem("footer_logo", data.data.footer_logo);
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -47,7 +51,7 @@ export default function Footer() {
       !localStorage.getItem("footer") ||
       !localStorage.getItem("footer_logo")
     ) {
-      getDataGeneral();
+      getDataGeneral(session?.token);
     }
 
     if (localStorage.getItem("footer") == "1") {
