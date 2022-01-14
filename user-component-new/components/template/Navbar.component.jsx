@@ -179,7 +179,7 @@ const Navigationbar = ({ session }) => {
 
   useEffect(() => {
     if (!localStorage.getItem("navbar")) {
-      getDataGeneral();
+      getDataGeneral(session?.token);
     }
     if (localStorage.getItem("navbar") === "1") {
       setWarna("primary");
@@ -202,7 +202,7 @@ const Navigationbar = ({ session }) => {
 
   useEffect(() => {
     getAkademi();
-    getMenu();
+    getMenu(session?.token);
   }, []);
 
   const handlerLogout = async () => {
