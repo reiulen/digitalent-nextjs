@@ -1092,6 +1092,7 @@ const Navigationbar = ({ session }) => {
                   screenClass={"d-block d-lg-none"}
                   accountFalse={`d-none d-lg-block`}
                   titleAkun={"Lainnya"}
+                  session={session}
                 />
               )}
             {/* End side bar */}
