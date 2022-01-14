@@ -194,10 +194,15 @@ const StepTwo = ({ token, tokenPermission }) => {
       dispatch({
         type: IMPORT_IMAGES_SUBTANCE_QUESTION_DETAIL_RESET,
       });
-      router.push({
-        pathname: `/subvit/substansi`,
-        query: { success: true },
-      });
+      if (localStorage.getItem("detail-import") !== null) {
+        router.push(localStorage.getItem("detail-import"));
+        localStorage.removeItem("detail-import");
+      } else {
+        router.push({
+          pathname: `/subvit/substansi`,
+          query: { success: true },
+        });
+      }
     }
   };
 
@@ -226,10 +231,20 @@ const StepTwo = ({ token, tokenPermission }) => {
 
     if (valid) {
       localStorage.setItem("method", "import" || router.query.metode);
-      router.push({
-        pathname: `/subvit/substansi/tambah-step-3`,
-        query: { id },
-      });
+      if (localStorage.getItem("detail-import") !== null) {
+        router.push(localStorage.getItem("detail-import"));
+        localStorage.removeItem("detail-import");
+        localStorage.removeItem("method");
+        localStorage.removeItem("step2");
+        localStorage.removeItem("clone");
+        localStorage.removeItem("successFile");
+        localStorage.removeItem("successImage");
+      } else {
+        router.push({
+          pathname: `/subvit/substansi/tambah-step-3`,
+          query: { id },
+        });
+      }
     }
   };
 
@@ -302,9 +317,6 @@ const StepTwo = ({ token, tokenPermission }) => {
       },
     };
 
-    // Cookies.set("Authorization", "Bearer " + token);
-    // Cookies.set("Permission", tokenPermission);
-
     await axios
       .get(
         process.env.END_POINT_API_SUBVIT +
@@ -312,26 +324,9 @@ const StepTwo = ({ token, tokenPermission }) => {
         config
       )
       .then((res) => {
-        // window.location.href = res.data.data[0];
         res.data.data.map((row, i) => {
           if (i === 0) {
             window.open(row);
-            //     var req = new XMLHttpRequest();
-            //     req.open("GET", row, true); //true means request will be async
-            //     req.onreadystatechange = function (aEvt) {
-            //       if (req.readyState == 4) {
-            //         if (req.status === 200) {
-            //           console.log(aEvt);
-            //           window.location.href = aEvt.currentTarget;
-            //         } else {
-            //           console.log("tidak berhasil");
-            //         }
-            //       }
-            //     };
-            //     req.setRequestHeader("Authorization", "Bearer " + token);
-            //     req.setRequestHeader("Permission", tokenPermission);
-            //     req.send();
-            //   }
           } else {
             window.location.href = row;
           }
@@ -744,7 +739,12 @@ const StepTwo = ({ token, tokenPermission }) => {
                           `/subvit/substansi/clone/step-3?id=${router.query.id}`
                         );
                       } else {
-                        router.push(`/subvit/substansi/tambah-step-1`);
+                        if (localStorage.getItem("detail-import") !== null) {
+                          router.push(localStorage.getItem("detail-import"));
+                          localStorage.removeItem("detail-import");
+                        } else {
+                          router.push(`/subvit/substansi/tambah-step-1`);
+                        }
                       }
                     }}
                   >

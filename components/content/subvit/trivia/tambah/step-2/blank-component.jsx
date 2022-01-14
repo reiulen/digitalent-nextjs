@@ -7,44 +7,13 @@ import {
   helperTextLimitMax,
 } from "../../../../../../utils/middleware/helper";
 
-const BlankComponent = ({ props_answer, props_duration }) => {
-  const [answer, setSoalList] = useState([
-    {
-      key: "A",
-      value: "",
-      type: "",
-      option: "",
-      image: "",
-    },
-    {
-      key: "B",
-      value: "",
-      type: "",
-      option: "",
-      image: "",
-    },
-    {
-      key: "C",
-      value: "",
-      type: "",
-      option: "",
-      image: "",
-    },
-    {
-      key: "D",
-      value: "",
-      type: "",
-      option: "",
-      image: "",
-    },
-  ]);
+const BlankComponent = ({ answer, props_answer, props_duration }) => {
   const [duration, setDuration] = useState("");
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...answer];
     list[index][name] = value;
-    setSoalList(list);
     props_answer(list);
   };
 
@@ -55,7 +24,6 @@ const BlankComponent = ({ props_answer, props_duration }) => {
       let key = String.fromCharCode(65 + i);
       list[i]["key"] = key;
     });
-    setSoalList(list);
     props_answer(list);
   };
 
@@ -63,10 +31,7 @@ const BlankComponent = ({ props_answer, props_duration }) => {
     const lastobj = answer[answer.length - 1];
     const keyindex = lastobj.key.charCodeAt(0);
     const newKey = String.fromCharCode(keyindex + 1);
-    setSoalList([
-      ...answer,
-      { key: newKey, option: "", image: "", is_right: false },
-    ]);
+
     props_answer([
       ...answer,
       { key: newKey, option: "", image: "", is_right: false },

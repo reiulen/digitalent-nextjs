@@ -40,43 +40,65 @@ const StepTwo = ({ token, tokenPermission }) => {
     (state) => state.detailSubtanceQuestionBanks
   );
 
-  const [question, setSoal] = useState("");
-  const [question_image, setSoalImage] = useState("");
-  const [answer, setSoalList] = useState([
-    {
-      key: "A",
-      option: "",
-      image: "",
-      imageName: "Pilih Gambar",
-      is_right: false,
-    },
-    {
-      key: "B",
-      option: "",
-      image: "",
-      imageName: "Pilih Gambar",
-      is_right: false,
-    },
-    {
-      key: "C",
-      option: "",
-      image: "",
-      imageName: "Pilih Gambar",
-      is_right: false,
-    },
-    {
-      key: "D",
-      option: "",
-      image: "",
-      imageName: "Pilih Gambar",
-      is_right: false,
-    },
-  ]);
-  const [answer_key, setAnswerKey] = useState("");
-  const [question_type_id, setQuestionTypeId] = useState("");
+  const [question, setSoal] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).question) ||
+      ""
+  );
+  const [question_image, setSoalImage] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).question_image) ||
+      ""
+  );
+  const [answer, setSoalList] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(JSON.parse(localStorage.getItem("step2")).answer)) || [
+      {
+        key: "A",
+        option: "",
+        image: "",
+        imageName: "Pilih Gambar",
+        is_right: false,
+      },
+      {
+        key: "B",
+        option: "",
+        image: "",
+        imageName: "Pilih Gambar",
+        is_right: false,
+      },
+      {
+        key: "C",
+        option: "",
+        image: "",
+        imageName: "Pilih Gambar",
+        is_right: false,
+      },
+      {
+        key: "D",
+        option: "",
+        image: "",
+        imageName: "Pilih Gambar",
+        is_right: false,
+      },
+    ]
+  );
+  const [answer_key, setAnswerKey] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).answer_key) ||
+      ""
+  );
+  const [question_type_id, setQuestionTypeId] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).question_type_id) ||
+      ""
+  );
   const [typeSave, setTypeSave] = useState("lanjut");
-  const [imageSoalName, setImageSoalName] = useState("");
-  const [imageAnswerName, setImageAnswerName] = useState("");
+  const [imageSoalName, setImageSoalName] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).question_image_name) ||
+      ""
+  );
 
   useEffect(() => {
     if (success) {
@@ -84,10 +106,17 @@ const StepTwo = ({ token, tokenPermission }) => {
         type: NEW_SUBTANCE_QUESTION_DETAIL_RESET,
       });
       if (typeSave === "lanjut") {
-        router.push({
-          pathname: `/subvit/substansi/tambah-step-3`,
-          query: { id },
-        });
+        if (localStorage.getItem("detail-entry") !== null) {
+          router.push(localStorage.getItem("detail-entry"));
+          localStorage.removeItem("detail-entry");
+          localStorage.removeItem("step2");
+          localStorage.removeItem("step1");
+        } else {
+          router.push({
+            pathname: `/subvit/substansi/tambah-step-3`,
+            query: { id },
+          });
+        }
       } else if (typeSave === "draft") {
         handleResetForm();
         if (router.query.metode) {
@@ -328,6 +357,7 @@ const StepTwo = ({ token, tokenPermission }) => {
         question,
         answer: answers,
         question_image,
+        question_image_name: imageSoalName,
         question_type_id,
         answer_key,
       };
@@ -350,7 +380,7 @@ const StepTwo = ({ token, tokenPermission }) => {
 
   return (
     <PageWrapper>
-      {error ? (
+      {error && (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
           role="alert"
@@ -373,8 +403,6 @@ const StepTwo = ({ token, tokenPermission }) => {
             </button>
           </div>
         </div>
-      ) : (
-        ""
       )}
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
@@ -552,8 +580,6 @@ const StepTwo = ({ token, tokenPermission }) => {
                           ""
                         )}
                       </div>
-                      {/* <div className="col-sm-12 col-md-4 d-flex align-items-end">
-                      </div> */}
                     </>
                   );
                 })}
@@ -586,7 +612,12 @@ const StepTwo = ({ token, tokenPermission }) => {
                           `/subvit/substansi/clone/step-3?id=${router.query.id}`
                         );
                       } else {
-                        router.push(`/subvit/substansi/tambah-step-1`);
+                        if (localStorage.getItem("detail-entry") !== null) {
+                          router.push(localStorage.getItem("detail-entry"));
+                          localStorage.removeItem("detail-entry");
+                        } else {
+                          router.push(`/subvit/substansi/tambah-step-1`);
+                        }
                       }
                     }}
                   >

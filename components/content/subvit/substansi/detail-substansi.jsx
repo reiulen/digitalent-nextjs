@@ -107,6 +107,7 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
       pathname: `/subvit/substansi/tambah-step-2-entry`,
       query: { id },
     });
+    localStorage.setItem("detail-entry", router.asPath);
   };
 
   const handleImport = () => {
@@ -114,6 +115,7 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
       pathname: `/subvit/substansi/tambah-step-2-import`,
       query: { id },
     });
+    localStorage.setItem("detail-import", router.asPath);
   };
 
   const handleFilter = () => {

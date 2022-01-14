@@ -82,6 +82,8 @@ const StepThree = ({ token, tokenPermission }) => {
       localStorage.removeItem("step2");
       localStorage.removeItem("clone1");
       localStorage.removeItem("clone3");
+      localStorage.removeItem("successFile");
+      localStorage.removeItem("successImage");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -128,6 +130,8 @@ const StepThree = ({ token, tokenPermission }) => {
         localStorage.removeItem("step2");
         localStorage.removeItem("clone1");
         localStorage.removeItem("clone3");
+        localStorage.removeItem("successFile");
+        localStorage.removeItem("successImage");
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);

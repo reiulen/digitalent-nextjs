@@ -39,8 +39,16 @@ const StepTwo = ({ token, tokenPermission }) => {
       JSON.parse(localStorage.getItem("step2")).question) ||
       ""
   );
-  const [question_image, setSoalImage] = useState("");
-  const [imageName, setImageName] = useState("");
+  const [question_image, setSoalImage] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).question_image) ||
+      ""
+  );
+  const [imageName, setImageName] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).imageName) ||
+      ""
+  );
   const [answer, setSoalList] = useState(
     (localStorage.getItem("step2") &&
       JSON.parse(localStorage.getItem("step2")).answer) || [
@@ -109,10 +117,17 @@ const StepTwo = ({ token, tokenPermission }) => {
       });
       if (typeSave === "lanjut") {
         handleResetForm();
-        router.push({
-          pathname: `/subvit/survey/tambah/step-3`,
-          query: { id },
-        });
+        if (localStorage.getItem("detail-entry") !== null) {
+          router.push(localStorage.getItem("detail-entry"));
+          localStorage.removeItem("detail-entry");
+          localStorage.removeItem("step2");
+          localStorage.removeItem("step1");
+        } else {
+          router.push({
+            pathname: `/subvit/survey/tambah/step-3`,
+            query: { id },
+          });
+        }
       } else if (typeSave === "draft") {
         localStorage.removeItem("step2");
         handleResetForm();
@@ -315,6 +330,7 @@ const StepTwo = ({ token, tokenPermission }) => {
             question,
             answer: answers,
             question_image,
+            imageName,
             answer_key: null,
             type: methodAdd,
           };
@@ -342,6 +358,7 @@ const StepTwo = ({ token, tokenPermission }) => {
             question,
             answer: answers_multiple,
             question_image,
+            imageName,
             answer_key: null,
             type: methodAdd,
           };
@@ -356,6 +373,7 @@ const StepTwo = ({ token, tokenPermission }) => {
             survey_question_bank_id: id,
             question,
             question_image,
+            imageName,
             type: methodAdd,
           };
           localStorage.setItem("step2", JSON.stringify(data));
@@ -382,6 +400,7 @@ const StepTwo = ({ token, tokenPermission }) => {
             question,
             answer: answers_triggered,
             question_image,
+            imageName,
             answer_key: null,
             type: methodAdd,
           };
@@ -655,7 +674,12 @@ const StepTwo = ({ token, tokenPermission }) => {
                           `/subvit/survey/clone/step-3?id=${router.query.id}`
                         );
                       } else {
-                        router.push("/subvit/survey/tambah");
+                        if (localStorage.getItem("detail-entry") !== null) {
+                          router.push(localStorage.getItem("detail-entry"));
+                          localStorage.removeItem("detail-entry");
+                        } else {
+                          router.push("/subvit/survey/tambah");
+                        }
                       }
                     }}
                   >
