@@ -114,7 +114,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
     }
 
     answer?.forEach((row, j) => {
-      if (row.option == "" && row.image == "") {
+      if (row.option == "" && row.image == "" && row.type !== "empty") {
         valid = false;
         Swal.fire({
           icon: "error",

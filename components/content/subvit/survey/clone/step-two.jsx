@@ -295,7 +295,6 @@ const StepTwo = ({ token, tokenPermission }) => {
                         <th>No</th>
                         <th>ID Soal</th>
                         <th>Soal</th>
-                        <th>Kategori</th>
                         <th>Bobot</th>
                         <th>Status</th>
                       </tr>
@@ -338,9 +337,6 @@ const StepTwo = ({ token, tokenPermission }) => {
                                 </td>
                                 <td className="align-middle">
                                   {question.question}
-                                </td>
-                                <td className="align-middle">
-                                  {question.type.name}
                                 </td>
                                 <td className="align-middle">
                                   {question.type.value} poin
