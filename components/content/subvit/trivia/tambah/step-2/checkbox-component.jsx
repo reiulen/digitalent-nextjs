@@ -9,6 +9,7 @@ import {
 } from "../../../../../../utils/middleware/helper";
 
 const CheckboxComponent = ({
+  answer,
   props_answer,
   props_answer_key,
   props_duration,
@@ -18,40 +19,6 @@ const CheckboxComponent = ({
     ssr: false,
   });
 
-  const [answer, setSoalList] = useState([
-    {
-      key: "A",
-      value: "",
-      option: "",
-      image: "",
-      imageName: "Pilih Gambar",
-      is_right: false,
-    },
-    {
-      key: "B",
-      value: "",
-      option: "",
-      image: "",
-      imageName: "Pilih Gambar",
-      is_right: false,
-    },
-    {
-      key: "C",
-      value: "",
-      option: "",
-      image: "",
-      imageName: "Pilih Gambar",
-      is_right: false,
-    },
-    {
-      key: "D",
-      value: "",
-      option: "",
-      image: "",
-      imageName: "Pilih Gambar",
-      is_right: false,
-    },
-  ]);
   const [answer_key, setAnswerKey] = useState("");
   const [duration, setDuration] = useState("");
 
@@ -69,7 +36,6 @@ const CheckboxComponent = ({
       };
       reader.readAsDataURL(e.target.files[0]);
     }
-    setSoalList(list);
     props_answer(list);
   };
 
@@ -91,7 +57,6 @@ const CheckboxComponent = ({
       let key = String.fromCharCode(65 + i);
       list[i]["key"] = key;
     });
-    setSoalList(list);
     props_answer(list);
   };
 
@@ -99,16 +64,7 @@ const CheckboxComponent = ({
     const lastobj = answer[answer.length - 1];
     const keyindex = lastobj.key.charCodeAt(0);
     const newKey = String.fromCharCode(keyindex + 1);
-    setSoalList([
-      ...answer,
-      {
-        key: newKey,
-        option: "",
-        image: "",
-        imageName: "Pilih Gambar",
-        is_right: false,
-      },
-    ]);
+
     props_answer([
       ...answer,
       {

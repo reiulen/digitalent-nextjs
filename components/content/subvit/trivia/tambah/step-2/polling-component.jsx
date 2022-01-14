@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import styles from "../step-2/step2-trivia.module.css";
 
-const PollingComponent = ({ props_answer }) => {
-  const [answer, setSoalList] = useState([
-    { key: "A", option: "", image: "", imageName: "Pilih Gambar" },
-    { key: "B", option: "", image: "", imageName: "Pilih Gambar" },
-    { key: "C", option: "", image: "", imageName: "Pilih Gambar" },
-    { key: "D", option: "", image: "", imageName: "Pilih Gambar" },
-  ]);
-
+const PollingComponent = ({ answer, props_answer }) => {
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...answer];
@@ -23,7 +16,6 @@ const PollingComponent = ({ props_answer }) => {
       };
       reader.readAsDataURL(e.target.files[0]);
     }
-    setSoalList(list);
     props_answer(list);
   };
 
@@ -34,7 +26,6 @@ const PollingComponent = ({ props_answer }) => {
       let key = String.fromCharCode(65 + i);
       list[i]["key"] = key;
     });
-    setSoalList(list);
     props_answer(list);
   };
 
@@ -42,16 +33,7 @@ const PollingComponent = ({ props_answer }) => {
     const lastobj = answer[answer.length - 1];
     const keyindex = lastobj.key.charCodeAt(0);
     const newKey = String.fromCharCode(keyindex + 1);
-    setSoalList([
-      ...answer,
-      {
-        key: newKey,
-        option: "",
-        image: "",
-        imageName: "Pilih Gambar",
-        is_right: false,
-      },
-    ]);
+
     props_answer([
       ...answer,
       {

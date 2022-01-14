@@ -109,6 +109,8 @@ const StepTwo = ({ token, tokenPermission }) => {
         if (localStorage.getItem("detail-entry") !== null) {
           router.push(localStorage.getItem("detail-entry"));
           localStorage.removeItem("detail-entry");
+          localStorage.removeItem("step2");
+          localStorage.removeItem("step1");
         } else {
           router.push({
             pathname: `/subvit/substansi/tambah-step-3`,

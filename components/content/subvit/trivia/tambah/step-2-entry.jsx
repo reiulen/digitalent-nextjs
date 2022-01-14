@@ -29,36 +29,75 @@ const StepTwo = ({ token, tokenPermission }) => {
   );
   const { trivia } = useSelector((state) => state.detailTriviaQuestionBanks);
 
-  const [methodAdd, setMethodAdd] = useState("polling");
-  const [question, setSoal] = useState("");
-  const [question_image_name, setImageName] = useState("Pilih Gambar");
-  const [question_image, setSoalImage] = useState("");
+  const [methodAdd, setMethodAdd] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).type) ||
+      "polling"
+  );
+  const [question, setSoal] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).question) ||
+      ""
+  );
+  const [question_image_name, setImageName] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).question_image_name) ||
+      "Pilih Gambar"
+  );
+  const [question_image, setSoalImage] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).question_image) ||
+      ""
+  );
 
   // polling
-  const [answer, setSoalList] = useState([
-    { key: "A", option: "", image: "" },
-    { key: "B", option: "", image: "" },
-    { key: "C", option: "", image: "" },
-    { key: "D", option: "", image: "" },
-  ]);
-  //checkbox
-  const [answer_checkbox, setCheckboxList] = useState([
-    { key: "A", value: "", option: "", image: "", is_right: false },
-    { key: "B", value: "", option: "", image: "", is_right: false },
-    { key: "C", value: "", option: "", image: "", is_right: false },
-    { key: "D", value: "", option: "", image: "", is_right: false },
-  ]);
-  const [duration, setDuration] = useState(null);
-  //blank
-  const [answer_blank, setBlanklList] = useState([
-    { key: "A", value: "", type: "", option: "", image: "" },
-    { key: "B", value: "", type: "", option: "", image: "" },
-    { key: "C", value: "", type: "", option: "", image: "" },
-    { key: "D", value: "", type: "", option: "", image: "" },
-  ]);
-  const [durationBlank, setDurationBlank] = useState(null);
+  const [answer, setSoalList] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(JSON.parse(localStorage.getItem("step2")).answer)) || [
+      { key: "A", option: "", image: "" },
+      { key: "B", option: "", image: "" },
+      { key: "C", option: "", image: "" },
+      { key: "D", option: "", image: "" },
+    ]
+  );
 
-  const [answer_key, setAnswerKey] = useState("");
+  //checkbox
+  const [answer_checkbox, setCheckboxList] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(JSON.parse(localStorage.getItem("step2")).answer)) || [
+      { key: "A", value: "", option: "", image: "", is_right: false },
+      { key: "B", value: "", option: "", image: "", is_right: false },
+      { key: "C", value: "", option: "", image: "", is_right: false },
+      { key: "D", value: "", option: "", image: "", is_right: false },
+    ]
+  );
+  const [duration, setDuration] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).duration) ||
+      null
+  );
+  //blank
+  const [answer_blank, setBlanklList] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(JSON.parse(localStorage.getItem("step2")).answer)) || [
+      { key: "A", value: "", type: "", option: "", image: "" },
+      { key: "B", value: "", type: "", option: "", image: "" },
+      { key: "C", value: "", type: "", option: "", image: "" },
+      { key: "D", value: "", type: "", option: "", image: "" },
+    ]
+  );
+
+  const [durationBlank, setDurationBlank] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).duration) ||
+      null
+  );
+
+  const [answer_key, setAnswerKey] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).answer_key) ||
+      ""
+  );
   const [typeSave, setTypeSave] = useState("lanjut");
 
   useEffect(() => {
@@ -68,10 +107,17 @@ const StepTwo = ({ token, tokenPermission }) => {
       });
       if (typeSave === "lanjut") {
         handleResetForm();
-        router.push({
-          pathname: `/subvit/trivia/tambah/step-3`,
-          query: { id },
-        });
+        if (localStorage.getItem("detail-entry") !== null) {
+          router.push(localStorage.getItem("detail-entry"));
+          localStorage.removeItem("detail-entry");
+          localStorage.removeItem("step2");
+          localStorage.removeItem("step1");
+        } else {
+          router.push({
+            pathname: `/subvit/trivia/tambah/step-3`,
+            query: { id },
+          });
+        }
       } else if (typeSave === "draft") {
         handleResetForm();
         if (router.query.metode) {
@@ -318,6 +364,7 @@ const StepTwo = ({ token, tokenPermission }) => {
             question,
             answer: answers,
             question_image,
+            question_image_name,
             answer_key: null,
             type: methodAdd,
           };
@@ -381,12 +428,16 @@ const StepTwo = ({ token, tokenPermission }) => {
     switch (methodAdd) {
       case "polling":
         return (
-          <PollingComponent props_answer={(answer) => setSoalList(answer)} />
+          <PollingComponent
+            answer={answer}
+            props_answer={(answer) => setSoalList(answer)}
+          />
         );
         break;
       case "checkbox":
         return (
           <CheckboxComponent
+            answer={answer_checkbox}
             props_answer={(answer) => setCheckboxList(answer)}
             props_answer_key={(key) => setAnswerKey(key)}
             props_duration={(duration) => setDuration(duration)}
@@ -396,6 +447,7 @@ const StepTwo = ({ token, tokenPermission }) => {
       case "fill_in_the_blank":
         return (
           <BlankComponent
+            answer={answer_blank}
             props_answer={(answer) => setBlanklList(answer)}
             props_duration={(duration) => setDurationBlank(duration)}
           />
@@ -403,7 +455,10 @@ const StepTwo = ({ token, tokenPermission }) => {
         break;
       default:
         return (
-          <PollingComponent props_answer={(answer) => setSoalList(answer)} />
+          <PollingComponent
+            answer={answer}
+            props_answer={(answer) => setSoalList(answer)}
+          />
         );
         break;
     }
@@ -564,7 +619,12 @@ const StepTwo = ({ token, tokenPermission }) => {
                               `/subvit/trivia/clone/step-3?id=${router.query.id}`
                             );
                           } else {
-                            router.push("/subvit/trivia/tambah");
+                            if (localStorage.getItem("detail-entry") !== null) {
+                              router.push(localStorage.getItem("detail-entry"));
+                              localStorage.removeItem("detail-entry");
+                            } else {
+                              router.push("/subvit/trivia/tambah");
+                            }
                           }
                         }}
                       >

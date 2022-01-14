@@ -27,7 +27,6 @@ import LoadingTable from "../../../../LoadingTable";
 import ButtonAction from "../../../../ButtonAction";
 import axios from "axios";
 import styles from "../../trivia/edit/step.module.css";
-import Cookies from "js-cookie";
 
 const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
@@ -141,8 +140,6 @@ const StepTwo = ({ token, tokenPermission }) => {
     }
 
     if (valid) {
-      localStorage.removeItem("successFile");
-      localStorage.removeItem("step-1");
       localStorage.removeItem("method");
       localStorage.removeItem("successFile");
       localStorage.removeItem("successImage");
@@ -152,10 +149,15 @@ const StepTwo = ({ token, tokenPermission }) => {
       dispatch({
         type: IMPORT_IMAGES_SURVEY_QUESTION_DETAIL_RESET,
       });
-      router.push({
-        pathname: `/subvit/survey`,
-        query: { success: true },
-      });
+      if (localStorage.getItem("detail-import") !== null) {
+        router.push(localStorage.getItem("detail-import"));
+        localStorage.removeItem("detail-import");
+      } else {
+        router.push({
+          pathname: `/subvit/survey`,
+          query: { success: true },
+        });
+      }
     }
   };
 
@@ -184,12 +186,20 @@ const StepTwo = ({ token, tokenPermission }) => {
 
     if (valid) {
       localStorage.setItem("method", "import" || router.query.metode);
-      localStorage.removeItem("successFile");
-      localStorage.removeItem("successImage");
-      router.push({
-        pathname: `/subvit/survey/tambah/step-3`,
-        query: { id },
-      });
+      if (localStorage.getItem("detail-import") !== null) {
+        router.push(localStorage.getItem("detail-import"));
+        localStorage.removeItem("detail-import");
+        localStorage.removeItem("method");
+        localStorage.removeItem("step2");
+        localStorage.removeItem("clone");
+        localStorage.removeItem("successFile");
+        localStorage.removeItem("successImage");
+      } else {
+        router.push({
+          pathname: `/subvit/survey/tambah/step-3`,
+          query: { id },
+        });
+      }
     }
   };
 
@@ -688,7 +698,12 @@ const StepTwo = ({ token, tokenPermission }) => {
                           `/subvit/survey/clone/step-3?id=${router.query.id}`
                         );
                       } else {
-                        router.push("/subvit/survey/tambah");
+                        if (localStorage.getItem("detail-import") !== null) {
+                          router.push(localStorage.getItem("detail-import"));
+                          localStorage.removeItem("detail-import");
+                        } else {
+                          router.push("/subvit/survey/tambah");
+                        }
                       }
                     }}
                   >
