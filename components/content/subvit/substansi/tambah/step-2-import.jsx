@@ -241,10 +241,14 @@ const StepTwo = ({ token, tokenPermission }) => {
         localStorage.removeItem("step2");
         localStorage.removeItem("clone");
       } else {
-        router.push({
-          pathname: `/subvit/substansi/tambah-step-3`,
-          query: { id },
-        });
+        if (localStorage.getItem("clone") === "true") {
+          router.push(`/subvit/substansi/clone/step-4?id=${router.query.id}`);
+        } else {
+          router.push({
+            pathname: `/subvit/substansi/tambah-step-3`,
+            query: { id },
+          });
+        }
       }
     }
   };
