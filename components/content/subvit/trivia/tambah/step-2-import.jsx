@@ -592,7 +592,11 @@ const StepTwo = ({ token, tokenPermission }) => {
                                   <td className="align-middle">
                                     <div className="d-flex">
                                       <Link
-                                        href={`/subvit/trivia/edit-soal-trivia?id=${question.id}`}
+                                        href={`/subvit/trivia/edit-soal-trivia?id=${
+                                          question.id
+                                        }&no=${
+                                          i + 1 * (page * 5 || limit) - 1 - 4
+                                        }`}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
