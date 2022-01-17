@@ -200,6 +200,8 @@ const StepTwo = ({ token, tokenPermission }) => {
     }
 
     if (valid) {
+      localStorage.removeItem("successFile");
+      localStorage.removeItem("successImage");
       localStorage.setItem("method", "import" || router.query.metode);
       if (localStorage.getItem("detail-import") !== null) {
         router.push(localStorage.getItem("detail-import"));
@@ -207,8 +209,6 @@ const StepTwo = ({ token, tokenPermission }) => {
         localStorage.removeItem("method");
         localStorage.removeItem("step2");
         localStorage.removeItem("clone");
-        localStorage.removeItem("successFile");
-        localStorage.removeItem("successImage");
       } else {
         router.push({
           pathname: `/subvit/trivia/tambah/step-3`,
@@ -685,26 +685,29 @@ const StepTwo = ({ token, tokenPermission }) => {
 
               <div className="row">
                 <div className="col-sm-12 col-md-12 pt-4">
-                  <button
-                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                    type="button"
-                    onClick={() => {
-                      if (localStorage.getItem("clone") === "true") {
-                        router.push(
-                          `/subvit/trivia/clone/step-3?id=${router.query.id}`
-                        );
-                      } else {
-                        if (localStorage.getItem("detail-import") !== null) {
-                          router.push(localStorage.getItem("detail-import"));
-                          localStorage.removeItem("detail-import");
+                  {(localStorage.getItem("detail-import") !== null ||
+                    localStorage.getItem("clone") !== null) && (
+                    <button
+                      className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                      type="button"
+                      onClick={() => {
+                        if (localStorage.getItem("clone") === "true") {
+                          router.push(
+                            `/subvit/trivia/clone/step-3?id=${router.query.id}`
+                          );
                         } else {
-                          router.push("/subvit/trivia/tambah");
+                          if (localStorage.getItem("detail-import") !== null) {
+                            router.push(localStorage.getItem("detail-import"));
+                            localStorage.removeItem("detail-import");
+                          } else {
+                            router.push("/subvit/trivia/tambah");
+                          }
                         }
-                      }
-                    }}
-                  >
-                    Kembali
-                  </button>
+                      }}
+                    >
+                      Kembali
+                    </button>
+                  )}
                   <div className="float-right">
                     <button
                       className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}

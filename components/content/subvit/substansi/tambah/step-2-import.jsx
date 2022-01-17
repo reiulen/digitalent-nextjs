@@ -231,14 +231,14 @@ const StepTwo = ({ token, tokenPermission }) => {
 
     if (valid) {
       localStorage.setItem("method", "import" || router.query.metode);
+      localStorage.removeItem("successFile");
+      localStorage.removeItem("successImage");
       if (localStorage.getItem("detail-import") !== null) {
         router.push(localStorage.getItem("detail-import"));
         localStorage.removeItem("detail-import");
         localStorage.removeItem("method");
         localStorage.removeItem("step2");
         localStorage.removeItem("clone");
-        localStorage.removeItem("successFile");
-        localStorage.removeItem("successImage");
       } else {
         router.push({
           pathname: `/subvit/substansi/tambah-step-3`,
@@ -730,26 +730,29 @@ const StepTwo = ({ token, tokenPermission }) => {
 
               <div className="row">
                 <div className="col-sm-12 mt-3">
-                  <button
-                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                    type="button"
-                    onClick={() => {
-                      if (localStorage.getItem("clone") === "true") {
-                        router.push(
-                          `/subvit/substansi/clone/step-3?id=${router.query.id}`
-                        );
-                      } else {
-                        if (localStorage.getItem("detail-import") !== null) {
-                          router.push(localStorage.getItem("detail-import"));
-                          localStorage.removeItem("detail-import");
+                  {(localStorage.getItem("detail-import") !== null ||
+                    localStorage.getItem("clone") !== null) && (
+                    <button
+                      className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                      type="button"
+                      onClick={() => {
+                        if (localStorage.getItem("clone") === "true") {
+                          router.push(
+                            `/subvit/substansi/clone/step-3?id=${router.query.id}`
+                          );
                         } else {
-                          router.push(`/subvit/substansi/tambah-step-1`);
+                          if (localStorage.getItem("detail-entry") !== null) {
+                            router.push(localStorage.getItem("detail-entry"));
+                            localStorage.removeItem("detail-entry");
+                          } else {
+                            router.push(`/subvit/substansi/tambah-step-1`);
+                          }
                         }
-                      }
-                    }}
-                  >
-                    Kembali
-                  </button>
+                      }}
+                    >
+                      Kembali
+                    </button>
+                  )}
                   <div className="float-right">
                     <button
                       className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
