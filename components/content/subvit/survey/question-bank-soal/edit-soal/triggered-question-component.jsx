@@ -270,7 +270,7 @@ const TriggeredQuestionComponent = ({
                   {row.type === "choose" ? (
                     <>
                       <div className="col-md-2 p-0 pl-3">
-                        {row.image_preview ? (
+                        {row.image_preview && (
                           <Image
                             src={
                               row.image_preview.includes("blob")
@@ -283,8 +283,6 @@ const TriggeredQuestionComponent = ({
                             height={90}
                             className="soal-image"
                           />
-                        ) : (
-                          ""
                         )}
                       </div>
                       <div className="col-md-6 pt-2">
@@ -336,7 +334,7 @@ const TriggeredQuestionComponent = ({
                   )}
 
                   <div className="col-md-4 d-flex justify-content-start my-auto">
-                    {i !== 0 ? (
+                    {i !== 0 && (
                       <button
                         className="btn btn-link-action bg-danger text-white"
                         type="button"
@@ -344,8 +342,6 @@ const TriggeredQuestionComponent = ({
                       >
                         <i className="ri-delete-bin-fill p-0 text-white"></i>
                       </button>
-                    ) : (
-                      ""
                     )}
                     <div className="d-flex ml-5">
                       <SwitchButton
@@ -607,7 +603,7 @@ const TriggeredQuestionComponent = ({
           })}
       </div>
 
-      {answer.length < 6 ? (
+      {answer.length < 6 && (
         <div className="d-flex my-3">
           <button
             type="button"
@@ -616,7 +612,7 @@ const TriggeredQuestionComponent = ({
           >
             <i className="ri-add-fill text-white"></i>Tambah Jawaban
           </button>
-          {answer.length > 2 ? (
+          {answer.length > 2 && (
             <button
               type="button"
               className="btn btn-rounded-full bg-blue-secondary text-white btn-sm"
@@ -624,12 +620,8 @@ const TriggeredQuestionComponent = ({
             >
               <i className="ri-add-fill text-white"></i>Tambah Jawaban Lain
             </button>
-          ) : (
-            ""
           )}
         </div>
-      ) : (
-        ""
       )}
 
       <div className="form-group row">

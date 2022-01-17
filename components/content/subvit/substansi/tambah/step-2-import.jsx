@@ -662,7 +662,11 @@ const StepTwo = ({ token, tokenPermission }) => {
                                   </td>
                                   <td className="align-middle d-flex">
                                     <Link
-                                      href={`edit-soal-substansi?id=${question.id}&no=${i}`}
+                                      href={`edit-soal-substansi?id=${
+                                        question.id
+                                      }&no=${
+                                        i + 1 * (page * 5 || limit) - 1 - 4
+                                      }`}
                                     >
                                       <a
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"

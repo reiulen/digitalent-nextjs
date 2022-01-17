@@ -48,7 +48,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
   );
   const [question_image_preview, setQuestionImagePreview] = useState(
     process.env.END_POINT_API_IMAGE_SUBVIT +
-      (survey_question_detail && survey_question_detail?.question_image_preview)
+      (survey_question_detail && survey_question_detail?.question_image)
   );
   const [question_image_name, setQuestionImageName] = useState("Pilih Gambar");
 
@@ -301,7 +301,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
 
             <div className="card-body pt-0">
               <div className="title row">
-                {question_image_preview != "" && (
+                {survey_question_detail?.question_image != "" && (
                   <div className="col-md-3">
                     <Image
                       src={question_image_preview}
