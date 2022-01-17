@@ -53,7 +53,6 @@ export const fetchSignature = (token) => async (dispatch, getState) => {
     );
     dispatch(successFetchSignature(data));
   } catch (error) {
-    // console.log(error.response.data.message);
   }
 };
 

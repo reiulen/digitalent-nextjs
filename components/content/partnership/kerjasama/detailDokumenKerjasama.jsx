@@ -131,14 +131,14 @@ const DetailDokumenKerjasama = ({ token }) => {
                 {allMK?.cooperationById?.length === 0
                   ? ""
                   : moment(
-                      allMK?.cooperationById?.data?.period_date_start
-                    ).format("DD MMMM YYYY")}
+                    allMK?.cooperationById?.data?.period_date_start
+                  ).format("DD MMMM YYYY")}
                 &nbsp;-&nbsp;
                 {allMK?.cooperationById?.length === 0
                   ? ""
                   : moment(
-                      allMK?.cooperationById?.data?.period_date_end
-                    ).format("DD MMMM YYYY")}
+                    allMK?.cooperationById?.data?.period_date_end
+                  ).format("DD MMMM YYYY")}
                 )
               </p>
 
@@ -169,7 +169,7 @@ const DetailDokumenKerjasama = ({ token }) => {
                     {allMK?.cooperationById.length === 0
                       ? ""
                       : allMK?.cooperationById?.data
-                          ?.agreement_number_kemkominfo}
+                        ?.agreement_number_kemkominfo}
                   </p>
                 </div>
               </div>
@@ -196,29 +196,46 @@ const DetailDokumenKerjasama = ({ token }) => {
               </label>
 
               <div className="border-bottom pb-6">
-                <button
-                  type="button"
-                  className="btn bg-blue-secondary text-white rounded-full d-flex align-items-center"
-                  onClick={() =>
-                    window.open(
-                      `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com${pdfFIle}`
-                    )
-                  }
-                >
-                  <Image
-                    src="/assets/icon/download-2-fill.svg"
-                    width={16}
-                    height={16}
-                    alt="imagess"
-                  />{" "}
-                  <p className="mb-0 ml-2">Unduh</p>
-                </button>
+                {
+                  pdfFIle !== null ?
+                    <button
+                      type="button"
+                      className="btn bg-blue-secondary text-white rounded-full d-flex align-items-center"
+                      onClick={() =>
+                        window.open(
+                          `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com${pdfFIle}`
+                        )
+                      }
+                    >
+                      <Image
+                        src="/assets/icon/download-2-fill.svg"
+                        width={16}
+                        height={16}
+                        alt="imagess"
+                      />{" "}
+                      <p className="mb-0 ml-2">Unduh</p>
+                    </button>
+                    :
+                    <button
+                      type="button"
+                      className="btn bg-blue-secondary text-white rounded-full d-flex align-items-center cursor-not-allowed"
+                      disabled
+                    >
+                      <Image
+                        src="/assets/icon/download-2-fill.svg"
+                        width={16}
+                        height={16}
+                        alt="imagess"
+                      />{" "}
+                      <p className="mb-0 ml-2">Unduh</p>
+                    </button>
+                }
               </div>
 
               {allMK?.cooperationById.length === 0 ? (
                 ""
               ) : allMK?.cooperationById?.data?.cooperation_category
-                  ?.data_content.cooperation_form === "-" ? (
+                ?.data_content.cooperation_form === "-" ? (
                 <h1 className="my-4">Data kerja sama tidak ada</h1>
               ) : (
                 allMK?.cooperationById?.data?.cooperation_category?.data_content?.map(

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
@@ -14,6 +14,7 @@ import Select from "react-select";
 import { toast } from "react-toastify";
 import moment from "moment";
 import axios from "axios";
+import ReactCrop from "react-image-crop";
 import Swal from "sweetalert2";
 import { Row, Col, Form, Button, Modal } from "react-bootstrap";
 import {
@@ -109,6 +110,12 @@ const TambahPage = ({ token }) => {
   );
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [showEditImage, setShowEditImage] = useState(false);
+  const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 9 / 9 });
+  const [completedCrop, setCompletedCrop] = useState(null);
+  const previewCanvasRef = useRef(null);
+  const [upImg, setUpImg] = useState();
+  const imgRef = useRef(null);
 
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePasswordConfirm, setHidePasswordConfirmConfirm] = useState(true);
@@ -219,59 +226,93 @@ const TambahPage = ({ token }) => {
     }
   };
 
-  const onFotoHandler = (e) => {
-    const type = ["image/jpg", "image/png", "image/jpeg"];
-    if (e.target.files[0]) {
-      if (type.includes(e.target.files[0].type)) {
-        if (e.target.files[0].size > 2000000) {
-          e.target.value = null;
-          Swal.fire(
-            "Oops !",
-            "Data yang bisa dimasukkan maksimal hanya 2 MB.",
-            "error"
-          );
-        } else {
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (reader.readyState === 2) {
-              setFotoProfil(reader.result);
-              const datas = {
-                foto: reader.result,
-                user_id: allDetailPeserta.data?.data.user_id,
-              };
-
-              const config = {
-                headers: {
-                  Authorization: "Bearer " + token,
-                },
-              };
-              axios
-                .post(
-                  process.env.END_POINT_API_PELATIHAN +
-                  "api/v1/auth/update-foto",
-                  datas,
-                  config
-                )
-                .then((res) => {
-                  toast.success("Berhasil Update");
-                })
-                .catch((err) => {
-                  toast.error("gagal");
-                });
-            }
-          };
-          reader.readAsDataURL(e.target.files[0]);
-        }
-      } else {
-        e.target.value = null;
-        Swal.fire(
-          "Oops !",
-          "Data yang bisa dimasukkan hanya berupa gambar.",
-          "error"
-        );
-      }
+  const generateImage = async (canvas, crops) => {
+    if (!crops || !canvas) {
+      return;
     }
-  };
+
+    const base64Image = canvas.toDataURL("image/jpeg");
+
+    const data = {
+      foto: base64Image,
+      user_id: allDetailPeserta.data?.data.user_id
+    }
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    await axios
+      .post(
+        process.env.END_POINT_API_PELATIHAN + "api/v1/auth/update-foto",
+        data,
+        config
+      )
+      .then((res) => {
+        toast.success("Berhasil Update");
+        setShowEditImage(false);
+        window.location.reload()
+      })
+      .catch((err) => {
+        toast.error("gagal");
+      });
+    
+  }
+
+  // const onFotoHandler = (e) => {
+  //   const type = ["image/jpg", "image/png", "image/jpeg"];
+  //   if (e.target.files[0]) {
+  //     if (type.includes(e.target.files[0].type)) {
+  //       if (e.target.files[0].size > 2000000) {
+  //         e.target.value = null;
+  //         Swal.fire(
+  //           "Oops !",
+  //           "Data yang bisa dimasukkan maksimal hanya 2 MB.",
+  //           "error"
+  //         );
+  //       } else {
+  //         const reader = new FileReader();
+  //         reader.onload = () => {
+  //           if (reader.readyState === 2) {
+  //             setFotoProfil(reader.result);
+  //             const datas = {
+  //               foto: reader.result,
+  //               user_id: allDetailPeserta.data?.data.user_id,
+  //             };
+
+  //             const config = {
+  //               headers: {
+  //                 Authorization: "Bearer " + token,
+  //               },
+  //             };
+  //             axios
+  //               .post(
+  //                 process.env.END_POINT_API_PELATIHAN +
+  //                 "api/v1/auth/update-foto",
+  //                 datas,
+  //                 config
+  //               )
+  //               .then((res) => {
+  //                 toast.success("Berhasil Update");
+  //               })
+  //               .catch((err) => {
+  //                 toast.error("gagal");
+  //               });
+  //           }
+  //         };
+  //         reader.readAsDataURL(e.target.files[0]);
+  //       }
+  //     } else {
+  //       e.target.value = null;
+  //       Swal.fire(
+  //         "Oops !",
+  //         "Data yang bisa dimasukkan hanya berupa gambar.",
+  //         "error"
+  //       );
+  //     }
+  //   }
+  // };
 
   const onIjasahHandler = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
@@ -380,6 +421,63 @@ const TambahPage = ({ token }) => {
     handleDate();
   }, []);
 
+
+  const onLoad = useCallback((img) => {
+    imgRef.current = img;
+  }, []);
+
+  useEffect(() => {
+    if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
+      return;
+    }
+
+    const image = imgRef.current;
+    const canvas = previewCanvasRef.current;
+    const crop = completedCrop;
+
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    const ctx = canvas.getContext("2d");
+    const pixelRatio = window.devicePixelRatio;
+
+    canvas.width = crop.width * pixelRatio * scaleX;
+    canvas.height = crop.height * pixelRatio * scaleY;
+
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    ctx.imageSmoothingQuality = "high";
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width * scaleX,
+      crop.height * scaleY
+    );
+  }, [completedCrop]);
+
+  const onSelectFile = (e) => {
+    if (e.target.files[0].size > "2000000") {
+      e.target.value = null;
+      Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
+    } else if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => setUpImg(reader.result));
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  const onHandleHideModal = () => {
+    setShowEditImage(false)
+  };
+
+  const onSubmitEditImage = () => {
+    setShowEditImage(false)
+  }
+
   return (
     <PageWrapper>
       <div className="row">
@@ -393,11 +491,11 @@ const TambahPage = ({ token }) => {
                 <div>
                   <div
                     className="image-input image-input-outline w-100"
-                    style={{ height: "19rem" }}
+                    style={{ height: "15rem" }}
                   >
                     <div
                       className="image-input-wrapper w-100"
-                      style={{ height: "19rem" }}
+                      style={{ height: "13.5rem" }}
                     >
                       <Image
                         src={
@@ -410,16 +508,20 @@ const TambahPage = ({ token }) => {
                         alt="user2"
                       />
                     </div>
-                    <label
-                      className="btn btn-xs btn-icon btn-circle btn-primary btn-hover-text-primary btn-shadow bg-blue-primary"
-                      data-action="change"
-                      data-toggle="tooltip"
-                      title=""
-                      data-original-title="Change avatar"
-                      style={{ width: "40px", height: "40px" }}
-                    >
-                      <i className="fa fa-pen icon-sm text-muted text-white"></i>
-                      <input
+                    <div>
+                      <label
+                        className="btn btn-xs btn-icon btn-circle btn-primary btn-hover-text-primary btn-shadow bg-blue-primary"
+                        data-action="change"
+                        data-toggle="tooltip"
+                        title=""
+                        data-original-title="Change avatar"
+                        onClick={() =>
+                          setShowEditImage(true)
+                        }
+                        style={{ width: "40px", height: "40px" }}
+                      >
+                        <i className="fa fa-pen icon-sm text-muted text-white"></i>
+                        {/* <input
                         type="file"
                         name="profile_avatar"
                         accept=".png, .jpg, .jpeg"
@@ -427,8 +529,9 @@ const TambahPage = ({ token }) => {
                           onFotoHandler(e);
                         }}
                       />
-                      <input type="hidden" name="profile_avatar_remove" />
-                    </label>
+                      <input type="hidden" name="profile_avatar_remove" /> */}
+                      </label>
+                    </div>
 
                     <span
                       className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
@@ -498,6 +601,99 @@ const TambahPage = ({ token }) => {
             </div>
           </div>
         )}
+
+        {/* Modal Edit Image  */}
+        <Modal
+          show={showEditImage}
+          onHide={() => onHandleHideModal()}
+          centered
+        // dialogClassName="mx-10 mx-sm-auto rounded-lg"
+        >
+          <Modal.Header>
+            <Modal.Title>Ganti Foto Profil</Modal.Title>
+
+            <button
+              type="button"
+              className="close"
+              onClick={() => onHandleHideModal()}
+            >
+              <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+            </button>
+          </Modal.Header>
+
+          <Modal.Body>
+            <div>Foto</div>
+
+            <div className="my-5">
+              <button
+                className="btn btn-rounded-full btn-sm bg-blue-primary text-white d-flex justify-content-center"
+                onClick={() => {
+                  document.getElementById("edit-image").click();
+                }}
+              >
+                <i className="ri-upload-2-fill text-white"></i> Pilih Foto
+              </button>
+
+              <input
+                type="file"
+                name="gambar"
+                className="custom-file-input"
+                id="edit-image"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={onSelectFile}
+              />
+
+              <div className="row mt-5">
+                <div className="col-12 col-md-6">
+                  <ReactCrop
+                    src={upImg}
+                    onImageLoaded={onLoad}
+                    crop={crop}
+                    onChange={(c) => setCrop(c)}
+                    onComplete={(c) => setCompletedCrop(c)}
+                  />
+                </div>
+
+                <div className="col-12 col-md-6">
+                  {upImg ? (
+                    <div>
+                      <div>Preview</div>
+                      <canvas
+                        ref={previewCanvasRef}
+                        style={{
+                          width: Math.round(completedCrop?.width ?? 0),
+                          height: Math.round(completedCrop?.height ?? 0),
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          </Modal.Body>
+
+          <Modal.Footer>
+            <div className="row">
+              <div className="d-flex justify-content-between align-items-center">
+                <button
+                  className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 d-flex justify-content-center"
+                  onClick={() => onHandleHideModal()}
+                >
+                  Batal
+                </button>
+                <button
+                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
+                  onClick={() => generateImage(previewCanvasRef.current,completedCrop)}
+                >
+                  Simpan
+                </button>
+              </div>
+            </div>
+          </Modal.Footer>
+        </Modal>
+        {/* End of Modal Edit Image */}
 
         {sideBar && !router.query.ubah_pelatihan_id && (
           <div className="col-12 col-lg-9 col-xl-9">
@@ -1277,7 +1473,7 @@ const TambahPage = ({ token }) => {
           <UbahPelatihan token={token} />
         ) : null}
       </div>
-    </PageWrapper>
+    </PageWrapper >
   );
 };
 
