@@ -51,41 +51,32 @@ const StepTwo = ({ token, tokenPermission }) => {
   );
 
   // polling
-  const [answer, setSoalList] = useState(
-    (localStorage.getItem("step2") &&
-      JSON.parse(JSON.parse(localStorage.getItem("step2")).answer)) || [
-      { key: "A", option: "", image: "" },
-      { key: "B", option: "", image: "" },
-      { key: "C", option: "", image: "" },
-      { key: "D", option: "", image: "" },
-    ]
-  );
+  const [answer, setSoalList] = useState([
+    { key: "A", option: "", image: "" },
+    { key: "B", option: "", image: "" },
+    { key: "C", option: "", image: "" },
+    { key: "D", option: "", image: "" },
+  ]);
 
   //checkbox
-  const [answer_checkbox, setCheckboxList] = useState(
-    (localStorage.getItem("step2") &&
-      JSON.parse(JSON.parse(localStorage.getItem("step2")).answer)) || [
-      { key: "A", value: "", option: "", image: "", is_right: false },
-      { key: "B", value: "", option: "", image: "", is_right: false },
-      { key: "C", value: "", option: "", image: "", is_right: false },
-      { key: "D", value: "", option: "", image: "", is_right: false },
-    ]
-  );
+  const [answer_checkbox, setCheckboxList] = useState([
+    { key: "A", value: "", option: "", image: "", is_right: false },
+    { key: "B", value: "", option: "", image: "", is_right: false },
+    { key: "C", value: "", option: "", image: "", is_right: false },
+    { key: "D", value: "", option: "", image: "", is_right: false },
+  ]);
   const [duration, setDuration] = useState(
     (localStorage.getItem("step2") &&
       JSON.parse(localStorage.getItem("step2")).duration) ||
       null
   );
   //blank
-  const [answer_blank, setBlanklList] = useState(
-    (localStorage.getItem("step2") &&
-      JSON.parse(JSON.parse(localStorage.getItem("step2")).answer)) || [
-      { key: "A", value: "", type: "", option: "", image: "" },
-      { key: "B", value: "", type: "", option: "", image: "" },
-      { key: "C", value: "", type: "", option: "", image: "" },
-      { key: "D", value: "", type: "", option: "", image: "" },
-    ]
-  );
+  const [answer_blank, setBlanklList] = useState([
+    { key: "A", value: "", type: "", option: "", image: "" },
+    { key: "B", value: "", type: "", option: "", image: "" },
+    { key: "C", value: "", type: "", option: "", image: "" },
+    { key: "D", value: "", type: "", option: "", image: "" },
+  ]);
 
   const [durationBlank, setDurationBlank] = useState(
     (localStorage.getItem("step2") &&
@@ -609,31 +600,42 @@ const StepTwo = ({ token, tokenPermission }) => {
                 <div className="col-sm-12">
                   <hr />
                   <div className="row">
-                    <div className="col-md-5 col-lg-5 col-xl-7">
-                      <button
-                        className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                        type="button"
-                        onClick={() => {
-                          if (localStorage.getItem("clone") === "true") {
-                            router.push(
-                              `/subvit/trivia/clone/step-3?id=${router.query.id}`
-                            );
-                          } else {
-                            if (localStorage.getItem("detail-entry") !== null) {
-                              router.push(localStorage.getItem("detail-entry"));
-                              localStorage.removeItem("detail-entry");
+                    {(localStorage.getItem("detail-entry") !== null ||
+                      localStorage.getItem("clone") !== null) && (
+                      <div className="col-md-2">
+                        <button
+                          className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                          type="button"
+                          onClick={() => {
+                            if (localStorage.getItem("clone") === "true") {
+                              router.push(
+                                `/subvit/trivia/clone/step-3?id=${router.query.id}`
+                              );
                             } else {
-                              router.push("/subvit/trivia/tambah");
+                              if (
+                                localStorage.getItem("detail-entry") !== null
+                              ) {
+                                router.push(
+                                  localStorage.getItem("detail-entry")
+                                );
+                                localStorage.removeItem("detail-entry");
+                              } else {
+                                router.push("/subvit/trivia/tambah");
+                              }
                             }
-                          }
-                        }}
-                      >
-                        Kembali
-                      </button>
-                    </div>
+                          }}
+                        >
+                          Kembali
+                        </button>
+                      </div>
+                    )}
                     {/* <div className="col-sm-12 col-md-6 col-lg-6 col-xl-5 buttoon float-right row justify-content-between" style={{border:'1px solid black'}}> */}
                     <div
-                      className={`${styles.btnSave} col-12 col-sm-12 col-md-7 col-lg-7 col-xl-5 buttoon float-right justify-content-between`}
+                      className={
+                        localStorage.getItem("detail-entry") !== null
+                          ? `col-sm-10 text-right`
+                          : `col-sm-12 text-right`
+                      }
                     >
                       <div className="d-flex flex-row float-right flex-wrap">
                         <div className={`p-2`}>

@@ -1310,6 +1310,7 @@ const ListTraining = ({ token }) => {
               defaultValue={theme}
               value={theme}
               onChange={(e) => setTheme({ value: e.value, label: e.label })}
+              isDisabled={academy ? false : true}
             />
           </div>
           <div className="form-group mb-5">

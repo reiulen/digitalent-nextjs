@@ -548,18 +548,19 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                                             </div>
                                           </>
                                         )}
-
-                                        <div className="col-sm-12 col-md-1 d-flex align-items-end mt-2">
-                                          <button
-                                            className="btn btn-link-action bg-danger text-white"
-                                            type="button"
-                                            onClick={() =>
-                                              handleRemoveClick(i, j, k)
-                                            }
-                                          >
-                                            <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                          </button>
-                                        </div>
+                                        {k !== 0 && (
+                                          <div className="col-sm-12 col-md-1 d-flex align-items-end mt-2">
+                                            <button
+                                              className="btn btn-link-action bg-danger text-white"
+                                              type="button"
+                                              onClick={() =>
+                                                handleRemoveClick(i, j, k)
+                                              }
+                                            >
+                                              <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                            </button>
+                                          </div>
+                                        )}
                                         <div className="col-sm-12 col-md-4"></div>
                                       </>
                                     );

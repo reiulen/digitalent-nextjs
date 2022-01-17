@@ -53,8 +53,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     success: successImages,
     subtance_question_images,
   } = useSelector((state) => state.importImagesSubtanceQuestionDetail);
-  let { page = 1, id } = router.query;
-  page = Number(page);
+  let { id } = router.query;
 
   let error;
   if (errorFile) {
@@ -81,6 +80,8 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [image_file, setImageFile] = useState(null);
   const [typeSave, setTypeSave] = useState("lanjut");
   const [successType, setSuccessType] = useState(null);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
 
   useEffect(() => {
     dispatch(
@@ -231,14 +232,14 @@ const StepTwo = ({ token, tokenPermission }) => {
 
     if (valid) {
       localStorage.setItem("method", "import" || router.query.metode);
+      localStorage.removeItem("successFile");
+      localStorage.removeItem("successImage");
       if (localStorage.getItem("detail-import") !== null) {
         router.push(localStorage.getItem("detail-import"));
         localStorage.removeItem("detail-import");
         localStorage.removeItem("method");
         localStorage.removeItem("step2");
         localStorage.removeItem("clone");
-        localStorage.removeItem("successFile");
-        localStorage.removeItem("successImage");
       } else {
         router.push({
           pathname: `/subvit/substansi/tambah-step-3`,
@@ -282,14 +283,40 @@ const StepTwo = ({ token, tokenPermission }) => {
 
   const handlePagination = (pageNumber) => {
     router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
-    // dispatch(
-    //   getAllSubtanceQuestionDetail(id, pageNumber, token, tokenPermission)
-    // );
+    setPage(pageNumber);
+    dispatch(
+      getAllSubtanceQuestionDetail(
+        id,
+        pageNumber,
+        "",
+        limit,
+        "",
+        "",
+        "",
+        token,
+        tokenPermission
+      )
+    );
   };
 
   const handleLimit = (val) => {
-    router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
+    // router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
     // dispatch(getAllSubtanceQuestionDetail(id, 1, val, token, tokenPermission));
+    setPage(1);
+    setLimit(val);
+    dispatch(
+      getAllSubtanceQuestionDetail(
+        id,
+        1,
+        "",
+        val,
+        "",
+        "",
+        "",
+        token,
+        tokenPermission
+      )
+    );
   };
 
   const handleDelete = (id) => {
@@ -703,6 +730,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                                     borderColor: "#F3F6F9",
                                     color: "#9E9E9E",
                                   }}
+                                  value={limit}
                                   onChange={(e) => handleLimit(e.target.value)}
                                   onBlur={(e) => handleLimit(e.target.value)}
                                 >
@@ -730,26 +758,31 @@ const StepTwo = ({ token, tokenPermission }) => {
 
               <div className="row">
                 <div className="col-sm-12 mt-3">
-                  <button
-                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                    type="button"
-                    onClick={() => {
-                      if (localStorage.getItem("clone") === "true") {
-                        router.push(
-                          `/subvit/substansi/clone/step-3?id=${router.query.id}`
-                        );
-                      } else {
-                        if (localStorage.getItem("detail-import") !== null) {
-                          router.push(localStorage.getItem("detail-import"));
-                          localStorage.removeItem("detail-import");
+                  {(localStorage.getItem("detail-import") !== null ||
+                    localStorage.getItem("clone") !== null) && (
+                    <button
+                      className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                      type="button"
+                      onClick={() => {
+                        if (localStorage.getItem("clone") === "true") {
+                          router.push(
+                            `/subvit/substansi/clone/step-3?id=${router.query.id}`
+                          );
                         } else {
-                          router.push(`/subvit/substansi/tambah-step-1`);
+                          if (localStorage.getItem("detail-entry") !== null) {
+                            router.push(localStorage.getItem("detail-entry"));
+                            localStorage.removeItem("successFile");
+                            localStorage.removeItem("successImage");
+                            localStorage.removeItem("detail-entry");
+                          } else {
+                            router.push(`/subvit/substansi/tambah-step-1`);
+                          }
                         }
-                      }
-                    }}
-                  >
-                    Kembali
-                  </button>
+                      }}
+                    >
+                      Kembali
+                    </button>
+                  )}
                   <div className="float-right">
                     <button
                       className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}

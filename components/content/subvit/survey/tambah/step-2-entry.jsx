@@ -663,30 +663,38 @@ const StepTwo = ({ token, tokenPermission }) => {
               {handleMethodeInput()}
 
               <div className="form-group row">
-                <div className="col-sm-2">
-                  {" "}
-                  <button
-                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                    type="button"
-                    onClick={() => {
-                      if (localStorage.getItem("clone") === "true") {
-                        router.push(
-                          `/subvit/survey/clone/step-3?id=${router.query.id}`
-                        );
-                      } else {
-                        if (localStorage.getItem("detail-entry") !== null) {
-                          router.push(localStorage.getItem("detail-entry"));
-                          localStorage.removeItem("detail-entry");
+                {(localStorage.getItem("detail-entry") !== null ||
+                  localStorage.getItem("clone") !== null) && (
+                  <div className="col-sm-2">
+                    <button
+                      className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                      type="button"
+                      onClick={() => {
+                        if (localStorage.getItem("clone") === "true") {
+                          router.push(
+                            `/subvit/survey/clone/step-3?id=${router.query.id}`
+                          );
                         } else {
-                          router.push("/subvit/survey/tambah");
+                          if (localStorage.getItem("detail-entry") !== null) {
+                            router.push(localStorage.getItem("detail-entry"));
+                            localStorage.removeItem("detail-entry");
+                          } else {
+                            router.push("/subvit/survey/tambah");
+                          }
                         }
-                      }
-                    }}
-                  >
-                    Kembali
-                  </button>
-                </div>
-                <div className="col-sm-10 text-right">
+                      }}
+                    >
+                      Kembali
+                    </button>
+                  </div>
+                )}
+                <div
+                  className={
+                    localStorage.getItem("detail-entry") !== null
+                      ? `col-sm-10 text-right`
+                      : `col-sm-12 text-right`
+                  }
+                >
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="submit"
