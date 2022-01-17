@@ -38,7 +38,7 @@ const Layout = ({ session, children, title }) => {
         <ToastContainer position="top-right" />
         {children}
         <ChatBot></ChatBot>
-        <Footer />
+        <Footer session={session} />
       </div>
     </>
   );
