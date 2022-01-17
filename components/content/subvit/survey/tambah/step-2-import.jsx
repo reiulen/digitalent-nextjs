@@ -55,8 +55,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     success: successImages,
     survey_question_images,
   } = useSelector((state) => state.importImagesSurveyQuestionDetail);
-  let { page = 1, id, metode } = router.query;
-  page = Number(page);
+  let { id, metode } = router.query;
 
   let error;
   if (errorFile) {
@@ -83,6 +82,7 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [image_file, setImageFile] = useState(null);
   const [typeSave, setTypeSave] = useState("lanjut");
   const [limit, setLimit] = useState(null);
+  const [page, setPage] = useState(1);
   const [successType, setSuccessType] = useState(null);
 
   useEffect(() => {
@@ -235,22 +235,26 @@ const StepTwo = ({ token, tokenPermission }) => {
   };
 
   const handlePagination = (pageNumber) => {
-    router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
-    // dispatch(
-    //   getAllSurveyQuestionDetail(
-    //     id,
-    //     pageNumber,
-    //     limit,
-    //     "",
-    //     token,
-    //     tokenPermission
-    //   )
-    // );
+    // router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
+    setPage(pageNumber);
+    dispatch(
+      getAllSurveyQuestionDetail(
+        id,
+        pageNumber,
+        limit,
+        "",
+        token,
+        tokenPermission
+      )
+    );
   };
 
   const handleLimit = (val) => {
     setLimit(val);
-    router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
+    setPage(1);
+    dispatch(
+      getAllSurveyQuestionDetail(id, 1, val, "", token, tokenPermission)
+    );
     // dispatch(
     //   getAllSurveyQuestionDetail(id, 1, val, "", token, tokenPermission)
     // );
@@ -703,6 +707,8 @@ const StepTwo = ({ token, tokenPermission }) => {
                           if (localStorage.getItem("detail-import") !== null) {
                             router.push(localStorage.getItem("detail-import"));
                             localStorage.removeItem("detail-import");
+                            localStorage.removeItem("successFile");
+                            localStorage.removeItem("successImage");
                           } else {
                             router.push("/subvit/survey/tambah");
                           }

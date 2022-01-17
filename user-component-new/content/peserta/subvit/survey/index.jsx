@@ -402,7 +402,7 @@ const SubtansiUser = ({ token }) => {
     setSub(sub[i]);
 
     if (e.sub && e.sub.length > 0) {
-      sessionStorage.setItem(`${router.query.id}e`, e.key);
+      sessionStorage.setItem(`${router.query.id}`, e.key);
       setOpen(!open);
       let val;
       if (sessionStorage.getItem(`${router.query.id}tg`) === null) {
@@ -412,23 +412,23 @@ const SubtansiUser = ({ token }) => {
       }
       sessionStorage.setItem(`${router.query.id}tg`, val);
     } else {
-      sessionStorage.setItem(`${router.query.id}e`, e.key);
+      sessionStorage.setItem(`${router.query.id}`, e.key);
     }
   };
 
-  const handleTriggered = (e) => {
-    let ansTw = [sessionStorage.getItem(router.query.id + "e"), e.key];
-    sessionStorage.setItem(router.query.id, JSON.stringify(ansTw));
-    sessionStorage.setItem(`${router.query.id}tr`, e.key);
-    setListAnswer(sessionStorage.getItem(`${router.query.id}tr`));
-  };
+  // const handleTriggered = (e) => {
+  //   let ansTw = [sessionStorage.getItem(router.query.id + "e"), e.key];
+  //   sessionStorage.setItem(router.query.id, JSON.stringify(ansTw));
+  //   sessionStorage.setItem(`${router.query.id}tr`, e.key);
+  //   setListAnswer(sessionStorage.getItem(`${router.query.id}tr`));
+  // };
 
   const handleTriggered2 = (e, parent, index) => {
     let ansTw;
-    if (sessionStorage.getItem(router.query.id) === null) {
+    if (sessionStorage.getItem(router.query.id + "e") === null) {
       ansTw = [];
     } else {
-      ansTw = [...JSON.parse(sessionStorage.getItem(router.query.id))];
+      ansTw = [...JSON.parse(sessionStorage.getItem(router.query.id + "e"))];
     }
     const data = { id: parent, key: e.key };
     const filter = ansTw.filter((val) => val.id === parent);
@@ -443,7 +443,7 @@ const SubtansiUser = ({ token }) => {
     }
 
     sessionStorage.setItem(router.query.id + parent + "td", e.key);
-    sessionStorage.setItem(router.query.id, JSON.stringify(ansTw));
+    sessionStorage.setItem(router.query.id + "e", JSON.stringify(ansTw));
     setListAnswer2(sessionStorage.getItem(router.query.id + parent + "td"));
   };
 
@@ -469,14 +469,16 @@ const SubtansiUser = ({ token }) => {
         data.list_questions.map((item, index) => {
           return {
             ...item,
-            participant_answer: sessionStorage.getItem(index + 1),
+            participant_answer:
+              item.type !== "triggered_question"
+                ? sessionStorage.getItem(index + 1)
+                : sessionStorage.getItem(index + 1 + "e"),
           };
         })
       ),
       training_id: router.query.training_id,
       type: "survey",
     };
-
     dispatch(postResultSurvey(setData, token));
     localStorage.clear();
     sessionStorage.clear();
@@ -489,7 +491,7 @@ const SubtansiUser = ({ token }) => {
 
   return (
     <>
-      {/* {console.log(multi)} */}
+      {/* {console.log(data.list_questions)} */}
       <Container className={styles.baseAll} fluid>
         <Card className={styles.cardTop}>
           <Row>
@@ -697,12 +699,10 @@ const SubtansiUser = ({ token }) => {
                           ) : (
                             <Card
                               className={
-                                sessionStorage.getItem(
-                                  router.query.id + "e"
-                                ) !== null &&
-                                sessionStorage.getItem(
-                                  router.query.id + "e"
-                                ) === item.key
+                                sessionStorage.getItem(router.query.id) !==
+                                  null &&
+                                sessionStorage.getItem(router.query.id) ===
+                                  item.key
                                   ? styles.answer
                                   : styles.boxAnswer
                               }

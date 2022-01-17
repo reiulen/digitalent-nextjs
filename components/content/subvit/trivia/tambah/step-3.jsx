@@ -348,7 +348,7 @@ const StepThree = ({ token, tokenPermission }) => {
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("durasi")
                       }
-                      max="300"
+                      max="360"
                     />
 
                     <div className="input-group-append bg-sedondary">
