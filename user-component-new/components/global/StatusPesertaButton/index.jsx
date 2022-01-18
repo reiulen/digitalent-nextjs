@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import CustomButton from "../../../content/peserta/riwayat-pelatihan/card/Buttons/CustomButton";
 import axios from "axios";
 import { Col, Row, Card, Button, Modal } from "react-bootstrap";
@@ -7,7 +7,13 @@ import Cookies from "js-cookie";
 import { SweatAlert } from "../../../../utils/middleware/helper";
 import { getAllRiwayatPelatihanPeserta } from "../../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 import { useDispatch } from "react-redux";
-export default function ButtonStatusPeserta({ data, token }) {
+
+export default function ButtonStatusPeserta({
+  data,
+  token,
+  setCountButton,
+  countButton,
+}) {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -88,6 +94,50 @@ export default function ButtonStatusPeserta({ data, token }) {
       }
     }
   };
+
+  useEffect(() => {
+    if (data?.lpj) return setCountButton(2);
+
+    if (data?.survei || data?.status == "survey belum tersedia")
+      return setCountButton(2);
+
+    if (data?.lpj || data?.status == "lpj belum tersedia")
+      return setCountButton(2);
+
+    if (data?.status.includes("tidak")) return setCountButton(1);
+
+    if (data?.status == "pelatihan" && data?.trivia && data?.midtest)
+      return setCountButton(2);
+
+    if (data?.status == "pelatihan" && data?.midtest) return setCountButton(1);
+
+    if (data?.status == "pelatihan" && data?.trivia) return setCountButton(1);
+
+    if (data?.status == "pelatihan") return setCountButton(1);
+
+    if (data?.status == "menunggu") return setCountButton(1);
+
+    if (
+      data?.status == "lulus pelatihan" ||
+      data?.status == "Lulus Pelatihan"
+    ) {
+      data?.sertifikasi != 0 ? setCountButton(2) : setCountButton(1);
+    }
+
+    if (data?.status == "tes substansi") return setCountButton(2);
+    if (data?.status == "diterima") {
+      data?.sertifikasi != 0 ? setCountButton(2) : setCountButton(1);
+    }
+    if (
+      data?.status.includes("seleksi administrasi") ||
+      data?.status.includes("seleksi")
+    )
+      return setCountButton(1);
+
+    if (data?.status.includes("belum tersedia")) return setCountButton(1);
+    if (data?.status === "lpj belum mengerjakan") return setCountButton(2);
+    else setCountButton(1);
+  }, [countButton, data]);
 
   return (
     <Fragment>
