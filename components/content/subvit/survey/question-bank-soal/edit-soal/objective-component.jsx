@@ -82,7 +82,7 @@ const ObjectiveComponent = ({
             return (
               <>
                 <div className="title row">
-                  {row.image_preview != "" && row.image_preview !== null ? (
+                  {row.image_preview && (
                     <div className="col-md-2 p-0 pl-3">
                       <Image
                         src={
@@ -97,8 +97,6 @@ const ObjectiveComponent = ({
                         height={90}
                       />
                     </div>
-                  ) : (
-                    ""
                   )}
                   <div className="col-md-9 pt-2">
                     <input

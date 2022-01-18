@@ -212,7 +212,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     const newKey = String.fromCharCode(keyindex + 1);
     setSoalList([
       ...answer,
-      { key: newKey, question: "", image: "", is_right: false },
+      { key: newKey, option: "", image: "", is_right: false },
     ]);
   };
 
@@ -354,6 +354,9 @@ const StepTwo = ({ token, tokenPermission }) => {
     }
 
     const answers = JSON.stringify(answer);
+
+    console.log(answer);
+
     if (valid) {
       const data = {
         subtance_question_bank_id: id,

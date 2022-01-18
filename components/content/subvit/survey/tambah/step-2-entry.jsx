@@ -52,19 +52,19 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [answer, setSoalList] = useState(
     (localStorage.getItem("step2") &&
       JSON.parse(localStorage.getItem("step2")).answer) || [
-      { key: "A", option: "", image: "" },
-      { key: "B", option: "", image: "" },
-      { key: "C", option: "", image: "" },
-      { key: "D", option: "", image: "" },
+      { key: "A", option: "", image: "", sub: [] },
+      { key: "B", option: "", image: "", sub: [] },
+      { key: "C", option: "", image: "", sub: [] },
+      { key: "D", option: "", image: "", sub: [] },
     ]
   );
   const [answer_multiple, setSoalMultipleList] = useState(
     (localStorage.getItem("step2") &&
       JSON.parse(localStorage.getItem("step2")).answer) || [
-      { key: "A", option: "", image: "" },
-      { key: "B", option: "", image: "" },
-      { key: "C", option: "", image: "" },
-      { key: "D", option: "", image: "" },
+      { key: "A", option: "", image: "", sub: [] },
+      { key: "B", option: "", image: "", sub: [] },
+      { key: "C", option: "", image: "", sub: [] },
+      { key: "D", option: "", image: "", sub: [] },
     ]
   );
   const [answer_triggered, setSoalTriggeredList] = useState(
