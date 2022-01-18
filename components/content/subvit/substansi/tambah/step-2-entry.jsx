@@ -50,39 +50,36 @@ const StepTwo = ({ token, tokenPermission }) => {
       JSON.parse(localStorage.getItem("step2")).question_image) ||
       ""
   );
-  const [answer, setSoalList] = useState(
-    (localStorage.getItem("step2") &&
-      JSON.parse(JSON.parse(localStorage.getItem("step2")).answer)) || [
-      {
-        key: "A",
-        option: "",
-        image: "",
-        imageName: "Pilih Gambar",
-        is_right: false,
-      },
-      {
-        key: "B",
-        option: "",
-        image: "",
-        imageName: "Pilih Gambar",
-        is_right: false,
-      },
-      {
-        key: "C",
-        option: "",
-        image: "",
-        imageName: "Pilih Gambar",
-        is_right: false,
-      },
-      {
-        key: "D",
-        option: "",
-        image: "",
-        imageName: "Pilih Gambar",
-        is_right: false,
-      },
-    ]
-  );
+  const [answer, setSoalList] = useState([
+    {
+      key: "A",
+      option: "",
+      image: "",
+      imageName: "Pilih Gambar",
+      is_right: false,
+    },
+    {
+      key: "B",
+      option: "",
+      image: "",
+      imageName: "Pilih Gambar",
+      is_right: false,
+    },
+    {
+      key: "C",
+      option: "",
+      image: "",
+      imageName: "Pilih Gambar",
+      is_right: false,
+    },
+    {
+      key: "D",
+      option: "",
+      image: "",
+      imageName: "Pilih Gambar",
+      is_right: false,
+    },
+  ]);
   const [answer_key, setAnswerKey] = useState(
     (localStorage.getItem("step2") &&
       JSON.parse(localStorage.getItem("step2")).answer_key) ||
@@ -112,10 +109,14 @@ const StepTwo = ({ token, tokenPermission }) => {
           localStorage.removeItem("step2");
           localStorage.removeItem("step1");
         } else {
-          router.push({
-            pathname: `/subvit/substansi/tambah-step-3`,
-            query: { id },
-          });
+          if (localStorage.getItem("clone") === "true") {
+            router.push(`/subvit/substansi/clone/step-4?id=${router.query.id}`);
+          } else {
+            router.push({
+              pathname: `/subvit/substansi/tambah-step-3`,
+              query: { id },
+            });
+          }
         }
       } else if (typeSave === "draft") {
         handleResetForm();
@@ -161,7 +162,9 @@ const StepTwo = ({ token, tokenPermission }) => {
   };
 
   const handleSoalImage = (e) => {
-    setImageSoalName(e.target.files[0].name);
+    if (e.target.files[0]) {
+      setImageSoalName(e.target.files[0].name);
+    }
     if (e.target.name === "question_image") {
       if (e.target.files[0].size > 5000000) {
         setImageSoalName("");
@@ -209,7 +212,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     const newKey = String.fromCharCode(keyindex + 1);
     setSoalList([
       ...answer,
-      { key: newKey, question: "", image: "", is_right: false },
+      { key: newKey, option: "", image: "", is_right: false },
     ]);
   };
 
@@ -351,6 +354,9 @@ const StepTwo = ({ token, tokenPermission }) => {
     }
 
     const answers = JSON.stringify(answer);
+
+    console.log(answer);
+
     if (valid) {
       const data = {
         subtance_question_bank_id: id,
@@ -587,7 +593,7 @@ const StepTwo = ({ token, tokenPermission }) => {
 
               <div className="form-group row">
                 <div className="col-sm-7 col-md-4">
-                  {answer.length < 6 ? (
+                  {answer.length < 6 && (
                     <button
                       type="button"
                       className="btn btn-rounded-full bg-blue-secondary text-white"
@@ -595,36 +601,43 @@ const StepTwo = ({ token, tokenPermission }) => {
                     >
                       <i className="ri-add-fill text-white"></i> Tambah Jawaban
                     </button>
-                  ) : (
-                    ""
                   )}
                 </div>
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-2">
-                  <button
-                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                    type="button"
-                    onClick={() => {
-                      if (localStorage.getItem("clone") === "true") {
-                        router.push(
-                          `/subvit/substansi/clone/step-3?id=${router.query.id}`
-                        );
-                      } else {
-                        if (localStorage.getItem("detail-entry") !== null) {
-                          router.push(localStorage.getItem("detail-entry"));
-                          localStorage.removeItem("detail-entry");
+                {(localStorage.getItem("detail-entry") !== null ||
+                  localStorage.getItem("clone") !== null) && (
+                  <div className="col-sm-2">
+                    <button
+                      className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                      type="button"
+                      onClick={() => {
+                        if (localStorage.getItem("clone") === "true") {
+                          router.push(
+                            `/subvit/substansi/clone/step-3?id=${router.query.id}`
+                          );
                         } else {
-                          router.push(`/subvit/substansi/tambah-step-1`);
+                          if (localStorage.getItem("detail-entry") !== null) {
+                            router.push(localStorage.getItem("detail-entry"));
+                            localStorage.removeItem("detail-entry");
+                          } else {
+                            router.push(`/subvit/substansi/tambah-step-1`);
+                          }
                         }
-                      }
-                    }}
-                  >
-                    Kembali
-                  </button>
-                </div>
-                <div className="col-sm-10 text-right">
+                      }}
+                    >
+                      Kembali
+                    </button>
+                  </div>
+                )}
+                <div
+                  className={
+                    localStorage.getItem("detail-entry") !== null
+                      ? `col-sm-10 text-right`
+                      : `col-sm-12 text-right`
+                  }
+                >
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="submit"

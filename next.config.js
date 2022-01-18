@@ -17,32 +17,47 @@ module.exports = {
   env: {
     NEXTAUTH_URL: "https://dts-dev.majapahit.id",
     LOGO_DTS:
-      "https://api-dts-dev.majapahit.id/pelatihan/storage/images/logo-dts.png",
+      process.env.MODE === "development"
+        ? "https://api-dts-dev.majapahit.id/pelatihan/storage/images/logo-dts.png"
+        : "https://api-dts-poc.majapahit.id/pelatihan/storage/images/logo-dts.png",
     // PATH_URL: "http://dts-dev.majapahit.id",
 
     CAPTCHA_SITE_KEY: "6LeUmtIbAAAAAMltXjRDmRqns6MThDowaaYHz3YU",
     CAPTCHA_SECRET_KEY: "6LeUmtIbAAAAAAbA9yada3LOIktctPbfQ86SjhNn",
 
     // END_POINT_API_PUBLIKASI: "http://dts-publikasi-dev.majapahit.id/",
-    END_POINT_API_PUBLIKASI: "https://api-dts-dev.majapahit.id/publikasi/",
+    END_POINT_API_PUBLIKASI:
+      process.env.MODE === "development"
+        ? "https://api-dts-dev.majapahit.id/publikasi/"
+        : "https://api-dts-poc.majapahit.id/publikasi/",
     END_POINT_API_PUBLIKASI_1:
-      "https://api-dts-dev.majapahit.id/publikasi-view/",
+      process.env.MODE === "development"
+        ? "https://api-dts-dev.majapahit.id/publikasi-view/"
+        : "https://api-dts-poc.majapahit.id/publikasi-view/",
     API_KEY_PUBLIKASI: "I8aylVChtrUB15Sp5v8TsjDOvb8kGcML",
     END_POINT_API_IMAGE_PUBLIKASI:
       "https://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
 
     //subvit
     // END_POINT_API_SUBVIT: "http://dts-subvit-dev.majapahit.id/",
-    END_POINT_API_SUBVIT: "https://api-dts-dev.majapahit.id/subvit/",
+    END_POINT_API_SUBVIT:
+      process.env.MODE === "development"
+        ? "https://api-dts-dev.majapahit.id/subvit/"
+        : "https://api-dts-poc.majapahit.id/subvit/",
 
     END_POINT_API_IMAGE_SUBVIT:
       "https://dts-subvit-dev.s3.ap-southeast-1.amazonaws.com/",
 
     // partnership
-    END_POINT_API_PARTNERSHIP: "https://api-dts-dev.majapahit.id/partnership/",
+    END_POINT_API_PARTNERSHIP:
+      process.env.MODE === "development"
+        ? "https://api-dts-dev.majapahit.id/partnership/"
+        : "https://api-dts-poc.majapahit.id/partnership/",
 
     END_POINT_API_PARTNERSHIP_MITRA:
-      "https://api-dts-dev.majapahit.id/partnership/",
+      process.env.MODE === "development"
+        ? "https://api-dts-dev.majapahit.id/partnership/"
+        : "https://api-dts-poc.majapahit.id/partnership/",
 
     END_POINT_API_IMAGE_PARTNERSHIP:
       "https://dts-partnership-dev.s3-ap-southeast-1.amazonaws.com",
@@ -50,16 +65,25 @@ module.exports = {
     //   "http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com",
 
     // site management
-    END_POINT_API_SITE_MANAGEMENT: "https://api-dts-dev.majapahit.id/sso/",
+    END_POINT_API_SITE_MANAGEMENT:
+      process.env.MODE === "development"
+        ? "https://api-dts-dev.majapahit.id/sso/"
+        : "https://api-dts-poc.majapahit.id/sso/",
     END_POINT_API_IMAGE_SITE_MANAGEMENT:
       "https://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
 
     // pelatihan
     // END_POINT_API_PELATIHAN: "http://192.168.11.44:83/",
-    END_POINT_API_PELATIHAN: "https://api-dts-dev.majapahit.id/pelatihan/",
+    END_POINT_API_PELATIHAN:
+      process.env.MODE === "development"
+        ? "https://api-dts-dev.majapahit.id/pelatihan/"
+        : "https://api-dts-poc.majapahit.id/pelatihan/",
 
     //sertifikat
-    END_POINT_API_SERTIFIKAT: "https://api-dts-dev.majapahit.id/sertifikat/",
+    END_POINT_API_SERTIFIKAT:
+      process.env.MODE === "development"
+        ? "https://api-dts-dev.majapahit.id/sertifikat/"
+        : "https://api-dts-poc.majapahit.id/sertifikat/",
     // END_POINT_API_SERTIFIKAT: "http://dts-sertifikat-dev.majapahit.id/",
     // END_POINT_API_SERTIFIKAT: "http://http://192.168.11.96:8000/",
 
@@ -67,17 +91,27 @@ module.exports = {
       "https://dts-sertifikat-dev.s3.ap-southeast-1.amazonaws.com/",
 
     // Beasiswa
-    END_POINT_API_BEASISWA: "https://api-dts-dev.majapahit.id/beasiswa/api/v1/",
+    END_POINT_API_BEASISWA:
+      process.env.MODE === "development"
+        ? "https://api-dts-dev.majapahit.id/beasiswa/api/v1/"
+        : "https://api-dts-poc.majapahit.id/beasiswa/api/v1/",
     END_POINT_API_IMAGE_BEASISWA:
       "https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com",
 
     END_POINT_API_BEASISWA_SCHOLARSHIP:
-      "https://api-dts-dev.majapahit.id/beasiswa/api/get-scholarship-data",
+      process.env.MODE === "development"
+        ? "https://api-dts-dev.majapahit.id/beasiswa/api/get-scholarship-data"
+        : "https://api-dts-poc.majapahit.id/beasiswa/api/get-scholarship-data",
 
     END_POINT_API_SIMONAS_JOB:
-      "https://api-dts-dev.majapahit.id/simonas/api/job",
+      process.env.MODE === "development"
+        ? "https://api-dts-dev.majapahit.id/simonas/api/job"
+        : "https://api-dts-poc.majapahit.id/simonas/api/job",
 
-    END_POINT_API_SIMONAS: "https://api-dts-dev.majapahit.id/simonas/api/v1/",
+    END_POINT_API_SIMONAS:
+      process.env.MODE === "development"
+        ? "https://api-dts-dev.majapahit.id/simonas/api/v1/"
+        : "https://api-dts-poc.majapahit.id/simonas/api/v1/",
 
     END_POINT_API_IMAGE_LOGO_MITRA:
       "https://dts-partnership-dev.s3-ap-southeast-1.amazonaws.com",
@@ -86,7 +120,10 @@ module.exports = {
       "pk.eyJ1IjoiZGVuZHlsb3JkcyIsImEiOiJja3U1NHJnYjkxczdyMnZxZ2ptM2hlNXpqIn0.o5v5Ch0AFJIfeZER2vZvwA",
 
     // END_POINT_API_TTEP12: "https://dts-signature-dev.majapahit.id/api/",
-    END_POINT_API_TTEP12: "https://api-dts-dev.majapahit.id/signature/api/",
+    END_POINT_API_TTEP12:
+      process.env.MODE === "development"
+        ? "https://api-dts-dev.majapahit.id/signature/api/"
+        : "https://api-dts-poc.majapahit.id/signature/api/",
 
     ROOT_URL: "https://dts-dev.majapahit.id/",
 

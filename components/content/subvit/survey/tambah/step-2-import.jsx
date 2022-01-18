@@ -55,8 +55,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     success: successImages,
     survey_question_images,
   } = useSelector((state) => state.importImagesSurveyQuestionDetail);
-  let { page = 1, id, metode } = router.query;
-  page = Number(page);
+  let { id, metode } = router.query;
 
   let error;
   if (errorFile) {
@@ -83,6 +82,7 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [image_file, setImageFile] = useState(null);
   const [typeSave, setTypeSave] = useState("lanjut");
   const [limit, setLimit] = useState(null);
+  const [page, setPage] = useState(1);
   const [successType, setSuccessType] = useState(null);
 
   useEffect(() => {
@@ -185,6 +185,8 @@ const StepTwo = ({ token, tokenPermission }) => {
     }
 
     if (valid) {
+      localStorage.removeItem("successFile");
+      localStorage.removeItem("successImage");
       localStorage.setItem("method", "import" || router.query.metode);
       if (localStorage.getItem("detail-import") !== null) {
         router.push(localStorage.getItem("detail-import"));
@@ -192,8 +194,6 @@ const StepTwo = ({ token, tokenPermission }) => {
         localStorage.removeItem("method");
         localStorage.removeItem("step2");
         localStorage.removeItem("clone");
-        localStorage.removeItem("successFile");
-        localStorage.removeItem("successImage");
       } else {
         router.push({
           pathname: `/subvit/survey/tambah/step-3`,
@@ -235,22 +235,26 @@ const StepTwo = ({ token, tokenPermission }) => {
   };
 
   const handlePagination = (pageNumber) => {
-    router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
-    // dispatch(
-    //   getAllSurveyQuestionDetail(
-    //     id,
-    //     pageNumber,
-    //     limit,
-    //     "",
-    //     token,
-    //     tokenPermission
-    //   )
-    // );
+    // router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
+    setPage(pageNumber);
+    dispatch(
+      getAllSurveyQuestionDetail(
+        id,
+        pageNumber,
+        limit,
+        "",
+        token,
+        tokenPermission
+      )
+    );
   };
 
   const handleLimit = (val) => {
     setLimit(val);
-    router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
+    setPage(1);
+    dispatch(
+      getAllSurveyQuestionDetail(id, 1, val, "", token, tokenPermission)
+    );
     // dispatch(
     //   getAllSurveyQuestionDetail(id, 1, val, "", token, tokenPermission)
     // );
@@ -586,7 +590,11 @@ const StepTwo = ({ token, tokenPermission }) => {
                                   <td className="align-middle">
                                     <div className="d-flex">
                                       <Link
-                                        href={`/subvit/survey/edit-soal-survey?id=${question.id}`}
+                                        href={`/subvit/survey/edit-soal-survey?id=${
+                                          question.id
+                                        }&no=${
+                                          i + 1 * (page * 5 || limit) - 1 - 4
+                                        }`}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -689,26 +697,31 @@ const StepTwo = ({ token, tokenPermission }) => {
 
               <div className="row">
                 <div className="col-sm-12 pt-3">
-                  <button
-                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                    type="button"
-                    onClick={() => {
-                      if (localStorage.getItem("clone") === "true") {
-                        router.push(
-                          `/subvit/survey/clone/step-3?id=${router.query.id}`
-                        );
-                      } else {
-                        if (localStorage.getItem("detail-import") !== null) {
-                          router.push(localStorage.getItem("detail-import"));
-                          localStorage.removeItem("detail-import");
+                  {(localStorage.getItem("detail-import") !== null ||
+                    localStorage.getItem("clone") !== null) && (
+                    <button
+                      className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                      type="button"
+                      onClick={() => {
+                        if (localStorage.getItem("clone") === "true") {
+                          router.push(
+                            `/subvit/survey/clone/step-3?id=${router.query.id}`
+                          );
                         } else {
-                          router.push("/subvit/survey/tambah");
+                          if (localStorage.getItem("detail-import") !== null) {
+                            router.push(localStorage.getItem("detail-import"));
+                            localStorage.removeItem("detail-import");
+                            localStorage.removeItem("successFile");
+                            localStorage.removeItem("successImage");
+                          } else {
+                            router.push("/subvit/survey/tambah");
+                          }
                         }
-                      }
-                    }}
-                  >
-                    Kembali
-                  </button>
+                      }}
+                    >
+                      Kembali
+                    </button>
+                  )}
                   <div className="float-right">
                     <button
                       className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}

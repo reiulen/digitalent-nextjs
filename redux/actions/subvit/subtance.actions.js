@@ -101,7 +101,7 @@ export const getAllSubtanceQuestionBanks =
     } catch (error) {
       dispatch({
         type: SUBTANCE_QUESTION_BANKS_FAIL,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };

@@ -297,6 +297,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                         <th>Soal</th>
                         <th>Bobot</th>
                         <th>Status</th>
+                        <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -351,6 +352,22 @@ const StepTwo = ({ token, tokenPermission }) => {
                                       Draft
                                     </span>
                                   )}
+                                </td>
+                                <td className="align-middle">
+                                  <Link
+                                    href={`/subvit/survey/edit-soal-survey?id=${
+                                      question.id
+                                    }&no=${i + 1 - 1}`}
+                                  >
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Edit"
+                                    >
+                                      <i className="ri-pencil-fill p-0 text-white"></i>
+                                    </a>
+                                  </Link>
                                 </td>
                               </tr>
                             );

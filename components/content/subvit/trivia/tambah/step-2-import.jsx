@@ -55,8 +55,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     success: successImages,
     trivia_question_images,
   } = useSelector((state) => state.importImagesTriviaQuestionDetail);
-  let { page = 1, id } = router.query;
-  page = Number(page);
+  let { id } = router.query;
 
   let error;
   if (errorFile) {
@@ -82,7 +81,8 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [question_file, setQuestionFile] = useState(null);
   const [image_file, setImageFile] = useState(null);
   const [typeSave, setTypeSave] = useState("lanjut");
-  const [limit, setLimit] = useState(null);
+  const [limit, setLimit] = useState(5);
+  const [page, setPage] = useState(1);
   const [fileSoalName, setFileSoalName] = useState("");
   const [imageFileName, setImageFileName] = useState("");
   const [successType, setSuccessType] = useState(null);
@@ -200,6 +200,8 @@ const StepTwo = ({ token, tokenPermission }) => {
     }
 
     if (valid) {
+      localStorage.removeItem("successFile");
+      localStorage.removeItem("successImage");
       localStorage.setItem("method", "import" || router.query.metode);
       if (localStorage.getItem("detail-import") !== null) {
         router.push(localStorage.getItem("detail-import"));
@@ -207,8 +209,6 @@ const StepTwo = ({ token, tokenPermission }) => {
         localStorage.removeItem("method");
         localStorage.removeItem("step2");
         localStorage.removeItem("clone");
-        localStorage.removeItem("successFile");
-        localStorage.removeItem("successImage");
       } else {
         router.push({
           pathname: `/subvit/trivia/tambah/step-3`,
@@ -251,13 +251,25 @@ const StepTwo = ({ token, tokenPermission }) => {
 
   const handlePagination = (pageNumber) => {
     router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
-    // dispatch(getAllTriviaQuestionDetail(id, pageNumber, "", limit, token));
+    setPage(pageNumber);
+    dispatch(
+      getAllTriviaQuestionDetail(
+        id,
+        pageNumber,
+        "",
+        limit,
+        token,
+        tokenPermission
+      )
+    );
   };
 
   const handleLimit = (val) => {
     setLimit(val);
-    router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
-    // dispatch(getAllTriviaQuestionDetail(id, 1, "", val, token));
+    setPage(1);
+    dispatch(
+      getAllTriviaQuestionDetail(id, 1, "", val, token, tokenPermission)
+    );
   };
 
   const handleDelete = (id) => {
@@ -580,7 +592,11 @@ const StepTwo = ({ token, tokenPermission }) => {
                                   <td className="align-middle">
                                     <div className="d-flex">
                                       <Link
-                                        href={`/subvit/trivia/edit-soal-trivia?id=${question.id}`}
+                                        href={`/subvit/trivia/edit-soal-trivia?id=${
+                                          question.id
+                                        }&no=${
+                                          i + 1 * (page * 5 || limit) - 1 - 4
+                                        }`}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -685,26 +701,31 @@ const StepTwo = ({ token, tokenPermission }) => {
 
               <div className="row">
                 <div className="col-sm-12 col-md-12 pt-4">
-                  <button
-                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                    type="button"
-                    onClick={() => {
-                      if (localStorage.getItem("clone") === "true") {
-                        router.push(
-                          `/subvit/trivia/clone/step-3?id=${router.query.id}`
-                        );
-                      } else {
-                        if (localStorage.getItem("detail-import") !== null) {
-                          router.push(localStorage.getItem("detail-import"));
-                          localStorage.removeItem("detail-import");
+                  {(localStorage.getItem("detail-import") !== null ||
+                    localStorage.getItem("clone") !== null) && (
+                    <button
+                      className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                      type="button"
+                      onClick={() => {
+                        if (localStorage.getItem("clone") === "true") {
+                          router.push(
+                            `/subvit/trivia/clone/step-3?id=${router.query.id}`
+                          );
                         } else {
-                          router.push("/subvit/trivia/tambah");
+                          if (localStorage.getItem("detail-import") !== null) {
+                            router.push(localStorage.getItem("detail-import"));
+                            localStorage.removeItem("detail-import");
+                            localStorage.removeItem("successFile");
+                            localStorage.removeItem("successImage");
+                          } else {
+                            router.push("/subvit/trivia/tambah");
+                          }
                         }
-                      }
-                    }}
-                  >
-                    Kembali
-                  </button>
+                      }}
+                    >
+                      Kembali
+                    </button>
+                  )}
                   <div className="float-right">
                     <button
                       className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}

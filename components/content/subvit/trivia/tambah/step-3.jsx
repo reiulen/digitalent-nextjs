@@ -103,9 +103,7 @@ const StepThree = ({ token, tokenPermission }) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (error) {
-      dispatch(clearErrors());
-    }
+    dispatch(clearErrors());
 
     if (
       moment(startDate).format("YYYY-MM-DD") >
@@ -350,7 +348,7 @@ const StepThree = ({ token, tokenPermission }) => {
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("durasi")
                       }
-                      max="300"
+                      max="360"
                     />
 
                     <div className="input-group-append bg-sedondary">
@@ -408,7 +406,7 @@ const StepThree = ({ token, tokenPermission }) => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-2">
+                {/* <div className="col-sm-2">
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     onClick={() => {
@@ -428,8 +426,8 @@ const StepThree = ({ token, tokenPermission }) => {
                   >
                     Kembali
                   </button>
-                </div>
-                <div className="col-sm-10 text-right">
+                </div> */}
+                <div className="col-sm-12 text-right">
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="submit"
