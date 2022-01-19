@@ -1,0 +1,8 @@
+.custom_button {
+  border: 1px solid #d7e1ea;
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #6c6c6c;
+}

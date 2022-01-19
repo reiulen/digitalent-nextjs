@@ -1,0 +1,295 @@
+import React, { useState, useRef, useEffect } from "react";
+import Link from "next/link";
+import SignaturePad from "react-signature-pad-wrapper";
+import { useRouter } from "next/router";
+
+import Swal from "sweetalert2";
+import SimpleReactValidator from "simple-react-validator";
+import axios from "axios";
+import PageWrapper from "../../../wrapper/page.wrapper";
+import Image from "next/image";
+import Cookies from 'js-cookie'
+
+const EditTandaTangan = ({ token }) => {
+  const signCanvas = useRef({});
+  const clear = () => {
+    Swal.fire({
+      title: "Apakah anda yakin ingin reset tanda tangan ?",
+      // text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      // dismissOnDestroy: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        signCanvas.current.clear();
+        setSignature("");
+      }
+    });
+  };
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const router = useRouter();
+  const [signature, setSignature] = useState("");
+
+  const dataTandaTangan = () => {
+    const data = signCanvas.current.toDataURL();
+    if (!signature) {
+      Swal.fire({
+        icon: "success",
+        title: "Tanda Tangan Berhasil di Buat",
+      });
+      setSignature(data);
+    }
+    if (signature) {
+      Swal.fire({
+        icon: "error",
+        title: "Tanda Tangan Sudah dibuat",
+      });
+    }
+  };
+
+  const [isUpdate, setIsUpdate] = useState(false);
+  const submit = async (e) => {
+    e.preventDefault();
+    if (signCanvas.current.isEmpty()) {
+      Swal.fire({
+        title: "Apakah anda yakin ingin simpan ?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya !",
+        // dismissOnDestroy: false,
+      }).then(async (result) => {
+        if (result.value) {
+          let formData = new FormData();
+          formData.append("_method", "PUT");
+          formData.append("name", nama);
+          formData.append("position", jabatan);
+          formData.append("signature_image", signature !== "" ? signature : "");
+          try {
+            let { data } = await axios.post(
+              `${process.env.END_POINT_API_PARTNERSHIP}api/signatures/${router.query.id}`,
+              formData,
+              {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                  Permission: Cookies.get ("token_permission")
+                },
+              }
+            );
+
+            router.push({
+              pathname: `/partnership/tanda-tangan`,
+              query: { update: true },
+            });
+          } catch (error) {
+            Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
+          }
+        }
+      });
+    } else {
+      if (signature !== "") {
+        Swal.fire({
+          title: "Apakah anda yakin ingin simpan ?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          cancelButtonText: "Batal",
+          confirmButtonText: "Ya !",
+          // dismissOnDestroy: false,
+        }).then(async (result) => {
+          if (result.value) {
+            let formData = new FormData();
+            formData.append("_method", "PUT");
+            formData.append("name", nama);
+            formData.append("position", jabatan);
+            formData.append(
+              "signature_image",
+              signature !== "" ? signature : ""
+            );
+            try {
+              let { data } = await axios.post(
+                `${process.env.END_POINT_API_PARTNERSHIP}api/signatures/${router.query.id}`,
+                formData,
+                {
+                  headers: {
+                    authorization: `Bearer ${token}`,
+                    Permission: Cookies.get ("token_permission")
+                  },
+                }
+              );
+
+              router.push({
+                pathname: `/partnership/tanda-tangan`,
+                query: { update: true },
+              });
+            } catch (error) {
+              Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
+            }
+          }
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title:
+            "Tekan button buat tanda tangan untuk menyimpat update tanda tangan anda",
+        });
+      }
+    }
+  };
+
+  const [nama, setNama] = useState("");
+  const [jabatan, setJabatan] = useState("");
+  const [tandaTangan, setTandaTangan] = useState("");
+
+  const setDataSingle = async (id, token) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/signatures/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get ("token_permission")
+          },
+        }
+      );
+
+      setNama(data?.data?.name);
+      setJabatan(data?.data?.position);
+      setTandaTangan(data?.data?.signature_image);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
+    }
+  };
+
+  useEffect(() => {
+    setDataSingle(router.query.id, token);
+  }, [router.query.id, token]);
+
+  return (
+    <PageWrapper>
+      <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+        <div className="card card-custom card-stretch gutter-b">
+          <div className="card-header border-0">
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
+              Ubah Tanda Tangan Digital
+            </h3>
+          </div>
+          <div className="card-body pt-0">
+            <form>
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
+                  Nama
+                </label>
+                <input
+                  required
+                  type="text"
+                  className="form-control"
+                  placeholder="Masukkan Nama"
+                  value={nama}
+                  onChange={(e) => setNama(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label className="col-form-label">Jabatan</label>
+                <input
+                  required
+                  type="text"
+                  className="form-control"
+                  placeholder="Masukkan Jabatan"
+                  value={jabatan}
+                  onChange={(e) => setJabatan(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label className="col-form-label">Buat Tanda Tangan</label>
+                <div className="row">
+                  <div className="col-sm-2 ">
+                    <div className="border my-3">
+                      {!tandaTangan ? (
+                        ""
+                      ) : (
+                        <Image
+                          unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                          src={
+                            process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                            tandaTangan
+                          }
+                          width={400}
+                          height={400}
+                          alt="logo"
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <div className="col-sm-12">
+                    <div
+                      style={{
+                        background: "#FFFFFF",
+                        boxShadow: "inset 10px 10px 40px rgba(0, 0, 0, 0.08)",
+                        borderRadius: "10px",
+                      }}
+                    >
+                      <SignaturePad
+                        ref={signCanvas}
+                        options={{
+                          minWidth: 1,
+                          maxWidth: 3,
+                          penColor: "rgb(66, 133, 244)",
+                        }}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("tandaTangan")
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className="d-flex flex-wrap align-items-center justify-content-center">
+                    <a
+                      className="btn btn-sm btn-rounded-full text-blue-primary border-primary text-blue-primary mr-md-5 mt-5"
+                      onClick={() => dataTandaTangan()}
+                    >
+                      Buat Tanda Tangan Baru
+                    </a>
+                    {/* </Link> */}
+                    <button
+                      type="button"
+                      onClick={clear}
+                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mt-5"
+                    >
+                      Buat Ulang Tanda Tangan
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-group">
+                <div className="d-flex flex-column flex-md-row justify-content-end">
+                  <Link href="/partnership/tanda-tangan">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 d-flex justify-content-center">
+                      Kembali
+                    </a>
+                  </Link>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
+                    onClick={(e) => submit(e)}
+                  >
+                    Simpan
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </PageWrapper>
+  );
+};
+
+export default EditTandaTangan;

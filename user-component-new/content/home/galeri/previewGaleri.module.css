@@ -1,0 +1,396 @@
+/* Galeri */
+
+.headTitle {
+  font-size: 25px;
+  font-weight: 600;
+  margin-top: 18px;
+}
+
+.btnTambah {
+  margin-top: 10px;
+}
+
+.modal-dialog {
+  width: 800px;
+  height: 80%;
+}
+
+.posModal {
+  display: flex;
+}
+
+.modalsRight{
+  padding: 30px;
+}
+
+.img-left {
+  width: 350px;
+}
+
+.fullBar {
+  margin: -23px;
+  width: 700px;
+}
+
+.rightSideBar {
+  width: 700px;
+}
+
+.img-prevModal {
+  position: relative;
+  height: 423px;
+  width: 100%;
+}
+
+.subMenuPreview {
+  font-size: 11px;
+}
+
+.description-img {
+  text-align: left;
+  width: 100%;
+  height: 260px;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  overflow-wrap: break-word;
+}
+
+.iconBorderGaleri {
+  background-color: #007cff;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  line-height: 39px;
+  margin-right: 3px;
+}
+
+.strip {
+  width: 112.3%;
+  margin-left: -44px;
+}
+
+.listTagGaleri {
+  display: flex;
+}
+
+.modals{
+  height: 520px;
+  width: auto;
+}
+
+.modalsPrevImage{
+  height: 400px;
+}
+
+.tagModal {
+  font-size: 10px;
+}
+
+/* Tambah Galeri */
+
+.imgPrevTambah{
+  margin-right: 25px;
+}
+
+.deskripsiTambah{
+  margin-bottom: 70px;
+}
+
+.btnKembali{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 27px;
+  padding-right: 27px;
+}
+
+.btnSimpan{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* HOME PAGE GALERI */
+
+.containerGaleri{
+  padding: 0 24px;
+}
+.contentGaleri{
+  margin-left: -4px;
+}
+.isiGaleriHome{
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 260px;
+  font-size: 12px;
+}
+.borderStrip{
+  width: 108%;
+  margin-left: -21px;
+}
+.closeModal{
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  z-index: 1;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 32px;
+  height: 29px;
+  justify-content: center;
+  visibility: hidden;
+}
+.simbolX{
+  position: absolute;
+  top: 4px;
+  right: 8px;
+}
+.kategoriGaleri{
+  cursor: pointer;
+  height: 40px;
+  min-width: 236px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .modal-body {
+    height: 400px;
+    width: 650px;
+    margin-left: -75px;
+  }
+  .description-img {
+    width: 98%;
+    height: 235px;
+  }
+  .strip {
+    width: 117%;
+    margin-left: -42px;
+  }
+  .deskripsiTambah{
+    margin-bottom: 90px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .subMenuPreview {
+    font-size: 9px;
+    margin-left: -5px;
+  }
+  .rightSideBar {
+    width: 660px;
+  }
+  .img-left {
+    width: 330px;
+  }
+  .img-prevModal {
+    height: 425px;
+  }
+  .description-img {
+    height: 235px;
+    overflow-y: auto;
+  }
+  .headTitle {
+    font-size: 22px;
+  }
+  .btnTambah {
+    font-size: 12px;
+  }
+
+  /* Modal Galeri HOMEPAGE */
+
+  .imageModalHomePage{
+    margin: 0 10px;
+  }
+  .contentGaleri{
+    margin: 10px 10px;
+  }
+  .isiGaleriHome{
+    margin-left: -10px;
+  }
+  .borderStrip{
+    width: 100%;
+    margin-left: -10px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .cari{
+    font-size: 9px;
+  }
+  .optionsSelect{
+    font-size: 7px;
+    max-width: max-content;
+  }
+  .fontCari{
+    font-size: 9px;
+  }
+  .filter{
+    font-size: 9px;
+    margin-left: -10px;
+  }
+  .subMenuPreview {
+    font-size: 6px;
+    margin-left: -10px;
+  }
+  .iconPreview {
+    font-size: 6px;
+    margin-left: 7px;
+  }
+  .description-img {
+    height: 97px;
+    width: 100%;
+    font-size: 7px;
+  }
+  .modals{
+    height: 200px;
+    width: auto;
+  }
+  .modalsRight{
+    padding: 30px;
+  }
+  .tagModal {
+    font-size: 6px;
+  }
+  .hideTitle {
+    display: none;
+  }
+  .headTitle {
+    font-size: 17px;
+  }
+  .btnTambah {
+    font-size: 9px;
+  }
+  .tagStyle{
+    font-size: 11px;
+  }
+  .modalsPrevImage{
+    height: 200px;
+  }
+  .deskripsiTambah{
+    margin-bottom: 140px;
+  }
+
+  /* Home Page Galeri */
+
+  .closeModal{
+    visibility: visible;
+  }
+  .padModalGaleri{
+    /* padding: 0 32px; */
+    margin: 0 195px;
+    /* margin-left: 50px; */
+  }
+  .kategoriGaleri{
+    text-align: center;
+    min-width: 160px;
+    width: 85px;
+  }
+}
+
+@media only screen and (max-width: 768px){
+  .padModalGaleri{
+    /* padding: 0 32px; */
+    margin: 0 84px;
+    /* margin-left: 50px; */
+  }
+}
+
+@media only screen and (max-width: 320px){
+  .cari{
+    font-size: 9px;
+  }
+  .filter{
+    font-size: 9px;
+  }
+  .judulTambah{
+    font-size: 8.5px;
+  }
+  .deskripsiTambah{
+    font-size: 8.5px;
+    margin-bottom: 190px;
+  }
+  .tagStyle{
+    font-size: 8.5px;
+  }
+  .resolusiTambah{
+    font-size: 8.5px;
+  }
+  .circleTop{
+    width: 20px;
+    height: 20px;
+    margin: 5px 10px 0 0;
+  }
+  .circleBottom{
+    width: 20px;
+    height: 20px;
+    margin: 0 10px 13px 0;
+  }
+  .selectKategori{
+    font-size: 8.5px;
+  }
+  .setPublish{
+    font-size: 8.5px;
+  }
+  .btnKembali{
+    font-size: 8.5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+  .btnSimpan{
+    font-size: 8.5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 13px;
+    padding-right: 13px;
+  }
+  .kategoriGaleri{
+    text-align: center;
+    min-width: 105px;
+    width: 85px;
+  }
+
+  .padModalGaleri{
+    /* padding: 0 32px; */
+    margin: 0 32px !important;
+  }
+}
+
+@media only screen and (max-width: 280px){
+  .cari{
+    font-size: 7.5px;
+  }
+  .filter{
+    font-size: 9px;
+  }
+  .tagStyle{
+    font-size: 6.7px;
+  }
+  .deskripsiTambah{
+    font-size: 6.7px;
+    margin-bottom: 210px;
+  }
+  .btnKembali{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+  .btnSimpan{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 13px;
+    padding-right: 13px;
+  }
+  .kategoriGaleri{
+    font-size: 9px;
+    min-width: 70px;
+    width: 55px;
+  }
+
+  .padModalGaleri{
+    /* padding: 0 32px; */
+    margin: 0 32px !important;
+  }
+}

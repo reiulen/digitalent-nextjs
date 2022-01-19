@@ -1,0 +1,661 @@
+import React, { useState, useEffect } from "react";
+
+import dynamic from "next/dynamic";
+import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  newSubtanceQuestionDetail,
+  clearErrors,
+} from "../../../../../redux/actions/subvit/subtance-question-detail.action";
+import { NEW_SUBTANCE_QUESTION_DETAIL_RESET } from "../../../../../redux/types/subvit/subtance-question-detail.type";
+import { useRouter } from "next/router";
+
+import PageWrapper from "/components/wrapper/page.wrapper";
+import StepInput from "/components/StepInput";
+import StepInputClone from "/components/StepInputClone";
+
+import LoadingPage from "../../../../LoadingPage";
+import styles from "../../trivia/edit/step.module.css";
+
+const StepTwo = ({ token, tokenPermission }) => {
+  const dispatch = useDispatch();
+  const importSwitch = () => import("bootstrap-switch-button-react");
+  const SwitchButton = dynamic(importSwitch, {
+    ssr: false,
+  });
+  const router = useRouter();
+
+  let { metode, id } = router.query;
+
+  const { loading, error, success } = useSelector(
+    (state) => state.newSubtanceQuestionDetail
+  );
+  const {
+    loading: allLoading,
+    error: allError,
+    subtance_question_type,
+  } = useSelector((state) => state.allSubtanceQuestionType);
+  const { loading: oneLoading, subtance } = useSelector(
+    (state) => state.detailSubtanceQuestionBanks
+  );
+
+  const [question, setSoal] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).question) ||
+      ""
+  );
+  const [question_image, setSoalImage] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).question_image) ||
+      ""
+  );
+  const [answer, setSoalList] = useState([
+    {
+      key: "A",
+      option: "",
+      image: "",
+      imageName: "Pilih Gambar",
+      is_right: false,
+    },
+    {
+      key: "B",
+      option: "",
+      image: "",
+      imageName: "Pilih Gambar",
+      is_right: false,
+    },
+    {
+      key: "C",
+      option: "",
+      image: "",
+      imageName: "Pilih Gambar",
+      is_right: false,
+    },
+    {
+      key: "D",
+      option: "",
+      image: "",
+      imageName: "Pilih Gambar",
+      is_right: false,
+    },
+  ]);
+  const [answer_key, setAnswerKey] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).answer_key) ||
+      ""
+  );
+  const [question_type_id, setQuestionTypeId] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).question_type_id) ||
+      ""
+  );
+  const [typeSave, setTypeSave] = useState("lanjut");
+  const [imageSoalName, setImageSoalName] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).question_image_name) ||
+      ""
+  );
+
+  useEffect(() => {
+    if (success) {
+      dispatch({
+        type: NEW_SUBTANCE_QUESTION_DETAIL_RESET,
+      });
+      if (typeSave === "lanjut") {
+        if (localStorage.getItem("detail-entry") !== null) {
+          router.push(localStorage.getItem("detail-entry"));
+          localStorage.removeItem("detail-entry");
+          localStorage.removeItem("step2");
+          localStorage.removeItem("step1");
+        } else {
+          if (localStorage.getItem("clone") === "true") {
+            router.push(`/subvit/substansi/clone/step-4?id=${router.query.id}`);
+          } else {
+            router.push({
+              pathname: `/subvit/substansi/tambah-step-3`,
+              query: { id },
+            });
+          }
+        }
+      } else if (typeSave === "draft") {
+        handleResetForm();
+        if (router.query.metode) {
+          router.push({
+            pathname: `/subvit/substansi/tambah-step-2-${metode}`,
+            query: { metode, id },
+          });
+        } else {
+          router.push({
+            pathname: `/subvit/substansi/tambah-step-2-entry`,
+            query: { id },
+          });
+        }
+      }
+    }
+  }, [dispatch, error, success, typeSave, id, metode, router]);
+
+  const handleInputChange = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...answer];
+    list[index][name] = value;
+    if (name === "image") {
+      list[index]["imageName"] = e.target.files[0].name;
+
+      if (e.target.files[0].size > 5000000) {
+        list[index]["imageName"] = "Pilih Gambar";
+        e.target.value = null;
+        Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            list[index]["image"] = reader.result;
+          }
+        };
+        if (e.target.files[0]) {
+          reader.readAsDataURL(e.target.files[0]);
+        }
+      }
+    }
+    setSoalList(list);
+  };
+
+  const handleSoalImage = (e) => {
+    if (e.target.files[0]) {
+      setImageSoalName(e.target.files[0].name);
+    }
+    if (e.target.name === "question_image") {
+      if (e.target.files[0].size > 5000000) {
+        setImageSoalName("");
+        e.target.value = null;
+        Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setSoalImage(reader.result);
+          }
+        };
+        if (e.target.files[0]) {
+          reader.readAsDataURL(e.target.files[0]);
+        }
+      }
+    }
+  };
+
+  const handleAnswer = (value, i) => {
+    setAnswerKey(answer[i].key);
+    if (value === false) {
+      setAnswerKey("");
+    }
+    const list = [...answer];
+    list.forEach((row, j) => {
+      list[j]["is_right"] = false;
+    });
+    list[i]["is_right"] = value;
+  };
+
+  const handleRemoveClick = (index) => {
+    const list = [...answer];
+    list.splice(index, 1);
+    list.forEach((row, i) => {
+      let key = String.fromCharCode(65 + i);
+      list[i]["key"] = key;
+    });
+    setSoalList(list);
+  };
+
+  const handleAddClick = () => {
+    const lastobj = answer[answer.length - 1];
+    const keyindex = lastobj.key.charCodeAt(0);
+    const newKey = String.fromCharCode(keyindex + 1);
+    setSoalList([
+      ...answer,
+      { key: newKey, question: "", image: "", is_right: false },
+    ]);
+  };
+
+  const handleResetForm = () => {
+    setImageSoalName("");
+    setSoal("");
+    setSoalImage("");
+    setSoalList([
+      { key: "A", option: "", image: "", is_right: false },
+      { key: "B", option: "", image: "", is_right: false },
+      { key: "C", option: "", image: "", is_right: false },
+      { key: "D", option: "", image: "", is_right: false },
+    ]);
+    setAnswerKey("");
+    setQuestionTypeId("");
+  };
+
+  const saveDraft = () => {
+    setTypeSave("draft");
+    let valid = true;
+
+    if (error) {
+      dispatch(clearErrors());
+    }
+
+    if (success) {
+      dispatch({
+        type: NEW_SUBTANCE_QUESTION_DETAIL_RESET,
+      });
+    }
+
+    if (answer_key === "") {
+      valid = false;
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi kunci jawaban dengan benar !",
+      });
+    }
+
+    if (question == "" && question_image == "") {
+      valid = false;
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi pertanyaan dengan benar !",
+      });
+    }
+
+    answer.forEach((row, j) => {
+      if (row.option == "" && row.image == "") {
+        valid = false;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi jawaban dengan benar !",
+        });
+      }
+    });
+
+    if (question_type_id === "") {
+      valid = false;
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi Tipe Soal dengan benar !",
+      });
+    }
+
+    const answers = JSON.stringify(answer);
+    if (valid) {
+      const data = {
+        subtance_question_bank_id: id,
+        question,
+        answer: answers,
+        question_image,
+        question_type_id,
+        answer_key,
+      };
+
+      dispatch(newSubtanceQuestionDetail(data, token, tokenPermission));
+      localStorage.removeItem("method");
+      localStorage.removeItem("step2");
+      handleResetForm();
+    }
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setTypeSave("lanjut");
+    let valid = true;
+
+    if (error) {
+      dispatch(clearErrors());
+    }
+
+    if (success) {
+      dispatch({
+        type: NEW_SUBTANCE_QUESTION_DETAIL_RESET,
+      });
+    }
+
+    if (answer_key === "") {
+      valid = false;
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi kunci jawaban dengan benar !",
+      });
+    }
+
+    if (question == "" && question_image == "") {
+      valid = false;
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi pertanyaan dengan benar !",
+      });
+    }
+
+    answer.forEach((row, j) => {
+      if (row.option == "" && row.image == "") {
+        valid = false;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi jawaban dengan benar !",
+        });
+      }
+    });
+
+    if (question_type_id === "") {
+      valid = false;
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi Tipe Soal dengan benar !",
+      });
+    }
+
+    const answers = JSON.stringify(answer);
+    if (valid) {
+      const data = {
+        subtance_question_bank_id: id,
+        question,
+        answer: answers,
+        question_image,
+        question_image_name: imageSoalName,
+        question_type_id,
+        answer_key,
+      };
+
+      localStorage.setItem("step2", JSON.stringify(data));
+
+      if (router.pathname.includes("entry")) {
+        localStorage.setItem("method", "entry" || metode);
+      }
+
+      dispatch(newSubtanceQuestionDetail(data, token, tokenPermission));
+    }
+  };
+
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+  };
+
+  return (
+    <PageWrapper>
+      {error && (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={handleResetError}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      )}
+      <div className="col-lg-12 order-1 order-xxl-2 px-0">
+        {loading ? <LoadingPage loading={loading} /> : ""}
+        <div className="card card-custom card-stretch gutter-b">
+          {localStorage.getItem("clone") === "true" ? (
+            <StepInputClone step="3" />
+          ) : (
+            <StepInput step="2" title="Substansi" />
+          )}
+          <div className="card-header border-0">
+            <h2 className="card-title h2 text-dark">
+              Soal {subtance && subtance.bank_soal + 1}
+            </h2>
+          </div>
+          <div className="card-body pt-0">
+            <form onSubmit={onSubmit}>
+              <div className="form-group row">
+                <div className="col-sm-12 col-md-12">
+                  <label
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold"
+                  >
+                    Tipe Soal
+                  </label>
+                  <select
+                    name="training_id"
+                    id=""
+                    onChange={(e) => setQuestionTypeId(e.target.value)}
+                    onBlur={(e) => setQuestionTypeId(e.target.value)}
+                    value={question_type_id}
+                    className="form-control"
+                  >
+                    <option selected disabled value="">
+                      -- Tipe Soal --
+                    </option>
+                    {subtance_question_type.list_types.length != 0 ? (
+                      subtance_question_type.list_types
+                        .filter((row) => row.status === 1)
+                        .map((row) => {
+                          return (
+                            <option key={row.id} value={row.id}>
+                              {row.name}
+                            </option>
+                          );
+                        })
+                    ) : (
+                      <option disabled>Tipe soal masih kosong</option>
+                    )}
+                  </select>
+                </div>
+              </div>
+
+              <div className="form-group mb-2 row">
+                <div className=" col-md-12">
+                  <label
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold"
+                  >
+                    Pertanyaan
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Isi Pertanyaan"
+                    value={question}
+                    onChange={(e) => setSoal(e.target.value)}
+                    autoComplete="off"
+                  />
+                </div>
+              </div>
+
+              <div className="form-group row">
+                <div className=" col-md-12">
+                  <label
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold"
+                  >
+                    Gambar Pertanyaan (Optional)
+                  </label>
+                  <div className="custom-file">
+                    <input
+                      type="file"
+                      className="custom-file-input"
+                      name="question_image"
+                      onChange={(e) => handleSoalImage(e)}
+                      accept="image/png, image/gif, image/jpeg , image/jpg"
+                    />
+                    <label className="custom-file-label" htmlFor="customFile">
+                      {imageSoalName ? imageSoalName : "Choose file"}
+                    </label>
+                  </div>
+                  <span className="text-muted">
+                    (Maksimal ukuran file 5 mb)
+                  </span>
+                </div>
+              </div>
+
+              <div className="form-group row">
+                {answer.map((x, i) => {
+                  return (
+                    <>
+                      <div className="col-sm-12 col-md-4">
+                        <label
+                          htmlFor="staticEmail"
+                          className=" col-form-label font-weight-bold"
+                        >
+                          Jawaban {x.key}
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="option"
+                          value={x.option}
+                          placeholder={`Isi Jawaban ` + x.key}
+                          onChange={(e) => handleInputChange(e, i)}
+                          autoComplete="off"
+                        />
+                      </div>
+                      <div className="col-sm-12 col-md-4">
+                        <label
+                          htmlFor="staticEmail"
+                          className=" col-form-label font-weight-bold"
+                        >
+                          Input Gambar (Optional)
+                        </label>
+                        <div className="custom-file">
+                          <input
+                            type="file"
+                            className="custom-file-input"
+                            name="image"
+                            onChange={(e) => handleInputChange(e, i)}
+                            accept="image/png, image/gif, image/jpeg , image/jpg"
+                          />
+                          <label
+                            className="custom-file-label"
+                            htmlFor="customFile"
+                          >
+                            {x.imageName}
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-sm-12 col-md-4 pr-0 mr-0 d-flex align-items-end mt-2">
+                        {answer.length !== 1 && x.key !== "A" ? (
+                          <button
+                            className="btn btn-link-action bg-danger text-white"
+                            type="button"
+                            onClick={() => handleRemoveClick(i)}
+                          >
+                            <i className="ri-delete-bin-fill p-0 text-white"></i>
+                          </button>
+                        ) : (
+                          <button
+                            className="btn btn-link-action bg-danger text-white invisible"
+                            type="button"
+                          >
+                            <i className="ri-delete-bin-fill p-0 text-white"></i>
+                          </button>
+                        )}
+                        <div className="ml-4">
+                          <SwitchButton
+                            checked={x.is_right}
+                            onlabel=" "
+                            onstyle="primary"
+                            offlabel=" "
+                            offstyle="secondary"
+                            size="sm"
+                            width={20}
+                            height={10}
+                            onChange={(checked) => handleAnswer(checked, i)}
+                          />
+                        </div>
+                        {x.is_right ? (
+                          <span className="ml-2">Pilihan Kunci yang benar</span>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </>
+                  );
+                })}
+              </div>
+
+              <div className="form-group row">
+                <div className="col-sm-7 col-md-4">
+                  {answer.length < 6 && (
+                    <button
+                      type="button"
+                      className="btn btn-rounded-full bg-blue-secondary text-white"
+                      onClick={() => handleAddClick()}
+                    >
+                      <i className="ri-add-fill text-white"></i> Tambah Jawaban
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="form-group row">
+                {(localStorage.getItem("detail-entry") !== null ||
+                  localStorage.getItem("clone") !== null) && (
+                  <div className="col-sm-2">
+                    <button
+                      className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                      type="button"
+                      onClick={() => {
+                        if (localStorage.getItem("clone") === "true") {
+                          router.push(
+                            `/subvit/substansi/clone/step-3?id=${router.query.id}`
+                          );
+                        } else {
+                          if (localStorage.getItem("detail-entry") !== null) {
+                            router.push(localStorage.getItem("detail-entry"));
+                            localStorage.removeItem("detail-entry");
+                          } else {
+                            router.push(`/subvit/substansi/tambah-step-1`);
+                          }
+                        }
+                      }}
+                    >
+                      Kembali
+                    </button>
+                  </div>
+                )}
+                <div
+                  className={
+                    localStorage.getItem("detail-entry") !== null
+                      ? `col-sm-10 text-right`
+                      : `col-sm-12 text-right`
+                  }
+                >
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    type="submit"
+                  >
+                    Simpan & Lanjut
+                  </button>
+                  <button
+                    className="btn btn-primary-rounded-full"
+                    onClick={saveDraft}
+                    type="button"
+                  >
+                    Tambah Soal
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </PageWrapper>
+  );
+};
+
+export default StepTwo;

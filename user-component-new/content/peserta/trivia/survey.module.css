@@ -1,0 +1,82 @@
+.cardBase {
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+}
+.title {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 160%;
+  letter-spacing: 0.015em;
+  color: #1f1f1f;
+  margin-bottom: 30px;
+}
+.cardPanduan {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  line-height: 200%;
+  letter-spacing: 0.015em;
+  padding: 18px;
+  color: #1f1f1f;
+}
+.btnStart {
+  float: right;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  text-align: center;
+  letter-spacing: 0.015em;
+  color: #ffffff;
+  background-color: #007cff !important;
+  border-radius: 30px !important;
+}
+.btnBatal {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  text-align: center;
+  letter-spacing: 0.015em;
+  margin-right: 20px;
+  color: #007cff;
+}
+.btnBatal:hover {
+  text-decoration: none;
+}
+.btnMulai {
+  background: #007cff;
+  border-radius: 30px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  text-align: center;
+  letter-spacing: 0.015em;
+  color: #ffffff;
+  padding: 8px 20px;
+}
+.bodyKonfirmasi {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 200%;
+  color: #1f1f1f;
+}
+.headerKonfirmasi {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 155%;
+  color: #1f1f1f;
+  padding: 30px;
+}

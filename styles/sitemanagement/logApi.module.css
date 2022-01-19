@@ -1,0 +1,77 @@
+/* LOG API */
+
+.rightBtnHead{
+    margin-left: 35px;
+}
+
+.filterBtn{
+    width: 200px;
+}
+
+@media only screen and (max-width: 1024px) {
+    /* LOG API */
+
+    .btnCari{
+        font-size: 11px;
+    }
+
+    .rightBtnHead{
+        margin-left: 50px;
+    }
+    .filterBtn{
+        width: 170px;
+        margin-left: -40px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .rightBtnHead{
+        margin-left: 80px;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .filterBtn{
+        width: 290px;
+        margin-left: -93px;
+    }
+    .iconFilter{
+        margin-left: -8px;
+    }
+    .btnExport{
+        width: 290px;
+        margin-left: -93px;
+        margin-top: 20px;
+        text-align: center;
+        display: block;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .filterBtn{
+        width: 236px;
+        margin-left: -93px;
+    }
+    .btnExport{
+        width: 236px;
+        margin-left: -93px;
+        margin-top: 20px;
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 280px) {
+    .btnCari{
+        font-size: 7.5px;
+    }
+    .filterBtn{
+        width: 197px;
+        margin-left: -93px;
+    }
+    .btnExport{
+        width: 197px;
+        margin-left: -93px;
+        margin-top: 20px;
+        text-align: center;
+    }
+}

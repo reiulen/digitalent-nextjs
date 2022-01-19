@@ -1,0 +1,242 @@
+.wizzard li {
+  width: 2em;
+  height: 2em;
+  text-align: center;
+  line-height: 2em;
+  border-radius: 1em;
+  background: dodgerblue;
+  margin: 0 1em;
+  display: inline-block;
+  color: white;
+  position: relative;
+}
+
+.wizzard li::before {
+  content: "";
+  position: absolute;
+  top: 0.9em;
+  left: -4em;
+  width: 4em;
+  height: 0.2em;
+  background: dodgerblue;
+  z-index: -1;
+}
+
+.wizzard li:first-child::before {
+  display: none;
+}
+
+.wizzard .active {
+  background: dodgerblue;
+}
+
+.wizzard .active ~ li {
+  background: lightblue;
+}
+
+.wizzard .active ~ li::before {
+  background: lightblue;
+}
+
+.background-primary {
+  background-color: #007cff !important;
+  color: white !important;
+}
+
+.background_outline_primary {
+  background-color: white !important;
+  color: #007cff !important;
+}
+
+.background_outline_primary i {
+  background-color: white !important;
+  color: #007cff !important;
+}
+
+.background_outline_primary:hover {
+  background-color: #007cff !important;
+  color: white !important;
+}
+
+.background_outline_primary:hover i {
+  background-color: #007cff !important;
+  color: white !important;
+}
+
+.circle {
+  background-color: #0063cc;
+  width: 40px;
+  height: 40px;
+  line-height: 24px;
+  border-radius: 50%;
+  border: 2px solid #0063cc;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+  color: white;
+  font-size: 20px;
+}
+
+.stepWrapper {
+  display: flex;
+  max-width: 100%;
+}
+
+.stepBlock .circleWrapper {
+  padding: 0px 10px;
+}
+
+.selected {
+  background-color: white;
+  width: 40px;
+  height: 40px;
+  line-height: 24px;
+  border-radius: 50%;
+  border: 2px solid #0063cc;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  color: #0063cc;
+  font-size: 20px;
+}
+
+.stepBlock:not(:last-child) .circleWrapper::after {
+  width: 100%;
+  content: "";
+  height: 2px;
+  position: absolute;
+  top: 50%;
+  background-color: #0063cc;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  z-index: -1;
+}
+
+.stepBlock {
+  z-index: 1;
+}
+
+.stepBlock:not(:last-child) > .circleWrapper::after {
+  height: 3px;
+  background-color: #0063cc;
+}
+
+.finish:not(:last-child) > .circleWrapper::after {
+  height: 2px;
+  background-color: grey;
+}
+
+.stepBlock:not(:last-child) > .circleWrapperSelected::after {
+  height: 2px;
+  background-color: grey;
+}
+
+.finish > .circleWrapper > .circle {
+  background-color: white;
+  width: 40px;
+  height: 40px;
+  line-height: 24px;
+  border-radius: 50%;
+  border: 2px solid grey;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+  color: grey;
+  font-size: 20px;
+}
+
+.finish .circle {
+  background-color: white;
+  border: 2px solid #0063cc;
+  z-index: 1;
+  color: #0063cc;
+  font-size: 20px;
+}
+
+
+.stepBlock2 .bigCircle{
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  background-color: #0063cc;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  color: white;
+  border: 2px solid #0063cc;
+}
+
+.stepBlock2 .bigCircleSelected {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  background-color: white;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  color: #0063cc;
+  border: 2px solid #0063cc ;
+}
+
+.stepBlock2 .bigStepperWrapperFinish .bigCircle {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  background-color: white;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  color: #ADB5BD;
+  border: 2px solid #ADB5BD;
+}
+
+
+.bigStepperCircleSelected{
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  background-color: white;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  color: #0063cc;
+  border: 2px solid #0063cc;
+}
+
+.bigStepperWrapper{
+  padding: 0px 10vw;
+  position: relative;
+  z-index: 2
+}
+
+.stepBlock2:not(:last-child) .bigStepperWrapper::after{
+  content: '';
+  width: 100%;
+  height: 3px;
+  top: 0px;
+  bottom: 0px;
+  position: absolute;
+  background-color:#0063cc;
+  margin: auto;
+  z-index: -1
+}
+
+.stepBlock2:not(:last-child) .bigStepperWrapperFinish::after{
+  content: '';
+  width: 100%;
+  height: 3px;
+  top: 0px;
+  bottom: 0px;
+  position: absolute;
+  background-color:#ADB5BD;
+  margin: auto;
+  z-index: -1
+}

@@ -1,0 +1,63 @@
+.refreshZindex {
+  z-index: 1;
+}
+.containerProggres {
+  width: 100%;
+}
+
+.progressbar li {
+  list-style-type: none;
+  float: left;
+  text-align: center;
+
+  margin-top: -2.5rem;
+  width: 16.66%;
+  position: relative;
+}
+
+.progressbar li:after {
+  content: "";
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+
+  display: block;
+  text-align: center;
+  margin: 20px auto 10px auto;
+  border-radius: 50%;
+  background-color: #c4c4c4;
+}
+
+.progressbar li:before {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+  height: 4px;
+
+  margin-top: 20px;
+  background-color: #c4c4c4;
+  top: 30px;
+  left: -50%;
+}
+
+.progressbar li:first-child:before {
+  content: none;
+}
+
+.progressbar li.active:after {
+  border-color: #1848f4;
+  background-color: #1848f4;
+}
+
+.progressbar li.active + li:before:last-child {
+  background-color: transparent;
+}
+.progressbar li.active + li:before {
+  background-color: #1848f4;
+}
+
+.clearRow {
+  clear: both;
+  padding-top: 2rem;
+}

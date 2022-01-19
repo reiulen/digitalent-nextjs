@@ -1,0 +1,27 @@
+.figure_img {
+  background-size: cover;
+  padding: 0;
+  border-radius: 8px;
+}
+
+.btn_profile {
+  color: #6c6c6c;
+}
+
+.btn_profile:hover {
+  background: #ecf5fc;
+  color: #1f1f1f;
+}
+
+.btn_profile_active {
+  background: #ecf5fc !important;
+  color: #1f1f1f !important;
+}
+
+.icon_active {
+  color: #4299e1;
+}
+
+.icon_hover:hover {
+  color: #4299e1;
+}

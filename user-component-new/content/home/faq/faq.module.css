@@ -1,0 +1,23 @@
+.menuItem {
+    color: #6C6C6C;
+    font-size: 14px;
+    font-family: "Poppins";
+    cursor: pointer;
+}
+
+.menuItem :hover{
+    color:#007CFF;
+}
+
+.menuItem :hover div{
+    color:#007CFF !important;
+}
+
+.detailFaq a {
+    color:#007CFF !important;
+}
+
+.btn_white {
+    background-color: white !important; 
+    border: none !important;
+}

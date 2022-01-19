@@ -1,0 +1,49 @@
+@media (max-width: 992px) {
+  .collapsed {
+    max-height: 300px;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-width: 100%;
+    z-index: 1;
+  }
+
+  .wrapAccounts {
+    width: 100%;
+  }
+}
+
+.navbar_btnPrimary {
+  background-color: white;
+  border: 1px solid #007cff;
+  /* background-color: black; */
+  color: #007cff;
+  width: 100%;
+}
+
+.navbar_btnPrimary i {
+  color: #007cff !important;
+}
+
+.navbar_btnPrimary:hover i {
+  color: white !important;
+}
+
+.navbar_btnPrimary:hover {
+  background-color: #007cff;
+  color: white;
+  width: 100%;
+}
+
+.scrollbar_navbar::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+.scrollbar_navbar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #007cff;
+}

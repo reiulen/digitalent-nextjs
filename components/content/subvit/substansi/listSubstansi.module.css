@@ -1,0 +1,59 @@
+@media (max-width: 1024px) {
+  .inputSearch {
+    width: 100% !important;
+  }
+  .baseSearch {
+    max-width: 100%;
+  }
+  .cardToolbar {
+    max-width: 500px;
+    width: auto;
+  }
+  .rowPagination {
+    margin-top: 20px;
+  }
+  .space {
+    padding: 0px !important;
+  }
+}
+
+@media (max-width: 280px) {
+  .btnAdd {
+    font-size: 11px;
+  }
+}
+.top {
+  padding: 15px 30px;
+}
+.baseSearch {
+  max-width: 330px !important;
+}
+.cardToolbar {
+  max-width: 100%;
+}
+.buttonGroup {
+  text-align: right !important;
+}
+.space {
+  padding: 0px 28px;
+}
+.btnNext {
+  background-color: white !important;
+  border: white;
+  margin-left: 55px;
+}
+.answer {
+  border-radius: 8px;
+  padding: 14px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 160%;
+  background: #e6f2ff;
+
+  /* border: 2px solid #007cff; */
+  box-sizing: border-box;
+}
