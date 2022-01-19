@@ -131,8 +131,16 @@ const StepTwo = ({ token, tokenPermission }) => {
   };
 
   const handlePassingGrade = (e) => {
-    if (e === "" || helperRegexNumber.test(e)) {
-      setPassingGrade(e);
+    if (e.target.value === "" || helperRegexNumber.test(e.target.value)) {
+      e.target.value = Math.max(
+        Number(e.target.min),
+        Math.min(Number(e.target.max), Number(e.target.value))
+      );
+      if (e.target.value < 30) {
+        setPassingGrade(e.target.value);
+      } else {
+        setPassingGrade(e.target.value);
+      }
     }
   };
 
@@ -354,10 +362,12 @@ const StepTwo = ({ token, tokenPermission }) => {
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={passing_grade}
-                      onChange={(e) => handlePassingGrade(e.target.value)}
+                      onChange={(e) => handlePassingGrade(e)}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("passing grade")
                       }
+                      min="0"
+                      max="100"
                     />
                     <div className="input-group-append">
                       <span
