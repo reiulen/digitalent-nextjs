@@ -175,7 +175,7 @@ export default function CardTemplateOriginal({ data, session }) {
                         paddingRight: "12px",
                         paddingLeft: "12px",
                       }}
-                      className={`label p-4 label-inline label-light-${
+                      className={`label p-6 label-inline label-light-${
                         data.survei ? "primary" : label
                       } font-weight-bolder text-capitalize`}
                     >
