@@ -559,10 +559,18 @@ const SubtansiUser = ({ token }) => {
                         height={800}
                       />
                     </Modal>
-                    <div className="p-5">
+                    <div className="p-5 d-flex flex-column">
                       {data &&
                         data.list_questions[parseInt(router.query.id) - 1]
                           ?.question}
+                      {data &&
+                        data.list_questions &&
+                        data.list_questions[parseInt(router.query.id) - 1]
+                          .type === "checkbox" && (
+                          <p style={{ color: "#ffa800" }} className="fz-12">
+                            Anda dapat memilih lebih dari 1 jawaban
+                          </p>
+                        )}
                     </div>
                   </div>
                 ) : (

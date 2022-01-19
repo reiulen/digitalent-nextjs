@@ -197,7 +197,7 @@ const EditTandaTangan = ({ token }) => {
                 />
               </div>
               <div className="form-group">
-                <label className="col-sm-2 col-form-label">Jabatan</label>
+                <label className="col-form-label">Jabatan</label>
                 <input
                   required
                   type="text"

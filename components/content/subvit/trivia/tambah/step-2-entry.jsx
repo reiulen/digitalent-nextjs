@@ -29,10 +29,26 @@ const StepTwo = ({ token, tokenPermission }) => {
   );
   const { trivia } = useSelector((state) => state.detailTriviaQuestionBanks);
 
-  const [methodAdd, setMethodAdd] = useState("polling");
-  const [question, setSoal] = useState("");
-  const [question_image_name, setImageName] = useState("Pilih Gambar");
-  const [question_image, setSoalImage] = useState("");
+  const [methodAdd, setMethodAdd] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).type) ||
+      "polling"
+  );
+  const [question, setSoal] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).question) ||
+      ""
+  );
+  const [question_image_name, setImageName] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).question_image_name) ||
+      "Pilih Gambar"
+  );
+  const [question_image, setSoalImage] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).question_image) ||
+      ""
+  );
 
   // polling
   const [answer, setSoalList] = useState([
@@ -41,6 +57,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     { key: "C", option: "", image: "" },
     { key: "D", option: "", image: "" },
   ]);
+
   //checkbox
   const [answer_checkbox, setCheckboxList] = useState([
     { key: "A", value: "", option: "", image: "", is_right: false },
@@ -48,7 +65,11 @@ const StepTwo = ({ token, tokenPermission }) => {
     { key: "C", value: "", option: "", image: "", is_right: false },
     { key: "D", value: "", option: "", image: "", is_right: false },
   ]);
-  const [duration, setDuration] = useState(null);
+  const [duration, setDuration] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).duration) ||
+      null
+  );
   //blank
   const [answer_blank, setBlanklList] = useState([
     { key: "A", value: "", type: "", option: "", image: "" },
@@ -56,9 +77,18 @@ const StepTwo = ({ token, tokenPermission }) => {
     { key: "C", value: "", type: "", option: "", image: "" },
     { key: "D", value: "", type: "", option: "", image: "" },
   ]);
-  const [durationBlank, setDurationBlank] = useState(null);
 
-  const [answer_key, setAnswerKey] = useState("");
+  const [durationBlank, setDurationBlank] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).duration) ||
+      null
+  );
+
+  const [answer_key, setAnswerKey] = useState(
+    (localStorage.getItem("step2") &&
+      JSON.parse(localStorage.getItem("step2")).answer_key) ||
+      ""
+  );
   const [typeSave, setTypeSave] = useState("lanjut");
 
   useEffect(() => {
@@ -68,10 +98,17 @@ const StepTwo = ({ token, tokenPermission }) => {
       });
       if (typeSave === "lanjut") {
         handleResetForm();
-        router.push({
-          pathname: `/subvit/trivia/tambah/step-3`,
-          query: { id },
-        });
+        if (localStorage.getItem("detail-entry") !== null) {
+          router.push(localStorage.getItem("detail-entry"));
+          localStorage.removeItem("detail-entry");
+          localStorage.removeItem("step2");
+          localStorage.removeItem("step1");
+        } else {
+          router.push({
+            pathname: `/subvit/trivia/tambah/step-3`,
+            query: { id },
+          });
+        }
       } else if (typeSave === "draft") {
         handleResetForm();
         if (router.query.metode) {
@@ -318,6 +355,7 @@ const StepTwo = ({ token, tokenPermission }) => {
             question,
             answer: answers,
             question_image,
+            question_image_name,
             answer_key: null,
             type: methodAdd,
           };
@@ -367,6 +405,7 @@ const StepTwo = ({ token, tokenPermission }) => {
             type: methodAdd,
             answer_key: null,
           };
+          // console.log(data);
           localStorage.setItem("step2", JSON.stringify(data));
           localStorage.setItem("method", "entry" || metode);
           dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
@@ -381,12 +420,16 @@ const StepTwo = ({ token, tokenPermission }) => {
     switch (methodAdd) {
       case "polling":
         return (
-          <PollingComponent props_answer={(answer) => setSoalList(answer)} />
+          <PollingComponent
+            answer={answer}
+            props_answer={(answer) => setSoalList(answer)}
+          />
         );
         break;
       case "checkbox":
         return (
           <CheckboxComponent
+            answer={answer_checkbox}
             props_answer={(answer) => setCheckboxList(answer)}
             props_answer_key={(key) => setAnswerKey(key)}
             props_duration={(duration) => setDuration(duration)}
@@ -396,6 +439,7 @@ const StepTwo = ({ token, tokenPermission }) => {
       case "fill_in_the_blank":
         return (
           <BlankComponent
+            answer={answer_blank}
             props_answer={(answer) => setBlanklList(answer)}
             props_duration={(duration) => setDurationBlank(duration)}
           />
@@ -403,7 +447,10 @@ const StepTwo = ({ token, tokenPermission }) => {
         break;
       default:
         return (
-          <PollingComponent props_answer={(answer) => setSoalList(answer)} />
+          <PollingComponent
+            answer={answer}
+            props_answer={(answer) => setSoalList(answer)}
+          />
         );
         break;
     }
@@ -554,26 +601,42 @@ const StepTwo = ({ token, tokenPermission }) => {
                 <div className="col-sm-12">
                   <hr />
                   <div className="row">
-                    <div className="col-md-5 col-lg-5 col-xl-7">
-                      <button
-                        className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                        type="button"
-                        onClick={() => {
-                          if (localStorage.getItem("clone") === "true") {
-                            router.push(
-                              `/subvit/trivia/clone/step-3?id=${router.query.id}`
-                            );
-                          } else {
-                            router.push("/subvit/trivia/tambah");
-                          }
-                        }}
-                      >
-                        Kembali
-                      </button>
-                    </div>
+                    {(localStorage.getItem("detail-entry") !== null ||
+                      localStorage.getItem("clone") !== null) && (
+                      <div className="col-md-2">
+                        <button
+                          className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                          type="button"
+                          onClick={() => {
+                            if (localStorage.getItem("clone") === "true") {
+                              router.push(
+                                `/subvit/trivia/clone/step-3?id=${router.query.id}`
+                              );
+                            } else {
+                              if (
+                                localStorage.getItem("detail-entry") !== null
+                              ) {
+                                router.push(
+                                  localStorage.getItem("detail-entry")
+                                );
+                                localStorage.removeItem("detail-entry");
+                              } else {
+                                router.push("/subvit/trivia/tambah");
+                              }
+                            }
+                          }}
+                        >
+                          Kembali
+                        </button>
+                      </div>
+                    )}
                     {/* <div className="col-sm-12 col-md-6 col-lg-6 col-xl-5 buttoon float-right row justify-content-between" style={{border:'1px solid black'}}> */}
                     <div
-                      className={`${styles.btnSave} col-12 col-sm-12 col-md-7 col-lg-7 col-xl-5 buttoon float-right justify-content-between`}
+                      className={
+                        localStorage.getItem("detail-entry") !== null
+                          ? `col-sm-10 text-right`
+                          : `col-sm-12 text-right`
+                      }
                     >
                       <div className="d-flex flex-row float-right flex-wrap">
                         <div className={`p-2`}>
