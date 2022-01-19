@@ -116,6 +116,19 @@ export default function ListPesertaID({ token }) {
     // check udh pernah di sign apa belum?
   };
 
+<<<<<<< HEAD
+=======
+  // const handleDownload = async () => {
+  //   const data = await convertDivToPng(divReference.current);
+  //   if (data) {
+  //     const a = document.createElement("a");
+  //     a.download = `Sertifikat.png`;
+  //     a.target = "_blank";
+  //     a.href = data;
+  //     a.click();
+  //   }
+  // };
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
   return (
     <PageWrapper>
       {/* error START */}
@@ -176,7 +189,11 @@ export default function ListPesertaID({ token }) {
             <div className="row p-0 justify-content-center">
               {/* START COL */}
               <div
+<<<<<<< HEAD
                 className={`position-relative p-0 d-flex`}
+=======
+                className={`position-relative p-0 d-flex justify-content-center list-peserta-window-dimensions`}
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                 id="sertifikat1"
                 ref={divReference}
               >
@@ -216,6 +233,10 @@ export default function ListPesertaID({ token }) {
                   objectFit="fill"
                   width={842}
                   height={595}
+<<<<<<< HEAD
+=======
+                  crossOrigin="anonymous"
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                   key={certificate?.data?.certificate?.certificate_result}
                 />
               </div>
@@ -260,6 +281,10 @@ export default function ListPesertaID({ token }) {
                       certificate?.data?.certificate
                         ?.certificate_result_syllabus
                     }
+<<<<<<< HEAD
+=======
+                    crossOrigin="anonymous"
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                     id="image2"
                   />
                 </div>

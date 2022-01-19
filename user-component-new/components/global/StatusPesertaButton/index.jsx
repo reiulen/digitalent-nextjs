@@ -1,5 +1,9 @@
 import { useRouter } from "next/router";
+<<<<<<< HEAD
 import React, { Fragment, useState } from "react";
+=======
+import React, { Fragment, useState, useEffect } from "react";
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
 import CustomButton from "../../../content/peserta/riwayat-pelatihan/card/Buttons/CustomButton";
 import axios from "axios";
 import { Col, Row, Card, Button, Modal } from "react-bootstrap";
@@ -7,7 +11,17 @@ import Cookies from "js-cookie";
 import { SweatAlert } from "../../../../utils/middleware/helper";
 import { getAllRiwayatPelatihanPeserta } from "../../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 import { useDispatch } from "react-redux";
+<<<<<<< HEAD
 export default function ButtonStatusPeserta({ data, token }) {
+=======
+
+export default function ButtonStatusPeserta({
+  data,
+  token,
+  setCountButton,
+  countButton,
+}) {
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -89,6 +103,56 @@ export default function ButtonStatusPeserta({ data, token }) {
     }
   };
 
+<<<<<<< HEAD
+=======
+  useEffect(() => {
+    if (setCountButton) {
+      if (data?.lpj) return setCountButton(2);
+
+      if (data?.survei || data?.status == "survey belum tersedia")
+        return setCountButton(2);
+
+      if (data?.lpj || data?.status == "lpj belum tersedia")
+        return setCountButton(2);
+
+      if (data?.status.includes("tidak")) return setCountButton(1);
+
+      if (data?.status == "pelatihan" && data?.trivia && data?.midtest)
+        return setCountButton(2);
+
+      if (data?.status == "pelatihan" && data?.midtest)
+        return setCountButton(1);
+
+      if (data?.status == "pelatihan" && data?.trivia) return setCountButton(1);
+
+      if (data?.status == "pelatihan") return setCountButton(1);
+
+      if (data?.status == "menunggu") return setCountButton(1);
+
+      if (
+        data?.status == "lulus pelatihan" ||
+        data?.status == "Lulus Pelatihan"
+      ) {
+        data?.sertifikasi != 0 ? setCountButton(2) : setCountButton(1);
+      }
+
+      if (data?.status == "tes substansi") return setCountButton(2);
+      if (data?.status == "diterima") {
+        data?.sertifikasi != 0 ? setCountButton(2) : setCountButton(1);
+      }
+      if (
+        data?.status.includes("seleksi administrasi") ||
+        data?.status.includes("seleksi")
+      )
+        return setCountButton(1);
+
+      if (data?.status.includes("belum tersedia")) return setCountButton(1);
+      if (data?.status === "lpj belum mengerjakan") return setCountButton(2);
+      if (data?.status.includes("lulus")) return setCountButton(2);
+    }
+  }, [countButton, data]);
+
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
   return (
     <Fragment>
       {data?.lpj ? (

@@ -15,12 +15,20 @@ import {
   IS_OVERLAY_SIDEBAR_MOBILE,
   IS_MINIMIZE_SIDEBAR,
 } from "../../redux/types/utils/functionals.type";
+<<<<<<< HEAD
+=======
+import { signOut } from "next-auth/client";
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
 
 const Sidebar = ({ session }) => {
   const dispatch = useDispatch();
   const allFunctionls = useSelector((state) => state.allFunctionls);
   const allSidebar = useSelector((state) => state.allSidebar);
   const router = useRouter();
+<<<<<<< HEAD
+=======
+  const token_permission = Cookies.get("token_permission");
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
 
   // mitra partnership sementara
   const [menuItem9, setMenuItem9] = useState("");
@@ -81,6 +89,15 @@ const Sidebar = ({ session }) => {
   );
 
   useEffect(() => {
+<<<<<<< HEAD
+=======
+    if (!token_permission) {
+      signOut();
+    }
+  }, [token_permission]);
+
+  useEffect(() => {
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
     let pathRoute = router.route;
     const replacedPath =
       pathRoute.substring(0, 0) + "" + pathRoute.substring(0 + 1);
@@ -161,7 +178,11 @@ const Sidebar = ({ session }) => {
               "trainings",
               JSON.stringify(data.data.data.user.trainings)
             );
+<<<<<<< HEAD
             Cookies.set("token_permission", data.data.data.tokenPermission);
+=======
+            // Cookies.set("token_permission", data.data.data.tokenPermission);
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
           })
           .catch((e) => {
             return;

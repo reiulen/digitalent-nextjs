@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
+<<<<<<< HEAD
 import dynamic from "next/dynamic";
+=======
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
 
 import Header from "../component/header.component";
 import CardTotal from "../component/card-total.component";

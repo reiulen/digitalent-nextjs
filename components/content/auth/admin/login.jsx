@@ -87,7 +87,12 @@ const LoginAdmin = () => {
                   .then((response) => {
                     Cookies.set(
                       "token_permission",
+<<<<<<< HEAD
                       response?.data?.data?.tokenPermission
+=======
+                      response?.data?.data?.tokenPermission,
+                      { expires: 1 }
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                     );
                     router.push("/dashboard");
                   });

@@ -212,7 +212,11 @@ const StepTwo = ({ token, tokenPermission }) => {
     const newKey = String.fromCharCode(keyindex + 1);
     setSoalList([
       ...answer,
+<<<<<<< HEAD
       { key: newKey, question: "", image: "", is_right: false },
+=======
+      { key: newKey, option: "", image: "", is_right: false },
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
     ]);
   };
 
@@ -354,6 +358,12 @@ const StepTwo = ({ token, tokenPermission }) => {
     }
 
     const answers = JSON.stringify(answer);
+<<<<<<< HEAD
+=======
+
+    console.log(answer);
+
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
     if (valid) {
       const data = {
         subtance_question_bank_id: id,

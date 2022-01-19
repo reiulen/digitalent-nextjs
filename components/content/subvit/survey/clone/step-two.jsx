@@ -297,6 +297,10 @@ const StepTwo = ({ token, tokenPermission }) => {
                         <th>Soal</th>
                         <th>Bobot</th>
                         <th>Status</th>
+<<<<<<< HEAD
+=======
+                        <th>Aksi</th>
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                       </tr>
                     </thead>
                     <tbody>
@@ -352,6 +356,25 @@ const StepTwo = ({ token, tokenPermission }) => {
                                     </span>
                                   )}
                                 </td>
+<<<<<<< HEAD
+=======
+                                <td className="align-middle">
+                                  <Link
+                                    href={`/subvit/survey/edit-soal-survey?id=${
+                                      question.id
+                                    }&no=${i + 1 - 1}`}
+                                  >
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Edit"
+                                    >
+                                      <i className="ri-pencil-fill p-0 text-white"></i>
+                                    </a>
+                                  </Link>
+                                </td>
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                               </tr>
                             );
                           }

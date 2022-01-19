@@ -301,7 +301,11 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
 
             <div className="card-body pt-0">
               <div className="title row">
+<<<<<<< HEAD
                 {survey_question_detail?.question_image != "" && (
+=======
+                {question_image && (
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                   <div className="col-md-3">
                     <Image
                       src={question_image_preview}

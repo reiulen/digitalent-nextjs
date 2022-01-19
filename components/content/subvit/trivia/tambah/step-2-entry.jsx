@@ -405,6 +405,10 @@ const StepTwo = ({ token, tokenPermission }) => {
             type: methodAdd,
             answer_key: null,
           };
+<<<<<<< HEAD
+=======
+          // console.log(data);
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
           localStorage.setItem("step2", JSON.stringify(data));
           localStorage.setItem("method", "entry" || metode);
           dispatch(newTriviaQuestionDetail(data, token, tokenPermission));

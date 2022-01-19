@@ -192,6 +192,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
         }
   );
   const [mitra, setMitra] = useState(
+<<<<<<< HEAD
     dataMitra.data
       .filter((item) => {
         return item.name === getEditTraining.mitra_nama;
@@ -202,6 +203,19 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
           label: item.name,
         };
       })[0]
+=======
+    dataMitra &&
+      dataMitra?.data
+        .filter((item) => {
+          return item.name === getEditTraining.mitra_nama;
+        })
+        .map((item) => {
+          return {
+            value: item.id,
+            label: item.name,
+          };
+        })[0]
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
   );
 
   //tanggal pendaftaran
@@ -381,10 +395,17 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
   }
 
   const optionsMitra = [];
+<<<<<<< HEAD
   for (let index = 0; index < dataMitra.data.length; index++) {
     let val = {
       value: dataMitra.data[index].id,
       label: dataMitra.data[index].name,
+=======
+  for (let index = 0; index < dataMitra?.data.length; index++) {
+    let val = {
+      value: dataMitra?.data[index].id,
+      label: dataMitra?.data[index].name,
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
     };
     optionsMitra.push(val);
   }

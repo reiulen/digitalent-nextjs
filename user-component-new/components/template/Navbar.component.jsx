@@ -418,7 +418,11 @@ const Navigationbar = ({ session }) => {
         </Col>
         {showSearch && (
           <Form
+<<<<<<< HEAD
             className="w-100 my-2 mx-1 row  d-block d-lg-none"
+=======
+            className="w-100 my-2 mx-1 row  d-block d-lg-none "
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
             onSubmit={(e) => {
               e.preventDefault();
               if (search != "") {
@@ -734,9 +738,15 @@ const Navigationbar = ({ session }) => {
             {session && session.roles[0] === "user" ? (
               <div>
                 {/* on media queries */}
+<<<<<<< HEAD
                 <div className="d-lg-none d-block">
                   <div
                     className={`wrap-accouts ${style.wrapAccounts} `}
+=======
+                <div className="d-lg-none d-block px-8">
+                  <div
+                    className={`wrap-accouts ${style.wrapAccounts}`}
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                     style={{ borderRadius: "44px" }}
                     onClick={() => router.push("/peserta/profile")}
                   >
@@ -776,7 +786,10 @@ const Navigationbar = ({ session }) => {
                       setIsShowDropdown(isShowDropdown ? false : true)
                     }
                   >
+<<<<<<< HEAD
                     {/* <div className="dot-accouts"></div> */}
+=======
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                     <Image
                       className="rounded-circle"
                       src={`${dataPribadi && dataPribadi.foto
@@ -900,7 +913,11 @@ const Navigationbar = ({ session }) => {
           <hr />
 
           <Nav style={{ fontSize: "14px", color: "#6C6C6C" }}>
+<<<<<<< HEAD
             <Row className="d-lg-none px-6">
+=======
+            <Row className="d-lg-none px-8">
+>>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
               <Col sm={12} className="font-weight-bold mb-8">
                 Menu
               </Col>
