@@ -136,7 +136,7 @@ export default function ButtonStatusPeserta({
 
     if (data?.status.includes("belum tersedia")) return setCountButton(1);
     if (data?.status === "lpj belum mengerjakan") return setCountButton(2);
-    else setCountButton(1);
+    if (data?.status.includes("lulus")) return setCountButton(2);
   }, [countButton, data]);
 
   return (
