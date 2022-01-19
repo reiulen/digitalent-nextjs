@@ -42,7 +42,7 @@ const TambahApi = ({ token }) => {
   const [, forceUpdate] = useState();
 
   const allListPelatihan = useSelector((state) => state.allListPelatihan);
-  const sortListPelatihan =  allListPelatihan.data.map((items) => {
+  const sortListPelatihan = allListPelatihan.data.map((items) => {
     return {
       ...items,
       manage: false,
@@ -50,7 +50,7 @@ const TambahApi = ({ token }) => {
       allSelect: false,
     };
   })
-  
+
   const [sortPelatihan, setSortPelatihan] = useState(sortListPelatihan)
 
   const [hidePassword, setHidePassword] = useState(true);
@@ -610,68 +610,69 @@ const TambahApi = ({ token }) => {
                         </div>
                       </div>
                     </div>
-
-                    <table className="table table-separate table-head-custom table-checkable mt-5">
-                      <thead style={{ backgroundColor: "#F2F7FC" }}>
-                        <tr>
-                          <th
-                            className="align-middle fz-16 fw-600"
-                          >
-                            No
-                          </th>
-                          <th
-                            className="align-middle fz-16 fw-600"
-                          >
-                            ID Pelatihan
-                          </th>
-                          <th
-                            className="align-middle fz-16 fw-600"
-                          >
-                            Nama Pelatihan
-                          </th>
-                          <th
-                            className="align-middle text-center fz-16 fw-600"
-                          >
-                            Access
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {sortListPelatihan && sortListPelatihan.length === 0 ?
+                    <div style={{ height: '340px',overflowY:'auto' }}>
+                      <table className="table table-separate table-head-custom table-checkable mt-5">
+                        <thead style={{ backgroundColor: "#F2F7FC" }}>
                           <tr>
-                            <td className='align-middle text-center' colSpan={4}>Data Kosong</td>
+                            <th
+                              className="align-middle fz-16 fw-600"
+                            >
+                              No
+                            </th>
+                            <th
+                              className="align-middle fz-16 fw-600"
+                            >
+                              ID Pelatihan
+                            </th>
+                            <th
+                              className="align-middle fz-16 fw-600"
+                            >
+                              Nama Pelatihan
+                            </th>
+                            <th
+                              className="align-middle text-center fz-16 fw-600"
+                            >
+                              Access
+                            </th>
                           </tr>
-                          : sortPelatihan.map((items, index) => {
-                            return (
-                              <tr key={index}>
-                                <td className="py-8 border-bottom">
-                                  {index + 1}
-                                </td>
+                        </thead>
+                        <tbody>
+                          {sortListPelatihan && sortListPelatihan.length === 0 ?
+                            <tr>
+                              <td className='align-middle text-center' colSpan={4}>Data Kosong</td>
+                            </tr>
+                            : sortPelatihan.map((items, index) => {
+                              return (
+                                <tr key={index}>
+                                  <td className="py-8 border-bottom">
+                                    {index + 1}
+                                  </td>
 
-                                <td className="py-8 border-bottom">
-                                  {items.value}
-                                </td>
-                                <td className="py-8 border-bottom">
-                                  {items.label}
-                                </td>
-                                <td className="text-center py-8 border-bottom">
-                                  <label className="checkbox d-flex justify-content-center">
-                                    <input
-                                      type="checkbox"
-                                      checked={items.allSelect}
-                                      name="select-all"
-                                      onChange={(e) =>
-                                        handleChangePelatihan(e, index)
-                                      }
-                                    />
-                                    <span></span>
-                                  </label>
-                                </td>
-                              </tr>
-                            );
-                          })}
-                      </tbody>
-                    </table>
+                                  <td className="py-8 border-bottom">
+                                    {items.value}
+                                  </td>
+                                  <td className="py-8 border-bottom">
+                                    {items.label}
+                                  </td>
+                                  <td className="text-center py-8 border-bottom">
+                                    <label className="checkbox d-flex justify-content-center">
+                                      <input
+                                        type="checkbox"
+                                        checked={items.allSelect}
+                                        name="select-all"
+                                        onChange={(e) =>
+                                          handleChangePelatihan(e, index)
+                                        }
+                                      />
+                                      <span></span>
+                                    </label>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>

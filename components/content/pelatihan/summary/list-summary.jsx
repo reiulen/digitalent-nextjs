@@ -627,6 +627,7 @@ const ListSummary = ({ token }) => {
               options={drowpdownTemabyAkademi.data.data}
               defaultValue={theme}
               onChange={(e) => setTheme({ value: e.value, label: e.label })}
+              isDisabled={academy ? false : true}
             />
           </div>
 

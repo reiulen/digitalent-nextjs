@@ -88,6 +88,7 @@ const DetailTrivia = ({ token, tokenPermission }) => {
       pathname: `/subvit/trivia/tambah/step-2-entry`,
       query: { id },
     });
+    localStorage.setItem("detail-entry", router.asPath);
   };
 
   const handleImport = () => {
@@ -95,6 +96,7 @@ const DetailTrivia = ({ token, tokenPermission }) => {
       pathname: `/subvit/trivia/tambah/step-2-import`,
       query: { id },
     });
+    localStorage.setItem("detail-import", router.asPath);
   };
 
   const handleSearch = (e) => {

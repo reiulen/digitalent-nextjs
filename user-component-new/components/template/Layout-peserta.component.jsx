@@ -94,7 +94,7 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
           {children}
         </Row>
       </div>
-      {!router.pathname.includes(routerPath) && <Footer />}
+      {!router.pathname.includes(routerPath) && <Footer session={session} />}
     </>
   );
 };

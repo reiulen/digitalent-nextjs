@@ -62,10 +62,8 @@ const Navigationbar = ({ session }) => {
 
   useEffect(() => {
     // getFirebaseToken(setTokenFound);
-    // console.log(Cookies.get("fcm_token"));
     const messaging = getMessaging();
     onMessage(messaging, (payload) => {
-      // console.log("Message received. ", payload.notification);
       // toast.info(payload.notification.title);
       GetNotifikasi();
       setAlertNotif(true);
@@ -126,7 +124,7 @@ const Navigationbar = ({ session }) => {
       if (data) {
         localStorage.setItem("navbar", data.data.color[0].color);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const GetNotifikasi = async () => {
@@ -142,7 +140,7 @@ const Navigationbar = ({ session }) => {
       .then((res) => {
         setDataNotification(res.data.data);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const ClearNotifikasi = async () => {
@@ -167,6 +165,7 @@ const Navigationbar = ({ session }) => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            'Host-Backend': `free`
           },
         }
       );
@@ -174,12 +173,12 @@ const Navigationbar = ({ session }) => {
         return item.status == 1 && item.page_status == 1;
       });
       setMenu(result);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
     if (!localStorage.getItem("navbar")) {
-      getDataGeneral();
+      getDataGeneral(session?.token);
     }
     if (localStorage.getItem("navbar") === "1") {
       setWarna("primary");
@@ -202,7 +201,7 @@ const Navigationbar = ({ session }) => {
 
   useEffect(() => {
     getAkademi();
-    getMenu();
+    getMenu(session?.token);
   }, []);
 
   const handlerLogout = async () => {
@@ -222,7 +221,7 @@ const Navigationbar = ({ session }) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -293,8 +292,8 @@ const Navigationbar = ({ session }) => {
               src={
                 footer && footer?.header_logo
                   ? process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                    "site-management/images/" +
-                    footer.header_logo
+                  "site-management/images/" +
+                  footer.header_logo
                   : `/assets/icon/mainlogo.svg`
               }
               width={50}
@@ -575,9 +574,8 @@ const Navigationbar = ({ session }) => {
                     )}
                   </Col>
                   <Col
-                    className={`p-0 m-0 ${
-                      menu?.length > 0 ? `h-400px` : "h-350px"
-                    } overflow-auto ${style.scrollbar_navbar}`}
+                    className={`p-0 m-0 ${menu?.length > 0 ? `h-400px` : "h-350px"
+                      } overflow-auto ${style.scrollbar_navbar}`}
                   >
                     {navbarItems &&
                       navbarItems?.map((el, i) => {
@@ -745,11 +743,10 @@ const Navigationbar = ({ session }) => {
                     {/* <div className="dot-accouts"></div> */}
                     <Image
                       className="rounded-circle"
-                      src={`${
-                        dataPribadi && dataPribadi.foto
-                          ? dataPribadi.file_path + dataPribadi.foto
-                          : "/assets/media/logos/default.png"
-                      }`}
+                      src={`${dataPribadi && dataPribadi.foto
+                        ? dataPribadi.file_path + dataPribadi.foto
+                        : "/assets/media/logos/default.png"
+                        }`}
                       width={32}
                       height={32}
                       alt="brand-navbar"
@@ -782,11 +779,10 @@ const Navigationbar = ({ session }) => {
                     {/* <div className="dot-accouts"></div> */}
                     <Image
                       className="rounded-circle"
-                      src={`${
-                        dataPribadi && dataPribadi.foto
-                          ? dataPribadi.file_path + dataPribadi.foto
-                          : "/assets/media/logos/default.png"
-                      }`}
+                      src={`${dataPribadi && dataPribadi.foto
+                        ? dataPribadi.file_path + dataPribadi.foto
+                        : "/assets/media/logos/default.png"
+                        }`}
                       width={32}
                       height={32}
                       alt="brand-navbar"
@@ -1059,24 +1055,23 @@ const Navigationbar = ({ session }) => {
                     <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
                       {menu
                         ? menu?.map((item, index) => {
-                            return (
-                              <Fragment key={index}>
-                                <div
-                                  onClick={() => {
-                                    router.push("/lainnya/" + item.url);
-                                  }}
-                                  className={`p-4 fz-12 ${
-                                    item.status === 1 && item.page_status === 1
-                                      ? ""
-                                      : "d-none"
+                          return (
+                            <Fragment key={index}>
+                              <div
+                                onClick={() => {
+                                  router.push("/lainnya/" + item.url);
+                                }}
+                                className={`p-4 fz-12 ${item.status === 1 && item.page_status === 1
+                                  ? ""
+                                  : "d-none"
                                   }`}
-                                >
-                                  {item.name}
-                                </div>
-                                <hr className="w-100 p-0 m-0" />
-                              </Fragment>
-                            );
-                          })
+                              >
+                                {item.name}
+                              </div>
+                              <hr className="w-100 p-0 m-0" />
+                            </Fragment>
+                          );
+                        })
                         : null}
                     </Dropdown.Menu>
                   </Dropdown>
@@ -1092,6 +1087,7 @@ const Navigationbar = ({ session }) => {
                   screenClass={"d-block d-lg-none"}
                   accountFalse={`d-none d-lg-block`}
                   titleAkun={"Lainnya"}
+                  session={session}
                 />
               )}
             {/* End side bar */}

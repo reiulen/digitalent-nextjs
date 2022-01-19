@@ -50,6 +50,12 @@ const StepThree = ({ token, tokenPermission }) => {
         pathname: `/subvit/substansi`,
         query: { success: true },
       });
+      localStorage.removeItem("method");
+      localStorage.removeItem("step1");
+      localStorage.removeItem("step2");
+      localStorage.removeItem("clone3");
+      localStorage.removeItem("clone1");
+      localStorage.removeItem("clone");
     }
   }, [dispatch, error, success, router]);
 
@@ -120,12 +126,6 @@ const StepThree = ({ token, tokenPermission }) => {
         dispatch(
           updateSubtanceQuestionBanksPublish(data, id, token, tokenPermission)
         );
-        localStorage.removeItem("method");
-        localStorage.removeItem("step1");
-        localStorage.removeItem("step2");
-        localStorage.removeItem("clone3");
-        localStorage.removeItem("clone1");
-        localStorage.removeItem("clone");
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
@@ -456,7 +456,7 @@ const StepThree = ({ token, tokenPermission }) => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-2">
+                {/* <div className="col-sm-2">
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     onClick={() => {
@@ -476,8 +476,8 @@ const StepThree = ({ token, tokenPermission }) => {
                   >
                     Kembali
                   </button>
-                </div>
-                <div className="col-sm-10 text-right">
+                </div> */}
+                <div className="col-sm-12 text-right">
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="submit"
