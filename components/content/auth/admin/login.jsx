@@ -87,7 +87,8 @@ const LoginAdmin = () => {
                   .then((response) => {
                     Cookies.set(
                       "token_permission",
-                      response?.data?.data?.tokenPermission
+                      response?.data?.data?.tokenPermission,
+                      { expires: 1 }
                     );
                     router.push("/dashboard");
                   });

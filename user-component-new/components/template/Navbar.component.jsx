@@ -418,7 +418,7 @@ const Navigationbar = ({ session }) => {
         </Col>
         {showSearch && (
           <Form
-            className="w-100 my-2 mx-1 row  d-block d-lg-none"
+            className="w-100 my-2 mx-1 row  d-block d-lg-none "
             onSubmit={(e) => {
               e.preventDefault();
               if (search != "") {
@@ -734,9 +734,9 @@ const Navigationbar = ({ session }) => {
             {session && session.roles[0] === "user" ? (
               <div>
                 {/* on media queries */}
-                <div className="d-lg-none d-block">
+                <div className="d-lg-none d-block px-8">
                   <div
-                    className={`wrap-accouts ${style.wrapAccounts} `}
+                    className={`wrap-accouts ${style.wrapAccounts}`}
                     style={{ borderRadius: "44px" }}
                     onClick={() => router.push("/peserta/profile")}
                   >
@@ -776,7 +776,6 @@ const Navigationbar = ({ session }) => {
                       setIsShowDropdown(isShowDropdown ? false : true)
                     }
                   >
-                    {/* <div className="dot-accouts"></div> */}
                     <Image
                       className="rounded-circle"
                       src={`${dataPribadi && dataPribadi.foto
@@ -900,7 +899,7 @@ const Navigationbar = ({ session }) => {
           <hr />
 
           <Nav style={{ fontSize: "14px", color: "#6C6C6C" }}>
-            <Row className="d-lg-none px-6">
+            <Row className="d-lg-none px-8">
               <Col sm={12} className="font-weight-bold mb-8">
                 Menu
               </Col>
