@@ -22,6 +22,8 @@ export default function CardTemplateOriginal({ data, session }) {
     (state) => state.getDataPribadi
   );
 
+  const [countButton, setCountButton] = useState(1);
+
   useEffect(() => {
     helperUserStatusColor(data.status, setLabel);
   }, [data.status]);
@@ -128,16 +130,14 @@ export default function CardTemplateOriginal({ data, session }) {
                     />
                   </Col>
                   <Col lg={6} className="my-auto order-3 order-lg-2 row p-0 ">
-                    <div className="d-flex justify-content-start justify-content-lg-start my-0 p-0 col-12 order-1 order-lg-1">
-                      <span
-                        className="font-weight-bolder text-truncate fz-18"
-                        style={{ maxWidth: "486px" }}
-                      >
-                        {data.name}
-                      </span>
+                    <div
+                      className="d-flex justify-content-start justify-content-lg-start my-0 p-lg-0 col-12 order-1 order-lg-1 font-weight-bolder text-truncate fz-18"
+                      style={{ maxWidth: "486px" }}
+                    >
+                      {data.name}
                     </div>
                     <div
-                      className="d-flex align-items-center p-0 justify-content-lg-start justify-content-start order-1 order-lg-2 col-12"
+                      className="d-flex align-items-center p-lg-0 justify-content-lg-start justify-content-start order-1 order-lg-2 col-12"
                       style={{ color: "#203E80" }}
                     >
                       <div
@@ -175,7 +175,7 @@ export default function CardTemplateOriginal({ data, session }) {
                         paddingRight: "12px",
                         paddingLeft: "12px",
                       }}
-                      className={`label p-4 label-inline label-light-${
+                      className={`label p-6 label-inline label-light-${
                         data.survei ? "primary" : label
                       } font-weight-bolder text-capitalize`}
                     >
@@ -199,7 +199,7 @@ export default function CardTemplateOriginal({ data, session }) {
                   </Col>
                   <Col
                     lg={12}
-                    className="order-5"
+                    className="order-5 px-lg-4 px-0"
                     style={{ paddingTop: "24px", paddingBottom: "8px" }}
                   >
                     <div className="d-flex align-items-center align-middle text-left">
@@ -209,7 +209,12 @@ export default function CardTemplateOriginal({ data, session }) {
                       </span>
                     </div>
                   </Col>
-                  <Col lg={12} className="my-auto order-5 pb-40 pb-md-20 ">
+                  <Col
+                    lg={12}
+                    className={`my-auto px-lg-4 px-0 order-5 ${
+                      countButton == 1 ? "pb-20" : "pb-40"
+                    } pb-lg-20`}
+                  >
                     <div className="d-flex align-items-center align-middle ">
                       <i className="ri-map-pin-line"></i>
                       <span
@@ -227,11 +232,16 @@ export default function CardTemplateOriginal({ data, session }) {
         </Button>
 
         <div
-          className="position-absolute w-100 d-lg-flex pb-10 pb-lg-0 pb-lg-10"
+          className="position-absolute w-100 d-lg-flex pb-10 pb-lg-10 "
           style={{ bottom: 0 }}
         >
           <Col lg={3} />
-          <ButtonStatusPeserta data={data} token={session.token} />
+          <ButtonStatusPeserta
+            data={data}
+            token={session.token}
+            setCountButton={setCountButton}
+            countButton={countButton}
+          />
         </div>
       </Card>
     </Fragment>

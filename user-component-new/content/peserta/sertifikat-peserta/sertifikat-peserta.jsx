@@ -137,7 +137,7 @@ export default function RiwayatPelatihanDetail({ session }) {
             <div className="row p-0 justify-content-center">
               {/* START COL */}
               <div
-                className={`position-relative p-0 d-flex`}
+                className={`position-relative p-0 d-flex justify-content-center list-peserta-window-dimensions`}
                 id="sertifikat1"
                 ref={divReference}
               >
