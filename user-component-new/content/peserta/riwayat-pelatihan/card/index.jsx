@@ -22,11 +22,8 @@ export default function CardTemplateOriginal({ data, session }) {
     (state) => state.getDataPribadi
   );
 
-<<<<<<< HEAD
-=======
   const [countButton, setCountButton] = useState(1);
 
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
   useEffect(() => {
     helperUserStatusColor(data.status, setLabel);
   }, [data.status]);
@@ -133,18 +130,6 @@ export default function CardTemplateOriginal({ data, session }) {
                     />
                   </Col>
                   <Col lg={6} className="my-auto order-3 order-lg-2 row p-0 ">
-<<<<<<< HEAD
-                    <div className="d-flex justify-content-start justify-content-lg-start my-0 p-0 col-12 order-1 order-lg-1">
-                      <span
-                        className="font-weight-bolder text-truncate fz-18"
-                        style={{ maxWidth: "486px" }}
-                      >
-                        {data.name}
-                      </span>
-                    </div>
-                    <div
-                      className="d-flex align-items-center p-0 justify-content-lg-start justify-content-start order-1 order-lg-2 col-12"
-=======
                     <div
                       className="d-flex justify-content-start justify-content-lg-start my-0 p-lg-0 col-12 order-1 order-lg-1 font-weight-bolder text-truncate fz-18"
                       style={{ maxWidth: "486px" }}
@@ -153,7 +138,6 @@ export default function CardTemplateOriginal({ data, session }) {
                     </div>
                     <div
                       className="d-flex align-items-center p-lg-0 justify-content-lg-start justify-content-start order-1 order-lg-2 col-12"
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                       style={{ color: "#203E80" }}
                     >
                       <div
@@ -191,11 +175,7 @@ export default function CardTemplateOriginal({ data, session }) {
                         paddingRight: "12px",
                         paddingLeft: "12px",
                       }}
-<<<<<<< HEAD
-                      className={`label p-4 label-inline label-light-${
-=======
                       className={`label p-6 label-inline label-light-${
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                         data.survei ? "primary" : label
                       } font-weight-bolder text-capitalize`}
                     >
@@ -219,11 +199,7 @@ export default function CardTemplateOriginal({ data, session }) {
                   </Col>
                   <Col
                     lg={12}
-<<<<<<< HEAD
-                    className="order-5"
-=======
                     className="order-5 px-lg-4 px-0"
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                     style={{ paddingTop: "24px", paddingBottom: "8px" }}
                   >
                     <div className="d-flex align-items-center align-middle text-left">
@@ -233,16 +209,12 @@ export default function CardTemplateOriginal({ data, session }) {
                       </span>
                     </div>
                   </Col>
-<<<<<<< HEAD
-                  <Col lg={12} className="my-auto order-5 pb-40 pb-md-20 ">
-=======
                   <Col
                     lg={12}
                     className={`my-auto px-lg-4 px-0 order-5 ${
                       countButton == 1 ? "pb-20" : "pb-40"
                     } pb-lg-20`}
                   >
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                     <div className="d-flex align-items-center align-middle ">
                       <i className="ri-map-pin-line"></i>
                       <span
@@ -260,13 +232,6 @@ export default function CardTemplateOriginal({ data, session }) {
         </Button>
 
         <div
-<<<<<<< HEAD
-          className="position-absolute w-100 d-lg-flex pb-10 pb-lg-0 pb-lg-10"
-          style={{ bottom: 0 }}
-        >
-          <Col lg={3} />
-          <ButtonStatusPeserta data={data} token={session.token} />
-=======
           className="position-absolute w-100 d-lg-flex pb-10 pb-lg-10 "
           style={{ bottom: 0 }}
         >
@@ -277,7 +242,6 @@ export default function CardTemplateOriginal({ data, session }) {
             setCountButton={setCountButton}
             countButton={countButton}
           />
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
         </div>
       </Card>
     </Fragment>

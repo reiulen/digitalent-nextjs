@@ -92,11 +92,7 @@ export default function Footer({ session }) {
               </p>
             </div>
           </Col>
-<<<<<<< HEAD
-          <Col lg={2} md={12} sm={12}>
-=======
           <Col lg={2} md={12} sm={12} className="p-lg-0">
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
             <div className="h-100 w-100">
               <div className="pl-xl-20 mt-lg-0 mt-8  d-flex border-left-lg align-items-md-center justify-content-lg-end h-100 w-100">
                 {sosmed &&

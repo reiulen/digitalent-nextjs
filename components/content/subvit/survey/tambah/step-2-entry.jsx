@@ -52,33 +52,19 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [answer, setSoalList] = useState(
     (localStorage.getItem("step2") &&
       JSON.parse(localStorage.getItem("step2")).answer) || [
-<<<<<<< HEAD
-      { key: "A", option: "", image: "" },
-      { key: "B", option: "", image: "" },
-      { key: "C", option: "", image: "" },
-      { key: "D", option: "", image: "" },
-=======
       { key: "A", option: "", image: "", sub: [] },
       { key: "B", option: "", image: "", sub: [] },
       { key: "C", option: "", image: "", sub: [] },
       { key: "D", option: "", image: "", sub: [] },
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
     ]
   );
   const [answer_multiple, setSoalMultipleList] = useState(
     (localStorage.getItem("step2") &&
       JSON.parse(localStorage.getItem("step2")).answer) || [
-<<<<<<< HEAD
-      { key: "A", option: "", image: "" },
-      { key: "B", option: "", image: "" },
-      { key: "C", option: "", image: "" },
-      { key: "D", option: "", image: "" },
-=======
       { key: "A", option: "", image: "", sub: [] },
       { key: "B", option: "", image: "", sub: [] },
       { key: "C", option: "", image: "", sub: [] },
       { key: "D", option: "", image: "", sub: [] },
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
     ]
   );
   const [answer_triggered, setSoalTriggeredList] = useState(

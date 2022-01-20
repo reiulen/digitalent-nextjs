@@ -131,10 +131,6 @@ const StepTwo = ({ token, tokenPermission }) => {
   };
 
   const handlePassingGrade = (e) => {
-<<<<<<< HEAD
-    if (e === "" || helperRegexNumber.test(e)) {
-      setPassingGrade(e);
-=======
     if (e.target.value === "" || helperRegexNumber.test(e.target.value)) {
       e.target.value = Math.max(
         Number(e.target.min),
@@ -145,7 +141,6 @@ const StepTwo = ({ token, tokenPermission }) => {
       } else {
         setPassingGrade(e.target.value);
       }
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
     }
   };
 
@@ -367,19 +362,12 @@ const StepTwo = ({ token, tokenPermission }) => {
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={passing_grade}
-<<<<<<< HEAD
-                      onChange={(e) => handlePassingGrade(e.target.value)}
-                      onBlur={() =>
-                        simpleValidator.current.showMessageFor("passing grade")
-                      }
-=======
                       onChange={(e) => handlePassingGrade(e)}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("passing grade")
                       }
                       min="0"
                       max="100"
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                     />
                     <div className="input-group-append">
                       <span

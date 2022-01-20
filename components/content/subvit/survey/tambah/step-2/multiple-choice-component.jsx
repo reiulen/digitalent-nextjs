@@ -4,17 +4,10 @@ import Image from "next/image";
 
 const MultipleChoiceComponent = ({ props_answer }) => {
   const [answer, setSoalList] = useState([
-<<<<<<< HEAD
-    { key: "A", option: "", image: "", imageName: "Choose File" },
-    { key: "B", option: "", image: "", imageName: "Choose File" },
-    { key: "C", option: "", image: "", imageName: "Choose File" },
-    { key: "D", option: "", image: "", imageName: "Choose File" },
-=======
     { key: "A", option: "", image: "", sub: [], imageName: "Choose File" },
     { key: "B", option: "", image: "", sub: [], imageName: "Choose File" },
     { key: "C", option: "", image: "", sub: [], imageName: "Choose File" },
     { key: "D", option: "", image: "", sub: [], imageName: "Choose File" },
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
   ]);
 
   const handleInputChange = (e, index) => {

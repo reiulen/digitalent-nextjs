@@ -1,9 +1,5 @@
 import { useRouter } from "next/router";
-<<<<<<< HEAD
-import React, { Fragment, useState } from "react";
-=======
 import React, { Fragment, useState, useEffect } from "react";
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
 import CustomButton from "../../../content/peserta/riwayat-pelatihan/card/Buttons/CustomButton";
 import axios from "axios";
 import { Col, Row, Card, Button, Modal } from "react-bootstrap";
@@ -11,9 +7,6 @@ import Cookies from "js-cookie";
 import { SweatAlert } from "../../../../utils/middleware/helper";
 import { getAllRiwayatPelatihanPeserta } from "../../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 import { useDispatch } from "react-redux";
-<<<<<<< HEAD
-export default function ButtonStatusPeserta({ data, token }) {
-=======
 
 export default function ButtonStatusPeserta({
   data,
@@ -21,7 +14,6 @@ export default function ButtonStatusPeserta({
   setCountButton,
   countButton,
 }) {
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -103,8 +95,6 @@ export default function ButtonStatusPeserta({
     }
   };
 
-<<<<<<< HEAD
-=======
   useEffect(() => {
     if (setCountButton) {
       if (data?.lpj) return setCountButton(2);
@@ -152,7 +142,6 @@ export default function ButtonStatusPeserta({
     }
   }, [countButton, data]);
 
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
   return (
     <Fragment>
       {data?.lpj ? (

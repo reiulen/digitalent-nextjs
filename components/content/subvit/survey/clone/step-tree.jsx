@@ -127,10 +127,6 @@ const StepTwo = ({ token, tokenPermission }) => {
   };
 
   const handleDuration = (e) => {
-<<<<<<< HEAD
-    if (e === "" || helperRegexNumber.test(e)) {
-      setDuration(e);
-=======
     if (e.target.value === "" || helperRegexNumber.test(e.target.value)) {
       e.target.value = Math.max(
         Number(e.target.min),
@@ -141,7 +137,6 @@ const StepTwo = ({ token, tokenPermission }) => {
       } else {
         setDuration(e.target.value);
       }
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
     }
   };
 
@@ -330,19 +325,12 @@ const StepTwo = ({ token, tokenPermission }) => {
                       placeholder="360"
                       aria-describedby="basic-addon2"
                       value={duration}
-<<<<<<< HEAD
-                      onChange={(e) => handleDuration(e.target.value)}
-=======
                       onChange={(e) => handleDuration(e)}
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("durasi")
                       }
                       min={1}
-<<<<<<< HEAD
-=======
                       max={360}
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                     />
                     <div className="input-group-append bg-sedondary">
                       <span

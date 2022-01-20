@@ -296,10 +296,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                         <th>ID Soal</th>
                         <th>Soal</th>
                         <th>Status</th>
-<<<<<<< HEAD
-=======
                         <th>Aksi</th>
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                       </tr>
                     </thead>
                     <tbody>
@@ -353,8 +350,6 @@ const StepTwo = ({ token, tokenPermission }) => {
                                     </span>
                                   )}
                                 </td>
-<<<<<<< HEAD
-=======
                                 <td className="align-middle">
                                   <Link
                                     href={`/subvit/trivia/edit-soal-trivia?id=${
@@ -371,7 +366,6 @@ const StepTwo = ({ token, tokenPermission }) => {
                                     </a>
                                   </Link>
                                 </td>
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                               </tr>
                             );
                           }

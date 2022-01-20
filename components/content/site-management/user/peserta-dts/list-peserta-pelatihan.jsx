@@ -191,7 +191,6 @@ const Table = ({ token }) => {
               </div>
 
               <div className="row">
-<<<<<<< HEAD
                 {
                   allListPelatihanPagination.data.data.total > 5 && (
                     <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
@@ -225,37 +224,6 @@ const Table = ({ token }) => {
                     </div>
                   )
                 }
-=======
-                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
-                  <Pagination
-                    activePage={page}
-                    itemsCountPerPage={
-                      allListPelatihanPagination.data.data.perPage
-                    }
-                    totalItemsCount={allListPelatihanPagination.data.data.total}
-                    pageRangeDisplayed={3}
-                    onChange={(e) => {
-                      setPage(e);
-                      dispatch(
-                        getPelatihanWithPagination(
-                          token,
-                          router.query.id,
-                          search,
-                          limit,
-                          e,
-                          Cookies.get("token_permission")
-                        )
-                      );
-                    }}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
 
                 <div className="table-total ml-auto">
                   <div className="row">

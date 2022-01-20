@@ -40,10 +40,6 @@ export default function DashboardPage(props) {
     { ssr: false }
   );
   const session = props.session.user.user.data;
-<<<<<<< HEAD
-=======
-
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
   return (
     <>
       <div className="d-flex flex-column flex-root">

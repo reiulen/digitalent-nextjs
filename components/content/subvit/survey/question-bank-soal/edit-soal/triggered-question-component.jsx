@@ -32,13 +32,8 @@ const TriggeredQuestionComponent = ({
             }
           };
           reader.readAsDataURL(e.target.files[0]);
-<<<<<<< HEAD
-          listOption.image_name = e.target.files[0].name;
-          listOption.image_preview = URL.createObjectURL(e.target.files[0]);
-=======
           listOption.image_preview = URL.createObjectURL(e.target.files[0]);
           listOption.image_name = e.target.files[0].name;
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
         }
       }
     }
@@ -55,13 +50,8 @@ const TriggeredQuestionComponent = ({
             }
           };
           reader.readAsDataURL(e.target.files[0]);
-<<<<<<< HEAD
-          listAnswer.image_name = e.target.files[0].name;
-          listAnswer.image_preview = URL.createObjectURL(e.target.files[0]);
-=======
           listAnswer.image_preview = URL.createObjectURL(e.target.files[0]);
           listAnswer.image_name = e.target.files[0].name;
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
         }
       }
     }
@@ -78,13 +68,8 @@ const TriggeredQuestionComponent = ({
             }
           };
           reader.readAsDataURL(e.target.files[0]);
-<<<<<<< HEAD
-          listOption.image_name = e.target.files[0].name;
-          listOption.image_preview = URL.createObjectURL(e.target.files[0]);
-=======
           listOption.image_preview = URL.createObjectURL(e.target.files[0]);
           listOption.image_name = e.target.files[0].name;
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
         }
       }
     }
@@ -334,11 +319,7 @@ const TriggeredQuestionComponent = ({
                     </>
                   ) : (
                     <>
-<<<<<<< HEAD
-                      <div className="col-md-8 pt-2">
-=======
                       <div className="col-md-6 pt-2 ml-auto">
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                         <input
                           type="text"
                           name="option"
@@ -383,241 +364,6 @@ const TriggeredQuestionComponent = ({
                       )}
                     </div>
                   </div>
-<<<<<<< HEAD
-                  {row.sub && row.sub.length != 0
-                    ? row.sub.map((rowY, j) => {
-                        return (
-                          <>
-                            <div className="col-md-1"></div>
-                            <div className="col-md-2 p-0 pl-3" key={j}>
-                              {rowY.image_preview ? (
-                                <Image
-                                  src={
-                                    rowY.image_preview &&
-                                    rowY.image_preview.includes("blob")
-                                      ? rowY.image_preview
-                                      : process.env.END_POINT_API_IMAGE_SUBVIT +
-                                        rowY.image_preview
-                                  }
-                                  alt="logo"
-                                  width={148}
-                                  height={90}
-                                />
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                            <div className="col-md-5 pt-2">
-                              <input
-                                type="text"
-                                name="question"
-                                className="form-control"
-                                placeholder={`Soal Lanjutan`}
-                                value={rowY.question}
-                                onChange={(e) =>
-                                  handleInputChange(e, null, i, j)
-                                }
-                                autoComplete="off"
-                              />
-                              <div className="custom-file mt-2">
-                                <span>Gambar Pertanyaan (Opsional)</span>
-                                <input
-                                  type="file"
-                                  className="custom-file-input"
-                                  name="question_image"
-                                  onChange={(e) =>
-                                    handleInputChange(e, null, i, j)
-                                  }
-                                  accept="image/png, image/gif, image/jpeg , image/jpg"
-                                />
-                                <label
-                                  className="custom-file-label"
-                                  htmlFor="customFile"
-                                >
-                                  {rowY.image_name || rowY.imageName
-                                    ? rowY.image_name || rowY.imageName
-                                    : "Pilih Gambar"}
-                                </label>
-                              </div>
-                            </div>
-                            <div className="col-md-4 d-flex justify-content-start my-auto">
-                              {j !== 0 ? (
-                                <button
-                                  className="btn btn-link-action bg-danger text-white"
-                                  type="button"
-                                  onClick={() => handleRemoveClick(null, i, j)}
-                                >
-                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                </button>
-                              ) : (
-                                ""
-                              )}
-                              <div className="d-flex ml-4">
-                                {j < 4 ? (
-                                  <>
-                                    <SwitchButton
-                                      checked={rowY.is_next}
-                                      onlabel=" "
-                                      onstyle="primary"
-                                      offlabel=" "
-                                      offstyle="danger"
-                                      size="sm"
-                                      width={10}
-                                      height={10}
-                                      onChange={(checked) =>
-                                        handleNext(checked, i, j)
-                                      }
-                                    />
-                                    <span className="font-weight-bold ml-2">
-                                      pertanyaan selanjutnya
-                                    </span>
-                                  </>
-                                ) : (
-                                  ""
-                                )}
-                              </div>
-                            </div>
-                            {rowY.answer.length !== 0
-                              ? rowY.answer.map((rowX, k) => {
-                                  return (
-                                    <>
-                                      <div className="col-md-2"></div>
-                                      {rowX.type === "choose" ? (
-                                        <>
-                                          <div
-                                            className="col-md-2 p-0 pl-3"
-                                            key={k}
-                                          >
-                                            {rowX.image_preview !== null && (
-                                              <Image
-                                                src={
-                                                  rowX.image_preview &&
-                                                  rowX.image_preview.includes(
-                                                    "blob"
-                                                  )
-                                                    ? rowX.image_preview
-                                                    : process.env
-                                                        .END_POINT_API_IMAGE_SUBVIT +
-                                                      rowX.image_preview
-                                                }
-                                                alt="logo"
-                                                width={148}
-                                                height={90}
-                                              />
-                                            )}
-                                          </div>
-                                          <div className="col-md-4 pt-2">
-                                            <input
-                                              type="text"
-                                              name="option"
-                                              className="form-control"
-                                              placeholder={`Isi Pilihan ${rowX.key}`}
-                                              value={rowX.option}
-                                              onChange={(e) =>
-                                                handleInputChange(e, i, j, k)
-                                              }
-                                              autoComplete="off"
-                                            />
-                                            <div className="custom-file mt-2">
-                                              <span>
-                                                Gambar Pertanyaan (Opsional)
-                                              </span>
-                                              <input
-                                                type="file"
-                                                className="custom-file-input"
-                                                name="question_image"
-                                                onChange={(e) =>
-                                                  handleInputChange(e, i, j, k)
-                                                }
-                                                accept="image/png, image/gif, image/jpeg , image/jpg"
-                                              />
-                                              <label
-                                                className="custom-file-label"
-                                                htmlFor="customFile"
-                                              >
-                                                {rowX.image_preview
-                                                  ? rowX.image_preview.split(
-                                                      "survey/images/"
-                                                    )
-                                                  : "Pilih Gambar"}
-                                              </label>
-                                            </div>
-                                          </div>
-                                        </>
-                                      ) : (
-                                        <>
-                                          <div className="col-md-8 pt-2">
-                                            <input
-                                              type="text"
-                                              name="option"
-                                              className="form-control"
-                                              placeholder={`Jawaban Lain`}
-                                              value=""
-                                              autoComplete="off"
-                                              disabled
-                                            />
-                                          </div>
-                                        </>
-                                      )}
-                                      <div className="col-md-4 d-flex justify-content-start my-auto">
-                                        {k !== 0 ? (
-                                          <button
-                                            className="btn btn-link-action bg-danger text-white"
-                                            type="button"
-                                            onClick={() =>
-                                              handleRemoveClick(i, j, k)
-                                            }
-                                          >
-                                            <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                          </button>
-                                        ) : (
-                                          ""
-                                        )}
-                                      </div>
-                                    </>
-                                  );
-                                })
-                              : ""}
-                            <div className="col-md-2 col-sm-2"></div>
-                            <div className="col-sm-10 col-md-10 d-flex">
-                              {rowY.answer.length < 6 ? (
-                                <>
-                                  <button
-                                    type="button"
-                                    className="btn btn-rounded-full bg-blue-secondary text-white btn-sm mr-2 my-3"
-                                    onClick={() =>
-                                      handleAddClick("choose", i, j)
-                                    }
-                                  >
-                                    <i className="ri-add-fill text-white"></i>
-                                    Tambah Jawaban
-                                  </button>
-                                  {rowY.answer.length > 2 ? (
-                                    <>
-                                      <button
-                                        type="button"
-                                        className="btn btn-rounded-full bg-blue-secondary text-white btn-sm my-3"
-                                        onClick={() =>
-                                          handleAddClick("empty", i, j)
-                                        }
-                                      >
-                                        <i className="ri-add-fill text-white"></i>
-                                        Tambah Jawaban Lain
-                                      </button>
-                                    </>
-                                  ) : (
-                                    ""
-                                  )}
-                                </>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                          </>
-                        );
-                      })
-                    : ""}
-=======
                   {row.sub &&
                     row.sub.length != 0 &&
                     row.sub.map((rowY, j) => {
@@ -841,7 +587,6 @@ const TriggeredQuestionComponent = ({
                         </>
                       );
                     })}
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
                 </div>
               </>
             );
@@ -849,30 +594,6 @@ const TriggeredQuestionComponent = ({
       </div>
 
       {answer.length < 6 && (
-<<<<<<< HEAD
-        <div className="d-flex my-3">
-          <button
-            type="button"
-            className="btn btn-rounded-full bg-blue-secondary text-white btn-sm mr-2"
-            onClick={() => handleAddClick("choose", null, null)}
-          >
-            <i className="ri-add-fill text-white"></i>Tambah Jawaban
-          </button>
-          {answer.length > 2 && (
-            <button
-              type="button"
-              className="btn btn-rounded-full bg-blue-secondary text-white btn-sm"
-              onClick={() => handleAddClick("empty", null, null)}
-            >
-              <i className="ri-add-fill text-white"></i>Tambah Jawaban Lain
-            </button>
-          )}
-        </div>
-      )}
-
-      <div className="form-group row">
-        <div className="col-sm-12 col-md-12">
-=======
         <>
           <div className="d-flex my-3">
             <div className="col-md-2"></div>
@@ -899,7 +620,6 @@ const TriggeredQuestionComponent = ({
       <div className="form-group row">
         <div className="col-md-2"></div>
         <div className="col-sm-8 col-md-8">
->>>>>>> 3c80f1339543dfb371138ebe28b6f69fd4638a13
           <span>Status</span>
           <select
             name="training_id"
