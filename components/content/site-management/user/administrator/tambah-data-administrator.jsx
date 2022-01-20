@@ -42,6 +42,7 @@ const TambahApi = ({ token }) => {
   const [, forceUpdate] = useState();
 
   const allListPelatihan = useSelector((state) => state.allListPelatihan);
+  console.log(allListPelatihan)
   const sortListPelatihan = allListPelatihan.data.map((items) => {
     return {
       ...items,
