@@ -1568,8 +1568,8 @@ const Artikel = () => {
                         </h3>
                         <div className=" d-flex flex-wrap  flex-row">
                             {
-                                tagArtikel ?
-                                    tagArtikel.map ((el, i) => {
+                                tags ?
+                                    tags.tag.map ((el, i) => {
                                         return (
                                             <div 
                                                 className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center" 

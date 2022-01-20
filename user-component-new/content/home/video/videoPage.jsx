@@ -1150,8 +1150,8 @@ const VideoPage = () => {
               </h3>
               <div className=" d-flex flex-wrap flex-row">
                 <div className="row ml-0">
-                  {tagVideo && tagVideo.length !== 0 ? (
-                    tagVideo.map((row, i) => {
+                  {dataTag && dataTag.tag.length !== 0 ? (
+                    dataTag.tag.map((row, i) => {
                       return (
                         <div
                           className="border px-2 py-1 rounded my-3 mr-3"

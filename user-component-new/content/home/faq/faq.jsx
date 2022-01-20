@@ -130,9 +130,9 @@ const FaqPage = () => {
             Ada yang bisa Kami Bantu ?
           </p>
         </div>
-        <div className="d-none d-md-block col-md-8">
+        <div className="col-md-8">
           <div
-            className="rounded-lg p-5 text-wrap ml-2"
+            className="rounded-lg p-5 text-wrap"
             style={{ backgroundColor: "#E6F2FF", fontSize: "14px" }}
           >
             <div className="font-weight-bold">
@@ -343,7 +343,7 @@ const FaqPage = () => {
 
         {/* Content */}
         <div className="col-md-8">
-          <div className="ml-3">
+          <div>
             <h2
               style={{
                 fontWeight: "bold",
@@ -367,15 +367,12 @@ const FaqPage = () => {
                     return (
                       <Accordion
                         key={i}
-                      // className="col-12"
                       >
                         <Accordion.Item
-                          // className="border border-dark"
                           style={{
                             marginTop: "30px",
                             borderRadius: "6px",
                             border: "1px solid #D7E1EA",
-                            // cursor: "pointer",
                           }}
                           onClick={() => {
                             setContent(
