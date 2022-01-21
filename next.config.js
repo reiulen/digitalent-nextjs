@@ -40,7 +40,7 @@ module.exports = {
     //subvit
     // END_POINT_API_SUBVIT: "http://dts-subvit-dev.majapahit.id/",
     END_POINT_API_SUBVIT:
-      (process.env.MODE === "development" ? ENDPOINT_DEV : ENDPOINT_PROD) +
+      (process.env.MODE === "development" ? ENDPOINT_PROD : ENDPOINT_PROD) +
       "/subvit/",
 
     END_POINT_API_IMAGE_SUBVIT:
