@@ -8,6 +8,7 @@ import SimpleReactValidator from "simple-react-validator";
 import axios from "axios";
 import PhoneInput from "react-phone-input-2";
 import { SweatAlert } from "../../../../utils/middleware/helper";
+import HeaderLogoAuth from "../../../HeaderLogoAuth";
 
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -126,13 +127,8 @@ const RegisterUser = () => {
           style={{ background: "#0063CC" }}
         >
           <div className="container ">
-            <div className="title-login text-center mt-6">
-              <Image
-                src="/assets/logo/logo-6.svg"
-                width={320}
-                height={124}
-                alt="Logo-5"
-              />
+            <div className="title-login text-center mt-10">
+              <HeaderLogoAuth type="register" />
 
               <h3
                 className="align-middle mt-8"

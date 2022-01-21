@@ -243,7 +243,7 @@ const Sidebar = ({ session }) => {
         <a className="brand-logo">
           <Image
             alt="icon-sidebar-logo"
-            src="/assets/logo/logo-6.svg"
+            src="/assets/logo/platform/dts.svg"
             width={58}
             height={53}
           />
