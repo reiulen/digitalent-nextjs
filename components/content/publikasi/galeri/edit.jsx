@@ -374,7 +374,7 @@ const EditGaleri = ({ token }) => {
             }
         } else {
             simpleValidator.current.showMessages();
-            forceUpdate(1);
+            // forceUpdate(1);
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
