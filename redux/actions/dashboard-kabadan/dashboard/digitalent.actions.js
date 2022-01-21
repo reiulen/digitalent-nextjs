@@ -84,7 +84,7 @@ export const getDetailAkademiPendaftar =
     } catch (error) {
       dispatch({
         type: DTS_DETAIL_AKADEMI_PENDAFTAR_FAIL,
-        payload: error.response.data.message,
+        payload: error?.response?.data?.message,
       });
     }
   };
@@ -115,7 +115,7 @@ export const getDetailAkademiPeserta =
     } catch (error) {
       dispatch({
         type: DTS_DETAIL_AKADEMI_PESERTA_FAIL,
-        payload: error.response.data.message,
+        payload: error?.response?.data?.message,
       });
     }
   };
@@ -146,7 +146,7 @@ export const getDetailTemaPeserta =
     } catch (error) {
       dispatch({
         type: DTS_DETAIL_TEMA_PESERTA_FAIL,
-        payload: error.response.data.message,
+        payload: error?.response?.data?.message,
       });
     }
   };
@@ -178,7 +178,7 @@ export const getDetailTemaPendaftar =
     } catch (error) {
       dispatch({
         type: DTS_DETAIL_TEMA_PENDAFTAR_FAIL,
-        payload: error.response.data.message,
+        payload: error?.response?.data?.message,
       });
     }
   };
@@ -208,7 +208,7 @@ export const getDigitalentTotalDataPendaftar =
     } catch (error) {
       dispatch({
         type: DTS_TOTAL_PENDAFTAR_FAIL,
-        payload: error.response.data.message,
+        payload: error?.response?.data?.message,
       });
     }
   };
@@ -239,7 +239,7 @@ export const getDigitalentTotalPengguna =
     } catch (error) {
       dispatch({
         type: DTS_TOTAL_PENGGUNA_FAIL,
-        payload: error.response.data.message,
+        payload: error?.response?.data?.message,
       });
     }
   };
@@ -271,7 +271,7 @@ export const getDigitalentStatistikAkademiPeserta =
     } catch (error) {
       dispatch({
         type: DTS_STATISTIK_AKADEMI_PESERTA_FAIL,
-        payload: error.response.data.message,
+        payload: error?.response?.data?.message,
       });
     }
   };
@@ -303,7 +303,7 @@ export const getDigitalentStatistikAkademiPendaftar =
     } catch (error) {
       dispatch({
         type: DTS_STATISTIK_AKADEMI_PENDAFTAR_FAIL,
-        payload: error.response.data.message,
+        payload: error?.response?.data?.message,
       });
     }
   };
@@ -335,7 +335,7 @@ export const getDigitalentStatistikMitraPeserta =
     } catch (error) {
       dispatch({
         type: DTS_STATISTIK_MITRA_PESERTA_FAIL,
-        payload: error.response.data.message,
+        payload: error?.response?.data?.message,
       });
     }
   };
@@ -367,7 +367,7 @@ export const getDigitalentStatistikMitraPendaftar =
     } catch (error) {
       dispatch({
         type: DTS_STATISTIK_MITRA_PENDAFTAR_FAIL,
-        payload: error.response.data.message,
+        payload: error?.response?.data?.message,
       });
     }
   };
@@ -401,7 +401,7 @@ export const getDigitalentTablePendaftaran =
     } catch (error) {
       dispatch({
         type: DTS_LIST_PENDAFTARAN_FAIL,
-        payload: error.response.data.message,
+        payload: error?.response?.data?.message,
       });
     }
   };
@@ -435,7 +435,7 @@ export const getDigitalentPesertaWilayah =
     } catch (error) {
       dispatch({
         type: DTS_LIST_PESERTA_WILAYAH_FAIL,
-        payload: error.response.data.message,
+        payload: error?.response?.data?.message,
       });
     }
   };
@@ -467,7 +467,7 @@ export const getDigitalentProvinsiPeserta =
     } catch (error) {
       dispatch({
         type: DTS_PROVINSI_PESERTA_FAIL,
-        payload: error.response.data.message,
+        payload: error?.response?.data?.message,
       });
     }
   };
@@ -499,7 +499,7 @@ export const getDigitalentProvinsiPendaftar =
     } catch (error) {
       dispatch({
         type: DTS_PROVINSI_PENDAFTAR_FAIL,
-        payload: error.response.data.message,
+        payload: error?.response?.data?.message,
       });
     }
   };
@@ -530,7 +530,7 @@ export const getDigitalentDataPribadi =
     } catch (error) {
       dispatch({
         type: DTS_PRIBADI_PESERTA_FAIL,
-        payload: error.response.data.message,
+        payload: error?.response?.data?.message,
       });
     }
   };

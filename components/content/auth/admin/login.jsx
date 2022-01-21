@@ -10,6 +10,7 @@ import { SweatAlert } from "../../../../utils/middleware/helper/index";
 
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
+import HeaderLogoAuth from "../../../HeaderLogoAuth";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -118,15 +119,10 @@ const LoginAdmin = () => {
         >
           <div className="container ">
             <div className="title-login text-center mt-6">
-              <Image
-                src="/assets/logo/logo-6.svg"
-                width={320}
-                height={124}
-                alt="Logo-5"
-              />
+              <HeaderLogoAuth />
 
               <h3
-                className="align-middle mt-8"
+                className="align-middle mt-10"
                 style={{
                   fontSize: "32px",
                   color: "#ffffff",

@@ -11,6 +11,7 @@ import { getSession } from "next-auth/client";
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
 import Cookies from "js-cookie";
+import HeaderLogoAuth from "../../../HeaderLogoAuth";
 
 const LoginUser = () => {
   const router = useRouter();
@@ -98,15 +99,10 @@ const LoginUser = () => {
         >
           <div className="container ">
             <div className="title-login text-center mt-6">
-              <Image
-                src="/assets/logo/logo-6.svg"
-                width={320}
-                height={124}
-                alt="Logo-5"
-              />
+              <HeaderLogoAuth />
 
               <h3
-                className="align-middle mt-8"
+                className="align-middle mt-10"
                 style={{
                   fontSize: "32px",
                   color: "#ffffff",
