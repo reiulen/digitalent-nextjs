@@ -15,12 +15,14 @@ import {
   IS_OVERLAY_SIDEBAR_MOBILE,
   IS_MINIMIZE_SIDEBAR,
 } from "../../redux/types/utils/functionals.type";
+import { signOut } from "next-auth/client";
 
 const Sidebar = ({ session }) => {
   const dispatch = useDispatch();
   const allFunctionls = useSelector((state) => state.allFunctionls);
   const allSidebar = useSelector((state) => state.allSidebar);
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   // mitra partnership sementara
   const [menuItem9, setMenuItem9] = useState("");
@@ -79,6 +81,12 @@ const Sidebar = ({ session }) => {
       ? JSON.parse(localStorage.getItem("sidebar"))
       : []
   );
+
+  useEffect(() => {
+    if (!token_permission) {
+      signOut();
+    }
+  }, [token_permission]);
 
   useEffect(() => {
     let pathRoute = router.route;
@@ -161,7 +169,7 @@ const Sidebar = ({ session }) => {
               "trainings",
               JSON.stringify(data.data.data.user.trainings)
             );
-            Cookies.set("token_permission", data.data.data.tokenPermission);
+            // Cookies.set("token_permission", data.data.data.tokenPermission);
           })
           .catch((e) => {
             return;

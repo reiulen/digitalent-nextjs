@@ -21,7 +21,8 @@ const Dashboard = ({ session, success }) => {
   const { error: errorDashboard, dataDashboard } = useSelector(
     (state) => state.dashboardPeserta
   );
-
+  console.log(dataDashboard, "ini data dashboard");
+  console.log(session);
   const [labelBerjalan, setLabelBerjalan] = useState("primary");
   const [labelAkhir, setLabelAkhir] = useState("primary");
 
@@ -181,7 +182,7 @@ const Dashboard = ({ session, success }) => {
               backgroundImage="new-game-3.svg"
               background="success"
               color="#00B27A"
-              link={`/peserta/survey/panduan-survey?no=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_tema=${dataDashboard?.subvit?.trivia?.tema_id}`}
+              link={`/peserta/survey/panduan-survey?no=${dataDashboard?.subvit?.survei?.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit?.survei?.pelatihan_id}&id_tema=${dataDashboard?.subvit?.survei?.tema_id}`}
               text="Lakukan Survey"
               desc="Anda Belum Melakukan Test Survey"
               total={dataDashboard?.subvit.survei.status}

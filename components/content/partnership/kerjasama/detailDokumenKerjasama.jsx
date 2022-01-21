@@ -196,40 +196,27 @@ const DetailDokumenKerjasama = ({ token }) => {
               </label>
 
               <div className="border-bottom pb-6">
-                {
-                  pdfFIle !== null ?
-                    <button
-                      type="button"
-                      className="btn bg-blue-secondary text-white rounded-full d-flex align-items-center"
-                      onClick={() =>
-                        window.open(
-                          `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com${pdfFIle}`
-                        )
-                      }
-                    >
-                      <Image
-                        src="/assets/icon/download-2-fill.svg"
-                        width={16}
-                        height={16}
-                        alt="imagess"
-                      />{" "}
-                      <p className="mb-0 ml-2">Unduh</p>
-                    </button>
-                    :
-                    <button
-                      type="button"
-                      className="btn bg-blue-secondary text-white rounded-full d-flex align-items-center cursor-not-allowed"
-                      disabled
-                    >
-                      <Image
-                        src="/assets/icon/download-2-fill.svg"
-                        width={16}
-                        height={16}
-                        alt="imagess"
-                      />{" "}
-                      <p className="mb-0 ml-2">Unduh</p>
-                    </button>
-                }
+                <button
+                  type="button"
+                  className={
+                    pdfFIle !== null ? "btn bg-blue-secondary text-white rounded-full d-flex align-items-center"
+                      : "btn bg-blue-secondary text-white rounded-full d-flex align-items-center cursor-not-allowed"
+                  }
+                  onClick={() =>
+                    window.open(
+                      `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com${pdfFIle}`
+                    )
+                  }
+                  disabled={pdfFIle === null}
+                >
+                  <Image
+                    src="/assets/icon/download-2-fill.svg"
+                    width={16}
+                    height={16}
+                    alt="imagess"
+                  />{" "}
+                  <p className="mb-0 ml-2">Unduh</p>
+                </button>
               </div>
 
               {allMK?.cooperationById.length === 0 ? (
