@@ -693,7 +693,7 @@ const Galeri = () => {
                                     {handleTitleToTrim(el.judul)}
                                   </div>
                                 ) : (
-                                  <h5 className="font-weight-bolder text-white mb-5 mx-5">
+                                  <h5 className="font-weight-bolder text-white mb-5 mx-5 text-break">
                                     {el.judul}
                                   </h5>
                                 )}

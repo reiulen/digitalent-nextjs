@@ -70,7 +70,7 @@ module.exports = {
     // pelatihan
     // END_POINT_API_PELATIHAN: "http://192.168.11.44:83/",
     END_POINT_API_PELATIHAN:
-      (process.env.MODE === "development" ? ENDPOINT_PROD : ENDPOINT_PROD) +
+      (process.env.MODE === "development" ? ENDPOINT_DEV : ENDPOINT_PROD) +
       "/pelatihan/",
 
     //sertifikat
