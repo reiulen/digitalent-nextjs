@@ -126,29 +126,7 @@ const TambahApi = ({ token }) => {
       };
     })
 
-  // const [sortListPelatihan, setSortListPelatihan] = useState(
-  //   allListPelatihan.data
-  //     .map((items) => {
-  //       return {
-  //         ...items,
-  //         manage: false,
-  //         view: false,
-  //         allSelect: false,
-  //       };
-  //     })
-  //     .map((item) => {
-  //       trainings?.filter((filter) => {
-  //         if (filter.id === item.value) {
-  //           item.manage = true
-  //           item.view = true
-  //           item.allSelect = true
-  //         }
-  //       });
-  //       return {
-  //         ...item,
-  //       };
-  //     })
-  // );
+  const [sortPelatihan, setSortPelatihan] = useState(sortListPelatihan)
   const [, forceUpdate] = useState();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
@@ -176,12 +154,27 @@ const TambahApi = ({ token }) => {
   };
 
   useEffect(() => {
-    // dispatch(getDetailAdminSite(router.query.id, token));
-    // dispatch(getListRoles(token));
     dispatch(getListUnitWorks(token));
     dispatch(getListAcademy(token));
     dispatch(getAllListPelatihan(token));
   }, [router.query.id, token, dispatch]);
+
+  useEffect(() => {
+    if (allListPelatihan) {
+      let cari = []
+      allListPelatihan.data
+        .map((items) => {
+          const val = {
+            ...items,
+            manage: false,
+            view: false,
+            allSelect: false,
+          };
+          cari.push(val)
+        })
+      setSortPelatihan(cari)
+    }
+  }, [allListPelatihan])
 
   const handlerShowPassword = (value) => {
     setHidePassword(value);
@@ -204,7 +197,7 @@ const TambahApi = ({ token }) => {
   };
 
   const handleChangePelatihan = (e, index) => {
-    let _temp = [...sortListPelatihan];
+    let _temp = [...sortPelatihan];
     if (e.target.name === "select-all") {
       if (_temp[index].allSelect) {
         _temp[index] = {
@@ -234,11 +227,11 @@ const TambahApi = ({ token }) => {
         _temp[index] = { ..._temp[index], view: true };
       }
     }
-    setSortListPelatihan(_temp);
+    setSortPelatihan(_temp);
   };
 
   const handleSubmit = async () => {
-    let newData = sortListPelatihan?.map((items) => {
+    let newData = sortPelatihan?.map((items) => {
       return { ...items, training_id: items.value };
     });
 
@@ -724,58 +717,59 @@ const TambahApi = ({ token }) => {
                         </div>
                       </div>
                     </div>
-
-                    <table className="table table-separate table-head-custom table-checkable mt-5">
-                      <thead style={{ backgroundColor: "#F2F7FC" }}>
-                        <tr>
-                          <th className="align-middle fz-16 fw-600">No</th>
-                          <th className="align-middle fz-16 fw-600">
-                            ID Pelatihan
-                          </th>
-                          <th className="align-middle fz-16 fw-600">
-                            Nama Pelatihan
-                          </th>
-                          <th className="align-middle text-center fz-16 fw-600">
-                            Access
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {sortListPelatihan && sortListPelatihan.length === 0 ?
+                    <div style={{ height: '340px', overflowY: 'auto' }}>
+                      <table className="table table-separate table-head-custom table-checkable mt-5">
+                        <thead style={{ backgroundColor: "#F2F7FC" }}>
                           <tr>
-                            <td className='align-middle text-center' colSpan={4}>Data Kosong</td>
+                            <th className="align-middle fz-16 fw-600">No</th>
+                            <th className="align-middle fz-16 fw-600">
+                              ID Pelatihan
+                            </th>
+                            <th className="align-middle fz-16 fw-600">
+                              Nama Pelatihan
+                            </th>
+                            <th className="align-middle text-center fz-16 fw-600">
+                              Access
+                            </th>
                           </tr>
-                          : sortListPelatihan.map((items, index) => {
-                            return (
-                              <tr key={index}>
-                                <td className="py-8 border-bottom">
-                                  {index + 1}
-                                </td>
+                        </thead>
+                        <tbody>
+                          {sortListPelatihan && sortListPelatihan.length === 0 ?
+                            <tr>
+                              <td className='align-middle text-center' colSpan={4}>Data Kosong</td>
+                            </tr>
+                            : sortPelatihan.map((items, index) => {
+                              return (
+                                <tr key={index}>
+                                  <td className="py-8 border-bottom">
+                                    {index + 1}
+                                  </td>
 
-                                <td className="py-8 border-bottom">
-                                  {items.value}
-                                </td>
-                                <td className="py-8 border-bottom">
-                                  {items.label}
-                                </td>
-                                <td className="text-center py-8 border-bottom">
-                                  <label className="checkbox d-flex justify-content-center">
-                                    <input
-                                      type="checkbox"
-                                      checked={items.allSelect}
-                                      name="select-all"
-                                      onChange={(e) =>
-                                        handleChangePelatihan(e, index)
-                                      }
-                                    />
-                                    <span></span>
-                                  </label>
-                                </td>
-                              </tr>
-                            );
-                          })}
-                      </tbody>
-                    </table>
+                                  <td className="py-8 border-bottom">
+                                    {items.value}
+                                  </td>
+                                  <td className="py-8 border-bottom">
+                                    {items.label}
+                                  </td>
+                                  <td className="text-center py-8 border-bottom">
+                                    <label className="checkbox d-flex justify-content-center">
+                                      <input
+                                        type="checkbox"
+                                        checked={items.allSelect}
+                                        name="select-all"
+                                        onChange={(e) =>
+                                          handleChangePelatihan(e, index)
+                                        }
+                                      />
+                                      <span></span>
+                                    </label>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>

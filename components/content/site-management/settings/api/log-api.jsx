@@ -61,9 +61,9 @@ const Table = ({ token }) => {
   const handleSubmitSearchMany = (event) => {
     event.preventDefault();
     if (froms === "") {
-      Swal.fire('Oops !', 'From tidak boleh kosong', 'error')
+      Swal.fire('Oops !', 'Tanggal tidak boleh kosong', 'error')
     } else if (tos === "") {
-      Swal.fire('Oops !', 'To tidak boleh kosong', 'error')
+      Swal.fire('Oops !', 'Tanggal tidak boleh kosong', 'error')
     } else {
       dispatch(changeDates(froms, tos));
       dispatch(getDetailLog(router.query.id, token, Cookies.get("token_permission")));
