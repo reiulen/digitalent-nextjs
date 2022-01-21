@@ -51,6 +51,22 @@ const TambahApi = ({ token }) => {
     };
   })
 
+  useEffect(() => {
+    if(allListPelatihan){
+      let cari = []
+      allListPelatihan.data.map((items) => {
+        const val = {
+          ...items,
+          manage: false,
+          view: false,
+          allSelect: false,
+        };
+        cari.push(val)
+      })
+      setSortPelatihan(cari)
+    }
+  }, [allListPelatihan])
+
   const [sortPelatihan, setSortPelatihan] = useState(sortListPelatihan)
 
   const [hidePassword, setHidePassword] = useState(true);
@@ -130,7 +146,6 @@ const TambahApi = ({ token }) => {
       if (simpleValidator.current.allValid()) {
         Swal.fire({
           title: "Apakah anda yakin simpan ?",
-          // text: "Data ini tidak bisa dikembalikan !",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -610,7 +625,7 @@ const TambahApi = ({ token }) => {
                         </div>
                       </div>
                     </div>
-                    <div style={{ height: '340px',overflowY:'auto' }}>
+                    <div style={{ height: '340px', overflowY: 'auto' }}>
                       <table className="table table-separate table-head-custom table-checkable mt-5">
                         <thead style={{ backgroundColor: "#F2F7FC" }}>
                           <tr>

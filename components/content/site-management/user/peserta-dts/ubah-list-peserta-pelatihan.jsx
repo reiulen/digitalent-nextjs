@@ -50,15 +50,19 @@ const Table = ({ token }) => {
     router.query.id_pendaftaran
   );
   const [ubahData, setUbahData] = useState(0);
+  const [klik, setKlik] = useState(1);
 
   const handleSubmit = () => {
     const data = {
-      "id" : parseInt(idPendaftaran),
-      "pelatihan_id" : parseInt(idPelatihan),
-      "ubah_data" : ubahData === true || ubahData === 1 ? 1 : 0,
+      "id": parseInt(idPendaftaran),
+      "pelatihan_id": parseInt(idPelatihan),
+      "ubah_data": ubahData === true || ubahData === 1 ? 1 : 0,
       "id_peserta": router.query.id
     }
-    dispatch(pindahPelatihan(token, data, Cookies.get("token_permission")))
+    setKlik(klik + 1)
+    if(klik <= 1){
+      dispatch(pindahPelatihan(token, data, Cookies.get("token_permission")))
+    }
   }
 
   useEffect(() => {
