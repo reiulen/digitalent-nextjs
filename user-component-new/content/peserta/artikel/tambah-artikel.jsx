@@ -47,6 +47,7 @@ const TambahArtikelPeserta = ({ session }) => {
   const [kategori, setKategori] = useState(null);
   const [tag, setTag] = useState([]);
   const [checkTag, setCheckTag] = useState(false);
+  const [klik, setKlik] = useState(1);
 
   const { quill, quillRef } = useQuill();
   const limit = 12000;
@@ -106,7 +107,10 @@ const TambahArtikelPeserta = ({ session }) => {
         kategori_id: kategori,
         tag: tag,
       };
-      dispatch(newArtikelPeserta(data, session.token));
+      setKlik(klik + 1)
+      if (klik <= 1) {
+        dispatch(newArtikelPeserta(data, session.token));
+      }
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

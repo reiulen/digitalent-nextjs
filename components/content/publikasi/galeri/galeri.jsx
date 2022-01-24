@@ -13,7 +13,7 @@ import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
 import Swal from "sweetalert2";
 import moment from "moment";
-import { Modal } from "react-bootstrap";
+import { Modal, ModalBody } from "react-bootstrap";
 import Cookies from 'js-cookie'
 
 import PageWrapper from "../../../wrapper/page.wrapper";
@@ -64,6 +64,7 @@ const Galeri = ({ token }) => {
     const [disableEndDate, setDisableEndDate] = useState(true);
     const [previewImage, setPreviewImage] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [showPreview, setShowPreview] = useState(false);
 
     let loading = false;
 
@@ -505,6 +506,11 @@ const Galeri = ({ token }) => {
         };
         dispatch(viewGaleri(data, token, permission));
         setIndexGalleri(i);
+        setShowPreview(true);
+    };
+
+    const handlePreviewModal = () => {
+        setShowPreview(false)
     };
 
     const printImage = () => {
@@ -522,18 +528,20 @@ const Galeri = ({ token }) => {
                             ? isViewed?.gambar?.map((row, i) => {
                                 return (
                                     <div className={i === 0 ? "carousel-item active" : "carousel-item"} key={i}>
-
                                         <div
-                                            className={`${styles.modals} position-relative`}
+                                        // className={`${styles.modals} position-relative`}
                                         >
                                             <Image
                                                 src={
                                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                     "publikasi/images/" + row.gambar
                                                 }
-                                                alt="Slider"
+                                                alt="Card Gallery"
+                                                width="100%"
+                                                height="121%"
+                                                className="rounded-lg"
                                                 objectFit="fill"
-                                                layout="fill"
+                                                layout="responsive"
                                             />
                                         </div>
                                     </div>
@@ -872,8 +880,8 @@ const Galeri = ({ token }) => {
                                                                                 handlePreview(i, row.id_gallery)
                                                                             }
                                                                             className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
-                                                                            data-target="#galleryModalPreview"
-                                                                            data-toggle="modal"
+                                                                        // data-target="#galleryModalPreview"
+                                                                        // data-toggle="modal"
                                                                         >
                                                                             <i className="ri-todo-fill p-0 text-white"></i>
                                                                             <div className="text-hover-show-hapus">
@@ -1096,140 +1104,163 @@ const Galeri = ({ token }) => {
             </div>
 
             {/* Modal */}
-            <div
-                className="modal fade"
-                id="galleryModalPreview"
-                tabIndex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalCenterTitle"
-                aria-hidden="true"
+            <Modal
+                show={showPreview}
+                onHide={() => handlePreviewModal()}
+                size={
+                    windowDimensions &&
+                        windowDimensions.width &&
+                        windowDimensions.width < 768
+                        ? "sm"
+                        : "lg"
+                }
+                dialogClassName="mx-10 mx-sm-auto rounded-lg"
+                centered
+                aria-labelledby="example-custom-modal-styling-title"
             >
-                <div className="modal-dialog modal-xl modal-dialog-centered" role="document">
-                    <div className="modal-content">
-                        <div className="">
-                            <div className="row">
-                                <div className="col-sm-12 col-md-6 col-lg-6">
-                                    {
-                                        isViewed &&
-                                        <>
-                                            {printImage()}
-                                        </>
-                                    }
-                                </div>
-                                <div className={`${styles.modalsRight} col-sm-12 col-md-6 col-lg-6`}>
-                                    <div className={`${styles.rightSide}`}>
-                                        {galeri &&
-                                            galeri.gallery.length !== 0 &&
-                                            index_galleri !== null ? (
-                                            <>
+                <ModalBody
+                    className={` p-0 m-0 ${windowDimensions && windowDimensions.width <= 768
+                        ? "overflow-auto"
+                        : ""
+                        }`}
+                    style={
+                        windowDimensions && windowDimensions.width >= 768
+                            ? { height: "550px" }
+                            : {}
+                    }
+                >
+                    <div className="row">
+                        <div className="col-sm-12 col-md-12 col-lg-7">
+                            {
+                                isViewed &&
+                                <>
+                                    {printImage()}
+                                </>
+                            }
+                        </div>
+                        <div className={`${styles.modalsRight} col-sm-12 col-md-12 col-lg-5`}>
+                            <div className={`${styles.rightSide}`}>
+                                {galeri &&
+                                    galeri.gallery.length !== 0 &&
+                                    index_galleri !== null ? (
+                                    <>
 
-                                                <div
-                                                    className="mb-1 justify-content-between"
-                                                    style={{ marginLeft: "-12px" }}
-                                                >
-                                                    <div className="mb-5" style={{}}>
-                                                        <span className="label label-inline label-light-success font-weight-bold">
-                                                            {(galeri.gallery[index_galleri].nama_kategori).toUpperCase()}
-                                                        </span>
-                                                    </div>
-                                                    <h3
-                                                        style={{
-                                                            fontWeight: "bold",
-                                                            textAlign: "left",
-                                                            wordWrap:'break-word',
-                                                        }}
-                                                    >
-                                                        {galeri.gallery[index_galleri].judul}
-                                                    </h3>
-                                                </div>
-                                                <div className="row mb-4 p-1">
-                                                    <div className={styles["subMenuPreview"]}>
-                                                        {
-                                                            galeri.gallery[index_galleri].publish === 0 ?
-                                                                <div className="mb-1 p-0 d-flex align-items-center">
-                                                                    <div className={styles["iconPreview"]}>
-                                                                        <i className="flaticon2-calendar-4"></i>
-                                                                    </div>
-                                                                    <span className="ml-2">
-                                                                        Publish : Belum dipublish
-                                                                    </span>
-                                                                </div>
-                                                                :
-                                                                <div className="mb-1 p-0 d-flex align-items-center">
-                                                                    <div className={styles["iconPreview"]}>
-                                                                        <i className="flaticon2-calendar-4"></i>
-                                                                    </div>
-                                                                    <span className="ml-2">
-                                                                        Publish:{" "}
-                                                                        {moment(galeri.gallery[index_galleri].tanggal_publish).format("LL")}
-                                                                    </span>
-                                                                </div>
-                                                        }
-
-                                                    </div>
-
-                                                    <div className={styles["subMenuPreview"]}>
-                                                        {
-                                                            galeri.gallery[index_galleri].dibaca === undefined ?
-                                                                <span className="mb-1 p-0 d-flex align-items-center">
-                                                                    <div className={`${styles.iconPreview} mr-1 ml-8`}>
-                                                                        <i className="ri-eye-line"></i>
-                                                                    </div>
-                                                                    <span className="ml-2">
-                                                                        Dibaca 0
-                                                                    </span>
-                                                                </span>
-                                                                :
-                                                                <span className="mb-1 p-0 d-flex align-items-center">
-                                                                    <div className={`${styles.iconPreview} mr-1 ml-8`}>
-                                                                        <i className="ri-eye-line"></i>
-                                                                    </div>
-                                                                    <span className="ml-2">
-                                                                        Dibaca {galeri.gallery[index_galleri].dibaca}
-                                                                    </span>
-                                                                </span>
-                                                        }
-                                                    </div>
-                                                </div>
-                                                <hr className={styles["strip"]} />
-                                                <div className="row mb-1">
-                                                    <p
-                                                        className={styles["description-img"]}
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: galeri.gallery[index_galleri].isi_galleri,
-                                                        }}
-                                                    ></p>
-                                                    <div className="row justify-content-between align-items-center" style={{ width: '100%' }}>
-                                                        <div className="col-sm-12 col-md-12 col-12" style={{ display: 'flex', flexWrap: 'wrap', overflowWrap: 'break-word' }}>
-                                                            {galeri.gallery[index_galleri].tag !== null
-                                                                ? galeri.gallery[index_galleri].tag.map((row, i) => {
-                                                                    return (
-                                                                        <span
-                                                                            style={{ background: "#fff", border: '1px solid #d7e1ea' }}
-                                                                            className="mr-3 px-3 py-1 rounded mb-1"
-                                                                            key={i}
-                                                                        >
-                                                                            <div className={styles["tagModal"]}>
-                                                                                #{row.toUpperCase()}
-                                                                            </div>
-                                                                        </span>
-                                                                    );
-                                                                })
-                                                                : null}
+                                        <div
+                                            className="mb-1 justify-content-between"
+                                            style={{ marginLeft: "-12px" }}
+                                        >
+                                            <div className="mb-5" style={{}}>
+                                                <span className="label label-inline label-light-success font-weight-bold">
+                                                    {(galeri.gallery[index_galleri].nama_kategori).toUpperCase()}
+                                                </span>
+                                            </div>
+                                            <h3
+                                                className={
+                                                    windowDimensions &&
+                                                        windowDimensions.width &&
+                                                        windowDimensions.width <= 770
+                                                        ? "text-dark text-wrap text-break mt-3"
+                                                        : "text-dark text-wrap text-break mt-3"
+                                                }
+                                                style={
+                                                    windowDimensions.width >= 770 &&
+                                                        galeri.gallery[index_galleri].judul.length >= 100
+                                                        ? { fontSize: "20px", width: "95%", fontWeight: '700' }
+                                                        : { fontSize: "24px", width: "95%", fontWeight: '700' }
+                                                }
+                                            >
+                                                {galeri.gallery[index_galleri].judul}
+                                            </h3>
+                                        </div>
+                                        <div className="row mb-4 p-1">
+                                            <div className={styles["subMenuPreview"]}>
+                                                {
+                                                    galeri.gallery[index_galleri].publish === 0 ?
+                                                        <div className="mb-1 p-0 d-flex align-items-center">
+                                                            <div className={styles["iconPreview"]}>
+                                                                <i className="flaticon2-calendar-4"></i>
+                                                            </div>
+                                                            <span className="ml-2">
+                                                                Publish : Belum dipublish
+                                                            </span>
                                                         </div>
-                                                    </div>
+                                                        :
+                                                        <div className="mb-1 p-0 d-flex align-items-center">
+                                                            <div className={styles["iconPreview"]}>
+                                                                <i className="flaticon2-calendar-4"></i>
+                                                            </div>
+                                                            <span className="ml-2">
+                                                                Publish:{" "}
+                                                                {moment(galeri.gallery[index_galleri].tanggal_publish).format("LL")}
+                                                            </span>
+                                                        </div>
+                                                }
+
+                                            </div>
+
+                                            <div className={styles["subMenuPreview"]}>
+                                                {
+                                                    galeri.gallery[index_galleri].dibaca === undefined ?
+                                                        <span className="mb-1 p-0 d-flex align-items-center">
+                                                            <div className={`${styles.iconPreview} mr-1 ml-8`}>
+                                                                <i className="ri-eye-line"></i>
+                                                            </div>
+                                                            <span className="ml-2">
+                                                                Dibaca 0
+                                                            </span>
+                                                        </span>
+                                                        :
+                                                        <span className="mb-1 p-0 d-flex align-items-center">
+                                                            <div className={`${styles.iconPreview} mr-1 ml-8`}>
+                                                                <i className="ri-eye-line"></i>
+                                                            </div>
+                                                            <span className="ml-2">
+                                                                Dibaca {galeri.gallery[index_galleri].dibaca}
+                                                            </span>
+                                                        </span>
+                                                }
+                                            </div>
+                                        </div>
+                                        <hr className={styles["strip"]} />
+                                        <div className="row mb-1">
+                                            <p
+                                                className={styles["description-img"]}
+                                                dangerouslySetInnerHTML={{
+                                                    __html: galeri.gallery[index_galleri].isi_galleri,
+                                                }}
+                                            ></p>
+                                            <div className="row justify-content-between align-items-center" style={{ width: '100%' }}>
+                                                <div className="col-sm-12 col-md-12 col-12" style={{ display: 'flex', flexWrap: 'wrap', overflowWrap: 'break-word' }}>
+                                                    {galeri.gallery[index_galleri].tag !== null
+                                                        ? galeri.gallery[index_galleri].tag.map((row, i) => {
+                                                            return (
+                                                                <span
+                                                                    style={{ background: "#fff", border: '1px solid #d7e1ea' }}
+                                                                    className="mr-3 px-3 py-1 rounded mb-1"
+                                                                    key={i}
+                                                                >
+                                                                    <div className={styles["tagModal"]}>
+                                                                        #{row.toUpperCase()}
+                                                                    </div>
+                                                                </span>
+                                                            );
+                                                        })
+                                                        : null}
                                                 </div>
-                                            </>
-                                        ) : (
-                                            <div>Data Tidak Ditemukan</div>
-                                        )}
-                                    </div>
-                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div>Data Tidak Ditemukan</div>
+                                )}
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                    {/* </div>
+                        </div>
+                    </div> */}
+                </ModalBody>
+            </Modal>
         </PageWrapper>
     );
 };
