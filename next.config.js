@@ -1,5 +1,5 @@
-const ENDPOINT_DEV = "https://api-dts-dev.majapahit.id";
-const ENDPOINT_PROD = "https://api-dts-poc.majapahit.id";
+const ENDPOINT_PROD = "https://api-dts-dev.majapahit.id";
+const ENDPOINT_DEV = "https://api-dts-poc.majapahit.id";
 
 module.exports = {
   reactStrictMode: true,

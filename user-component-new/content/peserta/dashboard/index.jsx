@@ -21,8 +21,7 @@ const Dashboard = ({ session, success }) => {
   const { error: errorDashboard, dataDashboard } = useSelector(
     (state) => state.dashboardPeserta
   );
-  console.log(dataDashboard, "ini data dashboard");
-  console.log(session);
+
   const [labelBerjalan, setLabelBerjalan] = useState("primary");
   const [labelAkhir, setLabelAkhir] = useState("primary");
 

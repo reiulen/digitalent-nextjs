@@ -67,9 +67,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
           Cookies.remove("tema_pelatihan_id");
           signOut();
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
     } else {
       localStorage.clear();
       signOut();
