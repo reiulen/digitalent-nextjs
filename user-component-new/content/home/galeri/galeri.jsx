@@ -77,7 +77,7 @@ const Galeri = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [detail]);
 
-  useEffect(() => {}, [windowDimensions]);
+  useEffect(() => { }, [windowDimensions]);
 
   useEffect(() => {
     handleCardIndex();
@@ -292,38 +292,38 @@ const Galeri = () => {
                     )}
                     {kategoriToShow
                       ? kategoriToShow.map((el, i) => {
-                          return kategoriGaleri == el ? (
-                            <SplideSlide>
-                              <div
-                                className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
-                                style={{ cursor: "pointer", height: "40px" }}
-                                onClick={() =>
-                                  handleFilterKategori(el.toString())
-                                }
-                                key={i}
-                              >
-                                <div className="my-1 mx-3 py-1 px-3 text-white">
-                                  {el.toString().toUpperCase()}
-                                </div>
+                        return kategoriGaleri == el ? (
+                          <SplideSlide>
+                            <div
+                              className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
+                              style={{ cursor: "pointer", height: "40px" }}
+                              onClick={() =>
+                                handleFilterKategori(el.toString())
+                              }
+                              key={i}
+                            >
+                              <div className="my-1 mx-3 py-1 px-3 text-white">
+                                {el.toString().toUpperCase()}
                               </div>
-                            </SplideSlide>
-                          ) : (
-                            <SplideSlide>
-                              <div
-                                className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
-                                style={{ cursor: "pointer", height: "40px" }}
-                                onClick={() =>
-                                  handleFilterKategori(el.toString())
-                                }
-                                key={i}
-                              >
-                                <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                  {el.toString().toUpperCase()}
-                                </div>
+                            </div>
+                          </SplideSlide>
+                        ) : (
+                          <SplideSlide>
+                            <div
+                              className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
+                              style={{ cursor: "pointer", height: "40px" }}
+                              onClick={() =>
+                                handleFilterKategori(el.toString())
+                              }
+                              key={i}
+                            >
+                              <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                {el.toString().toUpperCase()}
                               </div>
-                            </SplideSlide>
-                          );
-                        })
+                            </div>
+                          </SplideSlide>
+                        );
+                      })
                       : null}
                   </Splide>
                 </div>
@@ -371,38 +371,38 @@ const Galeri = () => {
                   )}
                   {kategoriToShow
                     ? kategoriToShow.map((el, i) => {
-                        return kategoriGaleri == el ? (
-                          <SplideSlide>
-                            <div
-                              className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
-                              style={{ cursor: "pointer", height: "40px" }}
-                              onClick={() =>
-                                handleFilterKategori(el.toString())
-                              }
-                              key={i}
-                            >
-                              <div className="my-1 mx-3 py-1 px-3 text-white">
-                                {el.toString().toUpperCase()}
-                              </div>
+                      return kategoriGaleri == el ? (
+                        <SplideSlide>
+                          <div
+                            className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
+                            style={{ cursor: "pointer", height: "40px" }}
+                            onClick={() =>
+                              handleFilterKategori(el.toString())
+                            }
+                            key={i}
+                          >
+                            <div className="my-1 mx-3 py-1 px-3 text-white">
+                              {el.toString().toUpperCase()}
                             </div>
-                          </SplideSlide>
-                        ) : (
-                          <SplideSlide>
-                            <div
-                              className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
-                              style={{ cursor: "pointer", height: "40px" }}
-                              onClick={() =>
-                                handleFilterKategori(el.toString())
-                              }
-                              key={i}
-                            >
-                              <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                {el.toString().toUpperCase()}
-                              </div>
+                          </div>
+                        </SplideSlide>
+                      ) : (
+                        <SplideSlide>
+                          <div
+                            className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
+                            style={{ cursor: "pointer", height: "40px" }}
+                            onClick={() =>
+                              handleFilterKategori(el.toString())
+                            }
+                            key={i}
+                          >
+                            <div className="my-1 mx-3 py-1 px-3 text-muted">
+                              {el.toString().toUpperCase()}
                             </div>
-                          </SplideSlide>
-                        );
-                      })
+                          </div>
+                        </SplideSlide>
+                      );
+                    })
                     : null}
                 </Splide>
               )}
@@ -465,38 +465,38 @@ const Galeri = () => {
                   )}
                   {kategoriToShow
                     ? kategoriToShow.map((el, i) => {
-                        return kategoriGaleri == el ? (
-                          <SplideSlide>
-                            <div
-                              className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
-                              style={{ cursor: "pointer", height: "40px" }}
-                              onClick={() =>
-                                handleFilterKategori(el.toString())
-                              }
-                              key={i}
-                            >
-                              <div className="my-1 mx-3 py-1 px-3 text-white">
-                                {el.toString().toUpperCase()}
-                              </div>
+                      return kategoriGaleri == el ? (
+                        <SplideSlide>
+                          <div
+                            className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
+                            style={{ cursor: "pointer", height: "40px" }}
+                            onClick={() =>
+                              handleFilterKategori(el.toString())
+                            }
+                            key={i}
+                          >
+                            <div className="my-1 mx-3 py-1 px-3 text-white">
+                              {el.toString().toUpperCase()}
                             </div>
-                          </SplideSlide>
-                        ) : (
-                          <SplideSlide>
-                            <div
-                              className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
-                              style={{ cursor: "pointer", height: "40px" }}
-                              onClick={() =>
-                                handleFilterKategori(el.toString())
-                              }
-                              key={i}
-                            >
-                              <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                {el.toString().toUpperCase()}
-                              </div>
+                          </div>
+                        </SplideSlide>
+                      ) : (
+                        <SplideSlide>
+                          <div
+                            className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
+                            style={{ cursor: "pointer", height: "40px" }}
+                            onClick={() =>
+                              handleFilterKategori(el.toString())
+                            }
+                            key={i}
+                          >
+                            <div className="my-1 mx-3 py-1 px-3 text-muted">
+                              {el.toString().toUpperCase()}
                             </div>
-                          </SplideSlide>
-                        );
-                      })
+                          </div>
+                        </SplideSlide>
+                      );
+                    })
                     : null}
                 </Splide>
               </div>
@@ -559,38 +559,38 @@ const Galeri = () => {
                   )}
                   {kategoriToShow
                     ? kategoriToShow.map((el, i) => {
-                        return kategoriGaleri == el ? (
-                          <SplideSlide>
-                            <div
-                              className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
-                              style={{ cursor: "pointer", height: "40px" }}
-                              onClick={() =>
-                                handleFilterKategori(el.toString())
-                              }
-                              key={i}
-                            >
-                              <div className="my-1 mx-3 py-1 px-3 text-white">
-                                {el.toString().toUpperCase()}
-                              </div>
+                      return kategoriGaleri == el ? (
+                        <SplideSlide>
+                          <div
+                            className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
+                            style={{ cursor: "pointer", height: "40px" }}
+                            onClick={() =>
+                              handleFilterKategori(el.toString())
+                            }
+                            key={i}
+                          >
+                            <div className="my-1 mx-3 py-1 px-3 text-white">
+                              {el.toString().toUpperCase()}
                             </div>
-                          </SplideSlide>
-                        ) : (
-                          <SplideSlide>
-                            <div
-                              className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
-                              style={{ cursor: "pointer", height: "40px" }}
-                              onClick={() =>
-                                handleFilterKategori(el.toString())
-                              }
-                              key={i}
-                            >
-                              <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                {el.toString().toUpperCase()}
-                              </div>
+                          </div>
+                        </SplideSlide>
+                      ) : (
+                        <SplideSlide>
+                          <div
+                            className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
+                            style={{ cursor: "pointer", height: "40px" }}
+                            onClick={() =>
+                              handleFilterKategori(el.toString())
+                            }
+                            key={i}
+                          >
+                            <div className="my-1 mx-3 py-1 px-3 text-muted">
+                              {el.toString().toUpperCase()}
                             </div>
-                          </SplideSlide>
-                        );
-                      })
+                          </div>
+                        </SplideSlide>
+                      );
+                    })
                     : null}
                 </Splide>
               </div>
@@ -632,8 +632,8 @@ const Galeri = () => {
                       key={i}
                       onMouseEnter={() => handleMouseEnter(i)}
                       onMouseLeave={() => handleMouseLeave(i)}
-                      // onMouseOver={() => handleMouseEnter(i)}
-                      // onMouseOut={() => handleMouseLeave(i)}
+                    // onMouseOver={() => handleMouseEnter(i)}
+                    // onMouseOut={() => handleMouseLeave(i)}
                     >
                       {show && show[i] === false ? (
                         <div
@@ -687,8 +687,8 @@ const Galeri = () => {
                             <div className="d-flex flex-column">
                               <div>
                                 {windowDimensions &&
-                                windowDimensions.width &&
-                                windowDimensions.width <= 770 ? (
+                                  windowDimensions.width &&
+                                  windowDimensions.width <= 770 ? (
                                   <div className="font-weight-bolder text-white mb-5 mx-5">
                                     {handleTitleToTrim(el.judul)}
                                   </div>
@@ -729,23 +729,21 @@ const Galeri = () => {
               onHide={() => handleCloseModal()}
               size={
                 windowDimensions &&
-                windowDimensions.width &&
-                windowDimensions.width < 768
+                  windowDimensions.width &&
+                  windowDimensions.width < 768
                   ? "sm"
                   : "lg"
               }
-              // dialogClassName={`${styles.padModalGaleri} rounded-lg`}
               dialogClassName="mx-10 mx-sm-auto rounded-lg"
               centered
               aria-labelledby="example-custom-modal-styling-title"
             >
               {/* <div className={`${styles.padModalGaleri} p-0 m-0`}> */}
               <Modal.Body
-                className={` p-0 m-0 ${
-                  windowDimensions && windowDimensions.width <= 768
-                    ? "overflow-auto"
-                    : ""
-                }`}
+                className={` p-0 m-0 ${windowDimensions && windowDimensions.width <= 768
+                  ? "overflow-auto"
+                  : ""
+                  }`}
                 style={
                   windowDimensions && windowDimensions.width >= 768
                     ? { height: "479px" }
@@ -754,50 +752,83 @@ const Galeri = () => {
               >
                 <div className="row">
                   <div className="col-12 col-md-12 col-lg-7 position-relative">
-                    {detail.gambar && detail.gambar.length !== 0 ? (
-                      <Splide
-                        options={{
-                          arrows: detail.gambar.length > 1 ? true : false,
-                          pagination: false,
-                          drag: "free",
-                          perPage: 1,
-                        }}
-                      >
-                        {detail.gambar.map((el, i) => {
-                          return (
-                            <SplideSlide key={i} className="position-relative">
-                              <div className={`${styles.closeModal} col-12`}>
-                                <i
-                                  className={`${styles.simbolX} ri-close-line text-dark`}
-                                  style={{ cursor: "pointer" }}
-                                  onClick={() => handleCloseModal()}
-                                />
-                              </div>
-                              <Image
-                                src={
-                                  process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                  "publikasi/images/" +
-                                  el.gambar
-                                }
-                                alt="Slider"
-                                width="100%"
-                                height="105%"
-                                layout="responsive"
-                                objectFit="cover"
-                              />
-                            </SplideSlide>
-                          );
-                        })}
-                      </Splide>
-                    ) : (
-                      // </div>
-
-                      <div className="container-fluid">
-                        <div className="row">
-                          <PulseLoaderRender />
-                        </div>
-                      </div>
-                    )}
+                    {
+                      detail && detail.gambar.length !== 0 ? (
+                        <>
+                          <div
+                            id="carouselExampleIndicators"
+                            className="carousel slide"
+                            data-ride="carousel"
+                          >
+                            <div
+                              className="carousel-inner"
+                            >
+                              {detail && detail.gambar.length !== 0
+                                ? detail.gambar.map((row, i) => {
+                                  return (
+                                    <div className={i === 0 ? "carousel-item active" : "carousel-item"} key={i}>
+                                      <div>
+                                        <Image
+                                          src={
+                                            process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                            "publikasi/images/" +
+                                            row.gambar
+                                          }
+                                          alt="Card Gallery"
+                                          width="100%"
+                                          height="105%"
+                                          layout="responsive"
+                                          objectFit="cover"
+                                        />
+                                      </div>
+                                    </div>
+                                  );
+                                })
+                                : null}
+                            </div>
+                            {
+                              detail?.gambar.length === 1 ? null :
+                                <div>
+                                  <button
+                                    className="carousel-control-prev"
+                                    type="button"
+                                    data-target="#carouselExampleIndicators"
+                                    data-slide="prev"
+                                    style={{
+                                      position: "absolute",
+                                      left: "-14px",
+                                      border: "none",
+                                      background: "none",
+                                    }}
+                                  >
+                                    <span
+                                      className="carousel-control-prev-icon"
+                                      aria-hidden="true"
+                                    ></span>
+                                  </button>
+                                  <button
+                                    className="carousel-control-next"
+                                    type="button"
+                                    data-target="#carouselExampleIndicators"
+                                    data-slide="next"
+                                    style={{
+                                      position: "absolute",
+                                      right: "-12px",
+                                      border: "none",
+                                      background: "none",
+                                    }}
+                                  >
+                                    <span
+                                      className="carousel-control-next-icon"
+                                      aria-hidden="true"
+                                    ></span>
+                                  </button>
+                                </div>
+                            }
+                          </div>
+                        </>
+                      ) : null
+                    }
                   </div>
 
                   <div
@@ -820,14 +851,14 @@ const Galeri = () => {
                     <h5
                       className={
                         windowDimensions &&
-                        windowDimensions.width &&
-                        windowDimensions.width <= 770
+                          windowDimensions.width &&
+                          windowDimensions.width <= 770
                           ? "text-dark text-wrap text-break font-weight-bolder mt-3"
                           : "text-dark text-wrap text-break font-weight-bolder mt-3"
                       }
                       style={
                         windowDimensions.width >= 770 &&
-                        detail.judul.length >= 100
+                          detail.judul.length >= 100
                           ? { fontSize: "20px", width: "95%" }
                           : { fontSize: "24px", width: "95%" }
                       }
@@ -838,8 +869,8 @@ const Galeri = () => {
                     <div
                       className={
                         windowDimensions &&
-                        windowDimensions.width &&
-                        windowDimensions.width <= 770
+                          windowDimensions.width &&
+                          windowDimensions.width <= 770
                           ? "row d-flex text-muted mr-4"
                           : "row d-flex text-muted"
                       }
@@ -852,14 +883,14 @@ const Galeri = () => {
                         <span>
                           {`Terbit : 
                                                 ${moment(
-                                                  detail.tanggal_publish
-                                                ).format("DD MMMM YYYY")}`}
+                            detail.tanggal_publish
+                          ).format("DD MMMM YYYY")}`}
                         </span>
                       </div>
 
                       {windowDimensions &&
-                      windowDimensions.width &&
-                      windowDimensions.width > 768 ? (
+                        windowDimensions.width &&
+                        windowDimensions.width > 768 ? (
                         detail.dibaca === undefined ? (
                           <span className="mb-1 ml-6 p-0 d-flex align-items-center">
                             <div className="">
@@ -878,20 +909,20 @@ const Galeri = () => {
                       ) : (
                         <div className="ml-4 my-1">
                           {windowDimensions &&
-                          windowDimensions.width &&
-                          windowDimensions.width > 768
+                            windowDimensions.width &&
+                            windowDimensions.width > 768
                             ? kategori.map((element, index) => {
-                                return detail.kategori_id == element.id ? (
-                                  <div
-                                    className={`${styles.kategoriModal} badge badge-light`}
-                                    key={index}
-                                  >
-                                    <div className="text-primary">
-                                      {element.nama_kategori}
-                                    </div>
+                              return detail.kategori_id == element.id ? (
+                                <div
+                                  className={`${styles.kategoriModal} badge badge-light`}
+                                  key={index}
+                                >
+                                  <div className="text-primary">
+                                    {element.nama_kategori}
                                   </div>
-                                ) : null;
-                              })
+                                </div>
+                              ) : null;
+                            })
                             : null}
                         </div>
                       )}
@@ -901,27 +932,27 @@ const Galeri = () => {
 
                     <div className="pr-3">
                       {windowDimensions &&
-                      windowDimensions.width &&
-                      windowDimensions.width >= 992 ? (
+                        windowDimensions.width &&
+                        windowDimensions.width >= 992 ? (
                         <p
                           className={`${styles.isiGaleriHome} text-justify`}
                           style={
                             windowDimensions &&
-                            windowDimensions.width > 768 &&
-                            detail?.judul.length >= 180
+                              windowDimensions.width > 768 &&
+                              detail?.judul.length >= 180
                               ? { maxHeight: "120px" }
                               : windowDimensions.width > 768 &&
                                 detail?.judul.length >= 130
-                              ? { maxHeight: "160px" }
-                              : {}
+                                ? { maxHeight: "160px" }
+                                : {}
                           }
                         >
                           {detail.isi_galeri}
                           <div
                             className={
                               windowDimensions &&
-                              windowDimensions.width &&
-                              windowDimensions.width <= 770
+                                windowDimensions.width &&
+                                windowDimensions.width <= 770
                                 ? "row mb-5 ml-3 mt-3"
                                 : "row mb-5 mt-3"
                             }
@@ -929,24 +960,24 @@ const Galeri = () => {
                             <div className="col-9 d-flex flex-row flex-wrap">
                               {detail.tag
                                 ? detail.tag.map((el, i) => {
-                                    {
-                                      el ? (
-                                        <div
-                                          className="border p-2 rounded mr-2 my-1"
-                                          key={i}
-                                          onClick={() => handleFilterTag(el)}
-                                          style={{
-                                            cursor: "pointer",
-                                            fontSize: "10px",
-                                          }}
-                                        >
-                                          {`#${el.toString().toUpperCase()}`}
-                                        </div>
-                                      ) : (
-                                        ""
-                                      );
-                                    }
-                                  })
+                                  {
+                                    el ? (
+                                      <div
+                                        className="border p-2 rounded mr-2 my-1"
+                                        key={i}
+                                        onClick={() => handleFilterTag(el)}
+                                        style={{
+                                          cursor: "pointer",
+                                          fontSize: "10px",
+                                        }}
+                                      >
+                                        {`#${el.toString().toUpperCase()}`}
+                                      </div>
+                                    ) : (
+                                      ""
+                                    );
+                                  }
+                                })
                                 : null}
                             </div>
 
@@ -993,26 +1024,26 @@ const Galeri = () => {
                             {detail.isi_galeri}
 
                             {windowDimensions &&
-                            windowDimensions.width &&
-                            windowDimensions.width > 768 ? (
+                              windowDimensions.width &&
+                              windowDimensions.width > 768 ? (
                               <div className="row mb-5 mt-3">
                                 <div className="col-9 d-flex flex-row flex-wrap">
                                   {detail.tag
                                     ? detail.tag.map((el, i) => {
-                                        return (
-                                          <div
-                                            className="border p-2 rounded mr-2 my-1"
-                                            key={i}
-                                            onClick={() => handleFilterTag(el)}
-                                            style={{
-                                              cursor: "pointer",
-                                              fontSize: "10px",
-                                            }}
-                                          >
-                                            #{el.toString().toUpperCase()}
-                                          </div>
-                                        );
-                                      })
+                                      return (
+                                        <div
+                                          className="border p-2 rounded mr-2 my-1"
+                                          key={i}
+                                          onClick={() => handleFilterTag(el)}
+                                          style={{
+                                            cursor: "pointer",
+                                            fontSize: "10px",
+                                          }}
+                                        >
+                                          #{el.toString().toUpperCase()}
+                                        </div>
+                                      );
+                                    })
                                     : null}
                                 </div>
 
@@ -1049,17 +1080,17 @@ const Galeri = () => {
                   <div className="col-9 d-flex flex-row flex-wrap">
                     {detail.tag
                       ? detail.tag.map((el, i) => {
-                          return (
-                            <div
-                              className="border p-2 rounded mr-9 my-1 ml-n7"
-                              key={i}
-                              onClick={() => handleFilterTag(el)}
-                              style={{ cursor: "pointer", fontSize: "10px" }}
-                            >
-                              #{el.toString().toUpperCase()}
-                            </div>
-                          );
-                        })
+                        return (
+                          <div
+                            className="border p-2 rounded mr-9 my-1 ml-n7"
+                            key={i}
+                            onClick={() => handleFilterTag(el)}
+                            style={{ cursor: "pointer", fontSize: "10px" }}
+                          >
+                            #{el.toString().toUpperCase()}
+                          </div>
+                        );
+                      })
                       : null}
                   </div>
 
