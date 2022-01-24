@@ -155,7 +155,7 @@ export const getTagBerandaTestimoni = () => async dispatch => {
 
         dispatch({ type: TAG_BERANDA_TESTIMONI_REQUEST })
 
-        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/artikel&role=0`
+        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/artikel?role=0`
 
         const config = {
             headers: {
@@ -164,12 +164,12 @@ export const getTagBerandaTestimoni = () => async dispatch => {
         };
 
         const { data } = await axios.get(link, config)
-
+        
         dispatch({
             type: TAG_BERANDA_TESTIMONI_SUCCESS,
             payload: data,
         })
-
+        
     } catch (error) {
         dispatch({
             type: TAG_BERANDA_TESTIMONI_FAIL,

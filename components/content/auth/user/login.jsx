@@ -102,7 +102,7 @@ const LoginUser = () => {
               <HeaderLogoAuth />
 
               <h3
-                className="align-middle mt-10"
+                className="align-middle mt-12"
                 style={{
                   fontSize: "32px",
                   color: "#ffffff",
