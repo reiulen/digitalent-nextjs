@@ -77,8 +77,6 @@ const Galeri = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [detail]);
 
-  useEffect(() => {}, [windowDimensions]);
-
   useEffect(() => {
     handleCardIndex();
     handleKategoriToShow();
@@ -929,23 +927,25 @@ const Galeri = () => {
                             <div className="col-9 d-flex flex-row flex-wrap">
                               {detail.tag
                                 ? detail.tag.map((el, i) => {
-                                    {
-                                      el ? (
-                                        <div
-                                          className="border p-2 rounded mr-2 my-1"
-                                          key={i}
-                                          onClick={() => handleFilterTag(el)}
-                                          style={{
-                                            cursor: "pointer",
-                                            fontSize: "10px",
-                                          }}
-                                        >
-                                          {`#${el.toString().toUpperCase()}`}
-                                        </div>
-                                      ) : (
-                                        ""
-                                      );
-                                    }
+                                    return (
+                                      <div
+                                        className={
+                                          el
+                                            ? `border p-2 rounded mr-2 my-1`
+                                            : ""
+                                        }
+                                        key={i}
+                                        onClick={() => handleFilterTag(el)}
+                                        style={{
+                                          cursor: "pointer",
+                                          fontSize: "10px",
+                                        }}
+                                      >
+                                        {el
+                                          ? `#${el.toString().toUpperCase()}`
+                                          : ""}
+                                      </div>
+                                    );
                                   })
                                 : null}
                             </div>
