@@ -355,8 +355,6 @@ const StepTwo = ({ token, tokenPermission }) => {
 
     const answers = JSON.stringify(answer);
 
-    console.log(answer);
-
     if (valid) {
       const data = {
         subtance_question_bank_id: id,

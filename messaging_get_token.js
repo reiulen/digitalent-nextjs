@@ -29,9 +29,7 @@ export const getFirebaseToken = () => {
         // setTokenFound(false);
       }
     })
-    .catch((err) => {
-      console.log("An error occurred while retrieving token. ", err);
-    });
+    .catch((err) => {});
 };
 
 export const onMessageListener = () =>

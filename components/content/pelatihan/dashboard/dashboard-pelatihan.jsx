@@ -12,11 +12,7 @@ const DashboardPelatihan = () => {
   return (
     <PageWrapper>
       <section className="opening-hello">
-        <DashboardHeader
-          funcFilterYear={(value) => {
-            console.log(value);
-          }}
-        />
+        <DashboardHeader funcFilterYear={(value) => {}} />
         <Header
           name={"Kepala Badan Litbang SDM Kementerian Kominfo"}
           text={"Pelatihan Digital Talent Scholarship"}
