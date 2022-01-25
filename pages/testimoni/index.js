@@ -3,7 +3,6 @@ import { getSession } from "next-auth/client";
 
 import { wrapper } from "../../redux/store";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions"
-// import { getAllBerandaArtikel, getKategoriBerandaArtikel,  getTagBerandaArtikel} from "../../redux/actions/beranda/artikel.actions"
 import { getAllBerandaTestimoni, getKategoriBerandaTestimoni,  getTagBerandaTestimoni} from "../../redux/actions/beranda/testimoni.actions"
 import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";
 import LoadingDetailAkademi from "../../user-component-new/components/loader/LoadingDetailAkademi";
