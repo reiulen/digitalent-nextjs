@@ -637,6 +637,7 @@ const Galeri = () => {
                         <div
                           className="card position-relative"
                           style={{ objectFit: "cover", borderRadius: "10px" }}
+                          onClick={() => handleDataModal(el.id_gallery)}
                         >
                           <Image
                             src={
