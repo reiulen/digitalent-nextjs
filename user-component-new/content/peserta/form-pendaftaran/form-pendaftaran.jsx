@@ -110,9 +110,7 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
       setPindahan(false);
     }
   }, []);
-  useEffect(() => {
-    console.log(pindahan, "ni pindahan");
-  }, [pindahan]);
+
   return (
     <>
       <Card.Body>

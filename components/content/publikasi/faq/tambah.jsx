@@ -306,7 +306,7 @@ const TambahFaq = ({ token, id }) => {
                             </div>
 
                             {
-                                role_permission?.roles.includes("Super Admin") ?
+                                role_permission?.roles.includes("Super Admin") || role_permission.permissions.includes('publikasi.faq.manage') ?
                                     <div className="form-group row font-weight-bolder font-weight-bolder">
                                         <label
                                             htmlFor="staticEmail"

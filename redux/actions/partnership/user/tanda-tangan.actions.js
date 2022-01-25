@@ -38,10 +38,8 @@ export const fetchSignature = (token) => async (dispatch, getState) => {
     page: pageState,
   };
 
-  
   try {
-
-    const {data} = await axios.get(
+    const { data } = await axios.get(
       `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures`,
       {
         params,
@@ -52,8 +50,7 @@ export const fetchSignature = (token) => async (dispatch, getState) => {
       }
     );
     dispatch(successFetchSignature(data));
-  } catch (error) {
-  }
+  } catch (error) {}
 };
 
 export const successFetchSignature = (data) => {
@@ -78,7 +75,7 @@ export const setPage = (page) => {
     type: SET_PAGE_M_TD,
     page,
   };
-}
+};
 
 export const setLimit = (value) => {
   return {
@@ -127,9 +124,7 @@ export const changeStatusList = (formData, id, token) => {
         }
       );
       dispatch(successChangeStatusList());
-    } catch (error) {
-      // console.log(error);
-    }
+    } catch (error) {}
   };
 };
 
