@@ -190,6 +190,7 @@ const RegisterUser = () => {
                     placeholder="Masukkan NIK"
                     onBlur={() => simpleValidator.current.showMessageFor("nik")}
                     maxLength={16}
+                    max={16}
                   />
                   {simpleValidator.current.message(
                     "nik",
