@@ -537,8 +537,7 @@ const Beranda = ({ session }) => {
                                       onClick={() => {
                                         windowDimensions.width > 770
                                           ? null
-                                          : row.status === "Dibuka" &&
-                                            router.push(
+                                          : router.push(
                                               `/detail/pelatihan/${row.id}?akademiId=${akademiId}`
                                             );
                                       }}

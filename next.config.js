@@ -18,11 +18,14 @@ module.exports = {
     ],
   },
   env: {
-    NEXTAUTH_URL: "https://dts-dev.majapahit.id",
+    NEXTAUTH_URL: "https://dts-poc.majapahit.id",
     LOGO_DTS: ENDPOINT_PROD + "/pelatihan/storage/images/logo-dts.png",
 
     CAPTCHA_SITE_KEY: "6LeUmtIbAAAAAMltXjRDmRqns6MThDowaaYHz3YU",
     CAPTCHA_SECRET_KEY: "6LeUmtIbAAAAAAbA9yada3LOIktctPbfQ86SjhNn",
+
+    PATH_URL:
+      process.env.MODE !== "development" && "https://dts-poc.majapahit.id",
 
     // END_POINT_API_PUBLIKASI: "http://dts-publikasi-dev.majapahit.id/",
     END_POINT_API_PUBLIKASI: ENDPOINT_PROD + "/publikasi/",

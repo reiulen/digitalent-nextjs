@@ -125,8 +125,8 @@ const ListSummary = ({ token }) => {
         statusSubstansi != null ? statusSubstansi.value : null,
         statusPelatihan != null ? statusPelatihan.value : null,
         penyelenggara != null ? penyelenggara.value : null,
-        academy,
-        theme,
+        academy !== null ? academy.label : null,
+        theme !== null ? theme.label : null,
         token,
         token_permission
       )
@@ -164,6 +164,7 @@ const ListSummary = ({ token }) => {
     let pelaksanaan = datePelaksanaan.map((item) => {
       return moment(item).format("YYYY-MM-DD");
     });
+
     dispatch(
       getAllSummary(
         1,
