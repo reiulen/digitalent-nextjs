@@ -64,7 +64,7 @@ const Beranda = ({ session }) => {
     drag: "free",
     perPage: 4,
     height: "80px",
-    type: "loop",
+    // type: "loop",
     breakpoints: {
       1262: {
         height: "80px",
@@ -537,8 +537,7 @@ const Beranda = ({ session }) => {
                                       onClick={() => {
                                         windowDimensions.width > 770
                                           ? null
-                                          : row.status === "Dibuka" &&
-                                            router.push(
+                                          : router.push(
                                               `/detail/pelatihan/${row.id}?akademiId=${akademiId}`
                                             );
                                       }}

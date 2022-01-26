@@ -3,7 +3,7 @@ import Image from "next/image";
 import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 
-const AuthWrapper = ({ children, image, title,bgOpacity }) => {
+const AuthWrapper = ({ children, image, title, bgOpacity }) => {
   return (
     <>
       <Head>

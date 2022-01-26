@@ -227,6 +227,7 @@ const MultipleElementRender = ({
               name="upload-document"
               accept="image/png, image/jpeg , image/jpg, application/pdf"
               id="uploadThumbnail"
+              required
               onChange={(e) =>
                 funcInputChangeParentHandler(
                   e,

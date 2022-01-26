@@ -395,11 +395,7 @@ const UploadEvidence = ({ token }) => {
                             onChange={(e) => onChangeImage(e, i)}
                           />
                         </div>
-                        {row.imageFile !== "" ? (
-                          <label>{row.imageName}</label>
-                        ) : (
-                          ""
-                        )}
+                        {row.imageFile !== "" && <label>{row.imageName}</label>}
                       </div>
                     </div>
                   ))}
@@ -459,18 +455,8 @@ const UploadEvidence = ({ token }) => {
                         name="name"
                         value={row.name}
                         onChange={(e) => onInputTeacher(e, i)}
-                        onBlur={() =>
-                          simpleValidator.current.showMessageFor(
-                            `nama pengajar ${i + 1}`
-                          )
-                        }
+                        required
                       />
-                      {simpleValidator.current.message(
-                        `nama pengajar ${i + 1}`,
-                        row.name,
-                        "required",
-                        { className: "text-danger" }
-                      )}
                     </div>
                     <div className="form-group col-md-5 col-sm-10 mb-0 pb-0">
                       <label className="col-form-label font-weight-bold">
@@ -484,21 +470,11 @@ const UploadEvidence = ({ token }) => {
                         name="agency"
                         value={row.agency}
                         onChange={(e) => onInputTeacher(e, i)}
-                        onBlur={() =>
-                          simpleValidator.current.showMessageFor(
-                            `instansi pengajar ${i + 1}`
-                          )
-                        }
+                        required
                       />
-                      {simpleValidator.current.message(
-                        `instansi pengajar ${i + 1}`,
-                        row.agency,
-                        "required",
-                        { className: "text-danger" }
-                      )}
                     </div>
                     <div className="col-md-2 d-flex align-items-end">
-                      {i !== 0 ? (
+                      {i !== 0 && (
                         <button
                           className="btn btn-link-action bg-danger text-white mt-2"
                           type="button"
@@ -506,8 +482,6 @@ const UploadEvidence = ({ token }) => {
                         >
                           <i className="ri-delete-bin-fill p-0 text-white"></i>
                         </button>
-                      ) : (
-                        ""
                       )}
                     </div>
                   </>
