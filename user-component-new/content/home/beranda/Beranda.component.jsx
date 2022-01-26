@@ -64,7 +64,7 @@ const Beranda = ({ session }) => {
     drag: "free",
     perPage: 4,
     height: "80px",
-    type: "loop",
+    // type: "loop",
     breakpoints: {
       1262: {
         height: "80px",
