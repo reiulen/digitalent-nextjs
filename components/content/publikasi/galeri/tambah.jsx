@@ -460,7 +460,7 @@ const TambahGaleri = ({ token, id }) => {
                                         {image?.map((row, i) => (
                                             <div className={`${styles.imgPrevTambah} col-4 col-md-2 col-lg-2 p-0 mb-2`} key={row.key} >
                                                 <div
-                                                    className="position-relative mx-auto mt-5"
+                                                    className={row.imagePreview === "" ? "position-relative mx-auto mt-5" : "position-relative mx-auto mt-10"}
                                                     style={{ maxWidth: "max-content" }}
                                                 >
                                                     <figure
@@ -517,7 +517,6 @@ const TambahGaleri = ({ token, id }) => {
 
                                                     {
                                                         image[i].imageName !== "" ?
-
                                                             <div className="mt-3 text-danger">
                                                                 <small className="text-danger">{image[i].imageName}</small>
                                                             </div>

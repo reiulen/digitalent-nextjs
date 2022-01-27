@@ -304,9 +304,9 @@ const EditFaq = ({ token }) => {
                                             {simpleValidator.current.message("kategori", kategori_id, "required", { className: "text-danger" })}
                                         </div>
                                     </div>
-
+                                    
                                     {
-                                        role_permission.roles.includes("Super Admin") ?
+                                        role_permission.roles.includes("Super Admin") || role_permission.permissions.includes('publikasi.faq.manage') ?
                                             <div className="form-group row">
                                                 <label
                                                     htmlFor="staticEmail"
@@ -337,7 +337,7 @@ const EditFaq = ({ token }) => {
                                     }
 
                                     {
-                                        role_permission?.roles.includes("Super Admin") ?
+                                        role_permission?.roles.includes("Super Admin") || role_permission.permissions.includes('publikasi.faq.manage') ?
                                             disablePublishDate === false ?
                                                 <div className="form-group">
                                                     <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>

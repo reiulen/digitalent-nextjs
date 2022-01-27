@@ -444,7 +444,8 @@ const EditGaleri = ({ token }) => {
                                                 {image.map((row, i) => (
                                                     <div className={`${styles.imgPrevTambah} col-4 col-md-2 col-lg-2 p-0 mb-2`} key={row.id}>
                                                         <div
-                                                            className="position-relative mx-auto mt-5"
+                                                            // className="position-relative mx-auto mt-5"
+                                                            className={row.imagePreview ? "position-relative mx-auto mt-10" : "position-relative mx-auto mt-3"}
                                                             style={{ maxWidth: "max-content" }}
                                                         >
                                                             <figure
@@ -506,7 +507,7 @@ const EditGaleri = ({ token }) => {
                                                 ))}
 
                                                 <button
-                                                    className="btn btn-primary-rounded-full text-white ml-5 mt-5"
+                                                    className="btn btn-primary-rounded-full text-white ml-5"
                                                     style={{ borderRadius: '10px', textAlign: 'center', width: '45px' }}
                                                     onClick={onAddImage}
                                                     type="button"
