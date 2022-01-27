@@ -112,9 +112,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
           signOut();
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   return (

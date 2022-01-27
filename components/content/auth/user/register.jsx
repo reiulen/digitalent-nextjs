@@ -56,23 +56,21 @@ const RegisterUser = () => {
   };
 
   const handlePassword = (value) => {
-    // if (value !== passwordConfirm) {
-    //   setMessageDontMatch(true);
-    //   setPassword(value);
-    // } else {
-    //   setMessageDontMatch(false);
-    // }
+    if (value !== passwordConfirm) {
+      setMessageDontMatch(true);
+    } else {
+      setMessageDontMatch(false);
+    }
     setPassword(value);
   };
 
   const handlePasswordConfirm = (value) => {
     if (value !== password) {
       setMessageDontMatch(true);
-      setPasswordConfirm(value);
     } else {
       setMessageDontMatch(false);
-      setPasswordConfirm(value);
     }
+    setPasswordConfirm(value);
   };
 
   const handlerSubmit = async (e) => {
@@ -190,6 +188,7 @@ const RegisterUser = () => {
                     placeholder="Masukkan NIK"
                     onBlur={() => simpleValidator.current.showMessageFor("nik")}
                     maxLength={16}
+                    max={16}
                   />
                   {simpleValidator.current.message(
                     "nik",
@@ -330,7 +329,7 @@ const RegisterUser = () => {
                       className: "text-danger",
                     }
                   )}
-                  {messageDontMatch && (
+                  {passwordConfirm !== "" && messageDontMatch && (
                     <p className="text-danger">Password tidak sama</p>
                   )}
                 </div>

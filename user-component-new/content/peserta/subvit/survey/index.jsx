@@ -491,7 +491,6 @@ const SubtansiUser = ({ token }) => {
 
   return (
     <>
-      {/* {console.log(data.list_questions)} */}
       <Container className={styles.baseAll} fluid>
         <Card className={styles.cardTop}>
           <Row>
@@ -903,14 +902,6 @@ const SubtansiUser = ({ token }) => {
                                     {a.answer.map((ans, index) => {
                                       return (
                                         <>
-                                          {/* {console.log(
-                                        sessionStorage.getItem(
-                                          router.query.id +
-                                            parent +
-                                            index +
-                                            "td"
-                                        )
-                                      )} */}
                                           <Card
                                             className={
                                               sessionStorage.getItem(
@@ -1090,14 +1081,6 @@ const SubtansiUser = ({ token }) => {
                                       {a.answer.map((ans, index) => {
                                         return (
                                           <>
-                                            {/* {console.log(
-                                        sessionStorage.getItem(
-                                          router.query.id +
-                                            parent +
-                                            index +
-                                            "td"
-                                        )
-                                      )} */}
                                             <Card
                                               className={
                                                 sessionStorage.getItem(

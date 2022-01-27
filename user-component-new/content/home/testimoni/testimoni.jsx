@@ -1524,11 +1524,11 @@ const Testimoni = () => {
                                             :
                                             <select className="form-control rounded-pill">
                                                 <option value="" selected>Semua Akademi</option>
-                                                <option value="">
+                                                {/* <option value="">
                                                     <div className="spinner-border text-dark" role="status">
                                                         <span className="sr-only">Memuat...</span>
                                                     </div>
-                                                </option>
+                                                </option> */}
                                             </select>
                                     }
 
