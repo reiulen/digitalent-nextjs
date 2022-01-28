@@ -59,16 +59,16 @@ const Dashboard = ({ session, success }) => {
   const [col, setCol] = useState(0);
 
   useEffect(() => {
-    if (dataDashboard?.subvit.subvit.status) {
+    if (dataDashboard?.subvit?.subvit?.status) {
       setCol(col + 1);
     }
-    if (dataDashboard?.subvit.survei.status) {
+    if (dataDashboard?.subvit?.survei?.status) {
       setCol(col + 1);
     }
-    if (dataDashboard?.subvit.trivia.status) {
+    if (dataDashboard?.subvit?.trivia?.status) {
       setCol(col + 1);
     }
-    if (dataDashboard?.subvit.sertifikat.status) {
+    if (dataDashboard?.subvit?.sertifikat?.status) {
       setCol(col + 1);
     }
 
@@ -162,21 +162,21 @@ const Dashboard = ({ session, success }) => {
           />
         </Row>
         <Row className="mx-1">
-          {dataDashboard?.subvit.subvit.status && (
+          {dataDashboard?.subvit?.subvit?.status && (
             <CardPage
               backgroundImage="new-game-4.svg"
               background="primary"
               color="#6C6C6C"
-              link={`/peserta/test-substansi/panduan-substansi?no=${dataDashboard?.subvit.subvit.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit.subvit.pelatihan_id}&id_tema=${dataDashboard?.subvit.subvit.tema_id}`}
+              link={`/peserta/test-substansi/panduan-substansi?no=${dataDashboard?.subvit?.subvit?.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit?.subvit?.pelatihan_id}&id_tema=${dataDashboard?.subvit?.subvit?.tema_id}`}
               text="Lakukan Test Substansi"
               desc="Anda Belum Melakukan Test Substansi"
-              total={dataDashboard?.subvit.subvit.status}
+              total={dataDashboard?.subvit?.subvit?.status}
               isSubvit={true}
               col={col === 1 ? 12 : 6}
             />
           )}
 
-          {dataDashboard?.subvit.survei.status && (
+          {dataDashboard?.subvit?.survei.status && (
             <CardPage
               backgroundImage="new-game-3.svg"
               background="success"
@@ -184,12 +184,12 @@ const Dashboard = ({ session, success }) => {
               link={`/peserta/survey/panduan-survey?no=${dataDashboard?.subvit?.survei?.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit?.survei?.pelatihan_id}&id_tema=${dataDashboard?.subvit?.survei?.tema_id}`}
               text="Lakukan Survey"
               desc="Anda Belum Melakukan Test Survey"
-              total={dataDashboard?.subvit.survei.status}
+              total={dataDashboard?.subvit?.survei.status}
               isSubvit={true}
               col={col === 1 ? 12 : 6}
             />
           )}
-          {dataDashboard?.subvit.trivia.status && (
+          {dataDashboard?.subvit?.trivia.status && (
             <CardPage
               backgroundImage="new-game-1.svg"
               background="danger"
@@ -197,12 +197,12 @@ const Dashboard = ({ session, success }) => {
               link={`/peserta/trivia/panduan-trivia?no=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_tema=${dataDashboard?.subvit?.trivia?.tema_id}`}
               text="Lakukan TRIVIA"
               desc="Anda Belum Melakukan TRIVIA"
-              total={dataDashboard.subvit.trivia.status}
+              total={dataDashboard.subvit?.trivia.status}
               isSubvit={true}
               col={col === 1 ? 12 : 6}
             />
           )}
-          {dataDashboard?.subvit.sertifikat.status && (
+          {dataDashboard?.subvit?.sertifikat.status && (
             <CardPage
               backgroundImage="new-game-2.svg"
               background="warning"
@@ -215,7 +215,7 @@ const Dashboard = ({ session, success }) => {
               }`}
               text="Unduh Sertifikat"
               desc="Anda Sudah bisa mengunduh Sertifikat"
-              total={dataDashboard?.subvit.sertifikat.status}
+              total={dataDashboard?.subvit?.sertifikat.status}
               isSubvit={true}
               col={col === 1 ? 12 : 6}
             />
@@ -295,6 +295,12 @@ const Dashboard = ({ session, success }) => {
                                 dataDashboard?.pelatihan.pelatihan_berjalan
                                   .gambar
                         }
+                        onError={({ currentTarget }) => {
+                          currentTarget.onerror = null; // prevents looping
+                          currentTarget.src = "/assets/media/default-card.png";
+                          // e.target = "/assets/media/default-card.png";
+                          // e.currentTarget = "/assets/media/default-card.png";
+                        }}
                         width={400}
                         height={180}
                         objectFit="cover"
@@ -334,6 +340,9 @@ const Dashboard = ({ session, success }) => {
                             roundedCircle
                             className={`${style.image_card_pelatihan} img-fluild`}
                             alt="Image"
+                            onError={(e) => {
+                              console.log(e);
+                            }}
                           />
                         </div>
                         <div
@@ -729,7 +738,7 @@ const Dashboard = ({ session, success }) => {
                 <Card.Title className="d-flex">
                   <p className={style.card_title}>Beasiswa Kominfo</p>
                   <div className="ml-auto">
-                    <Link href="https://beasiswa-dev.majapahit.id/" passHref>
+                    <Link href={`${process.env.PATH_BEASISWA}`} passHref>
                       <p
                         className={`d-flex align-items-center ${style.kunjungi_link}`}
                       >
@@ -752,11 +761,11 @@ const Dashboard = ({ session, success }) => {
                       onClick={() => {
                         if (row.type == "luar-negeri") {
                           router.push(
-                            "https://beasiswa-dev.majapahit.id/beasiswa/luar-negeri"
+                            `${process.env.PATH_BEASISWA}beasiswa/luar-negeri`
                           );
                         } else {
                           router.push(
-                            "https://beasiswa-dev.majapahit.id/beasiswa/dalam-negeri"
+                            `${process.env.PATH_BEASISWA}beasiswa/dalam-negeri`
                           );
                         }
                       }}
