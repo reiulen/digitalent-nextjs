@@ -83,7 +83,10 @@ const Sidebar = ({ session }) => {
   );
 
   useEffect(() => {
-    if (!token_permission) {
+    if (
+      !token_permission &&
+      session?.user?.user?.data?.user?.roles[0] != "mitra"
+    ) {
       signOut();
     }
   }, [token_permission]);
