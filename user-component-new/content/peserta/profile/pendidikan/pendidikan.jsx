@@ -10,6 +10,9 @@ const Pendidikan = ({ token }) => {
   const { error: errorPendidikan, pendidikan } = useSelector(
     (state) => state.dataPendidikan
   );
+  const { error: errorDataPribadi, dataPribadi } = useSelector(
+    (state) => state.getDataPribadi
+  );
 
   useEffect(() => {
     // if (errorPendidikan) {
@@ -395,13 +398,13 @@ const Pendidikan = ({ token }) => {
                             }}
                           >
                             <PDFReader
-                              url={`${process.env.END_POINT_API_IMAGE_BEASISWA}${pendidikan.ijasah}`}
+                              url={`${dataPribadi.file_path}${pendidikan.ijasah}`}
                               scale={0.9}
                             />
                           </div>
                         ) : (
                           <img
-                            src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${pendidikan.ijasah}`}
+                            src={`${dataPribadi.file_path}${pendidikan.ijasah}`}
                             alt="file ijasah"
                             className="img-fluid"
                           />
