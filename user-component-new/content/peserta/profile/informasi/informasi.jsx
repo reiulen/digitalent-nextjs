@@ -10,7 +10,6 @@ const Informasi = ({ funcViewEdit, token }) => {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
-  console.log(dataPribadi);
   useEffect(() => {
     dispatch(getDataPribadi(token));
   }, [dispatch, token]);

@@ -13,7 +13,6 @@ const Pendidikan = ({ token }) => {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
-  console.log(dataPribadi);
 
   useEffect(() => {
     // if (errorPendidikan) {
