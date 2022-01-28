@@ -66,7 +66,7 @@ export const getDataGeneral = (token, tokenPermission) =>
       dispatch({ type: DATA_GENERAL_REQUEST });
       let link =
         process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/setting/general/get`;
+        `sso/api/setting/general/get`;
 
       const config = {
         headers: {

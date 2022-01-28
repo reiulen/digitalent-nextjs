@@ -303,7 +303,7 @@ const Table = ({ token }) => {
                       </td>
                     </tr>
                   ) : allMitra?.mitraAll?.data &&
-                    allMitra?.mitraAll?.data?.list_mitras?.length === 0 ? (
+                  allMitra?.mitraAll?.data?.list_mitras?.length === 0 || allMitra?.mitraAll?.data === undefined ? (
                     <tr>
                       <td colSpan={6} className='align-middle text-center'>
                           Data Kosong
