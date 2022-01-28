@@ -24,7 +24,7 @@ const GeneralPage = ({ token }) => {
   const [description, setDescription] = useState("");
   const [address, setAddress] = useState("");
   const [imageLogoApi, setImageLogoApi] = useState("");
-  const [imageLogoApi2, setImageLogoApi2] = useState(data_general?.footer_logo);
+  const [imageLogoApi2, setImageLogoApi2] = useState([]);
   const [imageLogoApiOld, setImageLogoApiOld] = useState("");
   const [imageLogoApiOld2, setImageLogoApiOld2] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
@@ -52,9 +52,7 @@ const GeneralPage = ({ token }) => {
     },
   ]);
 
-  const [formSocialMedia, setFormSocialMedia] = useState(
-    data_general?.social_media
-  );
+  const [formSocialMedia, setFormSocialMedia] = useState([]);
   const [formExternalLink, setFormExternalLink] = useState([
     {
       name: "",
@@ -425,9 +423,9 @@ const GeneralPage = ({ token }) => {
           setColor(data.data.color);
           setFormExternalLink(data.data.external_link);
           setImageLogoApi(data.data.header_logo);
-          // setImageLogoApi2(data.data.footer_logo);
+          setImageLogoApi2(data.data.footer_logo);
           setDescription(data.data.logo_description);
-          // setFormSocialMedia(data.data.social_media);
+          setFormSocialMedia(data.data.social_media);
           setColorPrimary(data.data.color[0].color);
           setColorSecondary(data.data.color[1].color);
           setColorExtras(data.data.color[2].color);
