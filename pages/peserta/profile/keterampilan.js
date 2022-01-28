@@ -44,7 +44,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login",
+            destination: process.env.PATH_URL,
             permanent: false,
           },
         };
@@ -53,7 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (data.user.roles[0] !== "user") {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login",
+            destination: process.env.PATH_URL,
             permanent: false,
           },
         };

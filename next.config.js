@@ -103,5 +103,7 @@ module.exports = {
     FB_MEASUREMENT_ID: "G-Z43DV3R59G",
     FB_FCM_KEY_PAIR:
       "BAseWMZsJmdofVidmAZEOMnFjB2fZQFDmPtuMVPJEOFP5nLhogqDkMYolmQ-d4HABaS8nOakUaXt70DsrqHWR2Y",
+
+    PATH_BEASISWA: "https://beasiswa-poc.majapahit.id/",
   },
 };
