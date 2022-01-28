@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { helperDigitsCount } from "../../../../../utils/middleware/helper";
+import millify from "millify";
 
 export default function ComeJoin({ session }) {
   const { peserta, loading, error } = useSelector(
@@ -9,18 +10,17 @@ export default function ComeJoin({ session }) {
   );
 
   const fotmatThousand = (number) => {
-    let value = null;
-    if (helperDigitsCount(number) === 4) {
-      value = (number + "").slice(0, 1);
-    } else if (helperDigitsCount(number) === 5) {
-      value = (number + "").slice(0, 2);
-    } else if (helperDigitsCount(number) > 6) {
-      value = (number + "").slice(0, 3);
-    } else {
-      value = number;
-    }
+    // if (helperDigitsCount(number) === 4) {
+    //   value = (number + "").slice(0, 1);
+    // } else if (helperDigitsCount(number) === 5) {
+    //   value = (number + "").slice(0, 2);
+    // } else if (helperDigitsCount(number) > 6) {
+    //   value = (number + "").slice(0, 3);
+    // } else {
+    //   value = number;
+    // }
 
-    return value;
+    return millify(number);
   };
 
   return (
@@ -59,9 +59,7 @@ export default function ComeJoin({ session }) {
                       className="fz-32 fw-700 mb-1"
                       style={{ color: "#0063CC" }}
                     >
-                      {helperDigitsCount(peserta.pelatihan) > 4
-                        ? fotmatThousand(peserta.pelatihan) + "K"
-                        : peserta.pelatihan}
+                      {fotmatThousand(peserta.pelatihan)}
                     </p>
                     <p className="fz-14" style={{ color: "#6C6C6C" }}>
                       Pelatihan
@@ -80,9 +78,7 @@ export default function ComeJoin({ session }) {
                       className="fz-32 fw-700 mb-1"
                       style={{ color: "#0063CC" }}
                     >
-                      {helperDigitsCount(peserta.pendaftar) > 4
-                        ? fotmatThousand(peserta.pendaftar) + "K"
-                        : peserta.pendaftar}
+                      {fotmatThousand(peserta.pendaftar)}
                     </p>
                     <p className="fz-14" style={{ color: "#6C6C6C" }}>
                       Pendaftar
@@ -101,9 +97,7 @@ export default function ComeJoin({ session }) {
                       className="fz-32 fw-700 mb-1"
                       style={{ color: "#0063CC" }}
                     >
-                      {helperDigitsCount(peserta.peserta) > 4
-                        ? fotmatThousand(peserta.peserta) + "K"
-                        : peserta.peserta}
+                      {fotmatThousand(peserta.peserta)}
                     </p>
                     <p className="fz-14" style={{ color: "#6C6C6C" }}>
                       Peserta
@@ -122,9 +116,7 @@ export default function ComeJoin({ session }) {
                       className="fz-32 fw-700 mb-1"
                       style={{ color: "#0063CC" }}
                     >
-                      {helperDigitsCount(peserta.lulus) > 4
-                        ? fotmatThousand(peserta.lulus) + "K"
-                        : peserta.lulus}
+                      {fotmatThousand(peserta.lulus)}
                     </p>
                     <p className="fz-14" style={{ color: "#6C6C6C" }}>
                       Peserta Lulus

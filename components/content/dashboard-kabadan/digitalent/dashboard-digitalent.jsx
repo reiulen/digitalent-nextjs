@@ -11,14 +11,17 @@ import CardInfo from "../component/card-info.component";
 import ListCardInfo from "../component/list-card-info.component";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getDigitalentStatistikAkademiPendaftar,
+  getDigitalentTotalDataPendaftar,
+  getDigitalentTotalPengguna,
   getDigitalentStatistikAkademiPeserta,
-  getDigitalentStatistikMitraPendaftar,
+  getDigitalentStatistikAkademiPendaftar,
   getDigitalentStatistikMitraPeserta,
+  getDigitalentStatistikMitraPendaftar,
   getDigitalentTablePendaftaran,
   getDigitalentPesertaWilayah,
-  getDigitalentProvinsiPendaftar,
   getDigitalentProvinsiPeserta,
+  getDigitalentProvinsiPendaftar,
+  getDigitalentDataPribadi,
 } from "../../../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
 import { dropdownTemabyAkademi } from "../../../../redux/actions/pelatihan/function.actions";
 import { helperHandlePercentage } from "../../../../utils/middleware/helper";
@@ -58,6 +61,20 @@ const DashboardDigitalent = ({ token }) => {
   const [pageTablePendaftaran, setPageTablePendaftaran] = useState(1);
   const [pageProvinsiPendaftar, setPageProvinsiPendaftar] = useState(1);
   const [pageProvinsiPeserta, setPageProvinsiPeserta] = useState(1);
+
+  useEffect(() => {
+    dispatch(getDigitalentTotalDataPendaftar(token, token_permission));
+    dispatch(getDigitalentTotalPengguna(token, token_permission));
+    dispatch(getDigitalentStatistikAkademiPeserta(token, token_permission));
+    dispatch(getDigitalentStatistikAkademiPendaftar(token, token_permission));
+    dispatch(getDigitalentStatistikMitraPeserta(token, token_permission));
+    dispatch(getDigitalentStatistikMitraPendaftar(token, token_permission));
+    dispatch(getDigitalentTablePendaftaran(token, token_permission));
+    dispatch(getDigitalentPesertaWilayah(token, token_permission));
+    dispatch(getDigitalentProvinsiPeserta(token, token_permission));
+    dispatch(getDigitalentProvinsiPendaftar(token, token_permission));
+    dispatch(getDigitalentDataPribadi(token, token_permission));
+  }, [dispatch]);
 
   const {
     loading: loadingTotalPengguna,

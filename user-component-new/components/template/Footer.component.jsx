@@ -73,7 +73,7 @@ export default function Footer({ session }) {
               <Image
                 src={
                   footerLogo
-                    ? process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                    ? process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT +
                       "site-management/images/" +
                       footerLogo
                     : ImageWhiteLogo
@@ -109,7 +109,7 @@ export default function Footer({ session }) {
                           key={i}
                           src={
                             (footer &&
-                              process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                              process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT +
                                 "site-management/images/" +
                                 row.image_logo) ||
                             "/assets/media/logo-default.png"

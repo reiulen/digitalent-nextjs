@@ -81,71 +81,71 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(
-        getDigitalentTotalDataPendaftar(
-          session.user.user.data.token,
-          token_permission
-        )
-      );
-      await store.dispatch(
-        getDigitalentTotalPengguna(
-          session.user.user.data.token,
-          token_permission
-        )
-      );
-      await store.dispatch(
-        getDigitalentStatistikAkademiPeserta(
-          session.user.user.data.token,
-          token_permission,
-          yearNow
-        )
-      );
-      await store.dispatch(
-        getDigitalentStatistikAkademiPendaftar(
-          session.user.user.data.token,
-          token_permission,
-          yearNow
-        )
-      );
-      await store.dispatch(
-        getDigitalentStatistikMitraPeserta(
-          session.user.user.data.token,
-          token_permission
-        )
-      );
-      await store.dispatch(
-        getDigitalentStatistikMitraPendaftar(
-          session.user.user.data.token,
-          token_permission
-        )
-      );
-      await store.dispatch(
-        getDigitalentTablePendaftaran(
-          session.user.user.data.token,
-          token_permission
-        )
-      );
-      await store.dispatch(
-        getDigitalentPesertaWilayah(
-          session.user.user.data.token,
-          token_permission
-        )
-      );
-      await store.dispatch(
-        getDigitalentProvinsiPeserta(
-          session.user.user.data.token,
-          token_permission
-        )
-      );
-      await store.dispatch(
-        getDigitalentProvinsiPendaftar(
-          session.user.user.data.token,
-          token_permission
-        )
-      );
-      await store.dispatch(
-        getDigitalentDataPribadi(session.user.user.data.token, token_permission)
-      );
+      // await store.dispatch(
+      //   getDigitalentTotalDataPendaftar(
+      //     session.user.user.data.token,
+      //     token_permission
+      //   )
+      // );
+      // await store.dispatch(
+      //   getDigitalentTotalPengguna(
+      //     session.user.user.data.token,
+      //     token_permission
+      //   )
+      // );
+      // await store.dispatch(
+      //   getDigitalentStatistikAkademiPeserta(
+      //     session.user.user.data.token,
+      //     token_permission,
+      //     yearNow
+      //   )
+      // );
+      // await store.dispatch(
+      //   getDigitalentStatistikAkademiPendaftar(
+      //     session.user.user.data.token,
+      //     token_permission,
+      //     yearNow
+      //   )
+      // );
+      // await store.dispatch(
+      //   getDigitalentStatistikMitraPeserta(
+      //     session.user.user.data.token,
+      //     token_permission
+      //   )
+      // );
+      // await store.dispatch(
+      //   getDigitalentStatistikMitraPendaftar(
+      //     session.user.user.data.token,
+      //     token_permission
+      //   )
+      // );
+      // await store.dispatch(
+      //   getDigitalentTablePendaftaran(
+      //     session.user.user.data.token,
+      //     token_permission
+      //   )
+      // );
+      // await store.dispatch(
+      //   getDigitalentPesertaWilayah(
+      //     session.user.user.data.token,
+      //     token_permission
+      //   )
+      // );
+      // await store.dispatch(
+      //   getDigitalentProvinsiPeserta(
+      //     session.user.user.data.token,
+      //     token_permission
+      //   )
+      // );
+      // await store.dispatch(
+      //   getDigitalentProvinsiPendaftar(
+      //     session.user.user.data.token,
+      //     token_permission
+      //   )
+      // );
+      // await store.dispatch(
+      //   getDigitalentDataPribadi(session.user.user.data.token, token_permission)
+      // );
       await store.dispatch(
         dropdownAkademi(session.user.user.data.token, token_permission)
       );

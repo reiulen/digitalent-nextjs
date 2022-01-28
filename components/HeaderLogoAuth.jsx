@@ -7,9 +7,10 @@ const HeaderLogoAuth = ({ type = "" }) => {
     <div className="d-flex col-lg-6 mx-auto p-0 justify-content-between">
       <div className="" style={{ cursor: "pointer" }}>
         <Link
-          href={`https://dts-dev.majapahit.id${
-            type === "register" ? "/register" : "/login"
-          }`}
+          href={
+            process.env.PATH_URL +
+            `${type === "register" ? "/register" : "/login"}`
+          }
           passHref
         >
           <Image
@@ -22,9 +23,10 @@ const HeaderLogoAuth = ({ type = "" }) => {
       </div>
       <div className="" style={{ cursor: "pointer" }}>
         <Link
-          href={`http://simonas-dev.majapahit.id${
-            type === "register" ? "/register" : "/login"
-          }`}
+          href={
+            process.env.PATH_SIMONAS +
+            `${type === "register" ? "/register" : "/login"}`
+          }
           passHref
         >
           <Image
