@@ -204,7 +204,8 @@ const DetailDokumenKerjasama = ({ token }) => {
                   }
                   onClick={() =>
                     window.open(
-                      `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com${pdfFIle}`
+                      `https://bucket.cloud.lintasarta.co.id:8082/dts-partnership${pdfFIle}`
+                      // `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com${pdfFIle}`
                     )
                   }
                   disabled={pdfFIle === null}
