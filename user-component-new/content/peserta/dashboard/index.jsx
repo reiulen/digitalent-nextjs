@@ -656,7 +656,7 @@ const Dashboard = ({ session, success }) => {
                 <Card.Title className="d-flex">
                   <p className={style.card_title}>SIMONAS</p>
                   <div className="ml-auto">
-                    <Link href="http://simonas-dev.majapahit.id/jobs" passHref>
+                    <Link href={process.env.PATH_SIMONAS + `/jobs`} passHref>
                       <p
                         className={`d-flex align-items-center ${style.kunjungi_link}`}
                       >

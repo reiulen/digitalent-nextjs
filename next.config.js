@@ -15,7 +15,6 @@ module.exports = {
       "dts-partnership-dev.s3-ap-southeast-1.amazonaws.com",
       "simonas-dev.majapahit.id",
       "dts-simonas.s3.ap-southeast-1.amazonaws.com",
-      "bucket.cloud.lintasarta.co.id",
     ],
   },
   env: {
@@ -27,6 +26,7 @@ module.exports = {
 
     PATH_URL:
       process.env.MODE !== "development" ? "https://dts-poc.majapahit.id" : "",
+    PATH_SIMONAS: "http://simonas-dev.majapahit.id",
 
     // END_POINT_API_PUBLIKASI: "http://dts-publikasi-dev.majapahit.id/",
     END_POINT_API_PUBLIKASI: ENDPOINT_PROD + "/publikasi/",
