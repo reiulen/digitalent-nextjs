@@ -65,7 +65,9 @@ export default function Custom404() {
               </h3>
               <button
                 className="btn btn-primary rounded-full font-weight-bolder text-center my-7"
-                onClick={() => router.push("/login")}
+                onClick={() =>
+                  (window.location = process.env.PATH_URL + "/login")
+                }
                 style={{
                   width: "50%",
                   backgroundColor: "white",
