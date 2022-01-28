@@ -227,7 +227,9 @@ const MultipleElementRender = ({
               name="upload-document"
               accept="image/png, image/jpeg , image/jpg, application/pdf"
               id="uploadThumbnail"
-              required
+              required={
+                row.fileName === "" || row.dataOption === "" ? true : false
+              }
               onChange={(e) =>
                 funcInputChangeParentHandler(
                   e,
@@ -242,7 +244,7 @@ const MultipleElementRender = ({
               }
             />
             <label className="custom-file-label" htmlFor="customFile">
-              {row.fileName === ""
+              {row.fileName === "" || row.fileName === "Belum ada file"
                 ? row.dataOption.split("/")[2]
                 : row.fileName}
             </label>
