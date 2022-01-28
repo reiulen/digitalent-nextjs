@@ -341,7 +341,7 @@ const Dashboard = ({ session, success }) => {
                             className={`${style.image_card_pelatihan} img-fluild`}
                             alt="Image"
                             onError={(e) => {
-                              console.log(e);
+                              // console.log(e);
                             }}
                           />
                         </div>
