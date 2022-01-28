@@ -10,7 +10,7 @@ const Informasi = ({ funcViewEdit, token }) => {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
-
+  console.log(dataPribadi);
   useEffect(() => {
     dispatch(getDataPribadi(token));
   }, [dispatch, token]);
@@ -161,13 +161,13 @@ const Informasi = ({ funcViewEdit, token }) => {
                 }}
               >
                 <PDFReader
-                  url={`${process.env.END_POINT_API_IMAGE_BEASISWA}${dataPribadi.File_ktp}`}
+                  url={`${dataPribadi.file_path}${dataPribadi.File_ktp}`}
                   scale={0.9}
                 />
               </div>
             ) : (
               <img
-                src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${dataPribadi.File_ktp}`}
+                src={`${dataPribadi.file_path}${dataPribadi.File_ktp}`}
                 alt="file ktp"
                 className="img-fluid"
               />
