@@ -1,4 +1,5 @@
 import React from "react";
+import { helperFormatMoney } from "../../../../utils/middleware/helper";
 
 const Header = ({ name, text, value = 0, dailyAdd = 0, statisticDay = 0 }) => {
   return (
@@ -14,7 +15,7 @@ const Header = ({ name, text, value = 0, dailyAdd = 0, statisticDay = 0 }) => {
                 </p>
                 <div className="d-flex align-items-center">
                   <h1 className="text-dashboard-neutral fz-40 fw-700 mr-5">
-                    {value}
+                    {helperFormatMoney(value)}
                   </h1>
                   <div className="d-flex">
                     <i className="ri-arrow-up-s-fill text-success mr-2 fw-600 mt-1"></i>
