@@ -35,7 +35,7 @@ const UbahPage = ({ token }) => {
 
   const { isUpdateSuccess, errorUpdate } = useSelector((state) => state.updatePage);
   const [isi_artikel, setIsiArtikel] = useState(pages.property_template.content);
-  const [pageURL, setPageURL] = useState(`http://dts-dev.majapahit.id/lainnya/${pages.url}`)
+  const [pageURL, setPageURL] = useState(`https://dts-poc.majapahit.id/lainnya/${pages.url}`)
   const [pageName, setPageName] = useState(pages.name);
   const [pageStatus, setPageStatus] = useState(pages.status);
   const [titlePage, setTitlePage] = useState(pages.property_template.title);

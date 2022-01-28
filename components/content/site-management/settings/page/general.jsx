@@ -55,6 +55,7 @@ const GeneralPage = ({ token }) => {
   const [formSocialMedia, setFormSocialMedia] = useState(
     data_general?.social_media
   );
+  console.log("data : ", data_general)
   const [formExternalLink, setFormExternalLink] = useState([
     {
       name: "",
