@@ -25,7 +25,7 @@ module.exports = {
     CAPTCHA_SECRET_KEY: "6LeUmtIbAAAAAAbA9yada3LOIktctPbfQ86SjhNn",
 
     PATH_URL:
-      process.env.MODE == "development" ? "http://dts-dev.majapahit.id" : "https://dts-poc.majapahit.id",
+      process.env.NODE == "development" ? "" : "https://dts-poc.majapahit.id",
 
     // END_POINT_API_PUBLIKASI: "http://dts-publikasi-dev.majapahit.id/",
     END_POINT_API_PUBLIKASI: ENDPOINT_PROD + "/publikasi/",
