@@ -289,7 +289,7 @@ const Navigationbar = ({ session }) => {
               // src={}
               src={
                 footer && footer?.header_logo
-                  ? process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                  ? process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT +
                     "site-management/images/" +
                     footer.header_logo
                   : `/assets/icon/mainlogo.svg`
