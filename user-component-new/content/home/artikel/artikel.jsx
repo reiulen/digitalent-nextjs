@@ -1568,7 +1568,7 @@ const Artikel = () => {
                         </h3>
                         <div className=" d-flex flex-wrap  flex-row">
                             {
-                                tags ?
+                                tags && tags.tag.length !== 0 ?
                                     tags.tag.map ((el, i) => {
                                         return (
                                             <div 
@@ -1584,7 +1584,7 @@ const Artikel = () => {
                                     
                                 :
                                     <div className="row text-center">
-                                        <h3 className="text-muted">
+                                        <h3 className="text-muted ml-4">
                                             <em>
                                                 Tag Belum Tersedia
                                             </em>

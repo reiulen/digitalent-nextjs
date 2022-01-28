@@ -25,9 +25,9 @@ const UbahRole = ({ token }) => {
 
   const detailRoles = useSelector((state) => state.detailRoles);
 
-  const [status, setStatus] = useState(detailRoles.role.status);
-  const [editTable, setEditTable] = useState(detailRoles.role.type);
-  const [nameRole, setNameRole] = useState(detailRoles.role.name);
+  const [status, setStatus] = useState(detailRoles.role.data.status);
+  const [editTable, setEditTable] = useState(detailRoles.role.data.type);
+  const [nameRole, setNameRole] = useState(detailRoles.role.data.name);
   const [, forceUpdate] = useState();
   const [force, setForce] = useState(false);
 
@@ -56,14 +56,14 @@ const UbahRole = ({ token }) => {
     });
   };
 
-  let list = detailRoles.role.permissions;
+  let list = detailRoles.role.data.permissions;
 
   let permission = [];
 
-  for (let i = 0; i < detailRoles.role.permissions.length; i++) {
-    permission.push(detailRoles.role.permissions[i]);
-    if (detailRoles.role.permissions[i].list_sub_menu.length > 0) {
-      detailRoles.role.permissions[i].list_sub_menu.forEach((item) => {
+  for (let i = 0; i < detailRoles.role.data.permissions.length; i++) {
+    permission.push(detailRoles.role.data.permissions[i]);
+    if (detailRoles.role.data.permissions[i].list_sub_menu.length > 0) {
+      detailRoles.role.data.permissions[i].list_sub_menu.forEach((item) => {
         permission.push(item);
         if (item.list_sub_menu.length > 0) {
           item.list_sub_menu.forEach((sub) => {

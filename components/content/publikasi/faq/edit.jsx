@@ -266,7 +266,7 @@ const EditFaq = ({ token }) => {
                                                     {simpleValidator.current.message(
                                                         "jawaban",
                                                         jawaban,
-                                                        "required|min:100|max:7000",
+                                                        "required|min:50|max:7000",
                                                         { className: "text-danger" }
                                                     )}
                                                 </div>

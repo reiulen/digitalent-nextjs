@@ -96,6 +96,7 @@ function MyApp({ Component, pageProps }) {
     //   setDisabledRightClick(false);
     // }
     // if (disabledRightClick) {
+
     if (process.env.NODE_ENV != "development") {
       setDisabledRightClick(true);
       document.onkeydown = function (e) {
