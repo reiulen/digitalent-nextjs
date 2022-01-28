@@ -74,9 +74,8 @@ export const getDataGeneral = (token, tokenPermission) =>
           Permission: tokenPermission,
         },
       };
-      
+
       const { data } = await axios.get(link, config);
-      console.log("Action : ", data)
 
       dispatch({
         type: DATA_GENERAL_SUCCESS,
