@@ -15,6 +15,7 @@ module.exports = {
       "dts-partnership-dev.s3-ap-southeast-1.amazonaws.com",
       "simonas-dev.majapahit.id",
       "dts-simonas.s3.ap-southeast-1.amazonaws.com",
+      "bucket.cloud.lintasarta.co.id",
     ],
   },
   env: {

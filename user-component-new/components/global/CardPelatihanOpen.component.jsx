@@ -196,7 +196,7 @@ const CardPelatihanOpen = ({
                 </Button>
                 {/* SHAREOVERLAY */}
                 <ShareOverlay
-                  url={`http://dts-dev.majapahit.id/detail/pelatihan/${row.id}`}
+                  url={process.env.PATH_URL + `/detail/pelatihan/${row.id}`}
                   quote={row.name}
                 >
                   <Button
