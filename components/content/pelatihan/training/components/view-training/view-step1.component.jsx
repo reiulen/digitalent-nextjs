@@ -351,7 +351,8 @@ const ViewStep1Component = ({ review }) => {
           <p className="text-neutral-body mb-2 fz-14">Link Detail Pelatihan</p>
           {review.status_publish === "0" ? (
             <p className="fz-16 ">
-              {`http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`}
+              {process.env.PATH_URL +
+                `/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`}
             </p>
           ) : (
             <p
@@ -359,12 +360,14 @@ const ViewStep1Component = ({ review }) => {
               style={{ cursor: "pointer" }}
               onClick={() =>
                 window.open(
-                  `http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`,
+                  process.env.PATH_URL +
+                    `/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`,
                   "_blank"
                 )
               }
             >
-              {`http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`}
+              {process.env.PATH_URL +
+                `/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`}
             </p>
           )}
         </div>

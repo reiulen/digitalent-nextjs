@@ -1562,7 +1562,7 @@ const Testimoni = () => {
                         </h3>
                         <div className=" d-flex flex-wrap  flex-row">
                             {
-                                tags.tag ?
+                                tags && tags.tag.length !== 0 ?
                                     tags.tag.map((el, i) => {
                                         return (
                                             <div
@@ -1578,7 +1578,7 @@ const Testimoni = () => {
 
                                     :
                                     <div className="row text-center">
-                                        <h3 className="text-muted">
+                                        <h3 className="text-muted ml-4">
                                             <em>
                                                 Tag Belum Tersedia
                                             </em>

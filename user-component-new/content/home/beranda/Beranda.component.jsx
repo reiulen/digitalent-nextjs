@@ -631,7 +631,10 @@ const Beranda = ({ session }) => {
                                                   </Button>
                                                   {/* SHAREOVERLAY */}
                                                   <ShareOverlay
-                                                    url={`http://dts-dev.majapahit.id/detail/pelatihan/${row.id}`}
+                                                    url={
+                                                      process.env.PATH_URL +
+                                                      `/detail/pelatihan/${row.id}`
+                                                    }
                                                     quote={row.name}
                                                   >
                                                     <Button
@@ -904,7 +907,10 @@ const Beranda = ({ session }) => {
                                                 </Button>
                                                 {/* SHAREOVERLAY */}
                                                 <ShareOverlay
-                                                  url={`http://dts-dev.majapahit.id/detail/pelatihan/${cardId}`}
+                                                  url={
+                                                    process.env.PATH_URL +
+                                                    `/detail/pelatihan/${cardId}`
+                                                  }
                                                   quote={cardName}
                                                 >
                                                   <Button

@@ -864,7 +864,7 @@ const VideoPage = () => {
             {/* End of Search Field */}
             {/* Card Video */}
             {
-             
+
               allLoading ?
                 <div className="row my-20 ml-5">
                   <div className="col col-12">
@@ -1335,7 +1335,13 @@ const VideoPage = () => {
                         <div className="d-flex flex-row flex-wrap my-2">
                           {
                             detail.tag && detail.tag.length === 0 && detail.tag == undefined ?
-                              null
+                              <div className="row text-center">
+                                <h3 className="text-muted ml-4">
+                                  <em>
+                                    Tag Belum Tersedia
+                                  </em>
+                                </h3>
+                              </div>
                               :
                               detail?.tag?.map((el, i) => {
                                 return (

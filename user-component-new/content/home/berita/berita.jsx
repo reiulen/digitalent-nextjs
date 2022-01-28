@@ -24,23 +24,23 @@ const Berita = () => {
     const { akademi } = useSelector((state) => state.allAkademi);
     const { tags } = useSelector((state) => state.allTagBerandaBerita)
 
-    const [ activeTitle, setActiveTitle ] = useState("Ada Apa di Digitalent")
-    const [ kategoriBerita, setKategoriBerita ] = useState ("")
-    const [ keyword, setKeyword ] = useState (null)
-    const [ activePage, setActivePage ] = useState(1)
-    const [ limit, setLimit ] = useState(5)
-    const [ filterPublish, setFilterPublish ] = useState("desc")
-    const [ sort, setSort ] = useState("")
-    const [ category_id, setCategoryId ] = useState("")
-    const [ category_academy, setCategoryAcademy ] = useState("")
-    const [ tag, setTag ] = useState("")
-    const [ showFilter, setShowFilter ] = useState(false)
-    const [ tagBerita, setTagBerita ] = useState([])
-    const [ tagCards, setTagCards ] = useState ([])
-    const [ kategoriToShow, setKategoriToShow ] = useState ([])
-    const [ showArrow, setShowArrow ] = useState(null)
-    const [showDescButton, setShowDescButton ] = useState(false)
-    const [ optionAkademi, setOptionAkademi] = useState ([])
+    const [activeTitle, setActiveTitle] = useState("Ada Apa di Digitalent")
+    const [kategoriBerita, setKategoriBerita] = useState("")
+    const [keyword, setKeyword] = useState(null)
+    const [activePage, setActivePage] = useState(1)
+    const [limit, setLimit] = useState(5)
+    const [filterPublish, setFilterPublish] = useState("desc")
+    const [sort, setSort] = useState("")
+    const [category_id, setCategoryId] = useState("")
+    const [category_academy, setCategoryAcademy] = useState("")
+    const [tag, setTag] = useState("")
+    const [showFilter, setShowFilter] = useState(false)
+    const [tagBerita, setTagBerita] = useState([])
+    const [tagCards, setTagCards] = useState([])
+    const [kategoriToShow, setKategoriToShow] = useState([])
+    const [showArrow, setShowArrow] = useState(null)
+    const [showDescButton, setShowDescButton] = useState(false)
+    const [optionAkademi, setOptionAkademi] = useState([])
 
     const getWindowDimensions = () => {
 
@@ -50,7 +50,7 @@ const Berita = () => {
             height,
         };
     };
-    
+
     const [windowDimensions, setWindowDimensions] = useState(
         {}
     );
@@ -62,7 +62,7 @@ const Berita = () => {
         setWindowDimensions(getWindowDimensions());
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    },[akademi])
+    }, [akademi])
 
     useEffect(() => {
         handleTagEachCard()
@@ -75,10 +75,10 @@ const Berita = () => {
 
     useEffect(() => {
         setOptionSelect()
-    },[akademi])
+    }, [akademi])
 
     useEffect(() => {
-        if (router.query.tag){
+        if (router.query.tag) {
             handleFilterTag(router.query.tag)
         }
     }, [router.query.tag])
@@ -89,166 +89,163 @@ const Berita = () => {
         let temps = []
         let result = []
 
-        for (let i = 0; i < arr.length; i++){
-            for (let j = 0; j < arr[i].length; j++){
+        for (let i = 0; i < arr.length; i++) {
+            for (let j = 0; j < arr[i].length; j++) {
                 if (
-                    arr[i][j].length !== 0 && 
+                    arr[i][j].length !== 0 &&
                     arr[i][j] !== null &&
-                    arr[i][j] !== undefined && 
+                    arr[i][j] !== undefined &&
                     arr[i][j] !== " " &&
                     arr[i][j] !== ""
-                    )
-
-                {
-                    temps.push (arr[i][j].toUpperCase())
+                ) {
+                    temps.push(arr[i][j].toUpperCase())
                 }
             }
         }
 
-        for (let k = 0; k < temps.length; k++){
-            if (k === 0){
+        for (let k = 0; k < temps.length; k++) {
+            if (k === 0) {
                 result.push(temps[k].toUpperCase())
 
             } else {
-                if (result.includes (temps[k].toUpperCase()) === false){
-                result.push(temps[k].toUpperCase())
+                if (result.includes(temps[k].toUpperCase()) === false) {
+                    result.push(temps[k].toUpperCase())
                 }
             }
         }
 
-        if (result.length <= 8){
-            setTagBerita (result)
+        if (result.length <= 8) {
+            setTagBerita(result)
 
         } else {
             let tagResult = result.slice(0, 8)
-            setTagBerita (tagResult)
+            setTagBerita(tagResult)
         }
-        
+
     }
 
     // Handle Tag Each Card
     const handleTagEachCard = () => {
-        if (berita){
+        if (berita) {
             let arr = berita?.berita
             let result = []
-            for (let i = 0; i < arr.length; i++){
+            for (let i = 0; i < arr.length; i++) {
                 let resultTags = []
 
-                for (let j = 0; j < arr[i]?.tag?.length; j++){
-                    if 
+                for (let j = 0; j < arr[i]?.tag?.length; j++) {
+                    if
                         (
-                            arr[i].tag[j].length !== 0 && 
-                            arr[i].tag[j] !== null &&
-                            arr[i].tag[j] !== undefined &&
-                            arr[i].tag[j] !== " " &&
-                            arr[i].tag[j] !== ""
-                        )
-                    {
-                        resultTags.push (arr[i].tag[j])
+                        arr[i].tag[j].length !== 0 &&
+                        arr[i].tag[j] !== null &&
+                        arr[i].tag[j] !== undefined &&
+                        arr[i].tag[j] !== " " &&
+                        arr[i].tag[j] !== ""
+                    ) {
+                        resultTags.push(arr[i].tag[j])
                     }
-                
+
                 }
 
-                if (resultTags.length > 2){
-                    result.push (resultTags.splice(0, 2))
+                if (resultTags.length > 2) {
+                    result.push(resultTags.splice(0, 2))
 
                 } else {
-                    result.push (resultTags)
+                    result.push(resultTags)
 
-                }            
+                }
             }
-            setTagCards (result)
-            
-            if (result && result.length !== 0){
-                handleEmptyTag (result)
+            setTagCards(result)
+
+            if (result && result.length !== 0) {
+                handleEmptyTag(result)
             }
-          
+
         }
-        
+
     }
 
     // Show 2 Tags Only
     const showTagCards = (index) => {
         if (tagCards) {
             let arr = tagCards
-            if (arr.length !== 0 && arr){
+            if (arr.length !== 0 && arr) {
                 return (
-                    arr[index]?.map ((el, i) => {
+                    arr[index]?.map((el, i) => {
                         return (
                             <div
                                 className=" border px-2 py-1 my-1 mr-3"
                                 onClick={() => handleFilterTag(el)}
-                                style={{cursor:"pointer"}}
+                                style={{ cursor: "pointer" }}
                                 key={i}
                             >
                                 #{el.toUpperCase()}
                             </div>
                         )
                     })
-                    
+
                 )
             } else {
                 return (null)
             }
-            
+
         }
-        
+
     }
 
     // Handle Empty Kategori not show
     const handleKategoriToShow = () => {
-        if (berita){
+        if (berita) {
             let obj = berita?.berita
             let arr = []
             let result = []
 
-            for (let i = 0; i < obj.length; i++){
-                arr.push (obj[i].nama_kategori)
+            for (let i = 0; i < obj.length; i++) {
+                arr.push(obj[i].nama_kategori)
             }
 
-            for (let j = 0; j < arr.length; j++){
+            for (let j = 0; j < arr.length; j++) {
 
-                if (j === 0){
-                    result.push (arr[j])
-          
+                if (j === 0) {
+                    result.push(arr[j])
+
                 } else {
-                    if (result.includes (arr[j]) === false){
-                        result.push (arr[j])
+                    if (result.includes(arr[j]) === false) {
+                        result.push(arr[j])
                     }
                 }
             }
             setKategoriToShow(result)
 
             if (result.length > 3) {
-                setShowArrow (true)
-        
+                setShowArrow(true)
+
             } else {
-                setShowArrow (false)
+                setShowArrow(false)
             }
         }
 
-        if (kategori){
-            if (kategori.length > 3){
-                setShowArrow (true)
-        
+        if (kategori) {
+            if (kategori.length > 3) {
+                setShowArrow(true)
+
             } else {
-                setShowArrow (false)
+                setShowArrow(false)
             }
         }
-       
+
     }
 
     const setOptionSelect = () => {
-        if (akademi){
-            let result = [{value: "", label: "Semua Akademi"}]
-            
-            for (let i = 0; i < akademi.length; i++){
+        if (akademi) {
+            let result = [{ value: "", label: "Semua Akademi" }]
+
+            for (let i = 0; i < akademi.length; i++) {
                 let obj = {
                     value: akademi[i].slug,
                     label: akademi[i].slug
                 }
 
-                result.push (obj)
+                result.push(obj)
             }
 
             setOptionAkademi(result)
@@ -259,30 +256,30 @@ const Berita = () => {
         let result = ""
         let temp = ""
 
-        if (num >= 1000 && num < 10000){
+        if (num >= 1000 && num < 10000) {
             temp += num / 1000
             result += `${temp[0]},${temp[2]} K`
 
-        } else if (num >= 10000 && num < 100000){
+        } else if (num >= 10000 && num < 100000) {
             temp += num / 1000
             result += `${temp[0]}${temp[1]},${temp[2]} K`
 
-        } else if (num >= 100000 && num < 1000000){
+        } else if (num >= 100000 && num < 1000000) {
             temp += num / 1000
             result += `${temp[0]}${temp[1]}${temp[2]},${temp[3]} K`
-        
-        } else if (num >= 1000000 && num < 10000000){
+
+        } else if (num >= 1000000 && num < 10000000) {
             temp += num / 1000000
             result += `${temp[0]},${temp[2]} M`
 
-        } else if (num >= 10000000 && num < 100000000){
+        } else if (num >= 10000000 && num < 100000000) {
             temp += num / 1000000
             result += `${temp[0]}${temp[1]},${temp[2]} M`
 
-        } else if (num >= 100000000 && num < 1000000000){
+        } else if (num >= 100000000 && num < 1000000000) {
             temp += num / 1000000
             result += `${temp[0]}${temp[1]}${temp[2]},${temp[3]} M`
-    
+
         } else {
             result += num
         }
@@ -293,53 +290,53 @@ const Berita = () => {
     // Style Select Filter
     const customStyle = {
         control: (styles) => ({
-          ...styles,
-          borderRadius: "30px",
-          paddingLeft: "25px",
-          fontFamily:"Poppins",
-          fontSize:"14px"
+            ...styles,
+            borderRadius: "30px",
+            paddingLeft: "25px",
+            fontFamily: "Poppins",
+            fontSize: "14px"
         }),
         multiValue: (styles) => ({
-          ...styles,
-          backgroundColor: "#E6F2FF",
-          borderRadius: "30px",
-          fontFamily:"Poppins",
-          fontSize:"14px"
+            ...styles,
+            backgroundColor: "#E6F2FF",
+            borderRadius: "30px",
+            fontFamily: "Poppins",
+            fontSize: "14px"
         }),
         multiValueLabel: (styles) => ({
-          ...styles,
-          color:"#ADB5BD",
-          fontFamily:"Poppins",
-          fontSize:"14px"
+            ...styles,
+            color: "#ADB5BD",
+            fontFamily: "Poppins",
+            fontSize: "14px"
         }),
     };
 
     const handleFilterKategori = (str) => {
         setActiveTitle("Ada Apa di Digitalent")
         setKategoriBerita(str)
-        
-        dispatch (getAllBerandaBerita(
-            1, 
-            keyword, 
-            limit, 
-            filterPublish, 
-            sort, 
-            category_id, 
-            str, 
+
+        dispatch(getAllBerandaBerita(
+            1,
+            keyword,
+            limit,
+            filterPublish,
+            sort,
+            category_id,
+            str,
             category_academy,
             tag
         ))
 
-        if (router.query.tag){
-            router.push (router.pathname)
-            dispatch (getAllBerandaBerita(
-                1, 
-                keyword, 
-                limit, 
-                filterPublish, 
-                sort, 
-                category_id, 
-                str, 
+        if (router.query.tag) {
+            router.push(router.pathname)
+            dispatch(getAllBerandaBerita(
+                1,
+                keyword,
+                limit,
+                filterPublish,
+                sort,
+                category_id,
+                str,
                 category_academy,
                 tag
             ))
@@ -347,46 +344,46 @@ const Berita = () => {
 
         // if (keyword){
         //     router.push (`${router.pathname}?page=${1}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${str}&category_academy=${category_academy}&tag=${tag}`)
-        
+
         // } else {
         //     router.push (`${router.pathname}?page=${1}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${str}&category_academy=${category_academy}&tag=${tag}`)
         // }
 
-        window.scrollTo(0,0)
+        window.scrollTo(0, 0)
     }
 
     const handleFilterKeyword = (e) => {
         e.preventDefault();
-        dispatch (getAllBerandaBerita(
-            1, 
-            keyword, 
-            limit, 
-            filterPublish, 
-            sort, 
-            category_id, 
-            kategoriBerita, 
+        dispatch(getAllBerandaBerita(
+            1,
+            keyword,
+            limit,
+            filterPublish,
+            sort,
+            category_id,
+            kategoriBerita,
             category_academy,
             tag
         ))
 
-        if (router.query.tag){
-            router.push (router.pathname)
-            dispatch (getAllBerandaBerita(
-                1, 
-                keyword, 
-                limit, 
-                filterPublish, 
-                sort, 
-                category_id, 
-                kategoriBerita, 
+        if (router.query.tag) {
+            router.push(router.pathname)
+            dispatch(getAllBerandaBerita(
+                1,
+                keyword,
+                limit,
+                filterPublish,
+                sort,
+                category_id,
+                kategoriBerita,
                 category_academy,
                 tag
             ))
         }
 
         // router.push (`${router.pathname}?page=${1}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
-            
-        window.scrollTo(0,0)
+
+        window.scrollTo(0, 0)
     }
 
     const handleFilterPublish = (publish, status) => {
@@ -402,32 +399,32 @@ const Berita = () => {
     }
 
     const handleCategoryAcademy = (slug) => {
-        setCategoryAcademy (slug)
+        setCategoryAcademy(slug)
     }
 
     const submitFilter = () => {
-        dispatch (getAllBerandaBerita(
-            1, 
-            keyword, 
-            limit, 
-            filterPublish, 
-            sort, 
-            category_id, 
-            kategoriBerita, 
+        dispatch(getAllBerandaBerita(
+            1,
+            keyword,
+            limit,
+            filterPublish,
+            sort,
+            category_id,
+            kategoriBerita,
             category_academy,
             tag
         ))
 
-        if (router.query.tag){
-            router.push (router.pathname)
-            dispatch (getAllBerandaBerita(
-                1, 
-                keyword, 
-                limit, 
-                filterPublish, 
-                sort, 
-                category_id, 
-                kategoriBerita, 
+        if (router.query.tag) {
+            router.push(router.pathname)
+            dispatch(getAllBerandaBerita(
+                1,
+                keyword,
+                limit,
+                filterPublish,
+                sort,
+                category_id,
+                kategoriBerita,
                 category_academy,
                 tag
             ))
@@ -435,62 +432,62 @@ const Berita = () => {
 
         // if (keyword){
         //     router.push (`${router.pathname}?page=${1}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
-        
+
         // } else {
         //     router.push (`${router.pathname}?page=${1}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
         // }
 
-        window.scrollTo(0,0)
+        window.scrollTo(0, 0)
     }
 
     const handleFilterTag = (str) => {
         setActiveTitle(`#${str.toUpperCase()}`)
-        dispatch (getAllBerandaBerita(
-            1, 
-            keyword, 
-            limit, 
-            filterPublish, 
-            sort, 
-            category_id, 
-            kategoriBerita, 
+        dispatch(getAllBerandaBerita(
+            1,
+            keyword,
+            limit,
+            filterPublish,
+            sort,
+            category_id,
+            kategoriBerita,
             category_academy,
             str
         ))
 
         // if (keyword){
         //     router.push (`${router.pathname}?page=${1}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${str}`)
-        
+
         // } else {
         //     router.push (`${router.pathname}?page=${1}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${str}`)
         // }
 
-        window.scrollTo(0,0)
+        window.scrollTo(0, 0)
     }
 
     const handlePagination = (pageNumber) => {
         setActivePage(pageNumber)
-        dispatch (getAllBerandaBerita(
-            pageNumber, 
-            keyword, 
-            limit, 
-            filterPublish, 
-            sort, 
-            category_id, 
-            kategoriBerita, 
+        dispatch(getAllBerandaBerita(
+            pageNumber,
+            keyword,
+            limit,
+            filterPublish,
+            sort,
+            category_id,
+            kategoriBerita,
             category_academy,
             tag
         ))
 
-        if (router.query.tag){
-            router.push (router.pathname)
-            dispatch (getAllBerandaBerita(
-                pageNumber, 
-                keyword, 
-                limit, 
-                filterPublish, 
-                sort, 
-                category_id, 
-                kategoriBerita, 
+        if (router.query.tag) {
+            router.push(router.pathname)
+            dispatch(getAllBerandaBerita(
+                pageNumber,
+                keyword,
+                limit,
+                filterPublish,
+                sort,
+                category_id,
+                kategoriBerita,
                 category_academy,
                 tag
             ))
@@ -498,39 +495,39 @@ const Berita = () => {
 
         // if (keyword){
         //     router.push (`${router.pathname}?page=${pageNumber}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
-        
+
         // } else {
         //     router.push (`${router.pathname}?page=${pageNumber}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
         // }
 
-        window.scrollTo(0,0)
+        window.scrollTo(0, 0)
     }
 
     return (
         <HomeWrapper>
 
             {/* BreadCrumb */}
-            <SubHeaderComponent 
+            <SubHeaderComponent
                 data={[{ link: router.asPath, name: "Berita" }]}
             />
 
             {/* Header */}
             <div className="col-12 mt-5 ml-n3">
-                <h1 className="fw-700" style={{fontSize: "40px", fontFamily:"Poppins"}}>
+                <h1 className="fw-700" style={{ fontSize: "40px", fontFamily: "Poppins" }}>
                     {activeTitle}
                 </h1>
 
                 {
                     activeTitle == "Ada Apa di Digitalent" ?
-                        <div className="mt-3" style={{fontSize: "18px", fontFamily:"Poppins", color:"#6C6C6C"}}>
+                        <div className="mt-3" style={{ fontSize: "18px", fontFamily: "Poppins", color: "#6C6C6C" }}>
                             Cerita mitra, berita seru, dan Berita terbaru. Baca semua berita soal Digitalent di sini.
                         </div>
-                    :
-                        <div className="mt-3" style={{fontSize: "18px", fontFamily:"Poppins", color:"#6C6C6C"}}>
+                        :
+                        <div className="mt-3" style={{ fontSize: "18px", fontFamily: "Poppins", color: "#6C6C6C" }}>
                             Berita terkait {activeTitle} di  Digital Talent Scholarship
                         </div>
                 }
-                
+
             </div>
 
             {/* Filter Button */}
@@ -542,7 +539,7 @@ const Berita = () => {
                         className={
                             windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
                                 "col-12 pl-0 ml-4 mt-10 mb-5 d-none d-lg-block"
-                            :
+                                :
                                 "col-lg-8 col-12 pl-0 ml-n2 mt-10 mb-5 pr-10 d-none d-lg-block"
                         }
                     >
@@ -550,8 +547,8 @@ const Berita = () => {
                             showArrow === null ?
                                 <div className="col col-12">
                                     <PulseLoaderRender />
-                                </div> 
-                            :
+                                </div>
+                                :
                                 showArrow === true ?
                                     <Splide
                                         options={{
@@ -561,13 +558,13 @@ const Berita = () => {
                                             drag: "free",
                                             perPage: 4,
                                             autoWidth: true,
-                                            breakpoints:{
+                                            breakpoints: {
                                                 830: {
                                                     perPage: 2,
                                                 },
                                                 450: {
                                                     perPage: 1,
-                                                    },
+                                                },
                                             }
                                         }}
                                         className="px-20 mr-n5 mr-sm-n2 ml-n5 ml-sm-n2"
@@ -575,9 +572,9 @@ const Berita = () => {
                                         {
                                             kategoriBerita === "" ?
                                                 <SplideSlide>
-                                                    <div 
-                                                        className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5" 
-                                                        style={{ cursor: "pointer", height:"40px" }}
+                                                    <div
+                                                        className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
+                                                        style={{ cursor: "pointer", height: "40px" }}
                                                         onClick={() => handleFilterKategori("")}
                                                     >
                                                         <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -585,11 +582,11 @@ const Berita = () => {
                                                         </div>
                                                     </div>
                                                 </SplideSlide>
-                                            :
+                                                :
                                                 <SplideSlide>
-                                                    <div 
-                                                        className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
-                                                        style={{ cursor: "pointer", height:"40px" }}
+                                                    <div
+                                                        className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5"
+                                                        style={{ cursor: "pointer", height: "40px" }}
                                                         onClick={() => handleFilterKategori("")}
                                                     >
                                                         <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -597,7 +594,7 @@ const Berita = () => {
                                                         </div>
                                                     </div>
                                                 </SplideSlide>
-                                                
+
                                         }
                                         {
                                             kategori ?
@@ -605,9 +602,9 @@ const Berita = () => {
                                                     return (
                                                         kategoriBerita == el.nama_kategori ?
                                                             <SplideSlide>
-                                                                <div 
+                                                                <div
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
-                                                                    style={{ cursor: "pointer", height:"40px" }}
+                                                                    style={{ cursor: "pointer", height: "40px" }}
                                                                     onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
@@ -616,28 +613,28 @@ const Berita = () => {
                                                                     </div>
                                                                 </div>
                                                             </SplideSlide>
-                                                        :
+                                                            :
                                                             <SplideSlide>
-                                                                <div 
-                                                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
-                                                                    style={{ cursor: "pointer", height:"40px" }}
+                                                                <div
+                                                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5"
+                                                                    style={{ cursor: "pointer", height: "40px" }}
                                                                     onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
                                                                         {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
-                                                                </div> 
+                                                                </div>
                                                             </SplideSlide>
-                                                            
+
                                                     )
                                                 })
-                                            :
+                                                :
                                                 null
                                         }
-            
+
                                     </Splide>
-                                :
+                                    :
                                     <Splide
                                         options={{
                                             arrows: false,
@@ -646,23 +643,23 @@ const Berita = () => {
                                             drag: "free",
                                             perPage: 4,
                                             autoWidth: true,
-                                            breakpoints:{
+                                            breakpoints: {
                                                 830: {
                                                     perPage: 2,
                                                 },
                                                 450: {
                                                     perPage: 1,
-                                                    },
+                                                },
                                             }
                                         }}
                                         className="ml-0 ml-sm-3 mr-n5 mr-sm-n1"
                                     >
                                         {
-                                            kategoriBerita   === "" ?
+                                            kategoriBerita === "" ?
                                                 <SplideSlide>
-                                                    <div 
-                                                        className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5" 
-                                                        style={{ cursor: "pointer", height:"40px" }}
+                                                    <div
+                                                        className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
+                                                        style={{ cursor: "pointer", height: "40px" }}
                                                         onClick={() => handleFilterKategori("")}
                                                     >
                                                         <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -670,11 +667,11 @@ const Berita = () => {
                                                         </div>
                                                     </div>
                                                 </SplideSlide>
-                                            :
+                                                :
                                                 <SplideSlide>
-                                                    <div 
-                                                        className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
-                                                        style={{ cursor: "pointer", height:"40px" }}
+                                                    <div
+                                                        className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5"
+                                                        style={{ cursor: "pointer", height: "40px" }}
                                                         onClick={() => handleFilterKategori("")}
                                                     >
                                                         <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -682,7 +679,7 @@ const Berita = () => {
                                                         </div>
                                                     </div>
                                                 </SplideSlide>
-                                                
+
                                         }
                                         {
                                             kategori ?
@@ -690,9 +687,9 @@ const Berita = () => {
                                                     return (
                                                         kategoriBerita == el.nama_kategori ?
                                                             <SplideSlide>
-                                                                <div 
+                                                                <div
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
-                                                                    style={{ cursor: "pointer", height:"40px" }}
+                                                                    style={{ cursor: "pointer", height: "40px" }}
                                                                     onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
@@ -701,33 +698,33 @@ const Berita = () => {
                                                                     </div>
                                                                 </div>
                                                             </SplideSlide>
-                                                        :
+                                                            :
                                                             <SplideSlide>
-                                                                <div 
-                                                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
-                                                                    style={{ cursor: "pointer", height:"40px" }}
+                                                                <div
+                                                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5"
+                                                                    style={{ cursor: "pointer", height: "40px" }}
                                                                     onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
                                                                         {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
-                                                                </div> 
+                                                                </div>
                                                             </SplideSlide>
-                                                            
+
                                                     )
                                                 })
-                                            :
+                                                :
                                                 null
                                         }
-            
+
                                     </Splide>
                         }
-                        
-                        
+
+
                     </div>
-                    
-                :
+
+                    :
                     null
             }
             {/* Filter on Tablet */}
@@ -740,13 +737,13 @@ const Berita = () => {
                         drag: "free",
                         perPage: 4,
                         autoWidth: true,
-                        breakpoints:{
+                        breakpoints: {
                             830: {
                                 perPage: 2,
                             },
                             450: {
                                 perPage: 1,
-                                },
+                            },
                         }
                     }}
                     className="px-20 mr-n5 mr-sm-n2 ml-n5 ml-sm-n2"
@@ -754,9 +751,9 @@ const Berita = () => {
                     {
                         kategoriBerita === "" ?
                             <SplideSlide>
-                                <div 
-                                    className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5" 
-                                    style={{ cursor: "pointer", height:"40px" }}
+                                <div
+                                    className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
+                                    style={{ cursor: "pointer", height: "40px" }}
                                     onClick={() => handleFilterKategori("")}
                                 >
                                     <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -764,11 +761,11 @@ const Berita = () => {
                                     </div>
                                 </div>
                             </SplideSlide>
-                        :
+                            :
                             <SplideSlide>
-                                <div 
-                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
-                                    style={{ cursor: "pointer", height:"40px" }}
+                                <div
+                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5"
+                                    style={{ cursor: "pointer", height: "40px" }}
                                     onClick={() => handleFilterKategori("")}
                                 >
                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -776,7 +773,7 @@ const Berita = () => {
                                     </div>
                                 </div>
                             </SplideSlide>
-                            
+
                     }
                     {
                         kategori ?
@@ -784,9 +781,9 @@ const Berita = () => {
                                 return (
                                     kategoriBerita == el.nama_kategori ?
                                         <SplideSlide>
-                                            <div 
+                                            <div
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
-                                                style={{ cursor: "pointer", height:"40px" }}
+                                                style={{ cursor: "pointer", height: "40px" }}
                                                 onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
@@ -795,23 +792,23 @@ const Berita = () => {
                                                 </div>
                                             </div>
                                         </SplideSlide>
-                                    :
+                                        :
                                         <SplideSlide>
-                                            <div 
-                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
-                                                style={{ cursor: "pointer", height:"40px" }}
+                                            <div
+                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5"
+                                                style={{ cursor: "pointer", height: "40px" }}
                                                 onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
                                                     {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
-                                            </div> 
+                                            </div>
                                         </SplideSlide>
-                                        
+
                                 )
                             })
-                        :
+                            :
                             null
                     }
 
@@ -820,7 +817,7 @@ const Berita = () => {
 
             {/* Filter on Mobile */}
             <div className="col-12 pl-0 ml-4 mt-10 mb-5 d-block d-md-none">
-            <Splide
+                <Splide
                     options={{
                         arrows: true,
                         pagination: false,
@@ -828,13 +825,13 @@ const Berita = () => {
                         drag: "free",
                         perPage: 4,
                         autoWidth: true,
-                        breakpoints:{
+                        breakpoints: {
                             830: {
                                 perPage: 2,
                             },
                             450: {
                                 perPage: 1,
-                                },
+                            },
                         }
                     }}
                     className="px-20 mr-n5 mr-sm-n2 ml-n5 ml-sm-n2"
@@ -842,9 +839,9 @@ const Berita = () => {
                     {
                         kategoriBerita === "" ?
                             <SplideSlide>
-                                <div 
-                                    className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5" 
-                                    style={{ cursor: "pointer", height:"40px" }}
+                                <div
+                                    className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
+                                    style={{ cursor: "pointer", height: "40px" }}
                                     onClick={() => handleFilterKategori("")}
                                 >
                                     <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -852,11 +849,11 @@ const Berita = () => {
                                     </div>
                                 </div>
                             </SplideSlide>
-                        :
+                            :
                             <SplideSlide>
-                                <div 
-                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
-                                    style={{ cursor: "pointer", height:"40px" }}
+                                <div
+                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5"
+                                    style={{ cursor: "pointer", height: "40px" }}
                                     onClick={() => handleFilterKategori("")}
                                 >
                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -864,7 +861,7 @@ const Berita = () => {
                                     </div>
                                 </div>
                             </SplideSlide>
-                            
+
                     }
                     {
                         kategori ?
@@ -872,9 +869,9 @@ const Berita = () => {
                                 return (
                                     kategoriBerita == el.nama_kategori ?
                                         <SplideSlide>
-                                            <div 
+                                            <div
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
-                                                style={{ cursor: "pointer", height:"40px" }}
+                                                style={{ cursor: "pointer", height: "40px" }}
                                                 onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
@@ -883,23 +880,23 @@ const Berita = () => {
                                                 </div>
                                             </div>
                                         </SplideSlide>
-                                    :
+                                        :
                                         <SplideSlide>
-                                            <div 
-                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
-                                                style={{ cursor: "pointer", height:"40px" }}
+                                            <div
+                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5"
+                                                style={{ cursor: "pointer", height: "40px" }}
                                                 onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
                                                     {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
-                                            </div> 
+                                            </div>
                                         </SplideSlide>
-                                        
+
                                 )
                             })
-                        :
+                            :
                             null
                     }
 
@@ -911,23 +908,23 @@ const Berita = () => {
             <div className="row">
 
                 {/* Left Side */}
-                <div 
+                <div
                     className={
                         windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
                             "col-lg-8 col-12"
-                        :
+                            :
                             "col-lg-8 col-12 pr-15 mb-20"
                     }
                 >
 
                     {/* Filter at mobile screen */}
                     {
-                        
+
                         windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
                             <div className="border rounded-lg p-2 order-1 mb-10 ml-3">
-                                <div className="row "> 
+                                <div className="row ">
                                     <div className="col-2 my-auto ml-3">
-                                        <Image 
+                                        <Image
                                             src={`/assets/media/logo-filter.svg`}
                                             width={40}
                                             height={40}
@@ -945,12 +942,12 @@ const Berita = () => {
                                                 <div onClick={() => setShowFilter(true)}>
                                                     <i className="ri-arrow-right-s-line"></i>
                                                 </div>
-                                            :
+                                                :
                                                 <div onClick={() => setShowFilter(false)}>
                                                     <i className="ri-arrow-down-s-line"></i>
                                                 </div>
                                         }
-                                        
+
                                     </div>
                                 </div>
 
@@ -958,7 +955,7 @@ const Berita = () => {
                                     showFilter === true ?
                                         <>
                                             <div className="row ml-3 mt-5">
-                                                <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
+                                                <p style={{ fontSize: "16px", fontFamily: "Poppins" }}>
                                                     Urutkan Berdasarkan
                                                 </p>
                                             </div>
@@ -967,18 +964,18 @@ const Berita = () => {
                                                 <div className=" col-6">
                                                     {
                                                         showDescButton === true && sort === "" ?
-                                                            <button 
-                                                                className="btn btn-primary rounded-pill btn-block" 
+                                                            <button
+                                                                className="btn btn-primary rounded-pill btn-block"
                                                                 onClick={() => handleFilterPublish("", false)}
-                                                                style={{fontFamily: "Poppins", fontSize:'14px'}}
+                                                                style={{ fontFamily: "Poppins", fontSize: '14px' }}
                                                             >
                                                                 Terbaru
                                                             </button>
-                                                        :
-                                                            <button 
-                                                                className="btn btn-outline-light rounded-pill btn-block" 
+                                                            :
+                                                            <button
+                                                                className="btn btn-outline-light rounded-pill btn-block"
                                                                 onClick={() => handleFilterPublish("desc", true)}
-                                                                style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
+                                                                style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                                                             >
                                                                 Terbaru
                                                             </button>
@@ -987,19 +984,19 @@ const Berita = () => {
 
                                                 <div className="col-6">
                                                     {
-                                                        filterPublish === "asc"  && sort === "" ?
-                                                            <button 
-                                                                className="btn btn-primary rounded-pill btn-block" 
+                                                        filterPublish === "asc" && sort === "" ?
+                                                            <button
+                                                                className="btn btn-primary rounded-pill btn-block"
                                                                 onClick={() => handleFilterPublish("desc", false)}
-                                                                style={{fontFamily: "Poppins", fontSize:'14px'}}
+                                                                style={{ fontFamily: "Poppins", fontSize: '14px' }}
                                                             >
                                                                 Terlama
                                                             </button>
-                                                        :
-                                                            <button 
-                                                                className="btn btn-outline-light rounded-pill btn-block" 
+                                                            :
+                                                            <button
+                                                                className="btn btn-outline-light rounded-pill btn-block"
                                                                 onClick={() => handleFilterPublish("asc", false)}
-                                                                style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
+                                                                style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                                                             >
                                                                 Terlama
                                                             </button>
@@ -1010,19 +1007,19 @@ const Berita = () => {
                                             <div className="row mx-3 mb-3 d-flex justify-content-between">
                                                 <div className="col-6">
                                                     {
-                                                        sort === "asc" && showDescButton === false   ?
-                                                            <button 
-                                                                className="btn btn-primary rounded-pill btn-block" 
+                                                        sort === "asc" && showDescButton === false ?
+                                                            <button
+                                                                className="btn btn-primary rounded-pill btn-block"
                                                                 onClick={() => handleSort("", "desc")}
-                                                                style={{fontFamily: "Poppins", fontSize:'14px'}}
+                                                                style={{ fontFamily: "Poppins", fontSize: '14px' }}
                                                             >
                                                                 A-Z
                                                             </button>
-                                                        :
-                                                            <button 
-                                                                className="btn btn-outline-light rounded-pill btn-block" 
+                                                            :
+                                                            <button
+                                                                className="btn btn-outline-light rounded-pill btn-block"
                                                                 onClick={() => handleSort("asc", "")}
-                                                                style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
+                                                                style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                                                             >
                                                                 A-Z
                                                             </button>
@@ -1031,29 +1028,29 @@ const Berita = () => {
 
                                                 <div className="col-6">
                                                     {
-                                                        sort === "desc" &&  showDescButton === false   ?
-                                                            <button 
-                                                                className="btn btn-primary rounded-pill btn-block" 
+                                                        sort === "desc" && showDescButton === false ?
+                                                            <button
+                                                                className="btn btn-primary rounded-pill btn-block"
                                                                 onClick={() => handleSort("", "desc")}
-                                                                style={{fontFamily: "Poppins", fontSize:'14px'}}
+                                                                style={{ fontFamily: "Poppins", fontSize: '14px' }}
                                                             >
                                                                 Z-A
                                                             </button>
-                                                        :
-                                                            <button 
-                                                                className="btn btn-outline-light rounded-pill btn-block" 
+                                                            :
+                                                            <button
+                                                                className="btn btn-outline-light rounded-pill btn-block"
                                                                 onClick={() => handleSort("desc", "")}
-                                                                style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
+                                                                style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                                                             >
                                                                 Z-A
                                                             </button>
                                                     }
-                                                    
+
                                                 </div>
                                             </div>
 
                                             <div className="row ml-3 mt-5">
-                                                <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
+                                                <p style={{ fontSize: "16px", fontFamily: "Poppins" }}>
                                                     Akademi
                                                 </p>
                                             </div>
@@ -1068,16 +1065,16 @@ const Berita = () => {
                                                             styles={customStyle}
                                                             components={{
                                                                 IndicatorSeparator: () => null
-                                                              }}
+                                                            }}
                                                         />
-                                                    :
+                                                        :
                                                         null
                                                 }
-                                                
+
                                             </div>
 
                                             <div className="row mx-3 mb-3">
-                                                <button 
+                                                <button
                                                     className="btn btn-primary-dashboard rounded-pill btn-block"
                                                     onClick={() => submitFilter()}
                                                 >
@@ -1085,40 +1082,40 @@ const Berita = () => {
                                                 </button>
                                             </div>
                                         </>
-                                    :
+                                        :
                                         null
                                 }
-                                
+
 
                             </div>
-                        :
+                            :
                             null
                     }
-                    
+
                     {/* Search Tab */}
                     <form className="mb-3 ml-0 ml-md-0">
                         <div className="input-group">
                             <div className="input-group-prepend">
-                                <div 
+                                <div
                                     className="input-group-text bg-light border-right-0 pr-1"
-                                    style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
+                                    style={{ borderTopLeftRadius: "150px", borderBottomLeftRadius: "150px" }}
                                 >
                                     <i className="ri-search-line"></i>
                                 </div>
                             </div>
 
-                            <input 
-                                type="text" 
-                                className="form-control border-left-0 border p-0 bg-light" 
+                            <input
+                                type="text"
+                                className="form-control border-left-0 border p-0 bg-light"
                                 placeholder="Cari Berita"
                                 onChange={(e) => setKeyword(e.target.value)}
                             />
-            
+
                             <div>
-                                <button 
-                                    className="btn btn-primary-dashboard" 
+                                <button
+                                    className="btn btn-primary-dashboard"
                                     onClick={handleFilterKeyword}
-                                    style={{borderTopRightRadius:"150px", borderBottomRightRadius:"150px"}}
+                                    style={{ borderTopRightRadius: "150px", borderBottomRightRadius: "150px" }}
                                     type="submit"
                                 >
                                     Cari
@@ -1136,23 +1133,23 @@ const Berita = () => {
                                 role="alert"
                             >
                                 <div className="alert-icon">
-                                <i className="flaticon-warning"></i>
+                                    <i className="flaticon-warning"></i>
                                 </div>
                                 <div className="alert-text">{error}</div>
                                 <div className="alert-close">
-                                <button
-                                    type="button"
-                                    className="close"
-                                    data-dismiss="alert"
-                                    aria-label="Close"
-                                >
-                                    <span aria-hidden="true">
-                                    <i className="ki ki-close"></i>
-                                    </span>
-                                </button>
+                                    <button
+                                        type="button"
+                                        className="close"
+                                        data-dismiss="alert"
+                                        aria-label="Close"
+                                    >
+                                        <span aria-hidden="true">
+                                            <i className="ki ki-close"></i>
+                                        </span>
+                                    </button>
                                 </div>
                             </div>
-                        :
+                            :
                             null
                     }
                     {/* End of Error Alert */}
@@ -1165,12 +1162,12 @@ const Berita = () => {
                                     <PulseLoaderRender />
                                 </div>
                             </div>
-                        :
+                            :
                             berita && berita.berita && berita.berita.length !== 0 ?
-                                berita?.berita?.map ((el, i) => { // edit here
+                                berita?.berita?.map((el, i) => { // edit here
                                     return (
-                                        <div 
-                                            className= "row mt-20 mb-3 pl-6"
+                                        <div
+                                            className="row mt-20 mb-3 pl-6"
                                             key={i}
                                         >
                                             <div className="col-5 col-sm-9 pr-md-8 pr-2 pl-lg-2">
@@ -1190,7 +1187,7 @@ const Berita = () => {
                                                                 className="rounded-circle"
                                                             />
                                                         </div>
-                                                        
+
                                                         <span className="font-weight-bolder ml-2 my-auto">
                                                             {/* Insert Admin Here */}
                                                             {el.dibuat}
@@ -1199,12 +1196,12 @@ const Berita = () => {
 
                                                     <div className="mr-2 mb-3 d-flex align-content-center">
                                                         <div className="badge badge-pill badge-light mr-0 mr-sm-2">
-                                                            <div 
+                                                            <div
                                                                 className="text-primary p-1 text-truncate d-inline-block"
                                                                 style={
                                                                     windowDimensions && windowDimensions.width && windowDimensions.width <= 320 ?
-                                                                        {maxWidth:"75px"}
-                                                                    :
+                                                                        { maxWidth: "75px" }
+                                                                        :
                                                                         null
                                                                 }
                                                             >
@@ -1218,101 +1215,101 @@ const Berita = () => {
                                                                     {/* Insert Akademi Here */}
                                                                     | {el.kategori_akademi}
                                                                 </span>
-                                                            :
+                                                                :
                                                                 null
                                                         }
                                                     </div>
                                                 </div>
-                                                
+
                                                 {
                                                     windowDimensions && windowDimensions.width && windowDimensions.width > 576 ?
                                                         <div className="my-5 ml-n3">
                                                             {/* Insert Title Here */}
                                                             <Link href={`/berita/detail/${el.slug}`}>
                                                                 <a>
-                                                                    <h1 
+                                                                    <h1
                                                                         className={`text-dark font-weight-bolder ${styles.fontText}`}
                                                                         style=
                                                                         {{
-                                                                            display:"-webkit-box", 
-                                                                            overflow: 'hidden', 
-                                                                            textOverflow: 'ellipsis', 
+                                                                            display: "-webkit-box",
+                                                                            overflow: 'hidden',
+                                                                            textOverflow: 'ellipsis',
                                                                             WebkitLineClamp: "2",
-                                                                            WebkitBoxOrient:"vertical"
+                                                                            WebkitBoxOrient: "vertical"
                                                                         }}
                                                                     >
                                                                         {el.judul}
                                                                     </h1>
                                                                 </a>
                                                             </Link>
-                                                            
+
                                                         </div>
-                                                    :
+                                                        :
                                                         <div className="my-5 ml-n3">
                                                             {/* Insert Title Here */}
                                                             <Link href={`/berita/detail/${el.slug}`}>
                                                                 <a>
-                                                                    <h1 
+                                                                    <h1
                                                                         className={`text-dark font-weight-bolder ${styles.fontText}`}
                                                                         style=
                                                                         {{
-                                                                            display:"-webkit-box", 
-                                                                            overflow: 'hidden', 
-                                                                            textOverflow: 'ellipsis', 
+                                                                            display: "-webkit-box",
+                                                                            overflow: 'hidden',
+                                                                            textOverflow: 'ellipsis',
                                                                             WebkitLineClamp: "3",
-                                                                            WebkitBoxOrient:"vertical"
+                                                                            WebkitBoxOrient: "vertical"
                                                                         }}
                                                                     >
                                                                         {el.judul}
                                                                     </h1>
                                                                 </a>
                                                             </Link>
-                                                            
+
                                                         </div>
 
                                                 }
-                                                
-                                                
+
+
                                                 {
                                                     windowDimensions && windowDimensions.width && windowDimensions.width >= 768 ?
-                                                        <div 
+                                                        <div
                                                             // className="my-5 d-flex flex-wrap "
                                                             className="my-5 ml-n3"
-                                                            style={{ 
-                                                                    fontSize:"16px", 
-                                                                    fontFamily:"Poppins", 
-                                                                    color: "#6C6C6C",
-                                                                    display:"-webkit-box", 
-                                                                    overflow: 'hidden', 
-                                                                    textOverflow: 'ellipsis', 
-                                                                    WebkitLineClamp: "2",
-                                                                    WebkitBoxOrient:"vertical",
-                                                                    width:"100%",
-                                                                    lineHeight:"25px"
-                                                                }}
+                                                            style={{
+                                                                fontSize: "16px",
+                                                                fontFamily: "Poppins",
+                                                                color: "#6C6C6C",
+                                                                display: "-webkit-box",
+                                                                overflow: 'hidden',
+                                                                textOverflow: 'ellipsis',
+                                                                WebkitLineClamp: "2",
+                                                                WebkitBoxOrient: "vertical",
+                                                                width: "100%",
+                                                                lineHeight: "25px"
+                                                            }}
                                                         >
                                                             {/* Insert Desc Here */}
-                                                            <div 
-                                                                dangerouslySetInnerHTML={{__html: (el.isi_berita)}}
-                                                                // style={{ 
-                                                                //     fontSize:"16px", 
-                                                                //     fontFamily:"Poppins", 
-                                                                //     color: "#6C6C6C",
-                                                                //     display:"-webkit-box", 
-                                                                //     overflow: 'hidden', 
-                                                                //     textOverflow: 'ellipsis', 
-                                                                //     WebkitLineClamp: "2",
-                                                                //     WebkitBoxOrient:"vertical",
-                                                                //     width:"100%",
-                                                                //     lineHeight:"25px"
-                                                                // }}
-                                                                // className="ml-n3"
+                                                            <div
+                                                                dangerouslySetInnerHTML={{ __html: (el.isi_berita) }}
+                                                            // style={{ 
+                                                            //     fontSize:"16px", 
+                                                            //     fontFamily:"Poppins", 
+                                                            //     color: "#6C6C6C",
+                                                            //     display:"-webkit-box", 
+                                                            //     overflow: 'hidden', 
+                                                            //     textOverflow: 'ellipsis', 
+                                                            //     WebkitLineClamp: "2",
+                                                            //     WebkitBoxOrient:"vertical",
+                                                            //     width:"100%",
+                                                            //     lineHeight:"25px"
+                                                            // }}
+                                                            // className="ml-n3"
                                                             />
                                                         </div>
-                                                    :
+                                                        :
                                                         null
                                                 }
-                                                
+
                                                 <div className="row mb-3 mt-5 d-flex align-items-center ml-n7">
                                                     {/* Insert Date and View Here */}
                                                     <div className="text-muted col-md-4 col-lg-3 col-12 d-flex flex-row justify-content-between">
@@ -1329,17 +1326,17 @@ const Berita = () => {
 
                                                     {/* Insert Tag(s) here */}
                                                     <div className="col-xl-7 col-12 d-flex flex-row flex-wrap my-3 pl-2 ">
-                                                        {   
-                                                          berita && berita.berita && berita.berita.length !== 0 && tagCards && tagCards.length !== 0 ?
+                                                        {
+                                                            berita && berita.berita && berita.berita.length !== 0 && tagCards && tagCards.length !== 0 ?
                                                                 showTagCards(i)
-                                                            :
+                                                                :
                                                                 null
                                                         }
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div 
+                                            <div
                                                 // className="col-8 col-sm-4 pl-6 pl-sm-0 position-relative img-fluid" 
                                                 className="col-7 col-sm-3 d-flex justify-content-end position-relative img-fluid"
                                             >
@@ -1355,19 +1352,19 @@ const Berita = () => {
                                                             // height={250}
                                                             width={
                                                                 windowDimensions &&
-                                                                windowDimensions.width &&
-                                                                windowDimensions.width > 768 ?
-                                                                300
-                                                                :
-                                                                144
+                                                                    windowDimensions.width &&
+                                                                    windowDimensions.width > 768 ?
+                                                                    300
+                                                                    :
+                                                                    144
                                                             }
                                                             height={
                                                                 windowDimensions &&
-                                                                windowDimensions.width &&
-                                                                windowDimensions.width > 768 ?
-                                                                250
-                                                                :
-                                                                120
+                                                                    windowDimensions.width &&
+                                                                    windowDimensions.width > 768 ?
+                                                                    250
+                                                                    :
+                                                                    120
                                                             }
                                                             alt="Card Image"
                                                             className="rounded-lg img-fluid"
@@ -1375,13 +1372,13 @@ const Berita = () => {
                                                         />
                                                     </a>
                                                 </Link>
-                                                
+
                                             </div>
                                         </div>
                                     )
                                 })
-                                
-                            :
+
+                                :
                                 <div className="row my-20 ml-5">
                                     <div className="col col-12 d-flex flex-column justify-content-center">
                                         <Image
@@ -1390,23 +1387,23 @@ const Berita = () => {
                                             height={350}
                                             alt="Tidak Tersedia"
                                         />
-                                        <h1 
-                                            className="font-weight-bolder mt-15 text-center fw-600" 
-                                            style={{fontFamily:"Poppins", fontSize:"24px"}}
+                                        <h1
+                                            className="font-weight-bolder mt-15 text-center fw-600"
+                                            style={{ fontFamily: "Poppins", fontSize: "24px" }}
                                         >
                                             {
                                                 keyword ?
                                                     `Tidak ada berita terkait "${keyword}"`
-                                                :
+                                                    :
                                                     category_academy ?
                                                         `Tidak ada berita terkait "${category_academy}"`
-                                                    :
+                                                        :
                                                         `Tidak ada berita terkait.`
                                             }
-                                            
+
                                         </h1>
-                                
-                                        </div>
+
+                                    </div>
                                 </div>
                     }
                     {/* End of Card */}
@@ -1416,8 +1413,8 @@ const Berita = () => {
                         berita && berita.total !== 0 && berita.total > 5 ?
                             <div className="row mb-lg-n7 mb-10 mt-lg-0 mt-10 d-flex justify-content-center ">
                                 <div className="table-pagination">
-                                    <Pagination 
-                                        activePage = {activePage}
+                                    <Pagination
+                                        activePage={activePage}
                                         itemsCountPerPage={5}
                                         // itemsCountPerPage={berita.perPage}
                                         totalItemsCount={berita.total}
@@ -1431,9 +1428,9 @@ const Berita = () => {
                                         linkClass="page-link-dashboard"
                                     />
                                 </div>
-                                
+
                             </div>
-                        :
+                            :
                             null
                     }
                     {/* End of Pagination */}
@@ -1447,9 +1444,9 @@ const Berita = () => {
                     {
                         windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
                             <div className="border rounded-lg p-5 order-1 mb-15">
-                                <div className="row mt-5 "> 
+                                <div className="row mt-5 ">
                                     <div className="col-2 my-auto ml-3">
-                                        <Image 
+                                        <Image
                                             src={`/assets/media/logo-filter.svg`}
                                             width={40}
                                             height={40}
@@ -1464,7 +1461,7 @@ const Berita = () => {
                                 </div>
 
                                 <div className="row ml-3 mt-5">
-                                    <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
+                                    <p style={{ fontSize: "16px", fontFamily: "Poppins" }}>
                                         Urutkan Berdasarkan
                                     </p>
                                 </div>
@@ -1473,18 +1470,18 @@ const Berita = () => {
                                     <div className="col-md-6 col-12">
                                         {
                                             showDescButton === true && sort === "" ?
-                                                <button 
-                                                    className="btn btn-primary rounded-pill btn-block" 
+                                                <button
+                                                    className="btn btn-primary rounded-pill btn-block"
                                                     onClick={() => handleFilterPublish("", false)}
-                                                    style={{fontFamily: "Poppins", fontSize:'14px'}}
+                                                    style={{ fontFamily: "Poppins", fontSize: '14px' }}
                                                 >
                                                     Terbaru
                                                 </button>
-                                            :
-                                                <button 
-                                                    className="btn btn-outline-light rounded-pill btn-block" 
+                                                :
+                                                <button
+                                                    className="btn btn-outline-light rounded-pill btn-block"
                                                     onClick={() => handleFilterPublish("desc", true)}
-                                                    style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
+                                                    style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                                                 >
                                                     Terbaru
                                                 </button>
@@ -1494,18 +1491,18 @@ const Berita = () => {
                                     <div className="col-md-6 col-12">
                                         {
                                             filterPublish === "asc" && sort === "" ?
-                                                <button 
-                                                    className="btn btn-primary rounded-pill btn-block" 
+                                                <button
+                                                    className="btn btn-primary rounded-pill btn-block"
                                                     onClick={() => handleFilterPublish("desc", false)}
-                                                    style={{fontFamily: "Poppins", fontSize:'14px'}}
+                                                    style={{ fontFamily: "Poppins", fontSize: '14px' }}
                                                 >
                                                     Terlama
                                                 </button>
-                                            :
-                                                <button 
-                                                    className="btn btn-outline-light rounded-pill btn-block" 
+                                                :
+                                                <button
+                                                    className="btn btn-outline-light rounded-pill btn-block"
                                                     onClick={() => handleFilterPublish("asc", false)}
-                                                    style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
+                                                    style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                                                 >
                                                     Terlama
                                                 </button>
@@ -1517,18 +1514,18 @@ const Berita = () => {
                                     <div className="col-md-6 col-12">
                                         {
                                             sort === "asc" && showDescButton === false ?
-                                                <button 
-                                                    className="btn btn-primary rounded-pill btn-block" 
+                                                <button
+                                                    className="btn btn-primary rounded-pill btn-block"
                                                     onClick={() => handleSort("", "desc")}
-                                                    style={{fontFamily: "Poppins", fontSize:'14px'}}
+                                                    style={{ fontFamily: "Poppins", fontSize: '14px' }}
                                                 >
                                                     A-Z
                                                 </button>
-                                            :
-                                                <button 
-                                                    className="btn btn-outline-light rounded-pill btn-block" 
+                                                :
+                                                <button
+                                                    className="btn btn-outline-light rounded-pill btn-block"
                                                     onClick={() => handleSort("asc", "")}
-                                                    style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
+                                                    style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                                                 >
                                                     A-Z
                                                 </button>
@@ -1537,29 +1534,29 @@ const Berita = () => {
 
                                     <div className="col-md-6 col-12">
                                         {
-                                            sort === "desc" && showDescButton === false  ?
-                                                <button 
-                                                    className="btn btn-primary rounded-pill btn-block" 
+                                            sort === "desc" && showDescButton === false ?
+                                                <button
+                                                    className="btn btn-primary rounded-pill btn-block"
                                                     onClick={() => handleSort("", 'desc')}
-                                                    style={{fontFamily: "Poppins", fontSize:'14px'}}
+                                                    style={{ fontFamily: "Poppins", fontSize: '14px' }}
                                                 >
                                                     Z-A
                                                 </button>
-                                            :
-                                                <button 
-                                                    className="btn btn-outline-light rounded-pill btn-block" 
+                                                :
+                                                <button
+                                                    className="btn btn-outline-light rounded-pill btn-block"
                                                     onClick={() => handleSort("desc", "")}
-                                                    style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
+                                                    style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                                                 >
                                                     Z-A
                                                 </button>
                                         }
-                                        
+
                                     </div>
                                 </div>
 
                                 <div className="row ml-3 mt-5">
-                                    <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
+                                    <p style={{ fontSize: "16px", fontFamily: "Poppins" }}>
                                         Akademi
                                     </p>
                                 </div>
@@ -1567,25 +1564,25 @@ const Berita = () => {
                                 <div className="row mx-3 mb-7">
                                     {
                                         akademi && akademi.length !== 0 ?
-                                            <select 
+                                            <select
                                                 className="form-control rounded-pill"
                                                 onChange={(e) => handleCategoryAcademy(e.target.value)}
-                                                style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
+                                                style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                                             >
-                                                <option 
-                                                    value="" 
+                                                <option
+                                                    value=""
                                                     selected
-                                                    style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
+                                                    style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                                                 >
                                                     Semua Akademi
                                                 </option>
                                                 {
-                                                    akademi.map ((el, i) => {
+                                                    akademi.map((el, i) => {
                                                         return (
-                                                            <option 
-                                                                value={el.slug} 
+                                                            <option
+                                                                value={el.slug}
                                                                 key={i}
-                                                                style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
+                                                                style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                                                             >
                                                                 {el.slug}
                                                             </option>
@@ -1593,7 +1590,7 @@ const Berita = () => {
                                                     })
                                                 }
                                             </select>
-                                        :
+                                            :
                                             <select className="form-control rounded-pill">
                                                 <option value="" selected>Semua Akademi</option>
                                                 {/* <option value="">
@@ -1603,11 +1600,11 @@ const Berita = () => {
                                                 </option> */}
                                             </select>
                                     }
-                                    
+
                                 </div>
 
                                 <div className="row mx-3 mb-3">
-                                    <button 
+                                    <button
                                         className="btn btn-primary-dashboard rounded-pill btn-block"
                                         onClick={() => submitFilter()}
                                     >
@@ -1616,48 +1613,48 @@ const Berita = () => {
                                 </div>
 
                             </div>
-                        :
+                            :
                             null
                     }
                     {/* End of Filter */}
 
                     {/* Tag */}
-                    <div 
+                    <div
                         className={windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
-                                "row d-flex flex-column mx-auto px-10 my-5 d-flex justify-content-center order-3"
+                            "row d-flex flex-column mx-auto px-10 my-5 d-flex justify-content-center order-3"
                             :
-                                "row d-flex flex-column ml-0 ml-xl-5 mb-0 d-flex justify-content-center order-3"
+                            "row d-flex flex-column ml-0 ml-xl-5 mb-0 d-flex justify-content-center order-3"
                         }
                     >
-                        <h3 className="font-weight-bolder"> 
+                        <h3 className="font-weight-bolder">
                             Temukan lebih banyak berita yang sesuai:
                         </h3>
                         <div className=" d-flex flex-wrap  flex-row">
                             {
-                                tags ?
-                                    tags.tag.map ((el, i) => {
+                                tags && tags.tag.length !== 0 ?
+                                    tags.tag.map((el, i) => {
                                         return (
-                                            <div 
-                                                className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center" 
+                                            <div
+                                                className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center"
                                                 key={i}
                                                 onClick={() => handleFilterTag(el)}
-                                                style={{cursor:"pointer", height:"38px", fontSize:"14px"}}
+                                                style={{ cursor: "pointer", height: "38px", fontSize: "14px" }}
                                             >
                                                 #{el.toString().toUpperCase()}
                                             </div>
                                         )
                                     })
-                                    
-                                :
+
+                                    :
                                     <div className="row text-center">
-                                        <h3 className="text-muted">
+                                        <h3 className="text-muted ml-3">
                                             <em>
                                                 Tag Belum Tersedia
                                             </em>
                                         </h3>
                                     </div>
                             }
-                            
+
                         </div>
                     </div>
 
@@ -1666,9 +1663,9 @@ const Berita = () => {
             </div>
             {/* End Content */}
 
-            
-            
-            
+
+
+
         </HomeWrapper>
     )
 }

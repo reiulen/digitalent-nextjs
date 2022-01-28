@@ -1,4 +1,5 @@
 import React from "react";
+import { helperFormatMoney } from "../../../../utils/middleware/helper";
 
 const CardTotal = ({ title, value, dailyAdd, statisticDay }) => {
   return (
@@ -7,7 +8,9 @@ const CardTotal = ({ title, value, dailyAdd, statisticDay }) => {
         <div className="card-body">
           <p className="text-dashboard-neutral fz-16 fw-600">{title}</p>
           <div className="d-flex justify-content-between align-items-center flex-wrap">
-            <p className="text-dashboard-neutral fz-40 fw-700">{value}</p>
+            <p className="text-dashboard-neutral fz-40 fw-700">
+              {helperFormatMoney(value)}
+            </p>
             <div className="d-flex">
               <i className="ri-arrow-up-s-fill text-success mr-2 fw-600 mt-1"></i>
               <p className="text-success fz-20 fw-600">{dailyAdd}%</p>

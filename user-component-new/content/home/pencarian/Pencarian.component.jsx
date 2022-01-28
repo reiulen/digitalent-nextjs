@@ -356,7 +356,10 @@ const Pencarian = ({ session }) => {
                             </Button>
                             <ShareOverlay
                               quote={row?.name}
-                              url={`http://dts-dev.majapahit.id/detail/pelatihan/${row?.id}?akademiId=${row.akademi_id}`}
+                              url={
+                                process.env.PATH_URL +
+                                `/detail/pelatihan/${row?.id}?akademiId=${row.akademi_id}`
+                              }
                             >
                               <Button
                                 variant="light"

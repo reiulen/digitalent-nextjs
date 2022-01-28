@@ -348,8 +348,12 @@ const RegisterUser = () => {
                         onBlur={() =>
                           simpleValidator.current.showMessageFor("verifikasi")
                         }
+                        id="email-form"
                       />
-                      <label className="form-check-label form-auth-label">
+                      <label
+                        className="form-check-label form-auth-label"
+                        htmlFor="email-form"
+                      >
                         Email
                       </label>
                     </div>
@@ -364,8 +368,12 @@ const RegisterUser = () => {
                         onBlur={() =>
                           simpleValidator.current.showMessageFor("verifikasi")
                         }
+                        id="sms-form"
                       />
-                      <label className="form-check-label form-auth-label">
+                      <label
+                        className="form-check-label form-auth-label"
+                        htmlFor="sms-form"
+                      >
                         No. Handphone
                       </label>
                     </div>
