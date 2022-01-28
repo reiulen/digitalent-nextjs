@@ -53,10 +53,10 @@ const MapDigitalent = ({ data = [] }) => {
   });
 
   useEffect(() => {
-    if (data.length > 0) {
+    if (data?.length > 0) {
       setDataWilayah(() => {
         const arr = [];
-        data.map((row, i) => {
+        data?.map((row, i) => {
           let val = {
             provinsi: row.label,
             position: [row.latitude, row.longitude],

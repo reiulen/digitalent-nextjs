@@ -65,7 +65,7 @@ export const mm = today.getMonth() + 1; //January is 0 so need to add 1 to make 
 export const yyyy = today.getFullYear();
 
 export const helperFormatMoney = (value) => {
-  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 
 export const helperRemoveZeroFromIndex0 = (value, setValue) => {
