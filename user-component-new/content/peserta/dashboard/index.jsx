@@ -340,9 +340,7 @@ const Dashboard = ({ session, success }) => {
                             roundedCircle
                             className={`${style.image_card_pelatihan} img-fluild`}
                             alt="Image"
-                            onError={(e) => {
-                              console.log(e);
-                            }}
+                            onError={(e) => {}}
                           />
                         </div>
                         <div

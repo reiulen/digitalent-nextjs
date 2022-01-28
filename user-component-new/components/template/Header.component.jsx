@@ -105,7 +105,6 @@ const Header = () => {
                     height="120px"
                     hidden={router.pathname.includes(routerPath)}
                     onError={(e) => {
-                      console.log(e);
                       e.target.src = "/assets/media/logos/default.png";
                     }}
                   />
