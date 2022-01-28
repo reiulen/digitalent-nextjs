@@ -31,7 +31,7 @@ export default function Custom404() {
             marginTop: "24px",
             fontSize: "20px",
             fontWeight: "500",
-            marginBottom: "60px"
+            marginBottom: "60px",
           }}
         >
           Akun Anda dapat digunakan pada 3 platform
@@ -104,7 +104,9 @@ export default function Custom404() {
               </h3>
               <button
                 className="btn btn-primary rounded-full font-weight-bolder text-center my-7"
-                onClick={() => window.location = "https://beasiswa-dev.majapahit.id/login"}
+                onClick={() =>
+                  (window.location = "https://beasiswa-dev.majapahit.id/login")
+                }
                 style={{
                   width: "50%",
                   backgroundColor: "white",
@@ -139,11 +141,11 @@ export default function Custom404() {
                   marginTop: "20px",
                 }}
               >
-               SIMONAS
+                SIMONAS
               </h3>
               <button
                 className="btn btn-primary rounded-full font-weight-bolder text-center my-7"
-                onClick={() => window.location = "http://simonas-dev.majapahit.id/login"}
+                onClick={() => (window.location = PATH_SIMONAS + "/login")}
                 style={{
                   width: "50%",
                   backgroundColor: "white",
