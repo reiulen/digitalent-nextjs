@@ -28,6 +28,7 @@ module.exports = {
     PATH_URL:
       process.env.MODE !== "development" ? "https://dts-poc.majapahit.id" : "",
     PATH_SIMONAS: "http://simonas-dev.majapahit.id",
+    PATH_BEASISWA: "https://beasiswa-poc.majapahit.id/",
 
     // END_POINT_API_PUBLIKASI: "http://dts-publikasi-dev.majapahit.id/",
     END_POINT_API_PUBLIKASI: ENDPOINT_PROD + "/publikasi/",
@@ -102,7 +103,5 @@ module.exports = {
     FB_MEASUREMENT_ID: "G-Z43DV3R59G",
     FB_FCM_KEY_PAIR:
       "BAseWMZsJmdofVidmAZEOMnFjB2fZQFDmPtuMVPJEOFP5nLhogqDkMYolmQ-d4HABaS8nOakUaXt70DsrqHWR2Y",
-
-    PATH_BEASISWA: "https://beasiswa-poc.majapahit.id/",
   },
 };
