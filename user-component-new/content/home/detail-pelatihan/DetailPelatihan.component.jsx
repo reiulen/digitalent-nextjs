@@ -181,7 +181,10 @@ const DetailPelatihan = ({ session }) => {
                   <div className="col-6 col-sm-6 col-md-2">
                     <div className="d-flex align-items-center justify-content-md-end">
                       <ShareOverlay
-                        url={`http://dts-dev.majapahit.id/detail/pelatihan/${pelatihan?.id}`}
+                        url={
+                          process.env.PATH_URL +
+                          `/detail/pelatihan/${pelatihan?.id}`
+                        }
                         quote={pelatihan?.name}
                       >
                         <button

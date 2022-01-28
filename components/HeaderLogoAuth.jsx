@@ -23,9 +23,10 @@ const HeaderLogoAuth = ({ type = "" }) => {
       </div>
       <div className="" style={{ cursor: "pointer" }}>
         <Link
-          href={`http://simonas-dev.majapahit.id${
-            type === "register" ? "/register" : "/login"
-          }`}
+          href={
+            process.env.PATH_SIMONAS +
+            `${type === "register" ? "/register" : "/login"}`
+          }
           passHref
         >
           <Image

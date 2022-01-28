@@ -120,7 +120,7 @@ const PasswordPemulihan = () => {
           <div className="container ">
             <div className="title-login text-center mt-6">
               <Image
-                src="/assets/logo/logo-6.svg"
+                src="/assets/logo/platform/dts.svg"
                 width={320}
                 height={124}
                 alt="Logo-5"
