@@ -31,7 +31,7 @@ module.exports = {
       process.env.MODE !== "development"
         ? "https://digitalent.kominfo.go.id"
         : "",
-    PATH_SIMONAS: "http://simonas-dev.majapahit.id",
+    PATH_SIMONAS: "http://simonas-poc.majapahit.id",
     PATH_BEASISWA: "https://beasiswa-poc.majapahit.id/",
 
     END_POINT_API_PUBLIKASI: ENDPOINT_API + "/publikasi/",

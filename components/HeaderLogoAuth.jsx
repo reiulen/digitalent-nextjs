@@ -39,9 +39,10 @@ const HeaderLogoAuth = ({ type = "" }) => {
       </div>
       <div className="" style={{ cursor: "pointer" }}>
         <Link
-          href={`https://beasiswa-dev.majapahit.id${
-            type === "register" ? "/register" : "/login"
-          }`}
+          href={
+            process.env.PATH_BEASISWA +
+            `${type === "register" ? "register" : "login"}`
+          }
           passHref
         >
           <Image
