@@ -92,7 +92,7 @@ export default function ListPesertaID({ token }) {
               const a = document.createElement("a");
               a.download = `Sertifikat - ${nama} ${noRegis}.png`;
               a.target = "_blank";
-              a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${result.data.fileName}`;
+              a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}pdf/${result.data.fileName}`;
               a.click();
               setLoading(false);
             }
@@ -105,7 +105,7 @@ export default function ListPesertaID({ token }) {
         const a = document.createElement("a");
         a.download = `Sertifikat - ${nama} ${noRegis}.png`;
         a.target = "_blank";
-        a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${check.data.fileName}`;
+        a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}pdf/${check.data.fileName}`;
         a.click();
         setLoading(false);
       }
@@ -221,7 +221,7 @@ export default function ListPesertaID({ token }) {
                 </div>
 
                 <Image
-                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate?.data?.certificate?.certificate_result}`}
+                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}images/certificate-images/${certificate?.data?.certificate?.certificate_result}`}
                   alt={`image ${certificate?.data?.certificate?.certificate_result}`}
                   objectFit="fill"
                   width={842}
@@ -262,7 +262,7 @@ export default function ListPesertaID({ token }) {
                   ref={divReferenceSyllabus}
                 >
                   <Image
-                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${certificate.data.certificate.certificate_result_syllabus}`}
+                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}images/certificate-syllabus-images/${certificate.data.certificate.certificate_result_syllabus}`}
                     alt={`image ${certificate?.data?.certificate?.certificate_result_syllabus}`}
                     width={842}
                     height={595}

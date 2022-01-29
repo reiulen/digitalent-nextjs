@@ -494,7 +494,7 @@ export default function EditSertifikat({ token }) {
     xhr.send();
   };
 
-  const url = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${signature[0].signature}`;
+  const url = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}images/signature-certificate-images/${signature[0].signature}`;
 
   const [test, setTest] = useState();
   const [enableSyllabus, setEnableSyllabus] = useState(true);
@@ -610,7 +610,7 @@ export default function EditSertifikat({ token }) {
                     ) : background ? (
                       <img
                         className="position-absolute w-100 h-100"
-                        src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background/${background}`}
+                        src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}images/background/${background}`}
                         alt={`Background Image ${background}`}
                         key={background}
                         id={background}
@@ -752,7 +752,7 @@ export default function EditSertifikat({ token }) {
                                     ) : signature[i]?.signature ? (
                                       <img
                                         id={`TTD ke ${i + 1}`}
-                                        src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${signature[i].signature}`}
+                                        src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}images/signature-certificate-images/${signature[i].signature}`}
                                         layout="fill"
                                         alt={`Tanda tangan ${i + 1} `}
                                         className="position-absolute w-100 h-100"
@@ -1333,7 +1333,7 @@ export default function EditSertifikat({ token }) {
                       ) : background_syllabus ? (
                         <img
                           className="position-absolute w-100 h-100"
-                          src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background-syllabus/${background_syllabus}`}
+                          src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}images/background-syllabus/${background_syllabus}`}
                           alt={`Background Image ${background_syllabus}`}
                           layout="fill"
                           style={{ objectFit: "fill" }}
@@ -1442,7 +1442,7 @@ export default function EditSertifikat({ token }) {
                                         ) : signatureSyllabus[i]?.signature ? (
                                           <img
                                             className="position-absolute w-100 h-100"
-                                            src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-image-syllabus/${signatureSyllabus[i]?.signature}`}
+                                            src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}images/signature-certificate-image-syllabus/${signatureSyllabus[i]?.signature}`}
                                             layout="fill"
                                             alt={`Tanda tangan ${i + 1} `}
                                           />
