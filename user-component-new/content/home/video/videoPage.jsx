@@ -1166,7 +1166,7 @@ const VideoPage = () => {
                     })
                   ) : (
                     <div className="row text-center">
-                      <h3 className="text-muted">
+                      <h3 className="text-muted ml-3">
                         <em>Tag Belum Tersedia</em>
                       </h3>
                     </div>
@@ -1336,7 +1336,7 @@ const VideoPage = () => {
                           {
                             detail.tag && detail.tag.length === 0 && detail.tag == undefined ?
                               <div className="row text-center">
-                                <h3 className="text-muted ml-4">
+                                <h3 className="text-muted">
                                   <em>
                                     Tag Belum Tersedia
                                   </em>

@@ -134,7 +134,7 @@ const TambahPage = ({ token }) => {
     allDetailPeserta.data?.data.kecamatan_ktp
   );
 
-  const optionProvinsi = dataProvinsi.data.map((item) => {
+  const optionProvinsi = dataProvinsi?.data.map((item) => {
     return {
       label: item.label,
       value: item.id,
@@ -1312,7 +1312,7 @@ const TambahPage = ({ token }) => {
                   <div className="form-group">
                     <label>KTP</label>
                     <div className="d-flex">
-                      <div className="custom-file">
+                      <div className="custom-file" style={{zIndex:'0'}}>
                         <input
                           // onFocus={() => setError({ ...error, agency_logo: "" })}
                           onChange={(e) => onKtpHandler(e)}
@@ -1347,7 +1347,7 @@ const TambahPage = ({ token }) => {
                   <div className="form-group">
                     <label>Ijazah</label>
                     <div className="d-flex">
-                      <div className="custom-file">
+                      <div className="custom-file" style={{zIndex:'0'}}>
                         <input
                           onChange={(e) => onIjasahHandler(e)}
                           type="file"
