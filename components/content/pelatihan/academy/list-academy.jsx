@@ -283,13 +283,15 @@ const ListAcademy = ({ token }) => {
                                 : i + 1 * (page * limit) - (limit - 1)}
                             </td>
                             <td className="align-middle">
-                              <Image
-                                src={row.file_path + row.logo}
-                                width="111"
-                                height="52"
-                                objectFit="cover"
-                                alt={`image` + i}
-                              />
+                              {row.logo !== "kosong" && (
+                                <Image
+                                  src={row.file_path + row.logo}
+                                  width="111"
+                                  height="52"
+                                  objectFit="cover"
+                                  alt={`image` + i}
+                                />
+                              )}
                             </td>
                             <td className="align-middle">
                               <p className="font-weight-bolder my-0 h6">

@@ -139,7 +139,7 @@ export default function Bookmark({ session }) {
                         className={`${style.image_dashboard}`}
                         src={
                           (el.gambar &&
-                            process.env.END_POINT_API_IMAGE_BEASISWA +
+                            process.env.END_POINT_API_IMAGE_PELATIHAN +
                               el.gambar) ||
                           "/assets/media/default-card.png" //NEED TO BE FIXED
                         }

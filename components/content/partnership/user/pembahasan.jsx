@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import Style from "../../../../styles/progressbar.module.css";
 import axios from "axios";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 function Pembahasan({ token }) {
   const router = useRouter();
@@ -14,7 +14,6 @@ function Pembahasan({ token }) {
   const [status, setStatus] = useState("");
 
   useEffect(() => {
-    
     cekProgresStatus(router.query.id);
   }, [router.query.id, token]);
 
@@ -22,7 +21,7 @@ function Pembahasan({ token }) {
   async function cekProgresStatus(id) {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -32,7 +31,7 @@ function Pembahasan({ token }) {
       );
       setStatus(data?.data?.status_migrates_id?.status);
     } catch (error) {
-      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
     }
   }
 

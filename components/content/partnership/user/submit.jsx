@@ -108,7 +108,7 @@ const SubmitKerjasama = ({ token }) => {
 
           try {
             let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/proposal-revisi-document/${router.query.id}`,
+              `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/proposal-revisi-document/${router.query.id}`,
               formData,
               {
                 headers: {
@@ -159,14 +159,13 @@ const SubmitKerjasama = ({ token }) => {
   };
 
   useEffect(() => {
-    
     cekProgresStatus(router.query.id);
   }, [router.query.id, token]);
 
   async function cekProgresStatus(id) {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -187,7 +186,7 @@ const SubmitKerjasama = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title titles-1 fw-500 text-dark">
-              Submit Dokumen Kerjasama 
+              Submit Dokumen Kerjasama
             </h3>
           </div>
 
@@ -363,7 +362,10 @@ const SubmitKerjasama = ({ token }) => {
                 <label htmlFor="staticEmail" className="col-form-label">
                   Tanggal Penandatangan
                 </label>
-                <div className="d-flex align-items-center position-relative datepicker-w w-100" style={{zIndex:"10"}}>
+                <div
+                  className="d-flex align-items-center position-relative datepicker-w w-100"
+                  style={{ zIndex: "10" }}
+                >
                   <DatePicker
                     className="form-search-date form-control cursor-pointer"
                     selected={endDate}

@@ -100,7 +100,7 @@ export default function CardTemplateOriginal({ data, session }) {
                   src={
                     !data.gambar
                       ? "/assets/media/default-card.png"
-                      : `${process.env.END_POINT_API_IMAGE_BEASISWA}${data.gambar}`
+                      : `${process.env.END_POINT_API_IMAGE_PELATIHAN}${data.gambar}`
                   }
                   alt="test1"
                   style={{ height: "200px", objectFit: "cover" }}

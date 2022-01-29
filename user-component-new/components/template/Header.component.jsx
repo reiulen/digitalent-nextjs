@@ -104,9 +104,6 @@ const Header = () => {
                     width="120px"
                     height="120px"
                     hidden={router.pathname.includes(routerPath)}
-                    onError={(e) => {
-                      e.target.src = "/assets/media/logos/default.png";
-                    }}
                   />
                   <h1 className={styles.name}>
                     {dataPribadi ? dataPribadi.name || "-" : "-"}
