@@ -20,7 +20,8 @@ module.exports = {
     ],
   },
   env: {
-    NEXTAUTH_URL: "https://digitalent.kominfo.go.id",
+    // NEXTAUTH_URL: "https://digitalent.kominfo.go.id",
+    NEXTAUTH_URL: "http://localhost:3000",
     LOGO_DTS: ENDPOINT_API + "/pelatihan/storage/images/logo-dts.png",
 
     CAPTCHA_SITE_KEY: "6LeUmtIbAAAAAMltXjRDmRqns6MThDowaaYHz3YU",
@@ -30,7 +31,7 @@ module.exports = {
       process.env.MODE !== "development"
         ? "https://digitalent.kominfo.go.id"
         : "",
-    PATH_SIMONAS: "http://simonas-dev.majapahit.id",
+    PATH_SIMONAS: "http://simonas-poc.majapahit.id",
     PATH_BEASISWA: "https://beasiswa-poc.majapahit.id/",
 
     END_POINT_API_PUBLIKASI: ENDPOINT_API + "/publikasi/",
