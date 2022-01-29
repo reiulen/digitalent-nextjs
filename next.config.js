@@ -20,7 +20,8 @@ module.exports = {
     ],
   },
   env: {
-    NEXTAUTH_URL: "https://digitalent.kominfo.go.id",
+    // NEXTAUTH_URL: "https://digitalent.kominfo.go.id",
+    NEXTAUTH_URL: "http://localhost:3000",
     LOGO_DTS: ENDPOINT_API + "/pelatihan/storage/images/logo-dts.png",
 
     CAPTCHA_SITE_KEY: "6LeUmtIbAAAAAMltXjRDmRqns6MThDowaaYHz3YU",
