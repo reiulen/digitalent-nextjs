@@ -821,7 +821,7 @@ export default function NamaPelatihanID({ token }) {
                 }}
               >
                 <Image
-                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${imagePreviewClone}`}
+                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}images/certificate-images/${imagePreviewClone}`}
                   alt="Preview Sertifikat"
                   width={842}
                   height={595}
@@ -837,7 +837,7 @@ export default function NamaPelatihanID({ token }) {
                   }}
                 >
                   <Image
-                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${imagePreviewSyllabusClone}`}
+                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}images/certificate-syllabus-images/${imagePreviewSyllabusClone}`}
                     alt="Preview Syllabus"
                     width={842}
                     height={595}
