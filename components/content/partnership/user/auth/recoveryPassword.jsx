@@ -37,7 +37,7 @@ const RecoveryMitra = () => {
           formData.append("email", email);
           try {
             const { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/authentication/forgot-password`,
+              `${process.env.END_POINT_API_PARTNERSHIP}api/authentication/forgot-password`,
               formData
             );
             Swal.fire(
@@ -92,7 +92,7 @@ const RecoveryMitra = () => {
           <div className="container scroll-form-login">
             <div className="title-login text-center mt-6">
               <Image
-                src="/assets/logo/logo-6.svg"
+                src="/assets/logo/platform/dts.svg"
                 width={246}
                 height={96}
                 alt="Logo-5"

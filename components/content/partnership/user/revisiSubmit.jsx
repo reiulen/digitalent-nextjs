@@ -7,9 +7,9 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 
-const RevisiSubmit = ({token}) => {
+const RevisiSubmit = ({ token }) => {
   const router = useRouter();
-  const [information2, setInformation2] = useState("")
+  const [information2, setInformation2] = useState("");
 
   const [allCooperation, setAllCooperation] = useState([]);
   const [title, setTitle] = useState("");
@@ -40,14 +40,13 @@ const RevisiSubmit = ({token}) => {
           return items.form_content;
         });
 
-
         dataee.forEach((item, i) => {
           formData.append(`cooperation_form_content[${i}]`, item);
         });
 
         try {
           let respoonse = await axios.post(
-            `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/revisi/${router.query.id}/${router.query.version}`,
+            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/revisi/${router.query.id}/${router.query.version}`,
             formData,
             {
               headers: {
@@ -57,23 +56,19 @@ const RevisiSubmit = ({token}) => {
             }
           );
 
-            router.push({
-              pathname: "/partnership/user/kerjasama",
-              query: { successInputProfile: true },
-            });
-          
-
+          router.push({
+            pathname: "/partnership/user/kerjasama",
+            query: { successInputProfile: true },
+          });
         } catch (error) {
-          Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
+          Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
         }
       }
     });
   };
 
-
-  const [lengthListCard, setLengthListCard] = useState("")
-  const [indexCard, setIndexCard] = useState("")
-
+  const [lengthListCard, setLengthListCard] = useState("");
+  const [indexCard, setIndexCard] = useState("");
 
   const handleChange = (e, index) => {
     let dataaa = [...allCooperation];
@@ -82,51 +77,56 @@ const RevisiSubmit = ({token}) => {
   };
 
   useEffect(() => {
-    setDataSingle(router.query.id,router.query.version);
-    setInformation2(router.query.information2)
-    getLengthListCard(router.query.id)
-    setIndexCard(router.query.index)
-  }, [router.query.id,router.query.version,router.query.information2,router.query.index,token]);
+    setDataSingle(router.query.id, router.query.version);
+    setInformation2(router.query.information2);
+    getLengthListCard(router.query.id);
+    setIndexCard(router.query.index);
+  }, [
+    router.query.id,
+    router.query.version,
+    router.query.information2,
+    router.query.index,
+    token,
+  ]);
 
-  async function setDataSingle(id,version) {
+  async function setDataSingle(id, version) {
     try {
-    let { data } = await axios.get(
-      `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/show-revisi/${id}/${version}`,
-      {
-        headers: {
-          authorization: `Bearer ${token}`,
-          // Permission: Cookies.get("token_permission")
-        },
-      }
-    );
-    setTitle(data.data.title);
-    setDate(data.data.date);
-    setCooperationID(data.data.cooperation_category);
-    setPeriod(data.data.period);
-    setPeriodUnit(data.data.period_unit);
-    setAllCooperation(data.data.cooperation_category.data_content);
-    setNote(data.data.note);
-  } catch (error) {
-    Swal.fire("Gagal", `${error.response.data.message}`, "error")
-  }
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/show-revisi/${id}/${version}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            // Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+      setTitle(data.data.title);
+      setDate(data.data.date);
+      setCooperationID(data.data.cooperation_category);
+      setPeriod(data.data.period);
+      setPeriodUnit(data.data.period_unit);
+      setAllCooperation(data.data.cooperation_category.data_content);
+      setNote(data.data.note);
+    } catch (error) {
+      Swal.fire("Gagal", `${error.response.data.message}`, "error");
+    }
   }
 
   async function getLengthListCard(id) {
     try {
-    let { data } = await axios.get(
-      `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/card-review/${id}`,
-      {
-        headers: {
-          authorization: `Bearer ${token}`,
-          // Permission: Cookies.get("token_permission")
-        },
-      }
-    );
-    setLengthListCard(data.data.length - 1)
-  } catch (error) {
-    Swal.fire("Gagal", `${error.response.data.message}`, "error")
-  }
-    
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/card-review/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            // Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+      setLengthListCard(data.data.length - 1);
+    } catch (error) {
+      Swal.fire("Gagal", `${error.response.data.message}`, "error");
+    }
   }
 
   return (
@@ -140,7 +140,7 @@ const RevisiSubmit = ({token}) => {
           <div className="card-body pt-0">
             <div className="row mt-8 mb-10 relative-progress">
               <div className="col-2 p-0">
-              <div className="progress-items">
+                <div className="progress-items">
                   <div className="circle-progress active-circle">
                     <span className="title-progress">Submit Kerjasama</span>
                   </div>
@@ -150,7 +150,9 @@ const RevisiSubmit = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress active-line"></div>
                   <div className="circle-progress active-circle">
-                    <span className="title-progress active">Review Kerjasama</span>
+                    <span className="title-progress active">
+                      Review Kerjasama
+                    </span>
                   </div>
                 </div>
               </div>
@@ -166,8 +168,13 @@ const RevisiSubmit = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress text-center" style={{top:"-4rem"}}>
-                      Submit Dokumen<br/>Kerjasama
+                    <span
+                      className="title-progress text-center"
+                      style={{ top: "-4rem" }}
+                    >
+                      Submit Dokumen
+                      <br />
+                      Kerjasama
                     </span>
                   </div>
                 </div>
@@ -176,8 +183,13 @@ const RevisiSubmit = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress text-center" style={{top:"-4rem"}}>
-                      Review Dokumen<br/>Kerjasama
+                    <span
+                      className="title-progress text-center"
+                      style={{ top: "-4rem" }}
+                    >
+                      Review Dokumen
+                      <br />
+                      Kerjasama
                     </span>
                   </div>
                 </div>
@@ -229,7 +241,7 @@ const RevisiSubmit = ({token}) => {
                     <select
                       className="form-control remove-icon-default border-0"
                       disabled
-                      style={{backgroundColor:"transparent"}}
+                      style={{ backgroundColor: "transparent" }}
                     >
                       <option value="">
                         {cooperationID && cooperationID.name}
@@ -257,9 +269,9 @@ const RevisiSubmit = ({token}) => {
                 <div className="col-12 col-xl-6">
                   <div className="form-group mb-10">
                     <label className="required mb-2"></label>
-                    <select 
-                      className="form-control remove-icon-default mt-2 border-0" 
-                      style={{backgroundColor:"transparent"}} 
+                    <select
+                      className="form-control remove-icon-default mt-2 border-0"
+                      style={{ backgroundColor: "transparent" }}
                       disabled
                     >
                       <option value="">Tahun</option>
@@ -286,7 +298,13 @@ const RevisiSubmit = ({token}) => {
                             </label>
                             <div>
                               <textarea
-                              disabled={(lengthListCard || indexCard) === "" ? false  : lengthListCard == indexCard ? false : true }
+                                disabled={
+                                  (lengthListCard || indexCard) === ""
+                                    ? false
+                                    : lengthListCard == indexCard
+                                    ? false
+                                    : true
+                                }
                                 name="cooperation"
                                 id=""
                                 onChange={(e) => handleChange(e, index)}
@@ -316,7 +334,7 @@ const RevisiSubmit = ({token}) => {
                                 cols="30"
                                 rows="5"
                                 className="form-control border-0"
-                                style={{backgroundColor:"transparent"}}
+                                style={{ backgroundColor: "transparent" }}
                                 placeholder="Tuliskan Catatan Revisi"
                               ></textarea>
                             </div>
@@ -342,7 +360,7 @@ const RevisiSubmit = ({token}) => {
                     cols="30"
                     rows="5"
                     className="form-control border-0"
-                    style={{backgroundColor:"transparent"}}
+                    style={{ backgroundColor: "transparent" }}
                     placeholder="Tuliskan Catatan Tambahan"
                   ></textarea>
                 </div>
@@ -350,27 +368,33 @@ const RevisiSubmit = ({token}) => {
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
-                  <Link href={{
-                    pathname:"/partnership/user/kerjasama/review-list-kerjasama",
-                    query:{id:router.query.id}
-                  }}>
+                  <Link
+                    href={{
+                      pathname:
+                        "/partnership/user/kerjasama/review-list-kerjasama",
+                      query: { id: router.query.id },
+                    }}
+                  >
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali
                     </a>
                   </Link>
-                  {(lengthListCard || indexCard) === "" ? ""  : lengthListCard == indexCard ? 
-                  <button
-                  type="button"
-                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                    onClick={() => handleSubmit()}
+                  {(lengthListCard || indexCard) === "" ? (
+                    ""
+                  ) : lengthListCard == indexCard ? (
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                      onClick={() => handleSubmit()}
                     >
-                    Simpan
-                  </button>
-                  :""}
+                      Simpan
+                    </button>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </form>
-         
           </div>
         </div>
       </div>

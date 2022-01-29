@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
 import Swal from "sweetalert2";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 function RevisiList({ token }) {
   const router = useRouter();
@@ -34,14 +34,13 @@ function RevisiList({ token }) {
   const [listCardREvisi, setListCardREvisi] = useState([]);
 
   useEffect(() => {
-    
     getCardREviewList(router.query.id);
   }, [router.query.id, router, token]);
 
   async function getCardREviewList(id) {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/card-review/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/card-review/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,

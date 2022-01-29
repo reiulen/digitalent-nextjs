@@ -254,7 +254,7 @@ export default function RiwayatPelatihanDetail(props) {
                 // layout="fill"
                 src={
                   data?.gambar
-                    ? `${process.env.END_POINT_API_IMAGE_BEASISWA}${data?.gambar}`
+                    ? `${process.env.END_POINT_API_IMAGE_PELATIHAN}${data?.gambar}`
                     : "/assets/media/default-card.png"
                 }
                 // objectFit="cover"

@@ -54,7 +54,7 @@ const DetailPelatihan = ({ session }) => {
   };
 
   const handleDownloadSilabus = async () => {
-    let silabus = process.env.END_POINT_API_IMAGE_BEASISWA + pelatihan.silabus;
+    let silabus = process.env.END_POINT_API_IMAGE_PELATIHAN + pelatihan.silabus;
     window.location.href = silabus;
   };
 
@@ -232,7 +232,7 @@ const DetailPelatihan = ({ session }) => {
                   src={
                     (pelatihan?.thumbnail &&
                       pelatihan.thumbnail !== "Belum ada file" &&
-                      process.env.END_POINT_API_IMAGE_BEASISWA +
+                      process.env.END_POINT_API_IMAGE_PELATIHAN +
                         pelatihan?.thumbnail) ||
                     "/assets/media/default-card.png"
                   }

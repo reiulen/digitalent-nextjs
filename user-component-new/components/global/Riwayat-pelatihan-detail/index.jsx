@@ -17,7 +17,7 @@ export default function RiwayatPelatihanDetail({ session }) {
   );
 
   const handleDownloadSilabus = async () => {
-    let silabus = process.env.END_POINT_API_IMAGE_BEASISWA + data.silabus;
+    let silabus = process.env.END_POINT_API_IMAGE_PELATIHAN + data.silabus;
     window.location.href = silabus;
   };
 
@@ -148,7 +148,7 @@ export default function RiwayatPelatihanDetail({ session }) {
                 src={
                   !data?.gambar
                     ? "/assets/media/default-card.png"
-                    : `${process.env.END_POINT_API_IMAGE_BEASISWA}${data.gambar}`
+                    : `${process.env.END_POINT_API_IMAGE_PELATIHAN}${data.gambar}`
                 }
                 // objectFit="cover"
                 className={`rounded-xl`}

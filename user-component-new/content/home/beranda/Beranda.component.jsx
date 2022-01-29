@@ -563,7 +563,7 @@ const Beranda = ({ session }) => {
                                                 row.gambar !==
                                                   "Belum ada file" &&
                                                 process.env
-                                                  .END_POINT_API_IMAGE_BEASISWA +
+                                                  .END_POINT_API_IMAGE_PELATIHAN +
                                                   row.gambar) ||
                                               "/assets/media/default-card.png"
                                             }
@@ -804,7 +804,7 @@ const Beranda = ({ session }) => {
                                                 cardImage !==
                                                   "Belum ada file" &&
                                                 process.env
-                                                  .END_POINT_API_IMAGE_BEASISWA +
+                                                  .END_POINT_API_IMAGE_PELATIHAN +
                                                   cardImage) ||
                                               "/assets/media/default-card.png"
                                             }

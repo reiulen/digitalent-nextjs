@@ -20,7 +20,7 @@ const ProfileUser = ({ profile }) => {
                   <Image
                     src={
                       (profile.foto &&
-                        process.env.END_POINT_API_IMAGE_BEASISWA +
+                        process.env.END_POINT_API_IMAGE_PELATIHAN +
                           profile.foto) ||
                       "/assets/media/default.jpg"
                     }
@@ -167,7 +167,7 @@ const ProfileUser = ({ profile }) => {
                       height={200}
                       src={
                         (profile.File_ktp &&
-                          process.env.END_POINT_API_IMAGE_BEASISWA +
+                          process.env.END_POINT_API_IMAGE_PELATIHAN +
                             profile.File_ktp) ||
                         "/assets/media/default.jpg"
                       }
@@ -203,7 +203,7 @@ const ProfileUser = ({ profile }) => {
           <Image
             src={
               (profile.File_ktp &&
-                process.env.END_POINT_API_IMAGE_BEASISWA + profile.File_ktp) ||
+                process.env.END_POINT_API_IMAGE_PELATIHAN + profile.File_ktp) ||
               "/assets/media/default.jpg"
             }
             objectFit="cover"
