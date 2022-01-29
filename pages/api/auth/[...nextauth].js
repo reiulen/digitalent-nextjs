@@ -29,7 +29,7 @@ export default NextAuth({
 
           if (role === "mitra") {
             link =
-              process.env.END_POINT_API_PARTNERSHIP_MITRA +
+              process.env.END_POINT_API_PARTNERSHIP +
               "api/authentication/login";
           }
 

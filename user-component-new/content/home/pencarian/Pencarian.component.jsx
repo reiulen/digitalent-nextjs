@@ -403,7 +403,7 @@ const Pencarian = ({ session }) => {
                                 src={
                                   !row.gambar
                                     ? "/assets/media/default-card.png"
-                                    : `${process.env.END_POINT_API_IMAGE_BEASISWA}${row?.gambar}`
+                                    : `${process.env.END_POINT_API_IMAGE_PELATIHAN}${row?.gambar}`
                                 }
                                 layout="fill"
                                 objectFit="cover"

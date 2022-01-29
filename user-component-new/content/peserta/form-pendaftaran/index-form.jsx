@@ -123,7 +123,7 @@ const IndexForm = ({ token, session }) => {
                       className="img-fluid rounded-xl w-100 "
                       src={`${
                         dataPelatihan && dataPelatihan.thumbnail
-                          ? process.env.END_POINT_API_IMAGE_BEASISWA +
+                          ? process.env.END_POINT_API_IMAGE_PELATIHAN +
                             dataPelatihan.thumbnail
                           : "/assets/media/default-card.png"
                       }`}

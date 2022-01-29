@@ -445,7 +445,7 @@ export const dropdownMitra = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      process.env.END_POINT_API_PARTNERSHIP_MITRA + `api/option/mitra`,
+      process.env.END_POINT_API_PARTNERSHIP + `api/option/mitra`,
       config
     );
     dispatch({

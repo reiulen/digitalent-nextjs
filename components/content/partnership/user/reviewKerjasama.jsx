@@ -14,7 +14,7 @@ import {
 
 import axios from "axios";
 import AlertBar from "../components/BarAlert";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 
 function ReviewKerjasama({ token }) {
   const router = useRouter();
@@ -54,14 +54,13 @@ function ReviewKerjasama({ token }) {
   const [status, setStatus] = useState("");
 
   useEffect(() => {
-
     cekProgresStatus(router.query.id, token);
   }, [router.query.id, router, token]);
 
   async function cekProgresStatus(id, token) {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -96,7 +95,7 @@ function ReviewKerjasama({ token }) {
       }
       setStatus(data?.data?.status_migrates_id?.status);
     } catch (error) {
-      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
     }
   }
 

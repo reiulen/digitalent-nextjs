@@ -410,7 +410,7 @@ const Pendidikan = ({ token }) => {
                           />
                         )}
                         {/* <img
-													src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${pendidikan.ijasah}`}
+													src={`${process.env.END_POINT_API_IMAGE_PELATIHAN}${pendidikan.ijasah}`}
 													alt="file ijasah"
 													className="img-fluid"
 												/> */}

@@ -54,7 +54,7 @@ const Done = () => {
                       process.env.END_POINT_API_IMAGE_PARTNERSHIP +
                         dataTraining.gambar_mitra) ||
                     (dataTraining.logo &&
-                      process.env.END_POINT_API_IMAGE_BEASISWA +
+                      process.env.END_POINT_API_IMAGE_PELATIHAN +
                         dataTraining.logo) ||
                     "/assets/media/default-card.png"
                   }

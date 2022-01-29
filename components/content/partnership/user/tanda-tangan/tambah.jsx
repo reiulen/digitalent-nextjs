@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 
 import axios from "axios";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 const TambahTandaTangan = ({ token }) => {
   const signCanvas = useRef({});
@@ -94,7 +94,7 @@ const TambahTandaTangan = ({ token }) => {
 
           try {
             let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/create`,
+              `${process.env.END_POINT_API_PARTNERSHIP}api/signatures/create`,
               formData,
               {
                 headers: {

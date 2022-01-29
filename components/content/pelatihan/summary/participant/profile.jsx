@@ -31,7 +31,7 @@ const ProfileUser = ({ profile }) => {
                   <Image
                     src={
                       (profile.foto &&
-                        process.env.END_POINT_API_IMAGE_BEASISWA +
+                        process.env.END_POINT_API_IMAGE_PELATIHAN +
                           profile.foto) ||
                       "/assets/media/default.jpg"
                     }
@@ -324,7 +324,7 @@ const ProfileUser = ({ profile }) => {
                         }}
                       >
                         <PDFReader
-                          url={`${process.env.END_POINT_API_IMAGE_BEASISWA}${fileKtp}`}
+                          url={`${process.env.END_POINT_API_IMAGE_PELATIHAN}${fileKtp}`}
                           scale={1}
                         />
                       </div>
@@ -336,7 +336,7 @@ const ProfileUser = ({ profile }) => {
                         height={200}
                         src={
                           (profile.File_ktp &&
-                            process.env.END_POINT_API_IMAGE_BEASISWA +
+                            process.env.END_POINT_API_IMAGE_PELATIHAN +
                               profile.File_ktp) ||
                           "/assets/media/default.jpg"
                         }
@@ -357,7 +357,7 @@ const ProfileUser = ({ profile }) => {
                         }}
                       >
                         <PDFReader
-                          url={`${process.env.END_POINT_API_IMAGE_BEASISWA}${fileIjazah}`}
+                          url={`${process.env.END_POINT_API_IMAGE_PELATIHAN}${fileIjazah}`}
                           scale={1}
                         />
                       </div>
@@ -369,7 +369,7 @@ const ProfileUser = ({ profile }) => {
                         height={200}
                         src={
                           (profile.ijasah &&
-                            process.env.END_POINT_API_IMAGE_BEASISWA +
+                            process.env.END_POINT_API_IMAGE_PELATIHAN +
                               profile.ijasah) ||
                           "/assets/media/default.jpg"
                         }
@@ -411,7 +411,7 @@ const ProfileUser = ({ profile }) => {
               }}
             >
               <PDFReader
-                url={`${process.env.END_POINT_API_IMAGE_BEASISWA}${fileKtp}`}
+                url={`${process.env.END_POINT_API_IMAGE_PELATIHAN}${fileKtp}`}
                 scale={1}
               />
             </div>
@@ -419,7 +419,7 @@ const ProfileUser = ({ profile }) => {
             <img
               src={
                 (profile.File_ktp &&
-                  process.env.END_POINT_API_IMAGE_BEASISWA +
+                  process.env.END_POINT_API_IMAGE_PELATIHAN +
                     profile.File_ktp) ||
                 "/assets/media/default.jpg"
               }
@@ -459,7 +459,7 @@ const ProfileUser = ({ profile }) => {
               }}
             >
               <PDFReader
-                url={`${process.env.END_POINT_API_IMAGE_BEASISWA}${fileIjazah}`}
+                url={`${process.env.END_POINT_API_IMAGE_PELATIHAN}${fileIjazah}`}
                 scale={1}
               />
             </div>
@@ -467,7 +467,7 @@ const ProfileUser = ({ profile }) => {
             <img
               src={
                 (profile.ijasah &&
-                  process.env.END_POINT_API_IMAGE_BEASISWA + profile.ijasah) ||
+                  process.env.END_POINT_API_IMAGE_PELATIHAN + profile.ijasah) ||
                 "/assets/media/default.jpg"
               }
               width={400}

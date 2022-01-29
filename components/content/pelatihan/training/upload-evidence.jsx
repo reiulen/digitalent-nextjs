@@ -50,7 +50,7 @@ const UploadEvidence = ({ token }) => {
           return {
             key: 1,
             imagePreview:
-              process.env.END_POINT_API_IMAGE_BEASISWA + item.gambar,
+              process.env.END_POINT_API_IMAGE_PELATIHAN + item.gambar,
             imageFile: item.gambar,
             imageName: item.gambar,
           };
