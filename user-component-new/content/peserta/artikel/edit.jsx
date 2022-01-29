@@ -125,36 +125,28 @@ const EditArtikelPeserta = ({ session }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      if (deskripsi.length <= 11) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Isi Artikel tidak boleh kosong & minimal 5 character !",
-        });
+      if (gambarDB !== gambar) {
+        const data = {
+          isi_artikel: deskripsi,
+          judul_artikel: judul,
+          gambar: gambar,
+          kategori_akademi: akademi,
+          kategori_id: kategori,
+          tag: tag,
+          _method: "put",
+        };
+        dispatch(updateArtikelPeserta(data, session.token, router.query.id));
       } else {
-        if (gambarDB !== gambar) {
-          const data = {
-            isi_artikel: deskripsi,
-            judul_artikel: judul,
-            gambar: gambar,
-            kategori_akademi: akademi,
-            kategori_id: kategori,
-            tag: tag,
-            _method: "put",
-          };
-          dispatch(updateArtikelPeserta(data, session.token, router.query.id));
-        } else {
-          const data = {
-            isi_artikel: deskripsi,
-            judul_artikel: judul,
-            gambar: "",
-            kategori_akademi: akademi,
-            kategori_id: kategori,
-            tag: tag,
-            _method: "put",
-          };
-          dispatch(updateArtikelPeserta(data, session.token, router.query.id));
-        }
+        const data = {
+          isi_artikel: deskripsi,
+          judul_artikel: judul,
+          gambar: "",
+          kategori_akademi: akademi,
+          kategori_id: kategori,
+          tag: tag,
+          _method: "put",
+        };
+        dispatch(updateArtikelPeserta(data, session.token, router.query.id));
       }
     } else {
       simpleValidator.current.showMessages();

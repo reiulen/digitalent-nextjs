@@ -99,25 +99,17 @@ const TambahArtikelPeserta = ({ session }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      if (deskripsi.length <= 11) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Isi Artikel tidak boleh kosong & minimal 5 character !",
-        });
-      } else {
-        const data = {
-          isi_artikel: deskripsi,
-          judul_artikel: judul,
-          gambar: gambar,
-          kategori_akademi: akademi,
-          kategori_id: kategori,
-          tag: tag,
-        };
-        setKlik(klik + 1)
-        if (klik <= 1) {
-          dispatch(newArtikelPeserta(data, session.token));
-        }
+      const data = {
+        isi_artikel: deskripsi,
+        judul_artikel: judul,
+        gambar: gambar,
+        kategori_akademi: akademi,
+        kategori_id: kategori,
+        tag: tag,
+      };
+      setKlik(klik + 1)
+      if (klik <= 1) {
+        dispatch(newArtikelPeserta(data, session.token));
       }
     } else {
       simpleValidator.current.showMessages();
@@ -264,14 +256,14 @@ const TambahArtikelPeserta = ({ session }) => {
                         <p>Tunggu Sebentar</p>
                       )}
                     </div>
-                    {/* <div className={`${styles.validhomePage}`}>
+                    <div className={`${styles.validhomePage}`}>
                       {simpleValidator.current.message(
                         "isi artikel",
                         deskripsi,
                         "required",
                         { className: "text-danger" }
                       )}
-                    </div> */}
+                    </div>
                   </div>
                 </div>
 
