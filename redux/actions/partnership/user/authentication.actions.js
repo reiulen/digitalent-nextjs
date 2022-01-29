@@ -21,7 +21,7 @@ export const mitraRegister = (formData) => {
         type: REGISTER_PROCESS,
       });
       const { data } = await axios.post(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/authentication/register`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/authentication/register`,
         formData
       );
       dispatch({
@@ -43,7 +43,7 @@ export const vericationEmail = (formData) => {
         type: RECOVERY_PASSWORD_PROCESS,
       });
       const { data } = await axios.post(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/authentication/forgot-password`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/authentication/forgot-password`,
         formData
       );
       dispatch({
@@ -65,7 +65,7 @@ export const resetPassword = (formData) => {
         type: RESET_PASSWORD_PROCESS,
       });
       const { data } = await axios.post(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/authentication/password-reset`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/authentication/password-reset`,
         formData
       );
       dispatch({

@@ -311,7 +311,7 @@ const DetailAkademi = ({ session }) => {
                     src={
                       (akademi &&
                         akademi.logo &&
-                        process.env.END_POINT_API_IMAGE_BEASISWA +
+                        process.env.END_POINT_API_IMAGE_PELATIHAN +
                           akademi.logo) ||
                       `/assets/media/logo-vsga-1.svg`
                     }

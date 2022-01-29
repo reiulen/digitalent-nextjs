@@ -323,7 +323,7 @@ const Dashboard = ({ session, success }) => {
                           <Image
                             src={
                               dataDashboard?.pelatihan?.pelatihan_berjalan.logo
-                                ? process.env.END_POINT_API_IMAGE_BEASISWA +
+                                ? process.env.END_POINT_API_IMAGE_PELATIHAN +
                                   dataDashboard?.pelatihan.pelatihan_berjalan
                                     .logo
                                 : dataDashboard?.pelatihan.pelatihan_berjalan
@@ -341,7 +341,7 @@ const Dashboard = ({ session, success }) => {
                             className={`${style.image_card_pelatihan} img-fluild`}
                             alt="Image"
                             onError={(e) => {
-                              console.log(e);
+                              // console.log(e);
                             }}
                           />
                         </div>
@@ -777,7 +777,7 @@ const Dashboard = ({ session, success }) => {
                           src={
                             !row.logo
                               ? "/assets/icon/logo-dts-if-empty.png"
-                              : `${process.env.END_POINT_API_IMAGE_BEASISWA}/${row.logo}`
+                              : `${process.env.END_POINT_API_IMAGE_PELATIHAN}/${row.logo}`
                           }
                           width={55}
                           height={55}

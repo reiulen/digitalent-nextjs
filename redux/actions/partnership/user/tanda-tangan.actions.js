@@ -15,7 +15,7 @@ import axios from "axios";
 
 export async function fetchSignatureApi(params, token) {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures`,
+    `${process.env.END_POINT_API_PARTNERSHIP}api/signatures`,
     {
       params,
       headers: {
@@ -40,7 +40,7 @@ export const fetchSignature = (token) => async (dispatch, getState) => {
 
   try {
     const { data } = await axios.get(
-      `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures`,
+      `${process.env.END_POINT_API_PARTNERSHIP}api/signatures`,
       {
         params,
         headers: {
@@ -88,7 +88,7 @@ export const deleteTandaTangan = (id, token) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.delete(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/signatures/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -114,7 +114,7 @@ export const changeStatusList = (formData, id, token) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.post(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/update-status/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/signatures/update-status/${id}`,
         formData,
         {
           headers: {

@@ -147,7 +147,7 @@ const CardPelatihanOpen = ({
             src={
               (row.gambar &&
                 row.gambar !== "Belum ada file" &&
-                process.env.END_POINT_API_IMAGE_BEASISWA + row.gambar) ||
+                process.env.END_POINT_API_IMAGE_PELATIHAN + row.gambar) ||
               "/assets/media/default-card.png"
             }
             layout="fill"

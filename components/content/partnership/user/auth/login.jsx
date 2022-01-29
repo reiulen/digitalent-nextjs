@@ -68,7 +68,7 @@ const LoginAdmin = () => {
           <div className="container px-0 px-sm-4 scroll-form-login">
             <div className="title-login text-center mt-6">
               <Image
-                src="/assets/logo/logo-6.svg"
+                src="/assets/logo/platform/dts.svg"
                 width={246}
                 height={96}
                 alt="Logo-5"

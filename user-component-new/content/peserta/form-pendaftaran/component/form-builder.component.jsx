@@ -363,7 +363,8 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 onClick={() => {
                   !row.dataOption.includes("data:") &&
                     window.open(
-                      process.env.END_POINT_API_IMAGE_BEASISWA + row.dataOption,
+                      process.env.END_POINT_API_IMAGE_PELATIHAN +
+                        row.dataOption,
                       "_blank"
                     );
                 }}
@@ -807,7 +808,8 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 onClick={() => {
                   !row.dataOption.includes("data:") &&
                     window.open(
-                      process.env.END_POINT_API_IMAGE_BEASISWA + row.dataOption,
+                      process.env.END_POINT_API_IMAGE_PELATIHAN +
+                        row.dataOption,
                       "_blank"
                     );
                 }}
@@ -1164,7 +1166,8 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 onClick={() => {
                   !row.dataOption.includes("data:") &&
                     window.open(
-                      process.env.END_POINT_API_IMAGE_BEASISWA + row.dataOption,
+                      process.env.END_POINT_API_IMAGE_PELATIHAN +
+                        row.dataOption,
                       "_blank"
                     );
                 }}
@@ -1460,7 +1463,8 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 onClick={() => {
                   !row.dataOption.includes("data:") &&
                     window.open(
-                      process.env.END_POINT_API_IMAGE_BEASISWA + row.dataOption,
+                      process.env.END_POINT_API_IMAGE_PELATIHAN +
+                        row.dataOption,
                       "_blank"
                     );
                 }}

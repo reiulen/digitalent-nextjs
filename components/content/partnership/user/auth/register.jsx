@@ -128,7 +128,7 @@ const RegisterMitra = () => {
           <div className="container scroll-form-login">
             <div className="title-login text-center mt-40">
               <Image
-                src="/assets/logo/logo-6.svg"
+                src="/assets/logo/platform/dts.svg"
                 width={246}
                 height={96}
                 alt="Logo-5"

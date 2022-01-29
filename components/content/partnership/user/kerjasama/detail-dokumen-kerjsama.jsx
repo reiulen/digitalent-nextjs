@@ -9,7 +9,7 @@ import { getSingleCooperation } from "../../../../../redux/actions/partnership/u
 import moment from "moment";
 import Image from "next/image";
 import Swal from "sweetalert2";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 const DetailDokumenKerjasama = ({ token }) => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const DetailDokumenKerjasama = ({ token }) => {
   async function getSingleValue(id) {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -37,10 +37,9 @@ const DetailDokumenKerjasama = ({ token }) => {
       );
       setPdfFIle(data?.data?.document_file);
     } catch (error) {
-      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
     }
   }
-
 
   return (
     <PageWrapper>
@@ -119,8 +118,8 @@ const DetailDokumenKerjasama = ({ token }) => {
               <p className="fz-16">
                 {allCooperationUser?.cooperationById.length === 0
                   ? ""
-                  : allCooperationUser?.cooperationById?.data?.cooperation_category
-                      .name}
+                  : allCooperationUser?.cooperationById?.data
+                      ?.cooperation_category.name}
               </p>
 
               <label
@@ -138,7 +137,8 @@ const DetailDokumenKerjasama = ({ token }) => {
                 {allCooperationUser?.cooperationById?.length === 0
                   ? ""
                   : moment(
-                      allCooperationUser?.cooperationById?.data?.period_date_start
+                      allCooperationUser?.cooperationById?.data
+                        ?.period_date_start
                     ).format("DD MMMM YYYY")}
                 &nbsp;-&nbsp;
                 {allCooperationUser?.cooperationById.length === 0
@@ -227,8 +227,9 @@ const DetailDokumenKerjasama = ({ token }) => {
 
               {allCooperationUser?.cooperationById.length === 0 ? (
                 ""
-              ) : allCooperationUser?.cooperationById?.data?.cooperation_category
-                  .data_content?.cooperation_form === "-" ? (
+              ) : allCooperationUser?.cooperationById?.data
+                  ?.cooperation_category.data_content?.cooperation_form ===
+                "-" ? (
                 <h1 className="my-4">Data kerja sama tidak ada</h1>
               ) : (
                 allCooperationUser?.cooperationById?.data?.cooperation_category?.data_content?.map(

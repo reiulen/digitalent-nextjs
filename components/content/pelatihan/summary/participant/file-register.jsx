@@ -14,11 +14,11 @@ const FileRegister = ({ file }) => {
       row.type.includes("upload_document")
     ) {
       // window.location.href =
-      //   process.env.END_POINT_API_IMAGE_BEASISWA + row.value;
+      //   process.env.END_POINT_API_IMAGE_PELATIHAN + row.value;
 
       const data = {
         name: row.name,
-        link: process.env.END_POINT_API_IMAGE_BEASISWA + row.value,
+        link: process.env.END_POINT_API_IMAGE_PELATIHAN + row.value,
         type: row.type,
       };
       setPath(data);

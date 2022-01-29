@@ -1,5 +1,6 @@
 // const ENDPOINT_DEV = "https://api-dts-dev.majapahit.id";
-const ENDPOINT_PROD = "https://api-dts-poc.majapahit.id";
+const ENDPOINT_API = "https://api-dts-poc.majapahit.id";
+const ENDPOINT_IMAGE = "https://bucket.cloud.lintasarta.co.id:8082";
 
 module.exports = {
   reactStrictMode: true,
@@ -19,80 +20,55 @@ module.exports = {
     ],
   },
   env: {
-    NEXTAUTH_URL: "https://dts-poc.majapahit.id",
-    LOGO_DTS: ENDPOINT_PROD + "/pelatihan/storage/images/logo-dts.png",
+    NEXTAUTH_URL: "https://digitalent.kominfo.go.id",
+    LOGO_DTS: ENDPOINT_API + "/pelatihan/storage/images/logo-dts.png",
 
     CAPTCHA_SITE_KEY: "6LeUmtIbAAAAAMltXjRDmRqns6MThDowaaYHz3YU",
     CAPTCHA_SECRET_KEY: "6LeUmtIbAAAAAAbA9yada3LOIktctPbfQ86SjhNn",
 
     PATH_URL:
-      process.env.MODE !== "development" ? "https://dts-poc.majapahit.id" : "",
+      process.env.MODE !== "development"
+        ? "https://digitalent.kominfo.go.id"
+        : "",
     PATH_SIMONAS: "http://simonas-dev.majapahit.id",
     PATH_BEASISWA: "https://beasiswa-poc.majapahit.id/",
 
-    // END_POINT_API_PUBLIKASI: "http://dts-publikasi-dev.majapahit.id/",
-    END_POINT_API_PUBLIKASI: ENDPOINT_PROD + "/publikasi/",
-    END_POINT_API_PUBLIKASI_1: ENDPOINT_PROD + "/publikasi-view/",
+    END_POINT_API_PUBLIKASI: ENDPOINT_API + "/publikasi/",
+    END_POINT_API_PUBLIKASI_1: ENDPOINT_API + "/publikasi-view/",
     API_KEY_PUBLIKASI: "I8aylVChtrUB15Sp5v8TsjDOvb8kGcML",
 
     //subvit
-    // END_POINT_API_SUBVIT: "http://dts-subvit-dev.majapahit.id/",
-    END_POINT_API_SUBVIT: ENDPOINT_PROD + "/subvit/",
-
-    // partnership
-    END_POINT_API_PARTNERSHIP: ENDPOINT_PROD + "/partnership/",
-
-    END_POINT_API_PARTNERSHIP_MITRA: ENDPOINT_PROD + "/partnership/",
-
-    // END_POINT_API_IMAGE_PARTNERSHIP:
-    //   "http://dts-partnership-poc.s3.ap-southeast-1.amazonaws.com",
-
-    // site management
-    END_POINT_API_SITE_MANAGEMENT: ENDPOINT_PROD + "/sso/",
-
-    // pelatihan
-    // END_POINT_API_PELATIHAN: "http://192.168.11.44:83/",
-    END_POINT_API_PELATIHAN: ENDPOINT_PROD + "/pelatihan/",
-
+    END_POINT_API_SUBVIT: ENDPOINT_API + "/subvit/",
+    //partnership
+    END_POINT_API_PARTNERSHIP: ENDPOINT_API + "/partnership/",
+    //sitemanagement
+    END_POINT_API_SITE_MANAGEMENT: ENDPOINT_API + "/sso/",
+    //pelatihan
+    END_POINT_API_PELATIHAN: ENDPOINT_API + "/pelatihan/",
     //sertifikat
-    END_POINT_API_SERTIFIKAT: ENDPOINT_PROD + "/sertifikat/",
-    // END_POINT_API_SERTIFIKAT: "http://dts-sertifikat-dev.majapahit.id/",
-    // END_POINT_API_SERTIFIKAT: "http://http://192.168.11.96:8000/",
-
-    // Beasiswa
-    END_POINT_API_BEASISWA: ENDPOINT_PROD + "/beasiswa/api/v1/",
-
+    END_POINT_API_SERTIFIKAT: ENDPOINT_API + "/sertifikat/",
+    //beasiswa
+    END_POINT_API_BEASISWA: ENDPOINT_API + "/beasiswa/api/v1/",
     END_POINT_API_BEASISWA_SCHOLARSHIP:
-      ENDPOINT_PROD + "/beasiswa/api/get-scholarship-data",
-
-    END_POINT_API_SIMONAS_JOB: ENDPOINT_PROD + "/simonas/api/job",
-
-    END_POINT_API_SIMONAS: ENDPOINT_PROD + "/simonas/api/v1/",
-
-    TOKEN_MAP:
-      "pk.eyJ1IjoiZGVuZHlsb3JkcyIsImEiOiJja3U1NHJnYjkxczdyMnZxZ2ptM2hlNXpqIn0.o5v5Ch0AFJIfeZER2vZvwA",
-
-    // END_POINT_API_TTEP12: "https://dts-signature-dev.majapahit.id/api/",
-    END_POINT_API_TTEP12: ENDPOINT_PROD + "/signature/api/",
-
-    ROOT_URL: "https://dts-dev.majapahit.id/",
+      ENDPOINT_API + "/beasiswa/api/get-scholarship-data",
+    //simonas
+    END_POINT_API_SIMONAS_JOB: ENDPOINT_API + "/simonas/api/job",
+    END_POINT_API_SIMONAS: ENDPOINT_API + "/simonas/api/v1/",
+    END_POINT_API_TTEP12: ENDPOINT_API + "/signature/api/",
 
     VERSION_APP: "2.0.0",
 
-    END_POINT_API_IMAGE_PUBLIKASI:
-      "https://bucket.cloud.lintasarta.co.id:8082/dts-publikasi/",
-    END_POINT_API_IMAGE_PARTNERSHIP:
-      "https://bucket.cloud.lintasarta.co.id:8082/dts-partnership",
-    END_POINT_API_IMAGE_SUBVIT:
-      "https://bucket.cloud.lintasarta.co.id:8082/dts-subvit/",
-    END_POINT_API_IMAGE_SERTIFIKAT:
-      "https://bucket.cloud.lintasarta.co.id:8082/dts-sertifikat/",
-    END_POINT_API_IMAGE_BEASISWA:
-      "https://bucket.cloud.lintasarta.co.id:8082/dts-beasiswa",
+    END_POINT_API_IMAGE_PUBLIKASI: ENDPOINT_IMAGE + "/dts-publikasi/",
+    END_POINT_API_IMAGE_PARTNERSHIP: ENDPOINT_IMAGE + "/dts-partnership",
+    END_POINT_API_IMAGE_SUBVIT: ENDPOINT_IMAGE + "/dts-subvit/",
+    END_POINT_API_IMAGE_SERTIFIKAT: ENDPOINT_IMAGE + "/dts-sertifikat/",
+    END_POINT_API_IMAGE_PELATIHAN: ENDPOINT_IMAGE + "/dts-pelatihan",
     END_POINT_API_IMAGE_SITE_MANAGEMENT:
-      "https://bucket.cloud.lintasarta.co.id:8082/dts-sitemanagement/",
-    END_POINT_API_IMAGE_LOGO_MITRA:
-      "https://bucket.cloud.lintasarta.co.id:8082/dts-partnership",
+      ENDPOINT_IMAGE + "/dts-sitemanagement/",
+    END_POINT_API_IMAGE_LOGO_MITRA: ENDPOINT_IMAGE + "/dts-partnership",
+
+    TOKEN_MAP:
+      "pk.eyJ1IjoiZGVuZHlsb3JkcyIsImEiOiJja3U1NHJnYjkxczdyMnZxZ2ptM2hlNXpqIn0.o5v5Ch0AFJIfeZER2vZvwA",
 
     FB_API_KEY: "AIzaSyCE2YL39cNc47v0eSzmecyaAOhAKYlGjxQ",
     FB_AUTH_DOMAIN: "dts-kominfo.firebaseapp.com",

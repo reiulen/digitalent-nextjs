@@ -33,11 +33,11 @@ const ViewTrainingStep1 = () => {
     tema: review.tema,
     logoReference:
       review.logo && review.logo !== "Belum ada file"
-        ? process.env.END_POINT_API_IMAGE_BEASISWA + review.logo
+        ? process.env.END_POINT_API_IMAGE_PELATIHAN + review.logo
         : "/assets/media/default.jpg",
     thumbnail:
       review.thumbnail && review.thumbnail !== "Belum ada file"
-        ? process.env.END_POINT_API_IMAGE_BEASISWA + review.thumbnail
+        ? process.env.END_POINT_API_IMAGE_PELATIHAN + review.thumbnail
         : "/assets/media/default.jpg",
     silabus: review.silabus,
     metodePelatihan: review.metode_pelatihan,

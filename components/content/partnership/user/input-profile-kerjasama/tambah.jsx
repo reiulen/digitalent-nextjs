@@ -10,13 +10,13 @@ import Image from "next/image";
 import AlertBar from "../../components/BarAlert";
 import { Modal } from "react-bootstrap";
 import ReactCrop from "react-image-crop";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 
 const Tambah = ({ token }) => {
   const router = useRouter();
   const { successInputProfile } = router.query;
   const selectInputRef = useRef();
-  const defaultImage = "/public/assets/media/default.jpg"
+  const defaultImage = "/public/assets/media/default.jpg";
 
   // diambil dari data user ketika pertama kali register (name)
   const [institution_name, setInstitution_name] = useState("");
@@ -130,7 +130,7 @@ const Tambah = ({ token }) => {
 
           try {
             let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/profiles`,
+              `${process.env.END_POINT_API_PARTNERSHIP}api/profiles`,
               formData,
               {
                 headers: {
@@ -157,9 +157,9 @@ const Tambah = ({ token }) => {
       });
     }
   };
-  
+
   // Image Cropping
-  const [ showEditImage, setShowEditImage ] = useState(false)
+  const [showEditImage, setShowEditImage] = useState(false);
   const [upImg, setUpImg] = useState();
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
@@ -212,33 +212,33 @@ const Tambah = ({ token }) => {
   }, [completedCrop]);
 
   const onHandleHideModal = () => {
-    setShowEditImage(false)
-    setUpImg(null)
-  }
+    setShowEditImage(false);
+    setUpImg(null);
+  };
 
   const onSubmitEditImage = () => {
-    setShowEditImage(false)
-    setUpImg(null)
-    setAgency_logo(previewCanvasRef.current.toDataURL("image/png"))
-  }
+    setShowEditImage(false);
+    setUpImg(null);
+    setAgency_logo(previewCanvasRef.current.toDataURL("image/png"));
+  };
 
   const onChangeProvinces = (e) => {
-    setIndonesia_cities_id("")
-    setCitiesAll([])
+    setIndonesia_cities_id("");
+    setCitiesAll([]);
     selectInputRef.current.select.clearValue();
 
     setIndonesia_provinces_id(e.id);
-    fetchAPICity(e.id)
+    fetchAPICity(e.id);
   };
 
   const onChangeCity = (e) => {
-    setIndonesia_cities_id(e?.id)
-  }
+    setIndonesia_cities_id(e?.id);
+  };
 
   async function fetchAPICity(id) {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/cities/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}api/option/cities/${id}`
       );
       let dataNewCitites = data?.data?.map((items) => {
         return { ...items, label: items?.name, value: items?.id };
@@ -263,7 +263,7 @@ const Tambah = ({ token }) => {
   async function getDataProvinces(token) {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/provinces`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/option/provinces`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -284,7 +284,7 @@ const Tambah = ({ token }) => {
   async function getProfiles(token) {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/profiles`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/profiles`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -305,11 +305,15 @@ const Tambah = ({ token }) => {
             ? ""
             : data?.data?.pic_contact_number
         );
-        setPic_email(data?.data?.pic_email === "-" ? "" : data?.data?.pic_email);
+        setPic_email(
+          data?.data?.pic_email === "-" ? "" : data?.data?.pic_email
+        );
         setWesite(data?.data?.website === null ? "" : data?.data?.website);
         setEmail(data?.data?.email === "-" ? "" : data?.data?.email);
         setInstitution_name(
-          data?.data?.institution_name === "-" ? "" : data?.data?.institution_name
+          data?.data?.institution_name === "-"
+            ? ""
+            : data?.data?.institution_name
         );
         if (data?.data?.city.id !== "-" && data?.data?.province.id !== "-") {
           let citiesss = {
@@ -328,22 +332,21 @@ const Tambah = ({ token }) => {
       }
     } catch (error) {
       Swal.fire({
-        icon: 'error',
+        icon: "error",
         title: `Gagal`,
         text: `${error.response.data.message}`,
         showDenyButton: false,
         showCancelButton: false,
-        confirmButtonText: 'Ok',
+        confirmButtonText: "Ok",
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          router.back()
+          router.back();
         }
-      })
+      });
       // return;
     }
   }
-
 
   useEffect(() => {
     if (indonesia_provinces_id !== "") {
@@ -354,7 +357,7 @@ const Tambah = ({ token }) => {
   async function fetchAPI() {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/cities/${indonesia_provinces_id.id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}api/option/cities/${indonesia_provinces_id.id}`
       );
       let dataNewCitites = data.data.map((items) => {
         return { ...items, label: items.name, value: items.id };
@@ -385,7 +388,6 @@ const Tambah = ({ token }) => {
 
       {/* Content */}
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0 px-4">
             <h3 className="card-title text-dark fw-600 titles-1">
@@ -460,7 +462,7 @@ const Tambah = ({ token }) => {
 
               <div className="form-group mb-0 mb-sm-4">
                 <label htmlFor="staticEmail" className="col-form-label">
-                  Gambar Logo 
+                  Gambar Logo
                 </label>
 
                 {!agency_logo ? (
@@ -471,7 +473,10 @@ const Tambah = ({ token }) => {
                       data-target="#exampleModalCenter"
                     >
                       <Image
-                        src= {process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview}
+                        src={
+                          process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                          imageview
+                        }
                         alt="image"
                         width={160}
                         height={160}
@@ -479,18 +484,16 @@ const Tambah = ({ token }) => {
                         className="rounded-circle"
                       />
                     </figure>
-    
+
                     <div className="position-relative">
-                      <label 
-                        className="circle-top" 
+                      <label
+                        className="circle-top"
                         onClick={() => setShowEditImage(true)}
                       >
                         <i className="ri-add-line text-dark"></i>
                       </label>
                     </div>
                   </div>
-
-                  
                 ) : (
                   <div className="ml-4 row">
                     <figure
@@ -506,11 +509,10 @@ const Tambah = ({ token }) => {
                         objectFit="fill"
                         className="rounded-circle"
                       />
-
                     </figure>
                     <div className="position-relative">
-                      <label 
-                        className="circle-top" 
+                      <label
+                        className="circle-top"
                         onClick={() => setShowEditImage(true)}
                       >
                         <i className="ri-add-line text-dark"></i>
@@ -530,7 +532,6 @@ const Tambah = ({ token }) => {
                 ) : (
                   ""
                 )}
-
               </div>
 
               {/* modal image show */}
@@ -620,7 +621,7 @@ const Tambah = ({ token }) => {
                       className="basic-single"
                       classNamePrefix="select"
                       placeholder={`${
-                        indonesia_provinces_id !== "" 
+                        indonesia_provinces_id !== ""
                           ? indonesia_provinces_id?.name
                           : "Pilih provinsi"
                       } `}
@@ -647,7 +648,11 @@ const Tambah = ({ token }) => {
                     <label htmlFor="staticEmail" className=" col-form-label">
                       Kota / Kabupaten
                     </label>
-                    <div className={indonesia_provinces_id ? "" : "cursor-not-allowed"}>
+                    <div
+                      className={
+                        indonesia_provinces_id ? "" : "cursor-not-allowed"
+                      }
+                    >
                       <Select
                         onFocus={() =>
                           setError({ ...error, indonesia_cities_id: "" })
@@ -655,7 +660,8 @@ const Tambah = ({ token }) => {
                         className="basic-single"
                         classNamePrefix="select"
                         placeholder={`${
-                          indonesia_cities_id !== "" && indonesia_cities_id !== undefined
+                          indonesia_cities_id !== "" &&
+                          indonesia_cities_id !== undefined
                             ? indonesia_cities_id?.name
                             : "Pilih data Kab/Kota"
                         }`}
@@ -671,7 +677,7 @@ const Tambah = ({ token }) => {
                         ref={selectInputRef}
                       />
                     </div>
-                    
+
                     {error?.indonesia_cities_id ? (
                       <p className="error-text">{error?.indonesia_cities_id}</p>
                     ) : (
@@ -797,10 +803,7 @@ const Tambah = ({ token }) => {
       {/* End of Content */}
 
       {/* Modal Edit Image  */}
-      <Modal
-        show={showEditImage}
-        onHide={() => onHandleHideModal() }
-      >
+      <Modal show={showEditImage} onHide={() => onHandleHideModal()}>
         <Modal.Header>
           <Modal.Title>Ganti Logo Lembaga</Modal.Title>
 
@@ -811,88 +814,79 @@ const Tambah = ({ token }) => {
           >
             <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
           </button>
-
         </Modal.Header>
 
         <Modal.Body>
-          <div>
-            Logo Lembaga
-          </div>
+          <div>Logo Lembaga</div>
 
           <div className="my-5">
-              <button 
-                className="btn btn-rounded-full btn-sm bg-blue-primary text-white d-flex justify-content-center"
-                onClick={() => {
-                  document.getElementById("edit-image").click();
-                }}
-              >
-                <i className="ri-upload-2-fill text-white"></i> Pilih Logo Lembaga
-              </button>
+            <button
+              className="btn btn-rounded-full btn-sm bg-blue-primary text-white d-flex justify-content-center"
+              onClick={() => {
+                document.getElementById("edit-image").click();
+              }}
+            >
+              <i className="ri-upload-2-fill text-white"></i> Pilih Logo Lembaga
+            </button>
 
-              <input
-                type="file"
-                name="gambar"
-                className="custom-file-input"
-                id="edit-image"
-                accept="image/*"
-                style={{ display: "none" }}
-                onChange={onSelectFile}
-              />
+            <input
+              type="file"
+              name="gambar"
+              className="custom-file-input"
+              id="edit-image"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={onSelectFile}
+            />
 
-              <div className="row mt-5">
-                <div className="col-12 col-md-6">
-                  <ReactCrop 
-                    src={upImg}
-                    onImageLoaded={onLoad}
-                    crop={crop}
-                    onChange={(c) => setCrop(c)}
-                    onComplete={(c) => setCompletedCrop(c)}
-                  />
-                </div>
-
-                <div className="col-12 col-md-6">
-                    {
-                      upImg ?
-                        <div>
-                          <div>
-                            Pratinjau
-                          </div>
-                          <canvas
-                            ref={previewCanvasRef}
-                            style={{
-                              width: Math.round(completedCrop?.width ?? 0),
-                              height: Math.round(completedCrop?.height ?? 0),
-                              borderRadius: "50%",
-                            }}
-                          />
-                        </div>
-                      :
-                        null
-                    }
-                </div>
+            <div className="row mt-5">
+              <div className="col-12 col-md-6">
+                <ReactCrop
+                  src={upImg}
+                  onImageLoaded={onLoad}
+                  crop={crop}
+                  onChange={(c) => setCrop(c)}
+                  onComplete={(c) => setCompletedCrop(c)}
+                />
               </div>
+
+              <div className="col-12 col-md-6">
+                {upImg ? (
+                  <div>
+                    <div>Pratinjau</div>
+                    <canvas
+                      ref={previewCanvasRef}
+                      style={{
+                        width: Math.round(completedCrop?.width ?? 0),
+                        height: Math.round(completedCrop?.height ?? 0),
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </div>
+                ) : null}
+              </div>
+            </div>
           </div>
         </Modal.Body>
 
         <Modal.Footer>
           <div className="row">
             <div className="d-flex justify-content-between align-items-center">
-                  <button
-                    className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 d-flex justify-content-center"
-                    onClick={() => onHandleHideModal()}
-                  >
-                    Batal
-                  </button>
-                  <button
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
-                    onClick={() => onSubmitEditImage()}
-                  >
-                    Simpan
-                  </button>
+              <button
+                className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 d-flex justify-content-center"
+                onClick={() => onHandleHideModal()}
+              >
+                Batal
+              </button>
+              <button
+                className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
+                onClick={() => onSubmitEditImage()}
+              >
+                Simpan
+              </button>
             </div>
           </div>
         </Modal.Footer>
-
       </Modal>
       {/* End of Modal Edit Image */}
     </PageWrapper>
