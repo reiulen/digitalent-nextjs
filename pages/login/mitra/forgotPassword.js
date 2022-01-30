@@ -2,9 +2,10 @@ import dynamic from "next/dynamic";
 // import ForgotPassword from "../../../components/content/partnership/user/auth/forgotPassword";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-
+import { middlewareAuthMitraSession } from "../../../utils/middleware/authMiddleware";
 const ForgotPassword = dynamic(
-  () => import("../../../components/content/partnership/user/auth/forgotPassword"),
+  () =>
+    import("../../../components/content/partnership/user/auth/forgotPassword"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -25,10 +26,13 @@ export default function ForgotPasswordMitra() {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  if (session) {
+
+  const middleware = middlewareAuthMitraSession(session);
+
+  if (!middleware.status) {
     return {
       redirect: {
-        destination: "http://dts-dev.majapahit.id/partnership/user/kerjasama",
+        destination: middleware.redirect,
         permanent: false,
       },
     };
