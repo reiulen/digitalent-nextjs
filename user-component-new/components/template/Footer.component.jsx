@@ -118,7 +118,7 @@ export default function Footer({ session }) {
                 {(
                   localStorage.getItem("footer_data") &&
                   JSON.parse(localStorage.getItem("footer_data"))
-                ).alamat ||
+                )?.alamat ||
                   "Kementerian Komunikasi dan Informatika RI Jl. Medan Merdeka Barat No. 9 Jakarta Pusat, 10110"}
               </p>
             </div>

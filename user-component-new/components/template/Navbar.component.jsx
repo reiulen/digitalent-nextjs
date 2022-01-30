@@ -217,6 +217,9 @@ const Navigationbar = ({ session }) => {
           Cookies.remove("id_tema");
           Cookies.remove("id_pelatihan");
           Cookies.remove("fcm_token");
+          if (localStorage.getItem("footer_data")) {
+            localStorage.removeItem("footer_data");
+          }
           signOut();
         }
       })
