@@ -35,23 +35,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      // if (!session) {
-      //   return {
-      //     redirect: {
-      //       destination: "http://dts-dev.majapahit.id/login/admin",
-      //       permanent: false,
-      //     },
-      //   };
-      // }
 
       return {
         props: { session, title: "Detail Master Mitra - Paretnership" },
       };
     }
 );
-
-// import React from "react";
-
-// export default function index() {
-//   return <div>test</div>;
-// }

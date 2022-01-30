@@ -48,23 +48,20 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      const cookiePermission = req.cookies.token_permission
-      // if (!session) {
-      //   return {
-      //     redirect: {
-      //       destination: "http://dts-dev.majapahit.id/login/admin",
-      //       permanent: false,
-      //     },
-      //   };
-      // }
+      const cookiePermission = req.cookies.token_permission;
 
       dispatch(getSingleValue(token, params.id, cookiePermission));
       dispatch(fetchListSelectCooperation(token, cookiePermission));
       dispatch(fetchListSelectStatus(token, cookiePermission));
 
-      await store.dispatch(fetchListSelectStatus(session.user.user.data.token, cookiePermission));
       await store.dispatch(
-        fetchListSelectCooperation(session.user.user.data.token, cookiePermission)
+        fetchListSelectStatus(session.user.user.data.token, cookiePermission)
+      );
+      await store.dispatch(
+        fetchListSelectCooperation(
+          session.user.user.data.token,
+          cookiePermission
+        )
       );
 
       return {

@@ -59,14 +59,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       const data = session.user.user.data;
 
-      if (data.user.roles[0] !== "user") {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login",
-            permanent: false,
-          },
-        };
-      }
       return {
         props: {
           data: "auth",

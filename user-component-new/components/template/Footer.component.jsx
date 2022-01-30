@@ -30,13 +30,17 @@ export default function Footer({ session }) {
     }
   }, []);
 
+  const [statusFooter, setStatusFooter] = useState(false);
+
   useEffect(() => {
     if (footer && Object.keys(footer).length !== 0) {
       localStorage.setItem("footer", footer?.color[1]?.color);
       localStorage.setItem("footer_logo", footer?.footer_logo);
       localStorage.setItem("footer_data", JSON.stringify(footer));
+      setStatusFooter(true);
     }
   }, [footer]);
+
   return (
     <div className={`color-secondary-${warna}`}>
       <Container fluid className="padding-content-footer">
@@ -144,9 +148,7 @@ export default function Footer({ session }) {
                     : undefined
                 }
               >
-                {localStorage.getItem("footer_data") &&
-                  JSON.parse(localStorage.getItem("footer_data")).external_link
-                    ?.length > 0 &&
+                {statusFooter &&
                   JSON.parse(
                     localStorage.getItem("footer_data")
                   ).external_link?.map((row, i) => (
