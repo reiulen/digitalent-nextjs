@@ -490,11 +490,6 @@ const Beranda = ({ session }) => {
                             <h1>{row.Name}</h1>
                           </div>
                           <div className="link-pelatihan-new">
-                            {/* <Link
-                              href={`/detail/akademi/${akademiId}?tema_id=${row.id}`}
-                              passHref
-                            >
-                            </Link> */}
                             <span
                               className={`color-extras-${warna}`}
                               onClick={() =>
@@ -1067,13 +1062,6 @@ const Beranda = ({ session }) => {
                         </div>
                       </div>
                     )}
-                    {/* {arr === true && i === 0 && (
-                      <div className="row">
-                        <h1 className="text-center text-muted col-12 font-weight-bolder">
-                          Pelatihan Belum Tersedia
-                        </h1>
-                      </div>
-                    )} */}
                   </div>
                 ))
               ) : (
