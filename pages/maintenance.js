@@ -1,7 +1,7 @@
 import { Router, useRouter } from "next/router";
 import Image from "next/image";
 
-export default function Custom500() {
+export default function CustomMaintenance() {
   const router = useRouter();
 
   return (
