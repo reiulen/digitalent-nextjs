@@ -38,15 +38,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      // if (!session) {
-      //   return {
-      //     redirect: {
-      //       destination: "http://dts-dev.majapahit.id/login/mitra",
-      //       permanent: false,
-      //     },
-      //   };
-      // }
-
       return {
         props: { session, title: "Input Profile Kerjasama - Partnership" },
       };
