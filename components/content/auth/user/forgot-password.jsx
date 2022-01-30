@@ -40,6 +40,7 @@ const ForgotPassword = () => {
           setLoading(true);
           const data = {
             email: emailCode,
+            capcha: captcha,
           };
           await axios
             .post(
