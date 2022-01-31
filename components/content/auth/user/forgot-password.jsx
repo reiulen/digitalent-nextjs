@@ -149,20 +149,28 @@ const ForgotPassword = () => {
                   <>
                     <button
                       type="button"
-                      className="btn btn-primary-rounded-full bg-secondary btn-block mt-5"
+                      className="btn btn-outline-secondary-main btn-block mt-5 fw-600"
                       onClick={submit}
                     >
                       Kirim E-mail
                     </button>
+                    <Link href={"/login"} passHref>
+                      <button
+                        type="button"
+                        className="btn btn-block mt-5 btn-outline-secondary-dash fw-600"
+                      >
+                        Kembali
+                      </button>
+                    </Link>
 
-                    <div className="mt-10 fz-16">
+                    <div className="fz-16 mt-10">
                       {success && (
                         <center>
-                          <p
-                            className="mt-3 "
-                            style={{ fontSize: "16px", color: "#fff" }}
-                          >
+                          <p style={{ fontSize: "16px", color: "#fff" }}>
                             Sukses Mengirim Email, Silahkan Cek Email Anda !
+                          </p>
+                          <p style={{ fontSize: "16px", color: "#fff" }}>
+                            Periksa juga di folder spam email !
                           </p>
                         </center>
                       )}

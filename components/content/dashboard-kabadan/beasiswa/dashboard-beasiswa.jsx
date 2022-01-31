@@ -115,7 +115,7 @@ const DashboardBeasiswa = ({ token }) => {
 
   const dataBeasiwaDalamNegeri = [];
   if (statistikDalam) {
-    statistikDalam.map((row, i) => {
+    statistikDalam?.map((row, i) => {
       let val = {
         name: row.category,
         pendaftar: row.type.peserta,
@@ -126,7 +126,7 @@ const DashboardBeasiswa = ({ token }) => {
   }
   const dataBeasiwaLuarNegeri = [];
   if (statistikLuar) {
-    statistikLuar.map((row, i) => {
+    statistikLuar?.map((row, i) => {
       let val = {
         name: row.category,
         awardee: row.type.awardee,
@@ -138,7 +138,7 @@ const DashboardBeasiswa = ({ token }) => {
 
   const dataProvinsiPendaftar = [];
   if (provinsiPendaftar) {
-    provinsiPendaftar.list.map((row, i) => {
+    provinsiPendaftar?.list.map((row, i) => {
       let val = {
         id: i + 1,
         title: row.province,
@@ -234,17 +234,17 @@ const DashboardBeasiswa = ({ token }) => {
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Seluruh Pendaftar Beasiswa Dalam Negeri"}
-              value={totalPendaftar.dn.all}
-              dailyAdd={totalPendaftar.dn.percetage}
-              statisticDay={totalPendaftar.dn.latest}
+              value={totalPendaftar?.dn?.all}
+              dailyAdd={totalPendaftar?.dn?.percetage}
+              statisticDay={totalPendaftar?.dn?.latest}
             />
           </div>
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Seluruh Pendaftar Beasiswa Luar Negeri"}
-              value={totalPendaftar.ln.all}
-              dailyAdd={totalPendaftar.ln.percetage}
-              statisticDay={totalPendaftar.ln.latest}
+              value={totalPendaftar?.ln?.all}
+              dailyAdd={totalPendaftar?.ln?.percetage}
+              statisticDay={totalPendaftar?.ln?.latest}
             />
           </div>
         </div>
@@ -389,8 +389,8 @@ const DashboardBeasiswa = ({ token }) => {
                         <ListCardInfo data={dataProvinsiPendaftar} />
 
                         <PaginationDashboard
-                          total={provinsiPendaftar.total}
-                          perPage={provinsiPendaftar.perPage}
+                          total={provinsiPendaftar?.total}
+                          perPage={provinsiPendaftar?.perPage}
                           title="Pendaftar"
                           activePage={pageProvinsiPendaftar}
                           funcPagination={(value) => {
@@ -417,8 +417,8 @@ const DashboardBeasiswa = ({ token }) => {
                       <>
                         <ListCardInfo data={dataProvinsiAwardee} />
                         <PaginationDashboard
-                          total={provinsiAwardee.total}
-                          perPage={provinsiAwardee.perPage}
+                          total={provinsiAwardee?.total}
+                          perPage={provinsiAwardee?.perPage}
                           title="Awardee"
                           activePage={pageProvinsiAwardee}
                           funcPagination={(value) => {
@@ -456,8 +456,8 @@ const DashboardBeasiswa = ({ token }) => {
                       <>
                         <ListCardInfo data={dataUniversitasDalam} />
                         <PaginationDashboard
-                          total={UniversitasDalam.total}
-                          perPage={UniversitasDalam.perPage}
+                          total={UniversitasDalam?.total}
+                          perPage={UniversitasDalam?.perPage}
                           title="Perguruan Tinggi"
                           activePage={pageUniversitasDalam}
                           funcPagination={(value) => {
@@ -499,8 +499,8 @@ const DashboardBeasiswa = ({ token }) => {
                       <>
                         <ListCardInfo data={dataUniversitasLuarNegeri} />
                         <PaginationDashboard
-                          total={universitasLuar.total}
-                          perPage={universitasLuar.perPage}
+                          total={universitasLuar?.total}
+                          perPage={universitasLuar?.perPage}
                           title="Universitas"
                           activePage={pageUniversitasLuar}
                           funcPagination={(value) => {
