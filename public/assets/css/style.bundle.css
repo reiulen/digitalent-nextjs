@@ -4211,6 +4211,27 @@ fieldset:disabled a.btn {
   box-shadow: 0 0 0 0.2rem rgba(228, 230, 239, 0.5);
 }
 
+.btn-outline-secondary-dash{
+  background-color: #ffffff;
+  color: #4299e1;
+  border-radius:30px
+}
+.btn-outline-secondary-dash:hover{
+  background-color: #4299e1;
+  color: #ffffff;
+  border-radius:30px
+}
+.btn-outline-secondary-main:hover{
+  background-color: #ffffff;
+  color: #4299e1;
+  border-radius:30px
+}
+.btn-outline-secondary-main{
+  background-color: #4299e1;
+  color: #ffffff;
+  border-radius:30px
+}
+
 .btn-outline-secondary.disabled,
 .btn-outline-secondary:disabled {
   /* color: #E4E6EF; */
