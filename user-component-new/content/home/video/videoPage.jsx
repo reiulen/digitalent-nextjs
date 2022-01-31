@@ -1235,13 +1235,13 @@ const VideoPage = () => {
                   <h2 className="font-weight-bolder">
                     {detail.judul}
                   </h2>
-
+                  
                   {
                     windowDimensions && windowDimensions.width && windowDimensions.width <= 450 ?
                       <div className="mr-3" style={{ color: "#ADB5BD", fontSize: "14px" }}>
                         {
                           detail.tanggal_publish !== null && playLoading === false ?
-                            `${moment(detail.tanggal_publish).format("MMMM DD")} | ${detail.ditonton} Ditonton`
+                            `${moment(detail.tanggal_publish).format("MMMM DD")} | ${detail.total_views} Ditonton`
                             :
                             ""
                         }
@@ -1310,7 +1310,7 @@ const VideoPage = () => {
                           <div className="mr-3" style={{ color: "#ADB5BD", fontSize: "14px" }}>
                             {
                               detail.tanggal_publish !== null && playLoading === false ?
-                                `${moment(detail.tanggal_publish).format("MMMM DD")} | ${detail.ditonton} Ditonton`
+                                `${moment(detail.tanggal_publish).format("MMMM DD")} | ${detail.total_views} Ditonton`
                                 :
                                 ""
                             }
