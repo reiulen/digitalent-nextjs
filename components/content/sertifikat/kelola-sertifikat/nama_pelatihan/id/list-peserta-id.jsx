@@ -23,6 +23,7 @@ export default function ListPesertaID({ token }) {
     (state) => state.publishCertificate
   );
   const { participant } = useSelector((state) => state.detailParticipant);
+
   const [type, setType] = useState(
     certificate?.data?.certificate?.certificate_type
   );
@@ -212,7 +213,7 @@ export default function ListPesertaID({ token }) {
                 </div>
                 <div className="position-absolute zindex-2 responsive-qr-code">
                   <QRCode
-                    value={`${process.env.PATH_URL}cek-sertifikat?registrasi=${participant?.data?.nomor_registrasi}`}
+                    value={`${process.env.PATH_URL}/cek-sertifikat?registrasi=${participant?.data?.nomor_registrasi}`}
                     // size={80}
                     style={{ height: "60%", width: "60%" }}
                     // className="h-sm-80px w-sm-80px h-lg-100px w-lg-100px w-25px h-25px"
