@@ -29,7 +29,7 @@ import { getSidebar } from "../redux/actions/site-management/role.actions";
 import { useRouter } from "next/router";
 import Layout from "../components/templates/layout.component";
 import { getFirebaseToken } from "../messaging_get_token";
-
+import Maintenance from "./maintenance";
 function MyApp({ Component, pageProps }) {
   SimpleReactValidator.addLocale("id", {
     accepted: ":attribute harus diterima.",
@@ -75,6 +75,7 @@ function MyApp({ Component, pageProps }) {
   const dispatch = useDispatch();
   const router = useRouter();
   const [disabledRightClick, setDisabledRightClick] = useState(false);
+
   useEffect(() => {
     getFirebaseToken();
     if (pageProps?.session?.user?.user?.data?.token) {
@@ -134,6 +135,11 @@ function MyApp({ Component, pageProps }) {
             }
           }}
         >
+          {/* {true && router.pathname != "/login/admin" ? (
+            <Maintenance />
+          ) : (
+            <Component {...pageProps} />
+          )} */}
           <Component {...pageProps} />
         </div>
       )}

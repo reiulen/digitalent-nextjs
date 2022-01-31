@@ -111,11 +111,6 @@ const EditVideo = ({ token }) => {
             }
         }
         else {
-            // setGambar("")
-            // setGambarPreview("/assets/media/default.jpg")
-            // setGambarName(null)
-            // simpleValidator.current.showMessages();
-            // forceUpdate(1);
             e.target.value = null
             Swal.fire(
                 'Oops !',
@@ -360,11 +355,11 @@ const EditVideo = ({ token }) => {
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi</label>
                                     <div className={`${styles.deskripsiTambah} col-sm-12`}>
                                         <textarea className={`${styles.deskripsiTambah} form-control`} rows="10" placeholder="Deskripsi video" value={isi_video} onChange={e => setIsiVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("isi_video")} />
-                                        {simpleValidator.current.message("isi_video", isi_video, "required|min:5|max:7000", { className: "text-danger" })}
+                                        <div className={`${styles.validDeskripsi}`}>{simpleValidator.current.message("isi_video", isi_video, "required|min:5|max:7000", { className: "text-danger" })}</div>
                                     </div>
                                 </div>
 
-                                <div className={`${styles.selectKategori} form-group`}>
+                                <div className={`${styles.selectUpload} form-group`}>
                                     <label
                                         htmlFor="staticEmail"
                                         className="col-sm-4 col-form-label font-weight-bolder"
@@ -439,13 +434,14 @@ const EditVideo = ({ token }) => {
                                     <div className={`${styles.judulTambah} col-sm-12 input-group`}>
                                         <input type="text" className={`${styles.judulTambah} form-control ml-1`} placeholder="https://www.example.com" value={url_video} onChange={(e) => setUrlVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("url_video")} />
                                     </div>
-
-                                    {simpleValidator.current.message(
-                                        "url_video",
-                                        url_video,
-                                        "required|url",
-                                        { className: "text-danger ml-4" }
-                                    )}
+                                    <div className={`${styles.validFaq}`}>
+                                        {simpleValidator.current.message(
+                                            "url_video",
+                                            url_video,
+                                            "required|url",
+                                            { className: "text-danger ml-4" }
+                                        )}
+                                    </div>
 
                                 </div>
 

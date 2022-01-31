@@ -63,6 +63,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
 
   const handleDown = (e) => {
     setDrop(!drop);
+    return router.push("/coming-soon");
     if (e.target.innerText === "Digital Talent Schoolarship") {
       setClick(click + 1);
       if (click % 2 === 0) {
@@ -370,31 +371,33 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
           className={dropSimonas ? styles.active : styles.subMenuTitle}
           onClick={(event) => handleDown(event)}
         >
-          <a target="_blank" onClick={fetchSimonas}>
-            <div className="d-flex flex-row align-items-center">
-              <div className="p-2">
-                <Image src={Simonas} alt="" className={styles.img} />
-              </div>
-              <div className="p-2">
-                <div>SIMONAS</div>
-              </div>
+          {/* INI TINGGAL DI AKTIFIN KALO BEASISWA DAN SIMONAS UDAH JADI */}
+          {/* <a target="_blank" onClick={fetchSimonas}> */}
+          <div className="d-flex flex-row align-items-center">
+            <div className="p-2">
+              <Image src={Simonas} alt="" className={styles.img} />
             </div>
-          </a>
+            <div className="p-2">
+              <div>SIMONAS</div>
+            </div>
+          </div>
+          {/* </a> */}
         </div>
         <div
           className={dropBeasiswa ? styles.active : styles.subMenuTitle}
           onClick={(event) => handleDown(event)}
         >
-          <a target="_blank" onClick={fetchBeasiswa}>
-            <div className="d-flex flex-row align-items-center">
-              <div className="p-2">
-                <Image src={Beasiswa} alt="" className={styles.img} />
-              </div>
-              <div className="p-2">
-                <div>Beasiswa</div>
-              </div>
+          {/* INI TINGGAL DI AKTIFIN KALO BEASISWA DAN SIMONAS UDAH JADI */}
+          {/* <a target="_blank" onClick={fetchBeasiswa}> */}
+          <div className="d-flex flex-row align-items-center">
+            <div className="p-2">
+              <Image src={Beasiswa} alt="" className={styles.img} />
             </div>
-          </a>
+            <div className="p-2">
+              <div>Beasiswa</div>
+            </div>
+          </div>
+          {/* </a> */}
         </div>
         <div className={styles.titleAkun + " mx-md-0 mx-6 m-0"}>
           {titleAkun}

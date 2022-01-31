@@ -55,14 +55,6 @@ const TambahBerita = ({ token, id }) => {
                 if (quill.root.innerText.length <= limit) {
                     return;
                 }
-                const { ops } = delta;
-                let updatedOps;
-                if (ops.length === 1) {
-                    updatedOps = [{ delete: ops[0].insert.length }];
-                } else {
-                    updatedOps = [ops[0], { delete: ops[1].insert.length }];
-                }
-                quill.updateContents({ ops: updatedOps });
             });
         }
 
@@ -178,64 +170,72 @@ const TambahBerita = ({ token, id }) => {
 
             }
 
-            if (publishDate === null) {
-                let today = new Date
-
-                const data = {
-                    kategori_akademi,
-                    kategori_id,
-                    users_id,
-                    judul_berita,
-                    isi_berita,
-                    gambar,
-                    publish,
-                    tag,
-                    tanggal_publish: moment(today).format("YYYY-MM-DD")
-                }
-
+            if (isi_berita.length <= 11) {
                 Swal.fire({
-                    title: "Apakah anda yakin ?",
-                    text: "Data ini akan ditambahkan !",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Ya !",
-                    cancelButtonText: "Batal",
-                })
-                    .then((result) => {
-                        if (result.isConfirmed) {
-                            dispatch(newBerita(data, token, permission))
-                        }
-                    });
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Isi Berita tidak boleh kosong & minimal 5 character !",
+                });
             } else {
-                const data = {
-                    kategori_akademi,
-                    kategori_id,
-                    users_id,
-                    judul_berita,
-                    isi_berita,
-                    gambar,
-                    publish,
-                    tag,
-                    tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
-                }
+                if (publishDate === null) {
+                    let today = new Date
 
-                Swal.fire({
-                    title: "Apakah anda yakin ?",
-                    text: "Data ini akan ditambahkan !",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Ya !",
-                    cancelButtonText: "Batal",
-                })
-                    .then((result) => {
-                        if (result.isConfirmed) {
-                            dispatch(newBerita(data, token, permission))
-                        }
-                    });
+                    const data = {
+                        kategori_akademi,
+                        kategori_id,
+                        users_id,
+                        judul_berita,
+                        isi_berita,
+                        gambar,
+                        publish,
+                        tag,
+                        tanggal_publish: moment(today).format("YYYY-MM-DD")
+                    }
+
+                    Swal.fire({
+                        title: "Apakah anda yakin ?",
+                        text: "Data ini akan ditambahkan !",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Ya !",
+                        cancelButtonText: "Batal",
+                    })
+                        .then((result) => {
+                            if (result.isConfirmed) {
+                                dispatch(newBerita(data, token, permission))
+                            }
+                        });
+                } else {
+                    const data = {
+                        kategori_akademi,
+                        kategori_id,
+                        users_id,
+                        judul_berita,
+                        isi_berita,
+                        gambar,
+                        publish,
+                        tag,
+                        tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
+                    }
+
+                    Swal.fire({
+                        title: "Apakah anda yakin ?",
+                        text: "Data ini akan ditambahkan !",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Ya !",
+                        cancelButtonText: "Batal",
+                    })
+                        .then((result) => {
+                            if (result.isConfirmed) {
+                                dispatch(newBerita(data, token, permission))
+                            }
+                        });
+                }
             }
         } else {
             simpleValidator.current.showMessages();
@@ -306,14 +306,14 @@ const TambahBerita = ({ token, id }) => {
                                             :
                                             <p>Tunggu Sebentar</p>}
                                     </div>
-                                    <div className={`${styles.validQuill}`}>
+                                    {/* <div className={`${styles.validQuill}`}>
                                         {simpleValidator.current.message(
                                             "isi_berita",
                                             isi_berita,
                                             "required",
                                             { className: "text-danger" }
                                         )}
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
 

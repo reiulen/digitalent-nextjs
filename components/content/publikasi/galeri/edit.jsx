@@ -128,13 +128,10 @@ const EditGaleri = ({ token }) => {
     const [judul, setJudulGaleri] = useState(galeri?.judul);
     const [isi_galleri, setIsiGaleri] = useState(galeri?.isi_galeri);
     const [gambar, setGambar] = useState(galeri?.gambar);
-    //   const [gambarPreview, setGambarPreview] = useState(
-    //     "/assets/media/default.jpg"
-    //   ); //belum
+    const [, forceUpdate] = useState();
     const [kategori_id, setKategoriId] = useState(galeri?.kategori_id); //belum
     const [users_id, setUserId] = useState(galeri?.users_id);
     const [tag, setTag] = useState(galeri?.tag);
-    // const [publish, setPublish] = useState(galeri.publish === 1 ? true : false);
     const [publish, setPublish] = useState(galeri?.publish);
     const [_method, setMethod] = useState("put");
     const [publishDate, setPublishDate] = useState(galeri?.tanggal_publish ? new Date(galeri?.tanggal_publish) : null);
@@ -374,7 +371,7 @@ const EditGaleri = ({ token }) => {
             }
         } else {
             simpleValidator.current.showMessages();
-            // forceUpdate(1);
+            forceUpdate(1);
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
