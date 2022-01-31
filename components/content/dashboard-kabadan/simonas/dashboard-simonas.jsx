@@ -314,17 +314,17 @@ const DashboardSimonas = ({ token }) => {
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Lowongan Pekerjaan"}
-              value={companyTotal.all}
-              dailyAdd={companyTotal.percetage}
-              statisticDay={companyTotal.latest}
+              value={companyTotal?.all}
+              dailyAdd={companyTotal?.percetage}
+              statisticDay={companyTotal?.latest}
             />
           </div>
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Proyek"}
-              value={projectTotal.all}
-              dailyAdd={projectTotal.percetage}
-              statisticDay={projectTotal.latest}
+              value={projectTotal?.all}
+              dailyAdd={projectTotal?.percetage}
+              statisticDay={projectTotal?.latest}
             />
           </div>
         </div>
