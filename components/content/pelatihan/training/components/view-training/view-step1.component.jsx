@@ -15,9 +15,10 @@ const ViewStep1Component = ({ review }) => {
     levelPelatihan: review.level_pelatihan,
     akademi: review.akademi,
     tema: review.tema,
-    logoReference: review.file_path
-      ? review.file_path + review.logo
-      : "/assets/media/default.jpg",
+    logoReference:
+      review.file_path && review.logo
+        ? review.file_path + review.logo
+        : "/assets/media/default.jpg",
     thumbnail:
       review.file_path && review.thumbnail
         ? review.file_path + review.thumbnail
@@ -102,8 +103,8 @@ const ViewStep1Component = ({ review }) => {
         <div className="col-md-6">
           <p className="text-neutral-body mb-2 fz-14">Logo Reference</p>
           <div className="">
-            {dataPelatihan.logoReference.split("/").length === 3 && <p>-</p>}
-            {dataPelatihan.logoReference.split("/").length > 3 && (
+            {dataPelatihan.logoReference.includes("default") && <p>-</p>}
+            {dataPelatihan.logoReference.includes("https") > 3 && (
               <figure
                 className="avatar item-rtl"
                 data-toggle="modal"
