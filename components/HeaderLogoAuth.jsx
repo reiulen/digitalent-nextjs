@@ -23,10 +23,11 @@ const HeaderLogoAuth = ({ type = "" }) => {
       </div>
       <div className="" style={{ cursor: "pointer" }}>
         <Link
-          href={
-            process.env.PATH_SIMONAS +
-            `${type === "register" ? "/register" : "/login"}`
-          }
+          // href={
+          //   process.env.PATH_SIMONAS +
+          //   `${type === "register" ? "/register" : "/login"}`
+          // }
+          href={process.env.PATH_URL + "/maintenance"}
           passHref
         >
           <Image
@@ -39,10 +40,11 @@ const HeaderLogoAuth = ({ type = "" }) => {
       </div>
       <div className="" style={{ cursor: "pointer" }}>
         <Link
-          href={
-            process.env.PATH_BEASISWA +
-            `${type === "register" ? "register" : "login"}`
-          }
+          // href={
+          //   process.env.PATH_BEASISWA +
+          //   `${type === "register" ? "register" : "login"}`
+          // }
+          href={process.env.PATH_URL + "/maintenance"}
           passHref
         >
           <Image
