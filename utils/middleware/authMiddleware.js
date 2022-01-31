@@ -49,7 +49,14 @@ export const middlewareAuthPesertaSession = (session) => {
     };
     return data;
   }
-
+  // const maintenance = session?.user?.user?.data?.maintenance;
+  // if (maintenance) {
+  //   data = {
+  //     status: false,
+  //     redirect: process.env.PATH_URL + "/maintenance",
+  //   };
+  //   return data;
+  // }
   const auth = session.user.user.data.user;
   if (auth.roles[0] === "Super Admin") {
     data = {
