@@ -74,14 +74,14 @@ const DetailSummary = ({ token }) => {
     dispatch(
       getPendaftaranPeserta(
         token,
+        token_permission,
         id,
         search,
         limit,
         pageNumber,
         "",
         "",
-        "",
-        token_permission
+        ""
       )
     );
   };
