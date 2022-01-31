@@ -93,7 +93,7 @@ const Sidebar = ({ session }) => {
         signOut();
       }
     }
-  }, [session]);
+  }, [session, token_permission]);
 
   useEffect(() => {
     let pathRoute = router.route;
