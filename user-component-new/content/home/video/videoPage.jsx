@@ -1166,7 +1166,7 @@ const VideoPage = () => {
                     })
                   ) : (
                     <div className="row text-center">
-                      <h3 className="text-muted">
+                      <h3 className="text-muted ml-3">
                         <em>Tag Belum Tersedia</em>
                       </h3>
                     </div>
@@ -1235,13 +1235,13 @@ const VideoPage = () => {
                   <h2 className="font-weight-bolder">
                     {detail.judul}
                   </h2>
-
+                  
                   {
                     windowDimensions && windowDimensions.width && windowDimensions.width <= 450 ?
                       <div className="mr-3" style={{ color: "#ADB5BD", fontSize: "14px" }}>
                         {
                           detail.tanggal_publish !== null && playLoading === false ?
-                            `${moment(detail.tanggal_publish).format("MMMM DD")} | ${detail.ditonton} Ditonton`
+                            `${moment(detail.tanggal_publish).format("MMMM DD")} | ${detail.ditonton || detail.total_views} Ditonton`
                             :
                             ""
                         }
@@ -1310,7 +1310,7 @@ const VideoPage = () => {
                           <div className="mr-3" style={{ color: "#ADB5BD", fontSize: "14px" }}>
                             {
                               detail.tanggal_publish !== null && playLoading === false ?
-                                `${moment(detail.tanggal_publish).format("MMMM DD")} | ${detail.ditonton} Ditonton`
+                                `${moment(detail.tanggal_publish).format("MMMM DD")} | ${detail.total_views} Ditonton`
                                 :
                                 ""
                             }
@@ -1336,7 +1336,7 @@ const VideoPage = () => {
                           {
                             detail.tag && detail.tag.length === 0 && detail.tag == undefined ?
                               <div className="row text-center">
-                                <h3 className="text-muted ml-4">
+                                <h3 className="text-muted">
                                   <em>
                                     Tag Belum Tersedia
                                   </em>

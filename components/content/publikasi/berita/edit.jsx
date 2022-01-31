@@ -55,14 +55,6 @@ const EditBerita = ({ token, idUser }) => {
                 if (quill.root.innerText.length <= limit) {
                     return;
                 }
-                const { ops } = delta;
-                let updatedOps;
-                if (ops.length === 1) {
-                    updatedOps = [{ delete: ops[0].insert.length }];
-                } else {
-                    updatedOps = [ops[0], { delete: ops[1].insert.length }];
-                }
-                quill.updateContents({ ops: updatedOps });
             });
         }
 
@@ -178,142 +170,150 @@ const EditBerita = ({ token, idUser }) => {
 
             }
 
-            if (gambarDB !== gambar) {
-
-                if (publishDate === null) {
-                    let today = new Date
-
-                    const data = {
-                        judul_berita,
-                        isi_berita,
-                        gambar,
-                        kategori_id,
-                        kategori_akademi,
-                        users_id,
-                        tag,
-                        publish,
-                        id,
-                        _method,
-                        tanggal_publish: moment(today).format("YYYY-MM-DD")
-                    }
-
-                    Swal.fire({
-                        title: "Apakah anda yakin ?",
-                        text: "Data ini akan diedit !",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Ya !",
-                        cancelButtonText: "Batal",
-                    })
-                        .then((result) => {
-                            if (result.isConfirmed) {
-                                dispatch(updateBerita(data, token, permission));
-                            }
-                        });
-
-                } else {
-
-                    const data = {
-                        judul_berita,
-                        isi_berita,
-                        gambar,
-                        kategori_id,
-                        kategori_akademi,
-                        users_id,
-                        tag,
-                        publish,
-                        id,
-                        _method,
-                        tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
-                    }
-
-                    Swal.fire({
-                        title: "Apakah anda yakin ?",
-                        text: "Data ini akan diedit !",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Ya !",
-                        cancelButtonText: "Batal",
-                    })
-                        .then((result) => {
-                            if (result.isConfirmed) {
-                                dispatch(updateBerita(data, token, permission));
-                            }
-                        });
-                }
-
-
+            if (isi_berita.length <= 11) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Isi Berita tidak boleh kosong & minimal 5 character !",
+                });
             } else {
+                if (gambarDB !== gambar) {
 
-                if (publishDate === null) {
-                    let today = new Date
+                    if (publishDate === null) {
+                        let today = new Date
 
-                    const data = {
-                        judul_berita,
-                        isi_berita,
-                        gambar: "",
-                        kategori_id,
-                        kategori_akademi,
-                        users_id,
-                        tag,
-                        publish,
-                        id,
-                        _method,
-                        tanggal_publish: moment(today).format("YYYY-MM-DD")
+                        const data = {
+                            judul_berita,
+                            isi_berita,
+                            gambar,
+                            kategori_id,
+                            kategori_akademi,
+                            users_id,
+                            tag,
+                            publish,
+                            id,
+                            _method,
+                            tanggal_publish: moment(today).format("YYYY-MM-DD")
+                        }
+
+                        Swal.fire({
+                            title: "Apakah anda yakin ?",
+                            text: "Data ini akan diedit !",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Ya !",
+                            cancelButtonText: "Batal",
+                        })
+                            .then((result) => {
+                                if (result.isConfirmed) {
+                                    dispatch(updateBerita(data, token, permission));
+                                }
+                            });
+
+                    } else {
+
+                        const data = {
+                            judul_berita,
+                            isi_berita,
+                            gambar,
+                            kategori_id,
+                            kategori_akademi,
+                            users_id,
+                            tag,
+                            publish,
+                            id,
+                            _method,
+                            tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
+                        }
+
+                        Swal.fire({
+                            title: "Apakah anda yakin ?",
+                            text: "Data ini akan diedit !",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Ya !",
+                            cancelButtonText: "Batal",
+                        })
+                            .then((result) => {
+                                if (result.isConfirmed) {
+                                    dispatch(updateBerita(data, token, permission));
+                                }
+                            });
                     }
 
-                    Swal.fire({
-                        title: "Apakah anda yakin ?",
-                        text: "Data ini akan diedit !",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Ya !",
-                        cancelButtonText: "Batal",
-                    })
-                        .then((result) => {
-                            if (result.isConfirmed) {
-                                dispatch(updateBerita(data, token, permission));
-                            }
-                        });
 
                 } else {
-                    const data = {
-                        judul_berita,
-                        isi_berita,
-                        gambar: "",
-                        kategori_id,
-                        kategori_akademi,
-                        users_id,
-                        tag,
-                        publish,
-                        id,
-                        _method,
-                        tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
+
+                    if (publishDate === null) {
+                        let today = new Date
+
+                        const data = {
+                            judul_berita,
+                            isi_berita,
+                            gambar: "",
+                            kategori_id,
+                            kategori_akademi,
+                            users_id,
+                            tag,
+                            publish,
+                            id,
+                            _method,
+                            tanggal_publish: moment(today).format("YYYY-MM-DD")
+                        }
+
+                        Swal.fire({
+                            title: "Apakah anda yakin ?",
+                            text: "Data ini akan diedit !",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Ya !",
+                            cancelButtonText: "Batal",
+                        })
+                            .then((result) => {
+                                if (result.isConfirmed) {
+                                    dispatch(updateBerita(data, token, permission));
+                                }
+                            });
+
+                    } else {
+                        const data = {
+                            judul_berita,
+                            isi_berita,
+                            gambar: "",
+                            kategori_id,
+                            kategori_akademi,
+                            users_id,
+                            tag,
+                            publish,
+                            id,
+                            _method,
+                            tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
+                        }
+
+                        Swal.fire({
+                            title: "Apakah anda yakin ?",
+                            text: "Data ini akan diedit !",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Ya !",
+                            cancelButtonText: "Batal",
+                        })
+                            .then((result) => {
+                                if (result.isConfirmed) {
+                                    dispatch(updateBerita(data, token, permission));
+                                }
+                            });
                     }
 
-                    Swal.fire({
-                        title: "Apakah anda yakin ?",
-                        text: "Data ini akan diedit !",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Ya !",
-                        cancelButtonText: "Batal",
-                    })
-                        .then((result) => {
-                            if (result.isConfirmed) {
-                                dispatch(updateBerita(data, token, permission));
-                            }
-                        });
                 }
-
             }
         } else {
             simpleValidator.current.showMessages();
@@ -387,12 +387,12 @@ const EditBerita = ({ token, idUser }) => {
                                                 </div>
                                                 :
                                                 <p>Tunggu Sebentar</p>}
-                                            {simpleValidator.current.message(
+                                            {/* {simpleValidator.current.message(
                                                 "isi_berita",
                                                 isi_berita,
                                                 "required",
                                                 { className: "text-danger" }
-                                            )}
+                                            )} */}
                                         </div>
                                     </div>
                                 </div>

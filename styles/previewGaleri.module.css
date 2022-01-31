@@ -21,7 +21,6 @@
 
 .modalsRight{
   padding: 25px;
-  /* height: 550px; */
 }
 
 .img-left {
@@ -95,7 +94,6 @@
 }
 
 .deskripsiTambah{
-  margin-bottom: 70px;
   position: relative;
 }
 
@@ -107,6 +105,10 @@
 .validhomePage{
   position: absolute;
   top: 345px;
+}
+
+.selectUpload{
+  margin-top: 30px;
 }
 
 .btnKembali{
@@ -178,8 +180,8 @@
     width: 117%;
     margin-left: -42px;
   }
-  .deskripsiTambah{
-    margin-bottom: 90px;
+  .selectUpload{
+    margin-top: 20px;
   }
   .validQuill{
     position: absolute;
@@ -295,15 +297,15 @@
   .modalsPrevImage{
     height: 200px;
   }
-  .deskripsiTambah{
-    margin-bottom: 140px;
-  }
   .validQuill{
     position: absolute;
     top: 415px;
   }
   .validhomePage{
     top: 435px; 
+  }
+  .selectUpload{
+    margin-top: 10px;
   }
 
   /* Home Page Galeri */
@@ -313,7 +315,6 @@
   }
   .padModalGaleri{
     padding: 0 20px;
-    /* margin-left: 50px; */
   }
   .kategoriGaleri{
     text-align: center;
@@ -334,7 +335,6 @@
   }
   .deskripsiTambah{
     font-size: 8.5px;
-    margin-bottom: 190px;
   }
   .validFaq{
     font-size: 9px;
@@ -401,7 +401,9 @@
   }
   .deskripsiTambah{
     font-size: 6.7px;
-    margin-bottom: 210px;
+  }
+  .validDeskripsi{
+    font-size: 9px;
   }
   .validFaq{
     font-size: 9px;
