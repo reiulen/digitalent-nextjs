@@ -27,7 +27,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   () =>
     async ({ req }) => {
       const session = await getSession({ req });
-      
+
       const middleware = middlewareAuthMitraSession(session);
       if (!middleware.status) {
         return {
@@ -37,14 +37,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      // if (!session) {
-      //   return {
-      //     redirect: {
-      //       destination: "http://dts-dev.majapahit.id/login/mitra",
-      //       permanent: false,
-      //     },
-      //   };
-      // }
 
       return {
         props: { session, title: "Detail kerjasama  - Partnership" },

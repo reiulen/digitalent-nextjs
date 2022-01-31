@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 // import RegisterUser from "../../../components/content/partnership/user/auth/register";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import { middlewareAuthMitraSession } from "../../../utils/middleware/authMiddleware";
 
 const RegisterUser = dynamic(
   () => import("../../../components/content/partnership/user/auth/register"),
@@ -25,10 +26,13 @@ export default function LoginMitra() {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  if (session) {
+
+  const middleware = middlewareAuthMitraSession(session);
+
+  if (!middleware.status) {
     return {
       redirect: {
-        destination: "http://dts-dev.majapahit.id/partnership/user/kerjasama",
+        destination: middleware.redirect,
         permanent: false,
       },
     };

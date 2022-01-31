@@ -9,6 +9,7 @@ import SimpleReactValidator from "simple-react-validator";
 import { SweatAlert } from "../../../../utils/middleware/helper";
 import axios from "axios";
 import LoadingTable from "../../../LoadingTable";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const ForgotPassword = () => {
   const router = useRouter();
@@ -20,6 +21,7 @@ const ForgotPassword = () => {
   const [, forceUpdate] = useState();
   const [success, setSuccess] = useState(false);
   const [count, setCount] = useState(1);
+  const [captcha, setCaptcha] = useState("");
 
   const submit = async (e) => {
     e.preventDefault();
@@ -38,6 +40,7 @@ const ForgotPassword = () => {
           setLoading(true);
           const data = {
             email: emailCode,
+            capcha: captcha,
           };
           await axios
             .post(
@@ -60,7 +63,7 @@ const ForgotPassword = () => {
       setLoading(false);
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      SweatAlert("Gagal", "Email Tidak Boleh Kosong", "error");
+      SweatAlert("Gagal", "Isi data dengan benar !", "error");
     }
   };
 
@@ -120,6 +123,23 @@ const ForgotPassword = () => {
                       }
                     )}
                   </div>
+                </div>
+                <div className="g-recaptcha mt-5">
+                  <ReCAPTCHA
+                    sitekey={process.env.CAPTCHA_SITE_KEY}
+                    onChange={setCaptcha}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("Captcha")
+                    }
+                  />
+                  {simpleValidator.current.message(
+                    "Captcha",
+                    captcha,
+                    "required",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
                 {loading ? (
                   <div className="mt-5">

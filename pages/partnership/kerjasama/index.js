@@ -11,7 +11,7 @@ import {
 
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
-import { getPartnershipPermissions } from "../../../redux/actions/partnership/partnership_permission.actions"
+import { getPartnershipPermissions } from "../../../redux/actions/partnership/partnership_permission.actions";
 
 const Table = dynamic(
   () =>
@@ -44,25 +44,30 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      const cookiePermission = req.cookies.token_permission
+      const cookiePermission = req.cookies.token_permission;
 
-      // if (!session) {
-      //   return {
-      //     redirect: {
-      //       destination: "http://dts-dev.majapahit.id/login/admin",
-      //       permanent: false,
-      //     },
-      //   };
-      // }
-
-      await store.dispatch(fetchAllMK(session.user.user.data.token, cookiePermission));
-      await store.dispatch(fetchListSelectMitra(session.user.user.data.token, cookiePermission));
       await store.dispatch(
-        fetchListSelectCooperation(session.user.user.data.token, cookiePermission)
+        fetchAllMK(session.user.user.data.token, cookiePermission)
       );
-      await store.dispatch(fetchListSelectStatus(session.user.user.data.token, cookiePermission));
-      await store.dispatch(getPartnershipPermissions(session.user.user.data.token, cookiePermission))
-        
+      await store.dispatch(
+        fetchListSelectMitra(session.user.user.data.token, cookiePermission)
+      );
+      await store.dispatch(
+        fetchListSelectCooperation(
+          session.user.user.data.token,
+          cookiePermission
+        )
+      );
+      await store.dispatch(
+        fetchListSelectStatus(session.user.user.data.token, cookiePermission)
+      );
+      await store.dispatch(
+        getPartnershipPermissions(
+          session.user.user.data.token,
+          cookiePermission
+        )
+      );
+
       return {
         props: { session, title: "Kerjasama - Partnership" },
       };

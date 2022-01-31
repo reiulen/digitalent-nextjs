@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware"
+import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
 import { wrapper } from "../../../../../redux/store";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { getDetailLog } from "../../../../../redux/actions/site-management/settings/api.actions";
@@ -20,7 +20,7 @@ const TambahApi = dynamic(
 
 export default function LogApiPage(props) {
   const session = props.session.user.user.data;
-  
+
   return (
     <>
       <div className="d-flex flex-column flex-root">
@@ -44,17 +44,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      // if (!session) {
-      //   return {
-      //     redirect: {
-      //       destination: "http://dts-dev.majapahit.id/login/admin",
-      //       permanent: false,
-      //     },
-      //   };
-      // }
 
       await store.dispatch(
-        getDetailLog(query.id, session.user.user.data.token, req.cookies.token_permission)
+        getDetailLog(
+          query.id,
+          session.user.user.data.token,
+          req.cookies.token_permission
+        )
       );
       return {
         props: { session, title: "Log API - Site Management" },

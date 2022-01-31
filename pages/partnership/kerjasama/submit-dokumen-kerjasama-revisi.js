@@ -34,14 +34,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      // if (!session) {
-      //   return {
-      //     redirect: {
-      //       destination: "http://dts-dev.majapahit.id/login/admin",
-      //       permanent: false,
-      //     },
-      //   };
-      // }
 
       return {
         props: { session, title: "Revisi Dokumen - Partnership" },

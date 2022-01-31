@@ -109,6 +109,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
         if (res.data.status) {
           Cookies.remove("id_tema");
           Cookies.remove("id_pelatihan");
+          localStorage.clear();
           signOut();
         }
       })
