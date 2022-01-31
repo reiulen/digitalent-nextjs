@@ -174,8 +174,6 @@ const TambahGaleri = ({ token, id }) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    //   setGambar(reader.result);
-                    // setGambarPreview(reader.result);
                     arr.push(reader.result)
                     arrPreview.push(reader.result)
                 }
@@ -186,11 +184,6 @@ const TambahGaleri = ({ token, id }) => {
             setGambarPreview(arrPreview)
         }
         else {
-            // setGambar("")
-            // setGambarPreview("/assets/media/default.jpg")
-            // setGambarName(null)
-            // simpleValidator.current.showMessages();
-            // forceUpdate(1);
             e.target.value = null
             Swal.fire(
                 'Oops !',

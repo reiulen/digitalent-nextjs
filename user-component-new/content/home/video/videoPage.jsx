@@ -1241,7 +1241,7 @@ const VideoPage = () => {
                       <div className="mr-3" style={{ color: "#ADB5BD", fontSize: "14px" }}>
                         {
                           detail.tanggal_publish !== null && playLoading === false ?
-                            `${moment(detail.tanggal_publish).format("MMMM DD")} | ${detail.total_views} Ditonton`
+                            `${moment(detail.tanggal_publish).format("MMMM DD")} | ${detail.ditonton || detail.total_views} Ditonton`
                             :
                             ""
                         }
