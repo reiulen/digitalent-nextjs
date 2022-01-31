@@ -451,7 +451,7 @@ const ProfileUser = ({ profile }) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {fileKtp.includes("pdf") ? (
+          {fileIjazah.includes("pdf") ? (
             <div
               className="overflow-auto mx-auto px-auto"
               style={{

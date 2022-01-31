@@ -132,8 +132,8 @@ export default function Footer({ session }) {
             sm={12}
             className={
               localStorage.getItem("footer_data") &&
-              JSON.parse(localStorage.getItem("footer_data")).external_link <
-                5 &&
+              JSON.parse(localStorage.getItem("footer_data")).external_link
+                .length < 5 &&
               `d-flex justify-content-md-center`
             }
           >
