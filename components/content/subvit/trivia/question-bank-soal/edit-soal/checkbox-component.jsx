@@ -208,11 +208,6 @@ const CheckboxComponent = ({
             }}
             className="form-control"
           />
-          {duration < 30 && duration > 0 && (
-            <span className="text-danger">
-              Jika waktu kurang dari 30 detik, Waktu akan otomatis 30 detik
-            </span>
-          )}
         </div>
         <div className="col-sm-12 col-md-12 mt-3">
           <span className="font-weight-bold">Status</span>

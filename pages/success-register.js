@@ -1,9 +1,6 @@
-import { Router, useRouter } from "next/router";
 import Image from "next/image";
 
 export default function Custom404() {
-  const router = useRouter();
-
   return (
     <div className="success-register-page bg-white pt-10">
       <div className="d-flex justify-content-center">
@@ -107,7 +104,7 @@ export default function Custom404() {
               <button
                 className="btn btn-primary rounded-full font-weight-bolder text-center my-7"
                 onClick={() =>
-                  (window.location = "https://beasiswa-dev.majapahit.id/login")
+                  (window.location = process.env.PATH_BEASISWA + "login")
                 }
                 style={{
                   width: "50%",
@@ -147,7 +144,9 @@ export default function Custom404() {
               </h3>
               <button
                 className="btn btn-primary rounded-full font-weight-bolder text-center my-7"
-                onClick={() => (window.location = PATH_SIMONAS + "/login")}
+                onClick={() =>
+                  (window.location = process.env.PATH_SIMONAS + "/login")
+                }
                 style={{
                   width: "50%",
                   backgroundColor: "white",
