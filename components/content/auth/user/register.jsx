@@ -7,7 +7,11 @@ import ReCAPTCHA from "react-google-recaptcha";
 import SimpleReactValidator from "simple-react-validator";
 import axios from "axios";
 import PhoneInput from "react-phone-input-2";
-import { SweatAlert } from "../../../../utils/middleware/helper";
+import {
+  helperRegexNumber,
+  helperRemoveZeroFromIndex0,
+  SweatAlert,
+} from "../../../../utils/middleware/helper";
 import HeaderLogoAuth from "../../../HeaderLogoAuth";
 
 import AuthWrapper from "../../../wrapper/auth.wrapper";
@@ -184,7 +188,14 @@ const RegisterUser = () => {
                       "is-invalid"
                     }`}
                     value={nik}
-                    onChange={(e) => setNik(e.target.value)}
+                    onChange={(e) => {
+                      if (
+                        e.target.value === "" ||
+                        helperRegexNumber.test(e.target.value)
+                      ) {
+                        helperRemoveZeroFromIndex0(e.target.value, setNik);
+                      }
+                    }}
                     placeholder="Masukkan NIK"
                     onBlur={() => simpleValidator.current.showMessageFor("nik")}
                     maxLength={16}
