@@ -81,7 +81,7 @@ export default function RiwayatPelatihanDetail({ session }) {
               const a = document.createElement("a");
               a.download = `Sertifikat - ${nama} ${noRegis}.png`;
               a.target = "_blank";
-              a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}pdf/${result.data.fileName}`;
+              a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}sertifikat-pdf/${result.data.fileName}`;
               a.click();
               setLoading(false);
             }
@@ -94,7 +94,7 @@ export default function RiwayatPelatihanDetail({ session }) {
         const a = document.createElement("a");
         a.download = `Sertifikat - ${nama} ${noRegis}.png`;
         a.target = "_blank";
-        a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}pdf/${check.data.fileName}`;
+        a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}sertifikat-pdf/${check.data.fileName}`;
         a.click();
         setLoading(false);
       }
