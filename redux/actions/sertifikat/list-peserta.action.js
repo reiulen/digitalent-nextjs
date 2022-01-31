@@ -45,7 +45,7 @@ export const getDetailParticipant =
 
       let link =
         process.env.END_POINT_API_SERTIFIKAT +
-        `api/manage_certificates/detail-mitra-${id_pelatihan}/${id}`;
+        `api/manage_certificates/detail-mitra-certificate/${id_pelatihan}/${id}`;
 
       const config = {
         headers: {
