@@ -301,7 +301,7 @@ const EditSoalSubstansi = ({ token, tokenPermission }) => {
             <div className="card-body pt-0">
               <div className="title row ">
                 {question_image_preview !=
-                  "https://dts-subvit-dev.s3.ap-southeast-1.amazonaws.com/" && (
+                  process.env.END_POINT_API_IMAGE_SUBVIT && (
                   <div className="col-md-3 mt-4 text-center">
                     <Image
                       src={question_image_preview}

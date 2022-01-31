@@ -93,7 +93,7 @@ export default function Footer({ session }) {
                         <img
                           key={i}
                           src={
-                            (footer &&
+                            (localStorage.getItem("footer_data") &&
                               process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT +
                                 "site-management/images/" +
                                 row.image_logo) ||
@@ -132,8 +132,8 @@ export default function Footer({ session }) {
             sm={12}
             className={
               localStorage.getItem("footer_data") &&
-              JSON.parse(localStorage.getItem("footer_data")).external_link <
-                5 &&
+              JSON.parse(localStorage.getItem("footer_data")).external_link
+                .length < 5 &&
               `d-flex justify-content-md-center`
             }
           >
@@ -148,12 +148,13 @@ export default function Footer({ session }) {
                     : undefined
                 }
               >
-                {statusFooter &&
+                {localStorage.getItem("footer_data") &&
                   JSON.parse(
                     localStorage.getItem("footer_data")
                   ).external_link?.map((row, i) => (
                     <div
                       className={
+                        localStorage.getItem("footer_data") &&
                         JSON.parse(localStorage.getItem("footer_data"))
                           .external_link?.length > 5
                           ? `col-md-6 pl-0`

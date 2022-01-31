@@ -47,24 +47,29 @@ const PasswordPemulihan = () => {
 
   const handlePassword = (value) => {
     if (value !== passwordConfirm) {
-      setPassword(value);
+      setMessageDontMatch(true);
     } else {
-      setPassword(value);
+      setMessageDontMatch(false);
     }
+    setPassword(value);
   };
 
   const handlePasswordConfirm = (value) => {
     if (value !== password) {
       setMessageDontMatch(true);
-      setPasswordConfirm(value);
     } else {
       setMessageDontMatch(false);
-      setPasswordConfirm(value);
     }
+    setPasswordConfirm(value);
   };
 
   const submit = async (e) => {
     e.preventDefault();
+    if (messageDontMatch) {
+      setLoading(false);
+      SweatAlert("Gagal", "Password Tidak Sama", "error");
+      return;
+    }
     if (simpleValidator.current.allValid()) {
       Swal.fire({
         title: "Apakah anda yakin ?",
@@ -106,7 +111,7 @@ const PasswordPemulihan = () => {
       setLoading(false);
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      SweatAlert("Gagal", "Email Tidak Boleh Kosong", "error");
+      SweatAlert("Gagal", "Isi data dengan benar !", "error");
     }
   };
 
@@ -253,7 +258,7 @@ const PasswordPemulihan = () => {
                       className: "text-danger",
                     }
                   )}
-                  {messageDontMatch && (
+                  {passwordConfirm !== "" && messageDontMatch && (
                     <p className="text-danger">Password tidak sama</p>
                   )}
                 </div>

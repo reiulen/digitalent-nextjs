@@ -653,7 +653,11 @@ const Dashboard = ({ session, success }) => {
                 <Card.Title className="d-flex">
                   <p className={style.card_title}>SIMONAS</p>
                   <div className="ml-auto">
-                    <Link href={process.env.PATH_SIMONAS + `/jobs`} passHref>
+                    <Link
+                      // href={process.env.PATH_SIMONAS + `/jobs`}
+                      href={`/coming-soon`}
+                      passHref
+                    >
                       <p
                         className={`d-flex align-items-center ${style.kunjungi_link}`}
                       >
@@ -735,7 +739,11 @@ const Dashboard = ({ session, success }) => {
                 <Card.Title className="d-flex">
                   <p className={style.card_title}>Beasiswa Kominfo</p>
                   <div className="ml-auto">
-                    <Link href={`${process.env.PATH_BEASISWA}`} passHref>
+                    <Link
+                      //  href={`${process.env.PATH_BEASISWA}`}
+                      href="/coming-soon"
+                      passHref
+                    >
                       <p
                         className={`d-flex align-items-center ${style.kunjungi_link}`}
                       >

@@ -66,14 +66,6 @@ const EditArtikel = ({ token, idUser }) => {
         if (quill.root.innerText.length <= limit) {
           return;
         }
-        const { ops } = delta;
-        let updatedOps;
-        if (ops.length === 1) {
-          updatedOps = [{ delete: ops[0].insert.length }];
-        } else {
-          updatedOps = [ops[0], { delete: ops[1].insert.length }];
-        }
-        quill.updateContents({ ops: updatedOps });
       });
     }
 
@@ -204,130 +196,138 @@ const EditArtikel = ({ token, idUser }) => {
         setPublish(0);
       }
 
-      if (gambarDB !== gambar) {
-        if (publishDate === null) {
-          let today = new Date();
-
-          const data = {
-            judul_artikel,
-            isi_artikel,
-            gambar,
-            kategori_akademi,
-            kategori_id,
-            users_id,
-            tag,
-            publish,
-            id,
-            _method,
-            tanggal_publish: moment(today).format("YYYY-MM-DD"),
-          };
-
-          Swal.fire({
-            title: "Apakah anda yakin ?",
-            text: "Data ini akan diedit !",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Ya !",
-            cancelButtonText: "Batal",
-          }).then(result => {
-            if (result.isConfirmed) {
-              dispatch(updateArtikel(data, token, Cookies.get("token_permission")));
-            }
-          });
-        } else {
-          const data = {
-            judul_artikel,
-            isi_artikel,
-            gambar,
-            kategori_akademi,
-            kategori_id,
-            users_id,
-            tag,
-            publish,
-            id,
-            _method,
-            tanggal_publish: moment(publishDate).format("YYYY-MM-DD"),
-          };
-
-          Swal.fire({
-            title: "Apakah anda yakin ?",
-            text: "Data ini akan diedit !",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Ya !",
-            cancelButtonText: "Batal",
-          }).then(result => {
-            if (result.isConfirmed) {
-              dispatch(updateArtikel(data, token, Cookies.get("token_permission")));
-            }
-          });
-        }
-
+      if (isi_artikel.length <= 11) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi Artikel tidak boleh kosong & minimal 5 character !",
+        });
       } else {
-        if (publishDate === null) {
-          let today = new Date();
+        if (gambarDB !== gambar) {
+          if (publishDate === null) {
+            let today = new Date();
 
-          const data = {
-            judul_artikel,
-            isi_artikel,
-            gambar: "",
-            kategori_akademi,
-            kategori_id,
-            users_id,
-            tag,
-            publish,
-            id,
-            _method,
-            tanggal_publish: moment(today).format("YYYY-MM-DD"),
-          };
+            const data = {
+              judul_artikel,
+              isi_artikel,
+              gambar,
+              kategori_akademi,
+              kategori_id,
+              users_id,
+              tag,
+              publish,
+              id,
+              _method,
+              tanggal_publish: moment(today).format("YYYY-MM-DD"),
+            };
 
-          Swal.fire({
-            title: "Apakah anda yakin ?",
-            text: "Data ini akan diedit !",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Ya !",
-            cancelButtonText: "Batal",
-          }).then(result => {
-            if (result.isConfirmed) {
-              dispatch(updateArtikel(data, token, Cookies.get("token_permission")));
-            }
-          });
+            Swal.fire({
+              title: "Apakah anda yakin ?",
+              text: "Data ini akan diedit !",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Ya !",
+              cancelButtonText: "Batal",
+            }).then(result => {
+              if (result.isConfirmed) {
+                dispatch(updateArtikel(data, token, Cookies.get("token_permission")));
+              }
+            });
+          } else {
+            const data = {
+              judul_artikel,
+              isi_artikel,
+              gambar,
+              kategori_akademi,
+              kategori_id,
+              users_id,
+              tag,
+              publish,
+              id,
+              _method,
+              tanggal_publish: moment(publishDate).format("YYYY-MM-DD"),
+            };
+
+            Swal.fire({
+              title: "Apakah anda yakin ?",
+              text: "Data ini akan diedit !",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Ya !",
+              cancelButtonText: "Batal",
+            }).then(result => {
+              if (result.isConfirmed) {
+                dispatch(updateArtikel(data, token, Cookies.get("token_permission")));
+              }
+            });
+          }
+
         } else {
-          const data = {
-            judul_artikel,
-            isi_artikel,
-            gambar: "",
-            kategori_akademi,
-            kategori_id,
-            users_id,
-            tag,
-            publish,
-            id,
-            _method,
-            tanggal_publish: moment(publishDate).format("YYYY-MM-DD"),
-          };
+          if (publishDate === null) {
+            let today = new Date();
 
-          Swal.fire({
-            title: "Apakah anda yakin ?",
-            text: "Data ini akan diedit !",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Ya !",
-            cancelButtonText: "Batal",
-          }).then(result => {
-            if (result.isConfirmed) {
-              dispatch(updateArtikel(data, token, Cookies.get("token_permission")));
-            }
-          });
+            const data = {
+              judul_artikel,
+              isi_artikel,
+              gambar: "",
+              kategori_akademi,
+              kategori_id,
+              users_id,
+              tag,
+              publish,
+              id,
+              _method,
+              tanggal_publish: moment(today).format("YYYY-MM-DD"),
+            };
+
+            Swal.fire({
+              title: "Apakah anda yakin ?",
+              text: "Data ini akan diedit !",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Ya !",
+              cancelButtonText: "Batal",
+            }).then(result => {
+              if (result.isConfirmed) {
+                dispatch(updateArtikel(data, token, Cookies.get("token_permission")));
+              }
+            });
+          } else {
+            const data = {
+              judul_artikel,
+              isi_artikel,
+              gambar: "",
+              kategori_akademi,
+              kategori_id,
+              users_id,
+              tag,
+              publish,
+              id,
+              _method,
+              tanggal_publish: moment(publishDate).format("YYYY-MM-DD"),
+            };
+
+            Swal.fire({
+              title: "Apakah anda yakin ?",
+              text: "Data ini akan diedit !",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Ya !",
+              cancelButtonText: "Batal",
+            }).then(result => {
+              if (result.isConfirmed) {
+                dispatch(updateArtikel(data, token, Cookies.get("token_permission")));
+              }
+            });
+          }
         }
       }
     } else {
@@ -432,12 +432,12 @@ const EditArtikel = ({ token, idUser }) => {
                       ) : (
                         <p>Tunggu Sebentar</p>
                       )}
-                      {simpleValidator.current.message(
+                      {/* {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
                         "required",
                         { className: "text-danger" }
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>

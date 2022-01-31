@@ -159,27 +159,27 @@ const EditCommitmentStep3 = ({ token }) => {
                   <label className="col-form-label font-weight-bold">
                     Input Deskripsi
                   </label>
-                  {/* <div className="ckeditor">
-                  {editorLoaded ? (
-                    <CKEditor
-                      editor={ClassicEditor}
-                      data={description}
-                      onReady={(editor) => {
-                        // You can store the "editor" and use when it is needed.
-                      }}
-                      onChange={(event, editor) => {
-                        const data = editor.getData();
-                        setDescription(data);
-                      }}
-                      config={{
-                        placeholder: "Silahkan Masukan Deskripsi Detail",
-                      }}
-                    />
-                  ) : (
-                    <p>Tunggu Sebentar</p>
-                  )}
-                </div> */}
-                  <textarea
+                  <div className="ckeditor">
+                    {editorLoaded ? (
+                      <CKEditor
+                        editor={ClassicEditor}
+                        data={description}
+                        onReady={(editor) => {
+                          // You can store the "editor" and use when it is needed.
+                        }}
+                        onChange={(event, editor) => {
+                          const data = editor.getData();
+                          setDescription(data);
+                        }}
+                        config={{
+                          placeholder: "Silahkan Masukan Deskripsi Detail",
+                        }}
+                      />
+                    ) : (
+                      <p>Tunggu Sebentar</p>
+                    )}
+                  </div>
+                  {/* <textarea
                     className="form-control"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
@@ -187,7 +187,7 @@ const EditCommitmentStep3 = ({ token }) => {
                       simpleValidator.current.showMessageFor("deskripsi")
                     }
                     rows="10"
-                  />
+                  /> */}
                   {simpleValidator.current.message(
                     "deskripsi",
                     description,
