@@ -55,7 +55,9 @@ const DetailPelatihan = ({ session }) => {
 
   const handleDownloadSilabus = async () => {
     let silabus = process.env.END_POINT_API_IMAGE_PELATIHAN + pelatihan.silabus;
-    window.location.href = silabus;
+    if (pelatihan.silabus !== "") {
+      window.location.href = silabus;
+    }
   };
 
   //disini kurang
