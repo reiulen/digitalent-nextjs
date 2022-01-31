@@ -608,7 +608,9 @@ const DetailSummary = ({ token }) => {
                                     "label label-inline select-pelatihan-primary font-weight-bold")
                                 }
                               >
-                                {capitalize(row.status)}
+                                {row.status !== "NULL"
+                                  ? capitalize(row.status)
+                                  : "-"}
                               </span>
                             </td>
                             <td>

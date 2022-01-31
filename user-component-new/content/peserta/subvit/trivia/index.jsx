@@ -400,7 +400,10 @@ const SubtansiUser = ({ token }) => {
 
   useEffect(() => {
     // Hitung Waktu Mundur
-    if (random_trivia.list_questions[router.query.id - 1].duration) {
+    if (
+      random_trivia.list_questions[router.query.id - 1].type !== "polling" &&
+      random_trivia.list_questions[router.query.id - 1].duration
+    ) {
       if (
         random_trivia.list_questions[router.query.id - 1].duration >= 0 &&
         times >= 0
@@ -491,22 +494,18 @@ const SubtansiUser = ({ token }) => {
                   (data &&
                     data.list_questions &&
                     data.list_questions[parseInt(router.query.id) - 1].type ===
-                      "fill_in_the_blank") ? (
-                    data &&
-                    data.list_questions &&
-                    data.list_questions[parseInt(router.query.id) - 1]
-                      .duration !== 0 ? (
-                      <p className={styles.totalSoal2} id="time2">
-                        {hour2 < 9 ? "0" + hour2 : hour2}:
-                        {minute2 < 9 ? "0" + minute2 : minute2}:
-                        {second2 < 9 ? "0" + second2 : second2}
-                      </p>
-                    ) : (
-                      ""
-                    )
-                  ) : (
-                    ""
-                  )}
+                      "fill_in_the_blank")
+                    ? data &&
+                      data.list_questions &&
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        .duration !== 0 && (
+                        <p className={styles.totalSoal2} id="time2">
+                          {hour2 < 9 ? "0" + hour2 : hour2}:
+                          {minute2 < 9 ? "0" + minute2 : minute2}:
+                          {second2 < 9 ? "0" + second2 : second2}
+                        </p>
+                      )
+                    : ""}
                 </Col>
               </Row>
 
