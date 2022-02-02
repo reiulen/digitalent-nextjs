@@ -11,6 +11,7 @@ module.exports = {
       "dts-subvit-poc.s3.ap-southeast-1.amazonaws.com",
       "dts-publikasi-poc.s3.ap-southeast-1.amazonaws.com",
       "dts-partnership-poc.s3.ap-southeast-1.amazonaws.com",
+      "dts-partnership-dev.s3.ap-southeast-1.amazonaws.com",
       "dts-sertifikat-poc.s3.ap-southeast-1.amazonaws.com",
       "dts-beasiswa-poc.s3-ap-southeast-1.amazonaws.com",
       "dts-partnership-poc.s3-ap-southeast-1.amazonaws.com",

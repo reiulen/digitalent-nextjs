@@ -890,7 +890,11 @@ const ListTraining = ({ token }) => {
                                   ? row.name.substring(0, 30) + "..."
                                   : row.name}
                               </p>
-                              <p className="my-0">{row.penyelenggara}</p>
+                              <p className="my-0">
+                                {row.penyelenggara.length > 40
+                                  ? row.penyelenggara.substring(0, 40) + "..."
+                                  : row.penyelenggara}
+                              </p>
                               <p className="my-0">{row.provinsi}</p>
                             </td>
                             <td className="align-middle">

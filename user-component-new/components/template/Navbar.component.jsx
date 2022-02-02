@@ -378,7 +378,7 @@ const Navigationbar = ({ session }) => {
                                   alt="success"
                                   style={{ objectFit: "cover" }}
                                 />
-                                <span className="ml-5 fz-14 text-capitalize">
+                                <span className="ml-5 fz-10 text-capitalize">
                                   {el.Pesan}
                                 </span>
                               </div>

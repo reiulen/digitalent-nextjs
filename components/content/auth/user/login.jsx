@@ -53,7 +53,7 @@ const LoginUser = () => {
         SweatAlert("Gagal", result.error, "error");
         setLoading(false);
       } else {
-        setLoading(false);
+        // setLoading(false);
         if (data.role === "admin") {
         } else if (data.role === "mitra") {
           router.push("/partnership/user/kerjasama");
