@@ -83,13 +83,17 @@ const Sidebar = ({ session }) => {
   );
 
   useEffect(() => {
-    if (
-      !token_permission &&
-      session?.user?.user?.data?.user?.roles[0] != "mitra"
-    ) {
-      signOut();
+    if (session) {
+      if (
+        !token_permission &&
+        session.user.user.data.user.roles[0] != "mitra"
+      ) {
+        Cookies.remove("token_permission");
+        localStorage.clear();
+        signOut();
+      }
     }
-  }, [token_permission]);
+  }, [session, token_permission]);
 
   useEffect(() => {
     let pathRoute = router.route;

@@ -104,7 +104,8 @@ export default function Custom404() {
               <button
                 className="btn btn-primary rounded-full font-weight-bolder text-center my-7"
                 onClick={() =>
-                  (window.location = process.env.PATH_BEASISWA + "login")
+                  // (window.location = process.env.PATH_BEASISWA + "login")
+                  (window.location = process.env.PATH_URL + "/maintenance")
                 }
                 style={{
                   width: "50%",
@@ -145,7 +146,8 @@ export default function Custom404() {
               <button
                 className="btn btn-primary rounded-full font-weight-bolder text-center my-7"
                 onClick={() =>
-                  (window.location = process.env.PATH_SIMONAS + "/login")
+                  // (window.location = process.env.PATH_SIMONAS + "/login")
+                  (window.location = process.env.PATH_URL + "/maintenance")
                 }
                 style={{
                   width: "50%",

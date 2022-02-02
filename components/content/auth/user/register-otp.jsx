@@ -174,6 +174,20 @@ const RegisterUser = () => {
                     Daftar
                   </button>
                 )}
+
+                {services === "email" && (
+                  <center>
+                    <p
+                      style={{ fontSize: "13px", color: "#fff" }}
+                      className="mb-0 pb-0 mt-5"
+                    >
+                      Sukses Mengirim Email, Silahkan Cek Email Anda !
+                    </p>
+                    <p style={{ fontSize: "13px", color: "#fff" }}>
+                      Periksa juga di folder spam email !
+                    </p>
+                  </center>
+                )}
               </form>
               <div className="bottom mt-9 text-center mb-7">
                 <p style={{ fontSize: "12px", color: "#ffffff" }}>
