@@ -612,9 +612,9 @@ const TambahGaleri = ({ token, id }) => {
                                     }
                                 </div>
                             </div>
-
+                            
                             {
-                                role_permission.roles.includes("Super Admin") ?
+                                role_permission.roles.includes("Super Admin") || role_permission?.permissions?.includes("publikasi.galeri.manage") ?
                                     <div className="form-group row">
                                         <label
                                             htmlFor="staticEmail"

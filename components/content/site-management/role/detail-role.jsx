@@ -45,7 +45,7 @@ const DetailRole = ({ token }) => {
     });
   };
 
-  let list = detailRoles.role?.permissions;
+  let list = detailRoles.role?.data.permissions;
 
   const menu = list.map((item, index) => {
     if (item.list_sub_menu.length > 0) {
@@ -379,7 +379,7 @@ const DetailRole = ({ token }) => {
                 className="fw-400 fz-16"
                 style={{ color: "#1F1F1F" }}
               >
-                {detailRoles.role.name}
+                {detailRoles.role?.data?.name}
               </p>
             </div>
 
@@ -395,7 +395,7 @@ const DetailRole = ({ token }) => {
                 className="fw-400 fz-16"
                 style={{ color: "#1F1F1F" }}
               >
-                {detailRoles.role.status === 1 ? "Aktif" : "Tidak Aktif"}
+                {detailRoles.role?.data?.status === 1 ? "Aktif" : "Tidak Aktif"}
               </p>
             </div>
               </div>
@@ -410,7 +410,7 @@ const DetailRole = ({ token }) => {
                 className="fw-400 fz-16"
                 style={{ color: "#1F1F1F" }}
               >
-               {detailRoles.role.type === 1 ? "Aktif" : "Tidak Aktif"}
+               {detailRoles.role?.data?.type === 1 ? "Aktif" : "Tidak Aktif"}
               </p>
             </div>
               </div>

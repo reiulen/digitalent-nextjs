@@ -66,7 +66,7 @@ const Artikel = ({ token }) => {
     loading = deleteLoading;
   }
   page = Number(page);
-
+  
   useEffect(() => {
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
@@ -84,10 +84,6 @@ const Artikel = ({ token }) => {
   }, [limit, isDeleted, publishValue, dispatch, search]);
 
   const getWindowDimensions = () => {
-    // if (typeof window === 'undefined') {
-    //     global.window = {}
-    // }
-
     const { innerWidth: width, innerHeight: height } = window;
     return {
       width,

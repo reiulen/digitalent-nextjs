@@ -392,8 +392,8 @@ const TambahImagetron = ({ token, id }) => {
                   </p>
                 </div>
               </div>
-
-              {role_permission?.roles?.includes("Super Admin") ? (
+              
+              {role_permission?.roles?.includes("Super Admin") || role_permission?.permissions?.includes("publikasi.imagetron.manage")? (
                 <div className="form-group row">
                   <label
                     htmlFor="staticEmail"

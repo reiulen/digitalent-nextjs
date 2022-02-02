@@ -428,10 +428,9 @@ const TambahVidio = ({ token, id }) => {
                                     }
                                 </div>
                             </div>
-
+                            
                             {
-                                role_permission?.roles[0] !== "Super Admin" ? null
-                                    :
+                                role_permission?.roles[0] === "Super Admin" || role_permission?.permissions?.includes("publikasi.video.manage") ?
                                     <div className="form-group row">
                                         <label
                                             htmlFor="staticEmail"
@@ -458,6 +457,7 @@ const TambahVidio = ({ token, id }) => {
                                             </div>
                                         </div>
                                     </div>
+                                    : null
                             }
 
                             {

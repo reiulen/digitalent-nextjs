@@ -121,32 +121,40 @@ const EditArtikelPeserta = ({ session }) => {
     }
     setTag(data);
   };
-
+  
   const onSubmit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      if (gambarDB !== gambar) {
-        const data = {
-          isi_artikel: deskripsi,
-          judul_artikel: judul,
-          gambar: gambar,
-          kategori_akademi: akademi,
-          kategori_id: kategori,
-          tag: tag,
-          _method: "put",
-        };
-        dispatch(updateArtikelPeserta(data, session.token, router.query.id));
+      if (deskripsi.length <= 11) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi Artikel tidak boleh kosong & minimal 5 character !",
+        });
       } else {
-        const data = {
-          isi_artikel: deskripsi,
-          judul_artikel: judul,
-          gambar: "",
-          kategori_akademi: akademi,
-          kategori_id: kategori,
-          tag: tag,
-          _method: "put",
-        };
-        dispatch(updateArtikelPeserta(data, session.token, router.query.id));
+        if (gambarDB !== gambar) {
+          const data = {
+            isi_artikel: deskripsi,
+            judul_artikel: judul,
+            gambar: gambar,
+            kategori_akademi: akademi,
+            kategori_id: kategori,
+            tag: tag,
+            _method: "put",
+          };
+          dispatch(updateArtikelPeserta(data, session.token, router.query.id));
+        } else {
+          const data = {
+            isi_artikel: deskripsi,
+            judul_artikel: judul,
+            gambar: "",
+            kategori_akademi: akademi,
+            kategori_id: kategori,
+            tag: tag,
+            _method: "put",
+          };
+          dispatch(updateArtikelPeserta(data, session.token, router.query.id));
+        }
       }
     } else {
       simpleValidator.current.showMessages();
@@ -297,17 +305,17 @@ const EditArtikelPeserta = ({ session }) => {
                     ) : (
                       <p>Tunggu Sebentar</p>
                     )}
-                    {simpleValidator.current.message(
+                    {/* {simpleValidator.current.message(
                       "deskripsi",
                       deskripsi,
                       "required",
                       { className: "text-danger" }
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>
 
-              <div className="form-group">
+              <div className={`${styles.selectThumbnail} form-group`}>
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label font-weight-bolder"
