@@ -99,7 +99,7 @@ const CheckboxComponent = ({
             return (
               <>
                 <div className="title row">
-                  {row.image != "" ? (
+                  {row.image_preview != "" && (
                     <div className="col-md-2 p-0 pl-3">
                       <Image
                         src={
@@ -114,8 +114,6 @@ const CheckboxComponent = ({
                         objectFit="cover"
                       />
                     </div>
-                  ) : (
-                    ""
                   )}
                   <div className="col-md-7 pt-2">
                     <input

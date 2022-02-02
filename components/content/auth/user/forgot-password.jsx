@@ -9,6 +9,7 @@ import SimpleReactValidator from "simple-react-validator";
 import { SweatAlert } from "../../../../utils/middleware/helper";
 import axios from "axios";
 import LoadingTable from "../../../LoadingTable";
+import HeaderLogoAuth from "../../../HeaderLogoAuth";
 import ReCAPTCHA from "react-google-recaptcha";
 
 const ForgotPassword = () => {
@@ -76,12 +77,7 @@ const ForgotPassword = () => {
         >
           <div className="container ">
             <div className="title-login text-center mt-6">
-              <Image
-                src="/assets/logo/platform/dts.svg"
-                width={320}
-                height={124}
-                alt="Logo-5"
-              />
+              <HeaderLogoAuth />
               <h3
                 className="align-middle mt-8"
                 style={{

@@ -101,14 +101,14 @@ const DetailSummary = ({ token }) => {
     dispatch(
       getPendaftaranPeserta(
         token,
+        token_permission,
         id,
         search,
         limit,
         1,
         "",
         "",
-        "",
-        token_permission
+        ""
       )
     );
   };
@@ -119,14 +119,14 @@ const DetailSummary = ({ token }) => {
     dispatch(
       getPendaftaranPeserta(
         token,
+        token_permission,
         id,
         search,
         val,
         1,
         "",
         "",
-        "",
-        token_permission
+        ""
       )
     );
   };
@@ -135,20 +135,18 @@ const DetailSummary = ({ token }) => {
     dispatch(
       getPendaftaranPeserta(
         token,
+        token_permission,
         id,
         search,
         limit,
         1,
         statusBerkas === null ? "" : statusBerkas.value,
         statusPeserta === null ? "" : statusPeserta.value,
-        statusTesSubstansi === null ? "" : statusTesSubstansi.value,
-        token_permission
+        statusTesSubstansi === null ? "" : statusTesSubstansi.value
       )
     );
     setShowModal(false);
   };
-
-  const handleExportReport = async () => {};
 
   const handleSecondsToTime = (secs) => {
     let hours = Math.floor(secs / (60 * 60));

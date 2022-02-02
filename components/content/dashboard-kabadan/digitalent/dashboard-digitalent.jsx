@@ -367,22 +367,6 @@ const DashboardDigitalent = ({ token }) => {
 
   return (
     <PageWrapper>
-      <DashboardHeader
-        funcFilterYear={(value) => {
-          // Akademi Peserta
-          dispatch(
-            getDigitalentStatistikAkademiPendaftar(
-              token,
-              token_permission,
-              value
-            )
-          );
-          // Akademi Pendaftar
-          dispatch(
-            getDigitalentStatistikAkademiPeserta(token, token_permission, value)
-          );
-        }}
-      />
       <section className="opening-hello">
         <Header
           name={"Kepala Badan Litbang SDM Kementerian Kominfo"}
@@ -423,8 +407,29 @@ const DashboardDigitalent = ({ token }) => {
         </div>
       </section>
       <section className="total-per-akademi mt-10">
-        <h2 className="title-section-dashboard">total per akademi</h2>
-        {}
+        <div className="d-flex justify-content-between">
+          <h2 className="title-section-dashboard">total per akademi</h2>
+          <DashboardHeader
+            funcFilterYear={(value) => {
+              // Akademi Peserta
+              dispatch(
+                getDigitalentStatistikAkademiPendaftar(
+                  token,
+                  token_permission,
+                  value
+                )
+              );
+              // Akademi Pendaftar
+              dispatch(
+                getDigitalentStatistikAkademiPeserta(
+                  token,
+                  token_permission,
+                  value
+                )
+              );
+            }}
+          />
+        </div>
         <div className="row mt-5">
           {dataStatistikAkademiPeserta.map((row, i) => (
             <div className="col-md-4 mb-8" key={i}>
@@ -744,6 +749,8 @@ const DashboardDigitalent = ({ token }) => {
                     </p>
                     <select
                       className="border-0 p-0"
+                      style={{ width: "100px" }}
+                      disabled={academyPesertaWilayah !== "" ? false : true}
                       value={themePesertaWilayah}
                       onChange={(e) => {
                         setThemePesertaWilayah(e.target.value);
