@@ -396,6 +396,13 @@ const Sidebar = ({ session }) => {
                                     }}
                                     onClick={() => {
                                       window.location.href = item.href;
+                                      if (
+                                        localStorage.getItem("successFile") !==
+                                        null
+                                      ) {
+                                        localStorage.removeItem("successFile");
+                                        localStorage.removeItem("successImage");
+                                      }
                                     }}
                                   >
                                     <span className="menu-text">
