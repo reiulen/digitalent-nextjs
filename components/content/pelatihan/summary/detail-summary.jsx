@@ -46,6 +46,10 @@ const DetailSummary = ({ token }) => {
 
   const [loadingExport, setLoadingExport] = useState(false);
 
+  useEffect(() => {
+    dispatch(getPendaftaranPeserta(token, token_permission, id));
+  }, [dispatch]);
+
   const optionsPeserta = [
     { value: "seleksi administrasi", label: "Seleksi Administrasi" },
     { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
@@ -529,13 +533,13 @@ const DetailSummary = ({ token }) => {
                     </thead>
                     <tbody>
                       {!peserta ||
-                      (peserta && peserta.list === null) ||
-                      peserta.list.length === 0 ? (
+                      (peserta && peserta?.list === null) ||
+                      peserta?.list.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Kosong
                         </td>
                       ) : (
-                        peserta.list.map((row, i) => (
+                        peserta?.list.map((row, i) => (
                           <tr key={i}>
                             <td className="text-center">
                               {limit === null
@@ -657,12 +661,12 @@ const DetailSummary = ({ token }) => {
               </div>
 
               <div className="row">
-                {peserta && peserta.perPage < peserta.total && (
+                {peserta && peserta?.perPage < peserta?.total && (
                   <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
                     <Pagination
                       activePage={page}
-                      itemsCountPerPage={peserta.perPage}
-                      totalItemsCount={peserta.total}
+                      itemsCountPerPage={peserta?.perPage}
+                      totalItemsCount={peserta?.total}
                       pageRangeDisplayed={3}
                       onChange={handlePagination}
                       nextPageText={">"}
@@ -674,7 +678,7 @@ const DetailSummary = ({ token }) => {
                     />
                   </div>
                 )}
-                {peserta && peserta.total > 5 && (
+                {peserta && peserta?.total > 5 && (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0 mt-3">
@@ -703,7 +707,7 @@ const DetailSummary = ({ token }) => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {peserta.total}
+                          Total Data {peserta?.total}
                         </p>
                       </div>
                     </div>

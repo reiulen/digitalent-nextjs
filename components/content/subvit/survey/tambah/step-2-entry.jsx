@@ -390,7 +390,30 @@ const StepTwo = ({ token, tokenPermission }) => {
               title: "Oops...",
               text: "Isi jawaban dengan benar !",
             });
+            return;
           }
+          row.sub.map((rowX, k) => {
+            if (rowX.question === "" && rowX.image === "") {
+              valid = false;
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Isi pertanyaan dengan benar !",
+              });
+              return;
+            }
+            rowX.answer.map((rowY, l) => {
+              if (rowY.option === "" && rowY.image === "") {
+                valid = false;
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Isi jawaban dengan benar !",
+                });
+                return;
+              }
+            });
+          });
         });
 
         const answers_triggered = answer_triggered;

@@ -431,7 +431,7 @@ const EditArtikel = ({ token }) => {
                   </div>
                 </div>
 
-                <div className={`${styles.selectKategori} form-group`}>
+                <div className={`${styles.selectThumbnail} form-group`}>
                   <label
                     htmlFor="staticEmail"
                     className="col-sm-4 col-form-label font-weight-bolder"

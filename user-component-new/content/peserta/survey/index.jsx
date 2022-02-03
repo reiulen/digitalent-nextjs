@@ -56,47 +56,48 @@ const TestSubstansi = ({ token }) => {
         <Card className={styles.cardBase}>
           <h1 className={styles.title}>Panduan Survey</h1>
           <Card className={styles.cardPanduan}>
-            {" "}
-            <table>
-              <tr>
-                <td style={{ verticalAlign: "top" }}>1.</td>
-                <td>&nbsp;</td>
-                <td>
-                  {" "}
-                  Lakukan pengisian survey hingga seluruh pertanyaan terjawab
-                  dengan tuntas.
-                </td>
-              </tr>
-              <tr>
-                <td style={{ verticalAlign: "top" }}>2.</td>
-                <td>&nbsp;</td>
-                <td>
-                  {" "}
-                  Peserta wajib menjawab seluruh survey yang berjumlah &nbsp;
-                  {question || " "} pertanyaan.
-                </td>
-              </tr>
-              <tr>
-                <td style={{ verticalAlign: "top" }}>3.</td>
-                <td>&nbsp;</td>
-                <td>
-                  {" "}
-                  Peserta WAJIB mengisi jawaban dengan jujur sebagai bahan
-                  evaluasi bagi manajemen pelaksana pelatihan Digital Talent
-                  Scholarship 2022.
-                </td>
-              </tr>
-              <tr>
-                <td style={{ verticalAlign: "top" }}>4.</td>
-                <td>&nbsp;</td>
-                <td>
-                  {" "}
-                  Waktu yang tersedia untuk mengisi survey ini {time ||
-                    " "}{" "}
-                  Menit.
-                </td>
-              </tr>
-            </table>
+            <div className="table-responsive">
+              <table>
+                <tr>
+                  <td style={{ verticalAlign: "top" }}>1.</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    {" "}
+                    Lakukan pengisian survey hingga seluruh pertanyaan terjawab
+                    dengan tuntas.
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ verticalAlign: "top" }}>2.</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    {" "}
+                    Peserta wajib menjawab seluruh survey yang berjumlah &nbsp;
+                    {question || " "} pertanyaan.
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ verticalAlign: "top" }}>3.</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    {" "}
+                    Peserta WAJIB mengisi jawaban dengan jujur sebagai bahan
+                    evaluasi bagi manajemen pelaksana pelatihan Digital Talent
+                    Scholarship 2022.
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ verticalAlign: "top" }}>4.</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    {" "}
+                    Waktu yang tersedia untuk mengisi survey ini {time ||
+                      " "}{" "}
+                    Menit.
+                  </td>
+                </tr>
+              </table>
+            </div>
           </Card>
           <div
             style={{

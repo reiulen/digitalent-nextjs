@@ -455,7 +455,9 @@ const SubtansiUser = ({ token }) => {
               <Button
                 className={styles.btnHelp}
                 variant="link"
-                onClick={() => handleModalSoal}
+                onClick={() => {
+                  handleModalSoal();
+                }}
               >
                 <div className="d-flex flex-row">
                   <div className="p-2">

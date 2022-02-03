@@ -67,19 +67,19 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
 
-      await store.dispatch(
-        getPendaftaranPeserta(
-          session.user.user.data.token,
-          token_permission,
-          params.id,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null
-        )
-      );
+      // await store.dispatch(
+      //   getPendaftaranPeserta(
+      //     session.user.user.data.token,
+      //     token_permission,
+      //     params.id,
+      //     null,
+      //     null,
+      //     null,
+      //     null,
+      //     null,
+      //     null
+      //   )
+      // );
       return {
         props: { session, title: "Detail Rekap Pendaftaran - Pelatihan" },
       };

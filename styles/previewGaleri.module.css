@@ -111,6 +111,10 @@
   margin-top: 30px;
 }
 
+.selectThumbnail{
+  margin-top: 70px;
+}
+
 .btnKembali{
   padding-top: 10px;
   padding-bottom: 10px;
@@ -182,6 +186,9 @@
   }
   .selectUpload{
     margin-top: 20px;
+  }
+  .selectThumbnail{
+    margin-top: 95px;
   }
   .validQuill{
     position: absolute;
@@ -307,6 +314,9 @@
   .selectUpload{
     margin-top: 10px;
   }
+  .selectThumbnail{
+    margin-top: 140px;
+  }
 
   /* Home Page Galeri */
 
@@ -431,5 +441,8 @@
   }
   .validhomePage{
     top: 510px; 
+  }
+  .selectThumbnail{
+    margin-top: 210px;
   }
 }
