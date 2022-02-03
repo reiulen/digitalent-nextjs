@@ -639,7 +639,7 @@ const DetailSummary = ({ token }) => {
                                 <Link
                                   href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/data-peserta?pelatihan_id=${id}&index=${
                                     i + limit * (page - 1) + 1
-                                  }`}
+                                  }&keyword=${search}`}
                                 >
                                   <a
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"

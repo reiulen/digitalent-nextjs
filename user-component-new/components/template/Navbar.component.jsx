@@ -372,6 +372,7 @@ const Navigationbar = ({ session }) => {
                         dataNotification?.map((el, i) => {
                           return (
                             <Fragment key={i}>
+                              {console.log(dataNotification)}
                               <div className="d-flex align-items-center position-relative ">
                                 <img
                                   src={`/assets/media/notification/${el.icon}.png`}
