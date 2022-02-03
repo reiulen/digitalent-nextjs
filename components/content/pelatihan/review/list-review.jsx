@@ -509,9 +509,15 @@ const ListReview = ({ token }) => {
                             </td>
                             <td>
                               <p className="font-weight-bolder my-0">
-                                {row.name}
+                                {row.name.length > 30
+                                  ? row.name.substring(0, 30) + "..."
+                                  : row.name}
                               </p>
-                              <p className="my-0">{row.penyelenggara}</p>
+                              <p className="my-0">
+                                {row.penyelenggara.length > 30
+                                  ? row.penyelenggara.substring(0, 30) + "..."
+                                  : row.penyelenggara}
+                              </p>
                               <p className="my-0">{row.provinsi}</p>
                             </td>
                             <td className="align-middle">

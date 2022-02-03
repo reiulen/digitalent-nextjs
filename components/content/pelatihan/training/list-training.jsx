@@ -188,6 +188,7 @@ const ListTraining = ({ token }) => {
   useEffect(() => {
     dispatch(dropdownTemabyAkademi(academy?.value, token));
     if (isDeleted) {
+      setPage(1);
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
           if (result.isConfirmed) {

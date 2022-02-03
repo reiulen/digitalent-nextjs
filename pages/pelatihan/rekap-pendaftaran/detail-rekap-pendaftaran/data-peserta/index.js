@@ -52,7 +52,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token,
           token_permission,
           query.pelatihan_id,
-          "",
+          query.keyword,
           1,
           query.index,
           "",
