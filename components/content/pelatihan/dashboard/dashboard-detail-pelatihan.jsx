@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardTotal from "../../dashboard-kabadan/component/card-total.component";
 import DashboardHeader from "./dashboard-header.component";
 import PaginationDashboard from "../../dashboard-kabadan/component/pagination-dashbaord.component";
+import LoadingDashboard from "../../dashboard-kabadan/component/loading-dashboard.component";
 
 import { helperHandlePercentage } from "../../../../utils/middleware/helper";
 import { useRouter } from "next/router";
@@ -11,6 +12,8 @@ import { useSelector, useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 
 import {
+  getDigitalentTotalPengguna,
+  getDigitalentTotalDataPendaftar,
   getDetailTemaPendaftar,
   getDetailTemaPeserta,
 } from "../../../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
@@ -31,6 +34,13 @@ const DashboardDetailPelatihan = ({ token }) => {
     error: errorTemaPendaftar,
     temaPendaftar,
   } = useSelector((state) => state.detailTemaPendaftar);
+
+  useEffect(() => {
+    dispatch(getDetailTemaPendaftar(token, token_permission, id));
+    dispatch(getDetailTemaPeserta(token, token_permission, id));
+    dispatch(getDigitalentTotalPengguna(token, token_permission));
+    dispatch(getDigitalentTotalDataPendaftar(token, token_permission));
+  }, [dispatch]);
 
   const [page, setPage] = useState(1);
 
@@ -96,6 +106,11 @@ const DashboardDetailPelatihan = ({ token }) => {
                   </tr>
                 </thead>
                 <tbody className="w-100">
+                  {loadingTemaPendaftar && (
+                    <td className="text-center" colSpan={6}>
+                      <LoadingDashboard loading={loadingTemaPendaftar} />
+                    </td>
+                  )}
                   {temaPendaftar?.list?.map((row, i) => (
                     <tr key={i}>
                       <td className="text-center">

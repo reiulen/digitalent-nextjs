@@ -57,30 +57,37 @@ const Table = ({ token }) => {
                 <div className="col-12 col-sm-4">
                   <div className="d-flex align-items-center w-100">
                     <div className="position-relative overflow-hidden w-100">
-                      <IconSearch
-                        style={{ left: "10" }}
-                        className="left-center-absolute"
-                      />
-                      <input
-                        id="kt_datatable_search_query"
-                        type="text"
-                        className="form-control pl-10"
-                        placeholder="Ketik disini untuk Pencarian..."
-                        onChange={(e) =>
-                          handleChangeValueSearch(e.target.value)
-                        }
-                      />
-                      <button
-                        type="button"
-                        onClick={(e) => handleSubmit(e)}
-                        className="btn bg-blue-primary text-white right-center-absolute"
-                        style={{
-                          borderTopLeftRadius: "0",
-                          borderBottomLeftRadius: "0",
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          handleSubmit(e)
                         }}
                       >
-                        Cari
-                      </button>
+                        <IconSearch
+                          style={{ left: "10" }}
+                          className="left-center-absolute"
+                        />
+                        <input
+                          id="kt_datatable_search_query"
+                          type="text"
+                          className="form-control pl-10"
+                          placeholder="Ketik disini untuk Pencarian..."
+                          onChange={(e) =>
+                            handleChangeValueSearch(e.target.value)
+                          }
+                        />
+                        <button
+                          type="button"
+                          onClick={(e) => handleSubmit(e)}
+                          className="btn bg-blue-primary text-white right-center-absolute"
+                          style={{
+                            borderTopLeftRadius: "0",
+                            borderBottomLeftRadius: "0",
+                          }}
+                        >
+                          Cari
+                        </button>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -159,7 +166,7 @@ const Table = ({ token }) => {
                           activePage={page}
                           itemsCountPerPage={detailExportData?.data?.limit}
                           totalItemsCount={detailExportData?.data?.total_rows}
-                          pageRangeDisplayed={2}
+                          pageRangeDisplayed={3}
                           onChange={(e) => {
                             setPage(e)
                             dispatch(getDetailsExportData(router.query.id, token, e, valueSearch, limit, Cookies.get("token_permission")));

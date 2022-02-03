@@ -32,17 +32,19 @@ const DashboardHeader = ({ funcFilterYear, path = "" }) => {
         router.pathname != "/dashboard" ? "between" : "end"
       } flex-wrap`}
     >
-      {router.pathname !== "/pelatihan/dashboard" ||
-        (router.pathname != "/dashboard" && (
-          <h2 className="title-section-dashboard d-flex">
-            <div
-              className="ri-arrow-left-s-line mr-3"
-              onClick={() => router.back()}
-              style={{ cursor: "pointer" }}
-            ></div>
-            Dashboard {path}
-          </h2>
-        ))}
+      {!(
+        router.pathname === "/pelatihan/dashboard" ||
+        router.pathname === "/dashboard"
+      ) && (
+        <h2 className="title-section-dashboard d-flex">
+          <div
+            className="ri-arrow-left-s-line mr-3"
+            onClick={() => router.back()}
+            style={{ cursor: "pointer" }}
+          ></div>
+          Dashboard {path}
+        </h2>
+      )}
       <a className="px-8 rounded-full" style={{ border: "1px solid #215480" }}>
         <div className="d-flex flex-wrap align-items-center">
           <p className="mt-4 mr-3 text-dashboard-neutral">Pilih Tahun:</p>

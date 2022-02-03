@@ -946,7 +946,7 @@ export default function Pengaturan({ session }) {
               <Form.Control
                 style={{ fontSize: "14px" }}
                 type="email"
-                placeholder="Masukkan No HP Baru"
+                placeholder="Gunakan angka '62', Contoh : 62812...."
                 onChange={(e) => {
                   setHandphone(e.target.value);
                 }}

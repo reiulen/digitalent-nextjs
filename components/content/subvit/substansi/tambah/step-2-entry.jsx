@@ -212,7 +212,13 @@ const StepTwo = ({ token, tokenPermission }) => {
     const newKey = String.fromCharCode(keyindex + 1);
     setSoalList([
       ...answer,
-      { key: newKey, option: "", image: "", is_right: false },
+      {
+        key: newKey,
+        option: "",
+        image: "",
+        imageName: "Pilih Gambar",
+        is_right: false,
+      },
     ]);
   };
 
@@ -221,10 +227,34 @@ const StepTwo = ({ token, tokenPermission }) => {
     setSoal("");
     setSoalImage("");
     setSoalList([
-      { key: "A", option: "", image: "", is_right: false },
-      { key: "B", option: "", image: "", is_right: false },
-      { key: "C", option: "", image: "", is_right: false },
-      { key: "D", option: "", image: "", is_right: false },
+      {
+        key: "A",
+        option: "",
+        image: "",
+        imageName: "Pilih Gambar",
+        is_right: false,
+      },
+      {
+        key: "B",
+        option: "",
+        image: "",
+        imageName: "Pilih Gambar",
+        is_right: false,
+      },
+      {
+        key: "C",
+        option: "",
+        image: "",
+        imageName: "Pilih Gambar",
+        is_right: false,
+      },
+      {
+        key: "D",
+        option: "",
+        image: "",
+        imageName: "Pilih Gambar",
+        is_right: false,
+      },
     ]);
     setAnswerKey("");
     setQuestionTypeId("");

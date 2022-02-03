@@ -51,33 +51,33 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(
-        getDetailTemaPendaftar(
-          session.user.user.data.token,
-          token_permission,
-          query.id
-        )
-      );
-      await store.dispatch(
-        getDetailTemaPeserta(
-          session.user.user.data.token,
-          token_permission,
-          query.id
-        )
-      );
+      // await store.dispatch(
+      //   getDetailTemaPendaftar(
+      //     session.user.user.data.token,
+      //     token_permission,
+      //     query.id
+      //   )
+      // );
+      // await store.dispatch(
+      //   getDetailTemaPeserta(
+      //     session.user.user.data.token,
+      //     token_permission,
+      //     query.id
+      //   )
+      // );
 
-      await store.dispatch(
-        getDigitalentTotalDataPendaftar(
-          session.user.user.data.token,
-          token_permission
-        )
-      );
-      await store.dispatch(
-        getDigitalentTotalPengguna(
-          session.user.user.data.token,
-          token_permission
-        )
-      );
+      // await store.dispatch(
+      //   getDigitalentTotalDataPendaftar(
+      //     session.user.user.data.token,
+      //     token_permission
+      //   )
+      // );
+      // await store.dispatch(
+      //   getDigitalentTotalPengguna(
+      //     session.user.user.data.token,
+      //     token_permission
+      //   )
+      // );
 
       return {
         props: { session, title: "Dashboard - Pelatihan" },
