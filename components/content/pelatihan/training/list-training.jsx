@@ -1114,6 +1114,7 @@ const ListTraining = ({ token }) => {
                                       </button>
                                     )}
                                     {!(
+                                      row.lpj_peserta === "0" ||
                                       row.status_pelatihan ===
                                         "review substansi" ||
                                       row.status_pelatihan === "dibatalkan" ||
