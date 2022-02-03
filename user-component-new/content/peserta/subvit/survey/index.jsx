@@ -232,6 +232,7 @@ const SubtansiUser = ({ token }) => {
 
   const [question, setQuestion] = useState("");
   const [time, setTime] = useState("");
+  const [optionTriggeredEmpty, setOptionTriggeredEmpty] = useState("");
 
   let keyMap = [];
 
@@ -430,12 +431,43 @@ const SubtansiUser = ({ token }) => {
     } else {
       ansTw = [...JSON.parse(sessionStorage.getItem(router.query.id + "e"))];
     }
-    const data = { id: parent, key: e.key };
+    const data = { id: parent, key: e.key, value: "" };
     const filter = ansTw.filter((val) => val.id === parent);
     if (filter.length > 0) {
       ansTw.filter((val, i) => {
         if (val.id === parent) {
           ansTw[i].key = e.key;
+        }
+        ansTw[i].value = "";
+      });
+    } else {
+      ansTw.push(data);
+    }
+    setOptionTriggeredEmpty("");
+
+    sessionStorage.setItem(router.query.id + parent + "td", e.key);
+    sessionStorage.setItem(router.query.id + "e", JSON.stringify(ansTw));
+    setListAnswer2(sessionStorage.getItem(router.query.id + parent + "td"));
+  };
+
+  const handleTriggeredEmpty2 = (e, parent, value) => {
+    let ansTw;
+    if (sessionStorage.getItem(router.query.id + "e") === null) {
+      ansTw = [];
+    } else {
+      ansTw = [...JSON.parse(sessionStorage.getItem(router.query.id + "e"))];
+    }
+
+    const data = { id: parent, key: e.key, value: value };
+    const filter = ansTw.filter((val) => val.id === parent);
+    if (filter.length > 0) {
+      ansTw.filter((val, i) => {
+        if (val.id === parent) {
+          ansTw[i].key = e.key;
+          ansTw[i].value = value;
+        } else {
+          ansTw[i].value = "";
+          setOptionTriggeredEmpty("");
         }
       });
     } else {
@@ -575,7 +607,6 @@ const SubtansiUser = ({ token }) => {
                       .question_image !== "" ? (
                       <div className="d-flex flex-row">
                         <div className="p-2">
-                          {" "}
                           <Image
                             src={
                               process.env.END_POINT_API_IMAGE_SUBVIT +
@@ -710,6 +741,13 @@ const SubtansiUser = ({ token }) => {
                                 handleAnswerTriggered(item, index);
                               }}
                             >
+                              {console.log(
+                                JSON.parse(
+                                  data.list_questions[
+                                    parseInt(router.query.id) - 1
+                                  ]?.answer
+                                )
+                              )}
                               <table>
                                 <tr>
                                   <td style={{ width: "5px" }}>{item.key}</td>
@@ -745,17 +783,19 @@ const SubtansiUser = ({ token }) => {
                       </table>
                     </Card>
                   )}
-
+                  {/* {console.log(sessionStorage.getItem(`${router.query.id}tg`))} */}
                   <Collapse
                     in={
                       sessionStorage.getItem(`${router.query.id}tg`) !== null
-                        ? sessionStorage.getItem(`${router.query.id}tg`)
+                        ? true
                         : false
                     }
                     dimension="width"
                   >
                     <div id="example-collapse-text">
-                      {sub?.sub?.map((a, parent) => {
+                      {JSON.parse(
+                        sessionStorage.getItem("answerTriggered")
+                      )?.sub?.map((a, parent) => {
                         return (
                           <>
                             {parent !== 0 &&
@@ -902,35 +942,96 @@ const SubtansiUser = ({ token }) => {
                                     {a.answer.map((ans, index) => {
                                       return (
                                         <>
-                                          <Card
-                                            className={
-                                              sessionStorage.getItem(
-                                                router.query.id + parent + "td"
-                                              ) === ans.key
-                                                ? styles.answer
-                                                : styles.boxAnswer
-                                            }
-                                            key={index}
-                                            onClick={() => {
-                                              handleTriggered2(
-                                                ans,
-                                                parent,
-                                                index
-                                              );
-                                            }}
-                                          >
-                                            <table>
-                                              <tr>
-                                                <td style={{ width: "5px" }}>
-                                                  {ans.key}
-                                                </td>
-                                                <td style={{ width: "15px" }}>
-                                                  .
-                                                </td>
-                                                <td>{ans.option} </td>
-                                              </tr>
-                                            </table>
-                                          </Card>
+                                          {ans.type === "empty" ? (
+                                            <>
+                                              <div
+                                                style={{
+                                                  position: "relative",
+                                                }}
+                                              >
+                                                <input
+                                                  type="text"
+                                                  className={`form-control h-100 ${
+                                                    sessionStorage.getItem(
+                                                      router.query.id +
+                                                        parent +
+                                                        "td"
+                                                    ) === ans.key
+                                                      ? styles.answer
+                                                      : styles.boxAnswer
+                                                  }`}
+                                                  style={{
+                                                    paddingLeft: "40px",
+                                                  }}
+                                                  placeholder="Silahkan Masukkan Jawaban Lainya"
+                                                  value={
+                                                    optionTriggeredEmpty ||
+                                                    (sessionStorage.getItem(
+                                                      router.query.id + "e"
+                                                    ) !== null &&
+                                                      JSON.parse(
+                                                        sessionStorage.getItem(
+                                                          router.query.id + "e"
+                                                        )
+                                                      )[0].value) ||
+                                                    ""
+                                                  }
+                                                  onChange={(e) => {
+                                                    handleTriggeredEmpty2(
+                                                      ans,
+                                                      parent,
+                                                      e.target.value
+                                                    );
+                                                    setOptionTriggeredEmpty(
+                                                      e.target.value
+                                                    );
+                                                  }}
+                                                />
+                                                <div
+                                                  style={{
+                                                    position: "absolute",
+                                                    zIndex: 2,
+                                                    top: "15px",
+                                                    left: "17px",
+                                                  }}
+                                                >
+                                                  <p>{ans.key} .</p>
+                                                </div>
+                                              </div>
+                                            </>
+                                          ) : (
+                                            <Card
+                                              className={
+                                                sessionStorage.getItem(
+                                                  router.query.id +
+                                                    parent +
+                                                    "td"
+                                                ) === ans.key
+                                                  ? styles.answer
+                                                  : styles.boxAnswer
+                                              }
+                                              key={index}
+                                              onClick={() => {
+                                                handleTriggered2(
+                                                  ans,
+                                                  parent,
+                                                  index
+                                                );
+                                              }}
+                                            >
+                                              <table>
+                                                <tr>
+                                                  <td style={{ width: "5px" }}>
+                                                    {ans.key}
+                                                  </td>
+                                                  <td style={{ width: "15px" }}>
+                                                    .
+                                                  </td>
+                                                  <td>{ans.option}</td>
+                                                </tr>
+                                              </table>
+                                            </Card>
+                                          )}
                                         </>
                                       );
                                     })}
@@ -1081,37 +1182,101 @@ const SubtansiUser = ({ token }) => {
                                       {a.answer.map((ans, index) => {
                                         return (
                                           <>
-                                            <Card
-                                              className={
-                                                sessionStorage.getItem(
-                                                  router.query.id +
-                                                    parent +
-                                                    "td"
-                                                ) === ans.key
-                                                  ? styles.answer
-                                                  : styles.boxAnswer
-                                              }
-                                              key={index}
-                                              onClick={() => {
-                                                handleTriggered2(
-                                                  ans,
-                                                  parent,
-                                                  index
-                                                );
-                                              }}
-                                            >
-                                              <table>
-                                                <tr>
-                                                  <td style={{ width: "5px" }}>
-                                                    {ans.key}
-                                                  </td>
-                                                  <td style={{ width: "15px" }}>
-                                                    .
-                                                  </td>
-                                                  <td>{ans.option} </td>
-                                                </tr>
-                                              </table>
-                                            </Card>
+                                            {ans.type === "empty" ? (
+                                              <>
+                                                <div
+                                                  style={{
+                                                    position: "relative",
+                                                  }}
+                                                >
+                                                  <input
+                                                    type="text"
+                                                    className={`form-control h-100 ${
+                                                      sessionStorage.getItem(
+                                                        router.query.id +
+                                                          parent +
+                                                          "td"
+                                                      ) === ans.key
+                                                        ? styles.answer
+                                                        : styles.boxAnswer
+                                                    }`}
+                                                    style={{
+                                                      paddingLeft: "40px",
+                                                    }}
+                                                    placeholder="Silahkan Masukkan Jawaban Lainya"
+                                                    value={
+                                                      optionTriggeredEmpty ||
+                                                      (sessionStorage.getItem(
+                                                        router.query.id + "e"
+                                                      ) !== null &&
+                                                        JSON.parse(
+                                                          sessionStorage.getItem(
+                                                            router.query.id +
+                                                              "e"
+                                                          )
+                                                        )[0].value) ||
+                                                      ""
+                                                    }
+                                                    onChange={(e) => {
+                                                      handleTriggeredEmpty2(
+                                                        ans,
+                                                        parent,
+                                                        e.target.value
+                                                      );
+                                                      setOptionTriggeredEmpty(
+                                                        e.target.value
+                                                      );
+                                                    }}
+                                                  />
+                                                  <div
+                                                    style={{
+                                                      position: "absolute",
+                                                      zIndex: 2,
+                                                      top: "15px",
+                                                      left: "17px",
+                                                    }}
+                                                  >
+                                                    <p>{ans.key} .</p>
+                                                  </div>
+                                                </div>
+                                              </>
+                                            ) : (
+                                              <Card
+                                                className={
+                                                  sessionStorage.getItem(
+                                                    router.query.id +
+                                                      parent +
+                                                      "td"
+                                                  ) === ans.key
+                                                    ? styles.answer
+                                                    : styles.boxAnswer
+                                                }
+                                                key={index}
+                                                onClick={() => {
+                                                  handleTriggered2(
+                                                    ans,
+                                                    parent,
+                                                    index
+                                                  );
+                                                }}
+                                              >
+                                                <table>
+                                                  <tr>
+                                                    <td
+                                                      style={{ width: "5px" }}
+                                                    >
+                                                      {ans.key}
+                                                    </td>
+                                                    <td
+                                                      style={{ width: "15px" }}
+                                                    >
+                                                      .
+                                                    </td>
+                                                    <td>{ans.option} CC</td>
+                                                  </tr>
+                                                </table>
+                                              </Card>
+                                            )}
                                           </>
                                         );
                                       })}

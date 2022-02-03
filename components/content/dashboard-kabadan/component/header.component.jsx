@@ -19,7 +19,9 @@ const Header = ({ name, text, value = 0, dailyAdd = 0, statisticDay = 0 }) => {
                   </h1>
                   <div className="d-flex">
                     <i className="ri-arrow-up-s-fill text-success mr-2 fw-600 mt-1"></i>
-                    <p className="text-success fz-20 fw-600">{dailyAdd}%</p>
+                    <p className="text-success fz-20 fw-600">
+                      {dailyAdd || 0}%
+                    </p>
                   </div>
                 </div>
                 <p className="text-success fz-16 fw-500">
