@@ -1,6 +1,7 @@
 import React from "react";
+import { helperFormatMoney } from "../../../../utils/middleware/helper";
 
-const StatistikProgres = ({ user, value, percent, total }) => {
+const StatistikProgres = ({ user, value, percent, total = 0 }) => {
   return (
     <>
       <div className="mb-3 col-md-12 row mr-0 pr-0">
@@ -12,7 +13,7 @@ const StatistikProgres = ({ user, value, percent, total }) => {
 
         <div className="col-6 text-right pr-0 mr-0">
           <p className="text-dashboard-neutral mb-0 fz-14 fw-600 pr-0 mr-0">
-            {Math.ceil(percent) + `%`} ({total})
+            {Math.ceil(percent) + `%`} ({helperFormatMoney(total)})
           </p>
         </div>
       </div>

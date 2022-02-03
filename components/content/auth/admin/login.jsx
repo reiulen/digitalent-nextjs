@@ -53,7 +53,7 @@ const LoginAdmin = () => {
         SweatAlert("Gagal", result.error, "error");
         setLoading(false);
       } else {
-        setLoading(false);
+        // setLoading(false);
 
         // GET ROLES
         const setData = {
