@@ -271,7 +271,7 @@ const Table = ({ token }) => {
                         activePage={page}
                         itemsCountPerPage={allListPeserta?.data?.data?.perPage}
                         totalItemsCount={allListPeserta?.data?.data?.total}
-                        pageRangeDisplayed={2}
+                        pageRangeDisplayed={3}
                         onChange={(e) => {
                           setPage(e);
                           dispatch(getAllListsPeserta(token, limit, e, search, Cookies.get("token_permission")));
