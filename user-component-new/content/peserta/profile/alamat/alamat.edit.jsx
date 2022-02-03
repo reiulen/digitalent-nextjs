@@ -61,23 +61,22 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
   } = useSelector((state) => state.updateAlamat);
 
   const {
-		error: errorStatusWizzard,
-		loading: loadingStatusWizzard,
-		success: successStatusWizard,
-	} = useSelector((state) => state.updateStatusWizzard);
+    error: errorStatusWizzard,
+    loading: loadingStatusWizzard,
+    success: successStatusWizard,
+  } = useSelector((state) => state.updateStatusWizzard);
 
   // const [isValid, setIsValid] = useState(false);
   const [isValid, setIsValid] = useState(
-    alamat && 
-    alamat?.address &&
-    alamat?.provinsi &&
-    alamat?.kota &&
-    alamat?.kecamatan &&
-    alamat?.kelurahan &&
-    alamat?.kode_pos !== "" ?
-      true
-    :
-      false
+    alamat &&
+      alamat?.address &&
+      alamat?.provinsi &&
+      alamat?.kota &&
+      alamat?.kecamatan &&
+      alamat?.kelurahan &&
+      alamat?.kode_pos !== ""
+      ? true
+      : false
   );
 
   const [isProvinsi, setIsProvinsi] = useState(false);
@@ -87,11 +86,8 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
 
   // const [sesuai, setSesuai] = useState(false);
   const [sesuai, setSesuai] = useState(
-    alamat && alamat?.address_ktp === alamat?.address ? 
-      true
-    : 
-      false
-    );
+    alamat && alamat?.address_ktp === alamat?.address ? true : false
+  );
 
   const [alamatKtp, setAlamatKtp] = useState(
     (alamat && alamat.address_ktp) || ""
@@ -599,18 +595,17 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
   };
 
   const stepBack = async () => {
-    let status = 1
+    let status = 1;
 
-    const data = await dispatch (updateWizzardStatus(status, token))
+    const data = await dispatch(updateWizzardStatus(status, token));
 
-    if (data?.status === true){
+    if (data?.status === true) {
       router.push("/peserta/wizzard");
-
     } else {
       SweatAlert("Gagal", errorStatusWizzard, "error");
-			dispatch(clearErrors());
+      dispatch(clearErrors());
     }
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -721,7 +716,9 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                   simpleValidator.current.showMessageFor("kota ktp")
                 }
                 value={kotaKtp}
-                isDisabled={provinsiKtp ? false : true}
+                isDisabled={
+                  optionsKabupaten.length == 0 || !provinsiKtp ? true : false
+                }
               />
               {simpleValidator.current.message(
                 "kota ktp",
@@ -753,7 +750,9 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                   simpleValidator.current.showMessageFor("kecamatan ktp")
                 }
                 value={kecamatanKtp}
-                isDisabled={kotaKtp ? false : true}
+                isDisabled={
+                  optionsKecamatan.length == 0 || !kotaKtp ? true : false
+                }
               />
 
               {simpleValidator.current.message(
@@ -782,7 +781,9 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                   simpleValidator.current.showMessageFor("kelurahan ktp")
                 }
                 value={kelurahanKtp}
-                isDisabled={kecamatanKtp ? false : true}
+                isDisabled={
+                  optionsKelurahan.length == 0 || !kecamatanKtp ? true : false
+                }
               />
 
               {simpleValidator.current.message(
@@ -862,17 +863,17 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
         ) : (
           <div className="button-aksi mt-5 float-right">
             <Button
-							className={`${style.button_profile_batal} rounded-xl mr-2`}
-							type="button"
-							onClick={() => stepBack()}
-							disabled={loadingStatusWizzard ? true : false}
-						>
-							Kembali
-						</Button>
+              className={`${style.button_profile_batal} rounded-xl mr-2`}
+              type="button"
+              onClick={() => stepBack()}
+              disabled={loadingStatusWizzard ? true : false}
+            >
+              Kembali
+            </Button>
             <Button
               className={`${style.button_profile_simpan} rounded-xl`}
               type="submit"
-              disabled = {loadingUpdateData ? true : false}
+              disabled={loadingUpdateData ? true : false}
             >
               Lanjut
             </Button>

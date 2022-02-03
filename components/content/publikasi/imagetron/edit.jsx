@@ -438,7 +438,7 @@ const EditImagetron = ({ token, idUser }) => {
                             </div>
 
                             {
-                                role_permission?.roles.includes("Super Admin") ?
+                                role_permission?.roles.includes("Super Admin") || role_permission?.permissions?.includes("publikasi.imagetron.manage") ?
                                     <div className="form-group row">
                                         <label
                                             htmlFor="staticEmail"
@@ -469,7 +469,7 @@ const EditImagetron = ({ token, idUser }) => {
                             }
 
                             {
-                                role_permission?.roles.includes("Super Admin") ?
+                                role_permission?.roles.includes("Super Admin") || role_permission?.permissions?.includes("publikasi.imagetron.manage") ?
                                     disablePublishDate === false ?
                                         <div className="form-group">
                                             <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>

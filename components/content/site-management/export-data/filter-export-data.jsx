@@ -147,44 +147,40 @@ const UbahRole = ({ token, name }) => {
       provinsi: provinsi ? provinsi.label : "",
       kota: kota ? kota.label : "",
     };
-    if (datePelaksanaanEnd !== null) {
-      if (
-        datePelaksanaanStart === null &&
-        datePelaksanaanEnd === null &&
-        akademi == null &&
-        tema === null &&
-        penyelenggara == null &&
-        pelatihan == null &&
-        provinsi == null &&
-        kota == null
-      ) {
-        Swal.fire("Oppss", "Isi Field dengan benar minimal 1", "error");
-      } else {
-        Swal.fire({
-          title: "Apakah anda yakin ?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Ya !",
-          cancelButtonText: "Batal",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            dispatch(
-              postFilterExportData(
-                token,
-                data,
-                null,
-                null,
-                Cookies.get("token_permission"),
-                name
-              )
-            );
-          }
-        });
-      }
+    if (
+      datePelaksanaanStart === null &&
+      datePelaksanaanEnd === null &&
+      akademi == null &&
+      tema === null &&
+      penyelenggara == null &&
+      pelatihan == null &&
+      provinsi == null &&
+      kota == null
+    ) {
+      Swal.fire("Oppss", "Isi Field dengan benar minimal 1", "error");
     } else {
-      Swal.fire("Oppss", "isi tanggal dengan benar", "error");
+      Swal.fire({
+        title: "Apakah anda yakin ?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya !",
+        cancelButtonText: "Batal",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(
+            postFilterExportData(
+              token,
+              data,
+              null,
+              null,
+              Cookies.get("token_permission"),
+              name
+            )
+          );
+        }
+      });
     }
   };
 

@@ -576,7 +576,7 @@ const EditGaleri = ({ token }) => {
                             </div>
 
                             {
-                                role_permission.roles.includes("Super Admin") ?
+                                role_permission.roles.includes("Super Admin") || role_permission?.permissions?.includes("publikasi.galeri.manage")?
                                     <div className="form-group row">
                                         <label
                                             htmlFor="staticEmail"
@@ -607,7 +607,7 @@ const EditGaleri = ({ token }) => {
                             }
 
                             {
-                                role_permission.roles.includes("Super Admin") ?
+                                role_permission.roles.includes("Super Admin") || role_permission?.permissions?.includes("publikasi.galeri.manage") ?
                                     disablePublishDate === false ?
                                         <div className="form-group">
                                             <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>

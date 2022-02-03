@@ -313,7 +313,7 @@ const Table = ({ token }) => {
                       <p className="mb-2" style={colorText}>
                         KTP
                       </p>
-                      <p className="fz-16" style={{ cursor: "pointer"}} onClick={() => setShowModalPreview(true)}>
+                      <p className="fz-16" style={{ cursor: "pointer" }} onClick={() => setShowModalPreview(true)}>
                         {allDetailPeserta.data?.data?.File_ktp !== "" ? allDetailPeserta.data?.data?.File_ktp : "-"}
                       </p>
                     </div>
@@ -323,7 +323,7 @@ const Table = ({ token }) => {
                       <p className="mb-2" style={colorText}>
                         Ijazah
                       </p>
-                      <p className="fz-16" style={{ cursor: "pointer"}} onClick={() => setShowModalPreviewIjazah(true)}>
+                      <p className="fz-16" style={{ cursor: "pointer" }} onClick={() => setShowModalPreviewIjazah(true)}>
                         {allDetailPeserta.data?.data?.ijasah !== "" ? allDetailPeserta.data?.data?.ijasah : "-"}
                       </p>
                     </div>
@@ -339,7 +339,7 @@ const Table = ({ token }) => {
           onHide={() => setShowModalPreview(false)}
           aria-labelledby="contained-modal-title-vcenter"
           centered
-          size="xl"
+          size="lg"
         >
           <Modal.Header>
             <Modal.Title>Preview KTP</Modal.Title>
@@ -352,8 +352,17 @@ const Table = ({ token }) => {
             </button>
           </Modal.Header>
           <Modal.Body>
-            <div style={{ overflow: "scroll", height: 600 }}>
-              <PDFReader url={allDetailPeserta.data?.data?.file_path + allDetailPeserta.data?.data?.ijasah} />
+            <div style={{ overflow: "auto", height: 400 }}>
+              {
+                allDetailPeserta.data?.data?.File_ktp?.includes("jpeg", "jpg", "png") ?
+                  <img
+                    src={allDetailPeserta.data?.data?.file_path + allDetailPeserta.data?.data?.File_ktp}
+                    alt="file_ktp"
+                    className="img-fluid"
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                  : <PDFReader url={allDetailPeserta.data?.data?.file_path + allDetailPeserta.data?.data?.File_ktp} />
+              }
             </div>
           </Modal.Body>
         </Modal>
@@ -363,7 +372,7 @@ const Table = ({ token }) => {
           onHide={() => setShowModalPreviewIjazah(false)}
           aria-labelledby="contained-modal-title-vcenter"
           centered
-          size="xl"
+          size="lg"
         >
           <Modal.Header>
             <Modal.Title>Preview Ijazah</Modal.Title>
@@ -376,8 +385,17 @@ const Table = ({ token }) => {
             </button>
           </Modal.Header>
           <Modal.Body>
-            <div style={{ overflow: "scroll", height: 600 }}>
-              <PDFReader url={allDetailPeserta.data?.data?.file_path + allDetailPeserta.data?.data?.File_ktp} />
+            <div style={{ overflow: "auto", height: 600 }}>
+              {
+                allDetailPeserta.data?.data?.ijasah?.includes("jpeg", "jpg", "png") ?
+                  <img
+                    src={allDetailPeserta.data?.data?.file_path + allDetailPeserta.data?.data?.ijasah}
+                    alt="file_ktp"
+                    className="img-fluid"
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                  : <PDFReader url={allDetailPeserta.data?.data?.file_path + allDetailPeserta.data?.data?.ijasah} />
+              }
             </div>
           </Modal.Body>
         </Modal>
