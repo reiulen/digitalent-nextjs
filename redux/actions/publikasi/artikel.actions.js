@@ -46,7 +46,7 @@ export const getAllArtikel =
       try {
         dispatch({ type: ARTIKEL_REQUEST });
         let link =
-          process.env.END_POINT_API_PUBLIKASI + `api/artikel?page=${page}`;
+          process.env.END_POINT_API_PUBLIKASI + `api/artikel?page=${page}&&role=1`;
         if (keyword) link = link.concat(`&keyword=${keyword}`);
         if (limit) link = link.concat(`&limit=${limit}`);
         if (publish) link = link.concat(`&publish=${publish}`);

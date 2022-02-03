@@ -317,7 +317,7 @@ const TambahBerita = ({ token, id }) => {
                                 </div>
                             </div>
 
-                            <div className={`${styles.selectKategori} form-group`}>
+                            <div className={`${styles.selectThumbnail} form-group`}>
                                 <label
                                     htmlFor="staticEmail"
                                     className="col-sm-4 col-form-label font-weight-bolder"
@@ -458,7 +458,7 @@ const TambahBerita = ({ token, id }) => {
                             </div>
 
                             {
-                                role_permission?.roles.includes("Super Admin") ?
+                                role_permission?.roles.includes("Super Admin") || role_permission?.permissions?.includes("publikasi.berita.manage") ?
                                     <div className="form-group row">
                                         <label
                                             htmlFor="staticEmail"

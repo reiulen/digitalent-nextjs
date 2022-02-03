@@ -442,7 +442,7 @@ const EditArtikel = ({ token, idUser }) => {
                   </div>
                 </div>
 
-                <div className={`${styles.selectKategori} form-group`}>
+                <div className={`${styles.selectThumbnail} form-group`}>
                   <label
                     htmlFor="staticEmail"
                     className="col-sm-4 col-form-label font-weight-bolder"
@@ -629,7 +629,7 @@ const EditArtikel = ({ token, idUser }) => {
                 </div>
 
                 {
-                  role_permission.roles.includes("Super Admin") ?
+                  role_permission.roles.includes("Super Admin") || role_permission?.permissions?.includes("publikasi.artikel.manage") ?
                     <div className="form-group row">
                       <label
                         htmlFor="staticEmail"
@@ -659,7 +659,7 @@ const EditArtikel = ({ token, idUser }) => {
                 }
 
                 {
-                  role_permission.roles.includes("Super Admin") ?
+                  role_permission.roles.includes("Super Admin") || role_permission?.permissions?.includes("publikasi.artikel.manage") ?
                     disablePublishDate === false ? (
                       <div className="form-group">
                         <label className="col-sm-5 col-form-label font-weight-bolder">

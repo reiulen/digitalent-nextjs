@@ -188,7 +188,7 @@ const Preview = () => {
 
                                 {/* Artikel */}
                                 <div className="border rounded-lg mb-5 mt-15">
-                                    <div className="my-5 mx-5 text-justify" style={{width: '96%'}}>
+                                    <div className="my-5 mx-5 text-justify" style={{width: '96%', wordBreak:'break-word'}}>
                                         {
                                             resultText ?
                                                 <div dangerouslySetInnerHTML={{ __html: resultText }}></div>
@@ -300,7 +300,7 @@ const Preview = () => {
                                                 })
                                             ) : (
                                                 <div className="row text-center">
-                                                    <h3 className="text-muted">
+                                                    <h3 className="text-muted ml-3">
                                                         <em>Tag Belum Tersedia</em>
                                                     </h3>
                                                 </div>

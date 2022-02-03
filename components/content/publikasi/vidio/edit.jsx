@@ -497,8 +497,7 @@ const EditVideo = ({ token }) => {
                                 </div>
 
                                 {
-                                    role_permission?.roles[0] !== "Super Admin" ? null
-                                        :
+                                    role_permission?.roles[0] === "Super Admin" || role_permission?.permissions?.includes("publikasi.video.manage") ?
                                         <div className="form-group row">
                                             <label
                                                 htmlFor="staticEmail"
@@ -526,11 +525,11 @@ const EditVideo = ({ token }) => {
                                                 </div>
                                             </div>
                                         </div>
+                                        : null
                                 }
 
                                 {
-                                    role_permission?.roles[0] !== "Super Admin" ? null
-                                        :
+                                    role_permission?.roles[0] === "Super Admin" || role_permission?.permissions?.includes("publikasi.video.manage") ?
                                         disablePublishDate === false ?
                                             <div className="form-group">
                                                 <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
@@ -557,6 +556,7 @@ const EditVideo = ({ token }) => {
                                             </div>
                                             :
                                             null
+                                        : null
 
                                 }
 

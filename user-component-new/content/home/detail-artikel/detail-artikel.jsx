@@ -395,7 +395,7 @@ const DetailArtikel = () => {
                     })
                   ) : (
                     <div className="row d-flex justify-content-center  text-center">
-                      <h3 className="text-muted">
+                      <h3 className="text-muted ml-3">
                         <em>Tag Belum Tersedia</em>
                       </h3>
                     </div>
