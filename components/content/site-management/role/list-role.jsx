@@ -263,7 +263,7 @@ const Table = ({ token }) => {
                       activePage={allRoles.page}
                       itemsCountPerPage={allRoles.data.perPage}
                       totalItemsCount={allRoles.data.total}
-                      pageRangeDisplayed={2}
+                      pageRangeDisplayed={3}
                       onChange={(page) => dispatch(setPage(page))}
                       nextPageText={">"}
                       prevPageText={"<"}
