@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardTotal from "../../dashboard-kabadan/component/card-total.component";
@@ -9,8 +9,11 @@ import { helperHandlePercentage } from "../../../../utils/middleware/helper";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import Cookies from "js-cookie";
+import LoadingDashboard from "../../dashboard-kabadan/component/loading-dashboard.component";
 
 import {
+  getDigitalentTotalPengguna,
+  getDigitalentTotalDataPendaftar,
   getDetailAkademiPendaftar,
   getDetailAkademiPeserta,
 } from "../../../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
@@ -21,6 +24,13 @@ const DashboardDetailTema = ({ token }) => {
 
   const { akademi_id } = router.query;
   const token_permission = Cookies.get("token_permission");
+
+  useEffect(() => {
+    dispatch(getDigitalentTotalPengguna(token, token_permission));
+    dispatch(getDigitalentTotalDataPendaftar(token, token_permission));
+    dispatch(getDetailAkademiPendaftar(token, token_permission, akademi_id));
+    dispatch(getDetailAkademiPeserta(token, token_permission, akademi_id));
+  }, [dispatch]);
 
   const {
     loading: loadingAkademiPeserta,
@@ -91,6 +101,11 @@ const DashboardDetailTema = ({ token }) => {
         <h2 className="title-section-dashboard-mini">
           total per akademi {akademi_id}
         </h2>
+        {loadingAkademiPendaftar && (
+          <div className="text-center">
+            <LoadingDashboard loading={loadingAkademiPendaftar} />
+          </div>
+        )}
         <div className="row mt-5">
           {akademiPendaftar?.map((row, i) => (
             <div className="col-md-4 mb-8" key={i}>
