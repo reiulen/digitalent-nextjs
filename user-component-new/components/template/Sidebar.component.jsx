@@ -61,9 +61,11 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
       });
   };
 
-  const handleDown = (e) => {
+  const handleDown = (e, type = "") => {
     setDrop(!drop);
-    return router.push("/coming-soon");
+    if (type !== "dts") {
+      return router.push("/coming-soon");
+    }
     if (e.target.innerText === "Digital Talent Schoolarship") {
       setClick(click + 1);
       if (click % 2 === 0) {
@@ -129,7 +131,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
               ? styles.active
               : styles.subMenuTitle
           }
-          onClick={(event) => handleDown(event)}
+          onClick={(event) => handleDown(event, "dts")}
         >
           <div className="d-flex flex-row align-items-center">
             <div className="p-2">
@@ -137,7 +139,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
                 src={Logo}
                 alt=""
                 className={styles.img}
-                onClick={(event) => handleDown(event)}
+                onClick={(event) => handleDown(event, "dts")}
               />
             </div>
             <div className="p-2">
