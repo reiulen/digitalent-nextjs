@@ -265,7 +265,7 @@ const Table = ({ token }) => {
                       activePage={allDataReference.page}
                       itemsCountPerPage={allDataReference.data?.perPage}
                       totalItemsCount={allDataReference.data?.total}
-                      pageRangeDisplayed={2}
+                      pageRangeDisplayed={3}
                       onChange={(page) => dispatch(setPage(page))}
                       nextPageText={">"}
                       prevPageText={"<"}

@@ -431,7 +431,7 @@ const ListReport = ({ token }) => {
                       activePage={page}
                       itemsCountPerPage={getDataReportTraining.perPage}
                       totalItemsCount={getDataReportTraining.total}
-                      pageRangeDisplayed={2}
+                      pageRangeDisplayed={3}
                       onChange={(e) => {
                         setPage(e);
                         dispatch(

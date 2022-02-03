@@ -40,7 +40,7 @@ export default function Template(props) {
     { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
     { value: "tes substansi", label: "Tes Substansi" },
     { value: "tidak lulus tes subtansi", label: "Tidak Lulus Tes Substansi" },
-    { value: "lulus tes subtansi", label: "Seleksi Akhir" }, // => Seleksi Akhir
+    { value: "seleksi akhir", label: "Seleksi Akhir" }, // => Seleksi Akhir
     { value: "ditolak", label: "Ditolak" },
     { value: "diterima", label: "Diterima" },
     { value: "pelatihan", label: "Pelatihan" },

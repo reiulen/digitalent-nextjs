@@ -269,7 +269,7 @@ const Table = ({ token }) => {
                         activePage={allExportData.page}
                         itemsCountPerPage={allExportData.data.perPage}
                         totalItemsCount={allExportData.data.total}
-                        pageRangeDisplayed={2}
+                        pageRangeDisplayed={3}
                         onChange={(page) => dispatch(setPage(page))}
                         nextPageText={">"}
                         prevPageText={"<"}
