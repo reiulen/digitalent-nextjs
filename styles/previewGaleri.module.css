@@ -47,9 +47,10 @@
 }
 
 .description-img {
-  text-align: left;
+  text-align: justify;
   width: 98%;
   height: 140px;
+  padding-right: 15px;
   flex-wrap: wrap;
   overflow-y: auto;
   overflow-wrap: break-word;
@@ -140,8 +141,9 @@
 .isiGaleriHome{
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 260px;
+  max-height: 230px;
   font-size: 12px;
+  padding-right: 15px;
 }
 .borderStrip{
   width: 108%;
