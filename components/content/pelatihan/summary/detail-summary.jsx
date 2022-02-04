@@ -13,6 +13,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
 import CardPage from "../../../CardPage";
 import { getPendaftaranPeserta } from "../../../../redux/actions/pelatihan/summary.actions";
+import { SweatAlert } from "../../../../utils/middleware/helper";
 
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
@@ -182,7 +183,7 @@ const DetailSummary = ({ token }) => {
       .get(link, config)
       .then((res) => {
         setLoadingExport(false);
-        window.location.href = res.data.data;
+        SweatAlert("Berhasil", res.data.message, "success");
       })
       .catch((err) => {
         setLoadingExport(false);

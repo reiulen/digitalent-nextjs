@@ -133,11 +133,14 @@ const SubHeader = () => {
                       } */}
                           {i !== 0
                             ? i == breadcrumbs.length - 1
-                              ? convertBreadcrumb(breadcrumb.breadcrumb).slice(
-                                  0,
-                                  -1
+                              ? decodeURIComponent(
+                                  convertBreadcrumb(
+                                    breadcrumb.breadcrumb
+                                  ).slice(0, -1)
                                 )
-                              : convertBreadcrumb(breadcrumb.breadcrumb)
+                              : decodeURIComponent(
+                                  convertBreadcrumb(breadcrumb.breadcrumb)
+                                )
                             : null}
                         </p>
                       </a>
