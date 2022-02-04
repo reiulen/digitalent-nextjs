@@ -3,6 +3,20 @@ const ENDPOINT_API = "https://api-dts-poc.majapahit.id";
 const ENDPOINT_IMAGE = "https://bucket.cloud.lintasarta.co.id:8082";
 
 module.exports = {
+  async headers() {
+    return [
+      {
+        source: "/:all*(svg|jpg|png)",
+        locale: false,
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=60, must-revalidate",
+          },
+        ],
+      },
+    ];
+  },
   reactStrictMode: true,
   images: {
     domains: [
