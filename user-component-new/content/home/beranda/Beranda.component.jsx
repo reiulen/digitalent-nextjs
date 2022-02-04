@@ -553,6 +553,7 @@ const Beranda = ({ session }) => {
                                         >
                                           <Image
                                             className={`image-list-pelatihan-new`}
+                                            key={j}
                                             src={
                                               (row.gambar &&
                                                 row.gambar !==
@@ -659,6 +660,7 @@ const Beranda = ({ session }) => {
                                                     row.gambar_mitra) ||
                                                 "/assets/media/mitra-default.png"
                                               }
+                                              key={j}
                                               width={60}
                                               height={60}
                                               objectFit="cover"
@@ -794,6 +796,7 @@ const Beranda = ({ session }) => {
                                         </div>
                                         <div style={{ minHeight: "425px" }}>
                                           <Image
+                                            key={1}
                                             src={
                                               (cardImage &&
                                                 cardImage !==

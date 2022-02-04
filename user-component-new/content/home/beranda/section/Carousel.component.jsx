@@ -109,6 +109,7 @@ export default function Carousel({ data }) {
           data.imagetron.map((row, i) => (
             <div style={{ width: 1650 }} key={i}>
               <Image
+                key={i}
                 src={
                   process.env.END_POINT_API_IMAGE_PUBLIKASI +
                   "publikasi/images/" +
