@@ -354,7 +354,7 @@ const Table = ({ token }) => {
           <Modal.Body>
             <div style={{ overflow: "auto", height: 400 }}>
               {
-                allDetailPeserta.data?.data?.File_ktp?.includes("jpeg", "jpg", "png") ?
+                allDetailPeserta.data?.data?.File_ktp?.includes("jpeg") || allDetailPeserta.data?.data?.File_ktp?.includes("jpg") || allDetailPeserta.data?.data?.File_ktp?.includes("png") ?
                   <img
                     src={allDetailPeserta.data?.data?.file_path + allDetailPeserta.data?.data?.File_ktp}
                     alt="file_ktp"
@@ -387,7 +387,7 @@ const Table = ({ token }) => {
           <Modal.Body>
             <div style={{ overflow: "auto", height: 600 }}>
               {
-                allDetailPeserta.data?.data?.ijasah?.includes("jpeg", "jpg", "png") ?
+                allDetailPeserta.data?.data?.ijasah?.includes("jpeg") || allDetailPeserta.data?.data?.ijasah?.includes("jpg") || allDetailPeserta.data?.data?.ijasah?.includes("png") ?
                   <img
                     src={allDetailPeserta.data?.data?.file_path + allDetailPeserta.data?.data?.ijasah}
                     alt="file_ktp"
