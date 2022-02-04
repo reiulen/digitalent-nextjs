@@ -42,10 +42,7 @@ module.exports = {
     CAPTCHA_SITE_KEY: "6LeUmtIbAAAAAMltXjRDmRqns6MThDowaaYHz3YU",
     CAPTCHA_SECRET_KEY: "6LeUmtIbAAAAAAbA9yada3LOIktctPbfQ86SjhNn",
 
-    PATH_URL:
-      process.env.MODE !== "development"
-        ? "https://digitalent-nextjs-dendyjuliano.vercel.app"
-        : "",
+    PATH_URL: process.env.MODE !== "development" ? "/" : "",
     PATH_SIMONAS: "http://simonas-poc.majapahit.id",
     PATH_BEASISWA: "https://beasiswa-poc.majapahit.id/",
 
