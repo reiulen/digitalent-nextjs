@@ -21,7 +21,7 @@ class MyDocument extends Document {
           {/* please uncommented if you read this */}
 
           {/* <link rel="canonical" href="https://keenthemes.com/metronic" /> */}
-          <link rel="canonical" href={process.env.PATH_URL} />
+          <link rel="canonical" href={`${process.env.PATH_URL}`} />
           {/* <!--begin::Fonts--> */}
           <link
             rel="stylesheet"
