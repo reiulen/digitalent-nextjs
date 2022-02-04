@@ -44,7 +44,7 @@ module.exports = {
 
     PATH_URL:
       process.env.MODE !== "development"
-        ? "https://digitalent.kominfo.go.id"
+        ? "https://digitalent-nextjs-dendyjuliano.vercel.app"
         : "",
     PATH_SIMONAS: "http://simonas-poc.majapahit.id",
     PATH_BEASISWA: "https://beasiswa-poc.majapahit.id/",
