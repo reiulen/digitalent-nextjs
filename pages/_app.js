@@ -30,6 +30,8 @@ import { useRouter } from "next/router";
 import Layout from "../components/templates/layout.component";
 import { getFirebaseToken } from "../messaging_get_token";
 import Maintenance from "./maintenance";
+import Head from "next/head";
+
 function MyApp({ Component, pageProps }) {
   SimpleReactValidator.addLocale("id", {
     accepted: ":attribute harus diterima.",
@@ -123,6 +125,32 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
+      <Head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="description"
+          content="Website Digital Talent Scholarship Kementerian Komunikasi dan Informatika RI"
+        />
+        <meta
+          name="keywords"
+          content="Digital Talent Scholarship, Digital Talent, Digitalent, Kementerian, Kominfo, Informatika, Sertifikasi, Pelatihan, Bimtek, Bimbingan Teknis, SKKNI, Literasi, SDM, Indonesia, Proserti, Litprofkom, Litprofinformatika, DTS, Scholarship"
+        />
+        <meta name="author" content="Digital Talent Scholarship 2022" />
+        {/* <meta name="csrf-token" content="{{ csrf_token() }}" />
+          <meta name="color:Background" content="#f4fbfa" />
+          <meta property="og:url" content="{{ url('/') }}" /> */}
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="Digital Talent Scholarship 2022" />
+        <meta
+          property="og:description"
+          content="Digital Talent Scholarship Kementerian Komunikasi dan Informatika"
+        />
+        <meta
+          property="og:site_name"
+          content="Website Digital Talent Scholarship Kementerian Komunikasi dan Informatika RI"
+        />
+      </Head>
       {pageProps.data !== "auth" && pageProps.session ? (
         <Layout title={pageProps.title}>
           <Component {...pageProps} />
