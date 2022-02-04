@@ -4,7 +4,6 @@ const ENDPOINT_IMAGE = "https://bucket.cloud.lintasarta.co.id:8082";
 
 module.exports = {
   reactStrictMode: true,
-  generateEtags: false,
   images: {
     domains: [
       // "api.dts.majapahit.id",
