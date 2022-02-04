@@ -99,7 +99,7 @@ const DashboardDetailTema = ({ token }) => {
       </section>
       <section className="total-per-akademi">
         <h2 className="title-section-dashboard-mini">
-          total per akademi {akademi_id}
+          total per tema {akademi_id}
         </h2>
         {loadingAkademiPendaftar && (
           <div className="text-center">
@@ -111,7 +111,9 @@ const DashboardDetailTema = ({ token }) => {
             <div className="col-md-4 mb-8" key={i}>
               <TotalPerAkademi
                 group={row.name}
-                link={`/dashboard/${akademi_id}/${row.name}?id=${row.id}`}
+                link={`/dashboard/${akademi_id}/${encodeURIComponent(
+                  row.name
+                )}?id=${row.id}`}
                 pendaftar={row.pendaftar}
                 peserta={row.peserta}
                 lulus={row.lulus}

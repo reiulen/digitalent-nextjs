@@ -232,7 +232,6 @@ const SubtansiUser = ({ token }) => {
 
   const [question, setQuestion] = useState("");
   const [time, setTime] = useState("");
-  const [optionTriggeredEmpty, setOptionTriggeredEmpty] = useState("");
 
   let keyMap = [];
 
@@ -392,7 +391,10 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handleAnswerTriggered = (e, i) => {
-    sessionStorage.setItem("answerTriggered", JSON.stringify(e));
+    sessionStorage.setItem(
+      `answerTriggered${router.query.id}`,
+      JSON.stringify(e)
+    );
 
     let sub = JSON.parse(
       data.list_questions[parseInt(router.query.id) - 1]?.answer
@@ -443,7 +445,6 @@ const SubtansiUser = ({ token }) => {
     } else {
       ansTw.push(data);
     }
-    setOptionTriggeredEmpty("");
 
     sessionStorage.setItem(router.query.id + parent + "td", e.key);
     sessionStorage.setItem(router.query.id + "e", JSON.stringify(ansTw));
@@ -467,7 +468,6 @@ const SubtansiUser = ({ token }) => {
           ansTw[i].value = value;
         } else {
           ansTw[i].value = "";
-          setOptionTriggeredEmpty("");
         }
       });
     } else {
@@ -703,9 +703,10 @@ const SubtansiUser = ({ token }) => {
                               >
                                 <Card
                                   className={
-                                    sessionStorage.getItem(
-                                      router.query.id + "e"
-                                    ) === item.key
+                                    sessionStorage.getItem(router.query.id) !==
+                                      null &&
+                                    sessionStorage.getItem(router.query.id) ===
+                                      item.key
                                       ? styles.answer
                                       : styles.boxAnswer
                                   }
@@ -741,13 +742,6 @@ const SubtansiUser = ({ token }) => {
                                 handleAnswerTriggered(item, index);
                               }}
                             >
-                              {console.log(
-                                JSON.parse(
-                                  data.list_questions[
-                                    parseInt(router.query.id) - 1
-                                  ]?.answer
-                                )
-                              )}
                               <table>
                                 <tr>
                                   <td style={{ width: "5px" }}>{item.key}</td>
@@ -765,18 +759,24 @@ const SubtansiUser = ({ token }) => {
                       <table>
                         <tr>
                           <td style={{ width: "5px" }}>
-                            {sessionStorage.getItem("answerTriggered") !==
-                              null &&
+                            {sessionStorage.getItem(
+                              `answerTriggered${router.query.id}`
+                            ) !== null &&
                               JSON.parse(
-                                sessionStorage.getItem("answerTriggered")
+                                sessionStorage.getItem(
+                                  `answerTriggered${router.query.id}`
+                                )
                               ).key}
                           </td>
                           <td style={{ width: "15px" }}>.</td>
                           <td>
-                            {sessionStorage.getItem("answerTriggered") !==
-                              null &&
+                            {sessionStorage.getItem(
+                              `answerTriggered${router.query.id}`
+                            ) !== null &&
                               JSON.parse(
-                                sessionStorage.getItem("answerTriggered")
+                                sessionStorage.getItem(
+                                  `answerTriggered${router.query.id}`
+                                )
                               ).option}
                           </td>
                         </tr>
@@ -794,7 +794,9 @@ const SubtansiUser = ({ token }) => {
                   >
                     <div id="example-collapse-text">
                       {JSON.parse(
-                        sessionStorage.getItem("answerTriggered")
+                        sessionStorage.getItem(
+                          `answerTriggered${router.query.id}`
+                        )
                       )?.sub?.map((a, parent) => {
                         return (
                           <>
@@ -964,8 +966,7 @@ const SubtansiUser = ({ token }) => {
                                                     paddingLeft: "40px",
                                                   }}
                                                   placeholder="Silahkan Masukkan Jawaban Lainya"
-                                                  value={
-                                                    optionTriggeredEmpty ||
+                                                  defaultValue={
                                                     (sessionStorage.getItem(
                                                       router.query.id + "e"
                                                     ) !== null &&
@@ -980,9 +981,6 @@ const SubtansiUser = ({ token }) => {
                                                     handleTriggeredEmpty2(
                                                       ans,
                                                       parent,
-                                                      e.target.value
-                                                    );
-                                                    setOptionTriggeredEmpty(
                                                       e.target.value
                                                     );
                                                   }}
@@ -1204,8 +1202,7 @@ const SubtansiUser = ({ token }) => {
                                                       paddingLeft: "40px",
                                                     }}
                                                     placeholder="Silahkan Masukkan Jawaban Lainya"
-                                                    value={
-                                                      optionTriggeredEmpty ||
+                                                    defaultValue={
                                                       (sessionStorage.getItem(
                                                         router.query.id + "e"
                                                       ) !== null &&
@@ -1221,9 +1218,6 @@ const SubtansiUser = ({ token }) => {
                                                       handleTriggeredEmpty2(
                                                         ans,
                                                         parent,
-                                                        e.target.value
-                                                      );
-                                                      setOptionTriggeredEmpty(
                                                         e.target.value
                                                       );
                                                     }}
@@ -1272,7 +1266,7 @@ const SubtansiUser = ({ token }) => {
                                                     >
                                                       .
                                                     </td>
-                                                    <td>{ans.option} CC</td>
+                                                    <td>{ans.option}</td>
                                                   </tr>
                                                 </table>
                                               </Card>
