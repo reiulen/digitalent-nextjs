@@ -11,12 +11,13 @@ module.exports = {
         headers: [
           {
             key: "Cache-Control",
-            value: "public, s-maxage=1, stale-while-revalidate=59",
+            value: "no-cache, no-store, max-age=0, must-revalidate",
           },
         ],
       },
     ];
   },
+  generateEtags: false,
   reactStrictMode: true,
   images: {
     domains: [
